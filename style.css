@@ -209,6 +209,7 @@ button.Other { background: #ddd; }
 /* ========= スマホ最適化 ========= */
 /* スマホでは「6列」に増やし、画像をさらに小さくして収める */
 @media (max-width: 600px) {
+  /* スマホ用サイズ（ギャラリー6列は維持） */
   :root{
     --imgW: 54px;
     --imgH: 60px;
@@ -218,13 +219,13 @@ button.Other { background: #ddd; }
     --btnFS: 7.5px;
   }
 
-  /* ギャラリー：6列固定 */
+  /* ギャラリー：6列固定（そのまま） */
   #gallery {
     grid-template-columns: repeat(6, 1fr);
     justify-items: center;
   }
 
-  /* SelectヘッダーのRESETを少し詰める */
+  /* Select見出しのRESETを少し詰める */
   #reset-btn {
     margin-left: 12px;
     height: 28px;
@@ -232,29 +233,55 @@ button.Other { background: #ddd; }
     font-size: 12px;
   }
 
-  /* 選択枠の高さを少し低めに */
+  /* ▼▼ ここから：選択5枠を「上3・下2」の2段グリッドに ▼▼ */
+  #selection-area {
+    justify-content: center;
+  }
+  #selected-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 1段目3枠 */
+    gap: 8px;
+    width: 100%;
+    max-width: 440px; /* 画面中央に収めやすく */
+    margin: 0 auto;
+  }
+  /* 2段目の2枠（4・5枠目）を中央寄せ */
+  .selected-wrapper:nth-child(4),
+  .selected-wrapper:nth-child(5) {
+    justify-self: center;
+  }
+  /* 枠とプレースホルダを少し詰めて縦スクロール軽減 */
   .selected-wrapper {
-    height: 196px;
+    height: 188px;
+    min-width: auto;
+    padding: 4px;
   }
   .selected-wrapper:empty::before {
-    height: calc(var(--imgH) + 24px);
+    height: calc(var(--imgH) + 22px);
   }
-
-  /* ==== Result：縦スクロール削減レイアウト ==== */
-  /* 1段目：種類確率（フル幅） / 2段目：Secret確率 + 合計 を横並び */
-  #stats {
-    display: flex;
-    flex-wrap: wrap;
+  .selected-img {
+    width: var(--imgW);
+    height: var(--imgH);
   }
-  /* 並びの定義（種類→Secret＆合計） */
-  #stats .panel:nth-child(2) { order: 1; width: 100%; }        /* 種類（フル幅） */
-  #stats .panel:nth-child(1) { order: 2; flex: 1 1 calc(50% - 6px); } /* Secret（半幅） */
-  #stats .total-panel        { order: 2; flex: 1 1 calc(50% - 6px); }  /* 合計（半幅） */
+  .button-container { gap: 4px; }
+  .button-container button {
+    width: var(--btnW);
+    height: var(--btnH);
+    font-size: var(--btnFS);
+  }
+  /* ▲▲ ここまで：2段グリッド ▲▲ */
 
-  /* ナビバーのリンクは折返しやすく */
+  /* Result：種類（1段目フル幅）、下段でSecret＋合計を横並びに */
+  #stats { display: flex; flex-wrap: wrap; }
+  #stats .panel:nth-child(2) { order: 1; width: 100%; }              /* 種類 */
+  #stats .panel:nth-child(1) { order: 2; flex: 1 1 calc(50% - 6px);} /* Secret */
+  #stats .total-panel        { order: 2; flex: 1 1 calc(50% - 6px);} /* 合計 */
+
+  /* ナビバー微調整 */
   .nav-links { gap: 12px; }
   .nav-title { font-size: 18px; }
 }
+
 
 /* ========= さらに小さい端末（超小型） ========= */
 @media (max-width: 360px) {
