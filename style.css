@@ -8,7 +8,7 @@ body {
 /* セクションタイトル */
 h2 {
   margin: 0;
-  font-size: 22px; /* フォント少し大きく */
+  font-size: 25px; /* フォント少し大きく */
 }
 
 /* ヘッダー（Monster, Select, Result） */
