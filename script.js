@@ -1,8 +1,7 @@
 // ==========================
-// script.js（表示順・文言修正、Secret≤500、種類確率は整数丸め）
+// script.js（サイズ縮小・reset下端揃え対応版）
 // ==========================
 
-// 画像データ（valueのみ使用）
 const images = [
   { src: './img/tob.png', value: 25 },
   { src: './img/tralalero.png', value: 50 },
@@ -58,13 +57,13 @@ let selectedColors  = [null, null, null, null, null]; // 'Normal' など
 // ② 種類確率の基本値
 const baseProb = { Normal: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
-// --- ギャラリー（モンスター選択）描画 ---
+// --- ギャラリー描画（120×130固定） ---
 images.forEach(imgObj => {
   const img = document.createElement('img');
   img.src = imgObj.src;
   img.className = 'gallery-img';
-  img.style.width = '140px';
-  img.style.height = '150px';
+  img.style.width = '120px';
+  img.style.height = '130px';
   img.style.objectFit = 'cover';
   img.style.cursor = 'pointer';
   img.addEventListener('click', () => {
@@ -78,7 +77,7 @@ images.forEach(imgObj => {
   gallery.appendChild(img);
 });
 
-// --- 選択済みの画像をクリックでキャンセル（左詰め） ---
+// --- 選択済みクリックでキャンセル（左詰め） ---
 function removeFromSelected(index){
   selectedImages.splice(index, 1);
   selectedImages.push(null);
@@ -96,7 +95,7 @@ resetBtn.addEventListener('click', () => {
   updateAll();
 });
 
-// --- 5枠の描画 ---
+// --- 5枠描画（120×130固定） ---
 function renderSelected(){
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
@@ -106,8 +105,8 @@ function renderSelected(){
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      img.style.width = '140px';
-      img.style.height = '150px';
+      img.style.width = '120px';
+      img.style.height = '130px';
       img.style.objectFit = 'cover';
       img.style.cursor = 'pointer';
       const color = selectedColors[idx] || 'Normal';
@@ -133,8 +132,8 @@ function renderSelected(){
 
     } else {
       const ph = document.createElement('div');
-      ph.style.width = '140px';
-      ph.style.height = '180px';
+      ph.style.width = '120px';
+      ph.style.height = '160px';
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
@@ -154,7 +153,7 @@ function updateTotal(){
   totalEl.textContent = sum;
 }
 
-// ① Secret確率（合計値に応じた表示）
+// ① Secret確率（合計値に応じた表示：500以下は「Secret：5%以下」）
 function updateSecretProbability(){
   const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
   if (sum >= 1001) {
@@ -164,12 +163,11 @@ function updateSecretProbability(){
   } else if (sum >= 501) {
     secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
   } else {
-    // ★ 500以下のときの仕様
     secretProbEl.innerHTML = `<strong>Secret：5%以下</strong>`;
   }
 }
 
-// ② 種類確率（基本+75%分配、降順、整数表示）
+// ② 種類確率（基本+75%分配、降順、整数丸め表示）
 function updateTypeProbability(){
   const probs = { ...baseProb };
 

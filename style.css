@@ -11,12 +11,12 @@ h2 {
 /* 1) モンスター選択（ギャラリー） */
 #gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 140 -> 120 */
+  gap: 6px; /* 8 -> 6 */
 }
 .gallery-img {
-  width: 140px;
-  height: 150px;
+  width: 120px;   /* 140 -> 120 */
+  height: 130px;  /* 150 -> 130 */
   object-fit: cover;
   cursor: pointer;
   border: 1px solid #ccc;
@@ -25,14 +25,14 @@ h2 {
 /* 2) 選択済み（5枠＋リセット） */
 #selection-area {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end; /* resetボタンを5枠下端に揃える */
   gap: 12px;
   margin-bottom: 12px;
 }
 
 #selected-container {
   display: flex;
-  gap: 10px;
+  gap: 8px; /* 10 -> 8 */
   justify-content: center;
   flex-wrap: nowrap;
 }
@@ -45,8 +45,8 @@ h2 {
   background-color: #555;
   border-radius: 0;
   padding: 5px;
-  min-width: 164px;   /* 指定どおり幅+4px */
-  height: 280px;      /* 画像＋ボタンが収まる高さ */
+  min-width: 144px;  /* 164 -> 144 (画像幅縮小に合わせる) */
+  height: 260px;     /* 280 -> 260 (全体を少し小さく) */
   align-items: center;
   justify-content: flex-start;
 }
@@ -54,15 +54,15 @@ h2 {
 .selected-wrapper:empty::before {
   content: "";
   display: block;
-  width: 140px;
-  height: 180px;      /* 画像150 + 余白 */
+  width: 120px;
+  height: 160px; /* 画像130 + 余白 */
   background: #555;
 }
 
 /* 選択画像（強制サイズ） */
 .selected-img {
-  width: 140px;
-  height: 150px;
+  width: 120px;   /* 140 -> 120 */
+  height: 130px;  /* 150 -> 130 */
   object-fit: cover;
   border-width: 5px;
   border-style: solid;
@@ -79,10 +79,10 @@ h2 {
   justify-items: center;
 }
 
-/* ボタン共通 */
+/* ボタン共通（枠幅縮小に合わせてボタン幅も縮める） */
 .button-container button {
-  width: 74px;
-  height: 34px;
+  width: 64px;  /* 74 -> 64 */
+  height: 30px; /* 34 -> 30 */
   border: 1px solid #888;
   cursor: pointer;
 }
@@ -94,17 +94,18 @@ button.Rainbow { background: #ffcce5; }
 button.Halloween { background: #ffd1a6; }
 button.Other { background: #ddd; }
 
-/* リセットボタン（赤枠） */
+/* リセットボタン（赤背景・白太字、5枠の底に揃える） */
 #reset-btn {
-  border: 2px solid #d00;
-  color: #d00;
-  background: #fff;
-  padding: 6px 10px;
-  height: 44px;
-  align-self: center;
+  background: #d10000;     /* 赤背景 */
+  color: #fff;             /* 白文字 */
+  font-weight: 800;        /* 太字 */
+  border: none;            /* 赤背景なので枠なし */
+  padding: 8px 14px;
+  height: 40px;            /* 少し小さめに */
+  align-self: flex-end;    /* 5枠の下端に揃える */
   cursor: pointer;
   text-transform: lowercase;
-  font-weight: 700;
+  border-radius: 4px;
 }
 
 /* 3) 確率（パネル） */
