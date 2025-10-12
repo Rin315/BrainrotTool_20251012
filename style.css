@@ -38,7 +38,7 @@
 /* 選択画像の上に置かれる疑似要素は不要に変更 */
 .selected-wrapper img {
   width: 140px;
-  height: 150px; /* 強制サイズ */
+  height: 180px; /* 強制サイズ */
   border-width: 6px;
   border-style: solid;
   border-radius: 0; /* 角を立てる */
