@@ -4,6 +4,34 @@ body {
   margin: 16px;
   background-color: #e6f5e1; /* 薄緑の背景 */
 }
+/* タイトルバー */
+.navbar {
+  background-color: #2f4f4f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  font-family: "Arial", sans-serif;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.nav-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
 
 /* セクションタイトル */
 h2 {

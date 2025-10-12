@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ | Brainrot Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-title">Brainrot Tool</div>
+    <nav class="nav-links">
+      <a href="index.html">トップページ</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+  </header>
+
+  <main style="padding: 20px;">
+    <h2>お問い合わせ</h2>
+    <p>お問い合わせは、以下のフォームまたはメールにてお願いいたします。</p>
+    <form action="https://formspree.io/f/xxxxxxxx" method="POST">
+      <label>お名前：</label><br>
+      <input type="text" name="name" required><br><br>
+
+      <label>メールアドレス：</label><br>
+      <input type="email" name="email" required><br><br>
+
+      <label>お問い合わせ内容：</label><br>
+      <textarea name="message" rows="5" required></textarea><br><br>
+
+      <button type="submit">送信</button>
+    </form>
+  </main>
+</body>
+</html>
