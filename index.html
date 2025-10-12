@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>テストアプリ</title>
+  <meta charset="UTF-8">
+  <title>画像クリックで計算</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>テストページ</h1>
+  <h1>画像ギャラリー</h1>
 
-  <!-- 画像 -->
-  <img src="./img/FishiniBossini.png" alt="かわいい猫" id="main-image">
+  <!-- 画像グリッド -->
+  <div id="gallery"></div>
 
-  <!-- ボタンたち -->
-  <div id="buttons">
-    <button onclick="showResult('Aが押されました')">ボタンA</button>
-    <button onclick="showResult('Bが押されました')">ボタンB</button>
-    <button onclick="showResult('Cが押されました')">ボタンC</button>
-  </div>
+  <h2>選択した画像</h2>
+  <div id="selected"></div>
 
-  <!-- 結果表示欄 -->
-  <div id="result">ここに結果が表示されます</div>
+  <h2>合計値</h2>
+  <div id="total">0</div>
 
   <script src="script.js"></script>
 </body>

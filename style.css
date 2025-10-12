@@ -4,19 +4,36 @@ body {
   margin: 20px;
 }
 
-#buttons {
-  margin: 20px;
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(10, 80px);
+  grid-gap: 10px;
+  justify-content: center;
 }
 
-button {
-  margin: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
+#gallery img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
   cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.2s;
 }
 
-#result {
+#gallery img:hover {
+  border: 2px solid #007BFF;
+}
+
+#selected {
   margin-top: 20px;
-  font-size: 20px;
-  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#selected img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 2px solid #007BFF;
 }
