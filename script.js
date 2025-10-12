@@ -44,9 +44,10 @@ const images = [
   { src: './img/trenostruzzo.png', value: 300, gold: 375, diamond: 450, halloween: 3000 }
 ];
 
-
+// 選択された画像を保持する配列
 let selectedImages = [];
 
+// ギャラリーに画像を表示
 images.forEach(imgData => {
   const img = document.createElement('img');
   img.src = imgData.src;
@@ -59,16 +60,20 @@ images.forEach(imgData => {
   gallery.appendChild(img);
 });
 
+// 画像を選択する関数
 function selectImage(imgData) {
   if (selectedImages.length >= 5) {
     selectedImages.shift();
   }
-  selectedImages.push(imgData);
+
+  // 縁色を保持するためオブジェクトをコピーして追加
+  selectedImages.push({...imgData, borderColor: 'black'}); // 初期縁色は黒
 
   renderSelected();
   calculateTotal();
 }
 
+// 選択画像を表示
 function renderSelected() {
   selected.innerHTML = '';
   selectedImages.forEach((imgData, index) => {
@@ -79,9 +84,10 @@ function renderSelected() {
     const img = document.createElement('img');
     img.src = imgData.src;
     img.classList.add('selected-img');
+    img.style.borderColor = imgData.borderColor; // 保存された縁色を適用
     container.appendChild(img);
 
-    // 縦ボタンコンテナ
+    // ボタン縦配置
     const btnContainer = document.createElement('div');
     btnContainer.classList.add('button-container');
 
@@ -95,11 +101,14 @@ function renderSelected() {
     buttonInfo.forEach(btn => {
       const button = document.createElement('button');
       button.textContent = btn.name;
-      button.classList.add(btn.name); // CSSで背景色指定用
+      button.classList.add(btn.name);
       button.style.borderColor = btn.color;
 
+      // ボタン押下時に縁色更新
       button.addEventListener('click', () => {
-        img.style.borderColor = btn.color;
+        imgData.borderColor = btn.color; // 状態を保持
+        img.style.borderColor = btn.color; // 表示更新
+        calculateTotal(); // リアルタイムに合計値更新
       });
 
       btnContainer.appendChild(button);
@@ -110,17 +119,15 @@ function renderSelected() {
   });
 }
 
+// 合計値を計算（縁色によって倍率後の数値を使用）
 function calculateTotal() {
   let sum = 0;
-
   selectedImages.forEach(img => {
-    let val = img.value;
+    let val = img.value; // 初期値
 
-    // 画像の borderColor から倍率を判定
-    const color = img.borderColor || '#007BFF'; // デフォルト縁色
-    if (color === 'yellow') val = img.gold;
-    else if (color === 'cyan') val = img.diamond;
-    else if (color === 'orange') val = img.halloween;
+    if (img.borderColor === 'yellow') val = img.gold;
+    else if (img.borderColor === 'cyan') val = img.diamond;
+    else if (img.borderColor === 'orange') val = img.halloween;
 
     sum += val;
   });
