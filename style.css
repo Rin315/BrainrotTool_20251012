@@ -1,18 +1,35 @@
-/* レイアウト */
+/* ベース */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   margin: 16px;
 }
 
-/* 選択エリア：5枠＋右にリセット */
+h2 {
+  margin: 18px 0 8px;
+}
+
+/* 1) モンスター選択（ギャラリー） */
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.gallery-img {
+  width: 140px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+/* 2) 選択済み（5枠＋リセット） */
 #selection-area {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
-/* 5枠コンテナ（横並び） */
 #selected-container {
   display: flex;
   gap: 10px;
@@ -20,7 +37,7 @@ body {
   flex-wrap: nowrap;
 }
 
-/* 各枠：角を立てる、背景濃グレー、常に見える大きさ */
+/* 枠：角は立てる、濃いグレー塗り、常に見える */
 .selected-wrapper {
   display: flex;
   flex-direction: column;
@@ -28,22 +45,21 @@ body {
   background-color: #555;
   border-radius: 0;
   padding: 5px;
-  min-width: 164px;        /* 指定どおり横幅+4px */
-  height: 280px;           /* 画像＋ボタンが収まる高さ */
+  min-width: 164px;   /* 指定どおり幅+4px */
+  height: 280px;      /* 画像＋ボタンが収まる高さ */
   align-items: center;
   justify-content: flex-start;
 }
 
-/* 未選択のプレースホルダ */
 .selected-wrapper:empty::before {
   content: "";
   display: block;
   width: 140px;
-  height: 180px;           /* 画像150 + 余白 */
+  height: 180px;      /* 画像150 + 余白 */
   background: #555;
 }
 
-/* 選択画像（強制サイズ、角は立てる） */
+/* 選択画像（強制サイズ） */
 .selected-img {
   width: 140px;
   height: 150px;
@@ -54,7 +70,7 @@ body {
   cursor: pointer;
 }
 
-/* ボタン配置：2列 */
+/* ボタン群：2列 */
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -71,7 +87,6 @@ body {
   cursor: pointer;
 }
 
-/* 各色（背景色指定） */
 button.Normal { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
@@ -79,7 +94,7 @@ button.Rainbow { background: #ffcce5; }
 button.Halloween { background: #ffd1a6; }
 button.Other { background: #ddd; }
 
-/* リセットボタン（赤枠・右側） */
+/* リセットボタン（赤枠） */
 #reset-btn {
   border: 2px solid #d00;
   color: #d00;
@@ -92,21 +107,7 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
-/* ギャラリー（画像を均等に並べる） */
-#gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 8px;
-}
-.gallery-img {
-  width: 140px;
-  height: 150px;
-  object-fit: cover;
-  cursor: pointer;
-  border: 1px solid #ccc;
-}
-
-/* 確率や合計値のボックス */
+/* 3) 確率（パネル） */
 #stats {
   display: flex;
   flex-wrap: wrap;
@@ -114,7 +115,7 @@ button.Other { background: #ddd; }
   margin-bottom: 16px;
 }
 .panel {
-  border: 2px solid #999;
+  border: 2px solid #999;   /* 四角で囲う */
   padding: 10px;
   min-width: 260px;
   background: #fafafa;

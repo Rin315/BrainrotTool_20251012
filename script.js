@@ -1,9 +1,8 @@
 // ==========================
-// script.js（リセットボタン、左詰め移動、確率ボックス）
-// ① Secret確率（閾値ベース）と ② 種類確率（色分布ベース）を分離表示
-// value のみを使用
+// script.js（表示順・文言修正、Secret≤500、種類確率は整数丸め）
 // ==========================
 
+// 画像データ（valueのみ使用）
 const images = [
   { src: './img/tob.png', value: 25 },
   { src: './img/tralalero.png', value: 50 },
@@ -48,18 +47,18 @@ const images = [
 const gallery = document.getElementById('gallery');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper'); // 5枠
 const totalEl = document.getElementById('total');
-const typeProbEl = document.getElementById('probability');        // ②
-const secretProbEl = document.getElementById('secret-probability'); // ①
+const typeProbEl = document.getElementById('probability');         // 種類確率
+const secretProbEl = document.getElementById('secret-probability'); // Secret確率
 const resetBtn = document.getElementById('reset-btn');
 
-// 状態（5枠固定：画像と色）
+// 状態（5枠固定）
 let selectedImages = [null, null, null, null, null];
 let selectedColors  = [null, null, null, null, null]; // 'Normal' など
 
-// ②の基本確率
+// ② 種類確率の基本値
 const baseProb = { Normal: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
-// ------------- ギャラリー描画（140×150固定） -------------
+// --- ギャラリー（モンスター選択）描画 ---
 images.forEach(imgObj => {
   const img = document.createElement('img');
   img.src = imgObj.src;
@@ -79,19 +78,17 @@ images.forEach(imgObj => {
   gallery.appendChild(img);
 });
 
-// ------------- 選択枠クリックでキャンセル（左詰め移動あり） -------------
+// --- 選択済みの画像をクリックでキャンセル（左詰め） ---
 function removeFromSelected(index){
-  // 左詰め仕様：index の要素を取り除き、末尾に null を足す
   selectedImages.splice(index, 1);
   selectedImages.push(null);
   selectedColors.splice(index, 1);
   selectedColors.push(null);
-
   renderSelected();
   updateAll();
 }
 
-// ------------- リセット（5枠すべてクリア） -------------
+// --- リセット ---
 resetBtn.addEventListener('click', () => {
   selectedImages = [null, null, null, null, null];
   selectedColors  = [null, null, null, null, null];
@@ -99,12 +96,12 @@ resetBtn.addEventListener('click', () => {
   updateAll();
 });
 
-// ------------- 5枠レンダリング -------------
+// --- 5枠の描画 ---
 function renderSelected(){
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
-
     const imgObj = selectedImages[idx];
+
     if (imgObj) {
       const img = document.createElement('img');
       img.src = imgObj.src;
@@ -135,7 +132,6 @@ function renderSelected(){
       wrapper.appendChild(btnContainer);
 
     } else {
-      // 未選択プレースホルダ（CSSの:empty::beforeでも表示されるが、確実に高さ確保）
       const ph = document.createElement('div');
       ph.style.width = '140px';
       ph.style.height = '180px';
@@ -145,20 +141,20 @@ function renderSelected(){
   });
 }
 
-// ------------- 合計 & 確率更新 -------------
+// --- 合計 & 2種類の確率更新 ---
 function updateAll(){
   updateTotal();
   updateSecretProbability(); // ①
   updateTypeProbability();   // ②
 }
 
-// 合計（value合計）
+// 合計値（value合計）
 function updateTotal(){
   const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
   totalEl.textContent = sum;
 }
 
-// ① Secret確率（合計値のしきい値ベース）
+// ① Secret確率（合計値に応じた表示）
 function updateSecretProbability(){
   const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
   if (sum >= 1001) {
@@ -168,11 +164,12 @@ function updateSecretProbability(){
   } else if (sum >= 501) {
     secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
   } else {
-    secretProbEl.innerHTML = '';
+    // ★ 500以下のときの仕様
+    secretProbEl.innerHTML = `<strong>Secret：5%以下</strong>`;
   }
 }
 
-// ② 種類確率（基本＋75%分配、降順ソート表示）
+// ② 種類確率（基本+75%分配、降順、整数表示）
 function updateTypeProbability(){
   const probs = { ...baseProb };
 
@@ -182,11 +179,11 @@ function updateTypeProbability(){
     const img = selectedImages[i];
     const color = selectedColors[i];
     if (!img || !color) continue;
-    colorSums[color] += img.value; // どの色でも value を加算
+    colorSums[color] += img.value;
   }
   const totalColorSum = Object.values(colorSums).reduce((a,b)=>a+b, 0);
 
-  // 75%を分配
+  // 75%分配
   if (totalColorSum > 0) {
     const bonusTotal = 75;
     for (const color in colorSums){
@@ -196,14 +193,17 @@ function updateTypeProbability(){
     }
   }
 
-  // 降順ソートして表示
-  const items = Object.keys(probs).map(k => ({ name: k, prob: probs[k] || 0 }));
-  items.sort((a,b) => b.prob - a.prob);
+  // 降順ソート & 整数（四捨五入）
+  const items = Object.keys(probs)
+    .map(k => ({ name: k, prob: Math.round(probs[k] || 0) }))
+    .sort((a,b) => b.prob - a.prob);
 
-  typeProbEl.innerHTML = items.map(it => `${it.name}: ${it.prob.toFixed(2)}%`).join(' | ');
+  typeProbEl.innerHTML = items
+    .map(it => `${it.name}: ${it.prob}%`)
+    .join(' | ');
 }
 
-// 枠色
+// ボーダー色
 function getButtonColor(type){
   switch(type){
     case 'Normal': return 'black';
@@ -216,6 +216,6 @@ function getButtonColor(type){
   }
 }
 
-// 初期化
+// 初期表示
 renderSelected();
 updateAll();
