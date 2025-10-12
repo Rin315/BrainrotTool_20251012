@@ -1,7 +1,3 @@
-// ==========================
-// script.js（サイズ縮小・reset下端揃え対応版）
-// ==========================
-
 const images = [
   { src: './img/tob.png', value: 25 },
   { src: './img/tralalero.png', value: 50 },
@@ -42,42 +38,40 @@ const images = [
   { src: './img/trenostruzzo.png', value: 300 }
 ];
 
-// DOM
 const gallery = document.getElementById('gallery');
-const selectedWrappers = document.querySelectorAll('.selected-wrapper'); // 5枠
+const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 const totalEl = document.getElementById('total');
-const typeProbEl = document.getElementById('probability');         // 種類確率
-const secretProbEl = document.getElementById('secret-probability'); // Secret確率
+const typeProbEl = document.getElementById('probability');
+const secretProbEl = document.getElementById('secret-probability');
 const resetBtn = document.getElementById('reset-btn');
 
-// 状態（5枠固定）
 let selectedImages = [null, null, null, null, null];
-let selectedColors  = [null, null, null, null, null]; // 'Normal' など
+let selectedColors  = [null, null, null, null, null];
 
-// ② 種類確率の基本値
-const baseProb = { Normal: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
+// 基本確率（Defaultに変更）
+const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
-// --- ギャラリー描画（120×130固定） ---
+// ギャラリー描画
 images.forEach(imgObj => {
   const img = document.createElement('img');
   img.src = imgObj.src;
   img.className = 'gallery-img';
-  img.style.width = '120px';
-  img.style.height = '130px';
+  img.style.width = '110px';
+  img.style.height = '120px';
   img.style.objectFit = 'cover';
   img.style.cursor = 'pointer';
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
-    if (emptyIndex === -1) return; // 空き枠なし
+    if (emptyIndex === -1) return;
     selectedImages[emptyIndex] = { ...imgObj };
-    selectedColors[emptyIndex]  = 'Normal';
+    selectedColors[emptyIndex]  = 'Default';
     renderSelected();
     updateAll();
   });
   gallery.appendChild(img);
 });
 
-// --- 選択済みクリックでキャンセル（左詰め） ---
+// キャンセル
 function removeFromSelected(index){
   selectedImages.splice(index, 1);
   selectedImages.push(null);
@@ -87,7 +81,7 @@ function removeFromSelected(index){
   updateAll();
 }
 
-// --- リセット ---
+// RESET
 resetBtn.addEventListener('click', () => {
   selectedImages = [null, null, null, null, null];
   selectedColors  = [null, null, null, null, null];
@@ -95,28 +89,25 @@ resetBtn.addEventListener('click', () => {
   updateAll();
 });
 
-// --- 5枠描画（120×130固定） ---
+// 描画
 function renderSelected(){
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
     const imgObj = selectedImages[idx];
-
     if (imgObj) {
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      img.style.width = '120px';
-      img.style.height = '130px';
-      img.style.objectFit = 'cover';
-      img.style.cursor = 'pointer';
-      const color = selectedColors[idx] || 'Normal';
+      img.style.width = '110px';
+      img.style.height = '120px';
+      const color = selectedColors[idx] || 'Default';
       img.style.border = `5px solid ${getButtonColor(color)}`;
       img.addEventListener('click', () => removeFromSelected(idx));
       wrapper.appendChild(img);
 
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
-      ['Normal','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
+      ['Default','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
@@ -129,50 +120,49 @@ function renderSelected(){
         btnContainer.appendChild(btn);
       });
       wrapper.appendChild(btnContainer);
-
     } else {
       const ph = document.createElement('div');
-      ph.style.width = '120px';
-      ph.style.height = '160px';
+      ph.style.width = '110px';
+      ph.style.height = '150px';
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
   });
 }
 
-// --- 合計 & 2種類の確率更新 ---
+// 合計・確率更新
 function updateAll(){
   updateTotal();
-  updateSecretProbability(); // ①
-  updateTypeProbability();   // ②
+  updateSecretProbability();
+  updateTypeProbability();
 }
 
-// 合計値（value合計）
+// 合計
 function updateTotal(){
   const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
   totalEl.textContent = sum;
 }
 
-// ① Secret確率（合計値に応じた表示：500以下は「Secret：5%以下」）
+// Secret確率
 function updateSecretProbability(){
   const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
-  if (sum >= 1001) {
-    secretProbEl.innerHTML = `<strong>Secret：100%</strong>`;
-  } else if (sum >= 751) {
-    secretProbEl.innerHTML = `<strong>Secret：75%　BrainrotGod：25%</strong>`;
-  } else if (sum >= 501) {
-    secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
-  } else {
-    secretProbEl.innerHTML = `<strong>Secret：5%以下</strong>`;
-  }
+  if (sum >= 1001) secretProbEl.innerHTML = `<strong>Secret：100%</strong>`;
+  else if (sum >= 751) secretProbEl.innerHTML = `<strong>Secret：75%　BrainrotGod：25%</strong>`;
+  else if (sum >= 501) secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
+  else secretProbEl.innerHTML = `<strong>Secret：5%以下</strong>`;
 }
 
-// ② 種類確率（基本+75%分配、降順、整数丸め表示）
+// 種類確率
 function updateTypeProbability(){
-  const probs = { ...baseProb };
+  // 無選択時は固定値を表示
+  const hasAny = selectedImages.some(img => img);
+  if (!hasAny) {
+    typeProbEl.innerHTML = `Default: 84% | Gold: 10% | Diamond: 5% | Rainbow: 0% | Halloween: 0% | Other: 0%`;
+    return;
+  }
 
-  // 色ごとの value 合計
-  const colorSums = { Normal:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
+  const probs = { ...baseProb };
+  const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
   for (let i = 0; i < selectedImages.length; i++){
     const img = selectedImages[i];
     const color = selectedColors[i];
@@ -180,8 +170,6 @@ function updateTypeProbability(){
     colorSums[color] += img.value;
   }
   const totalColorSum = Object.values(colorSums).reduce((a,b)=>a+b, 0);
-
-  // 75%分配
   if (totalColorSum > 0) {
     const bonusTotal = 75;
     for (const color in colorSums){
@@ -191,20 +179,16 @@ function updateTypeProbability(){
     }
   }
 
-  // 降順ソート & 整数（四捨五入）
   const items = Object.keys(probs)
     .map(k => ({ name: k, prob: Math.round(probs[k] || 0) }))
     .sort((a,b) => b.prob - a.prob);
 
-  typeProbEl.innerHTML = items
-    .map(it => `${it.name}: ${it.prob}%`)
-    .join(' | ');
+  typeProbEl.innerHTML = items.map(it => `${it.name}: ${it.prob}%`).join(' | ');
 }
 
-// ボーダー色
 function getButtonColor(type){
   switch(type){
-    case 'Normal': return 'black';
+    case 'Default': return 'black';
     case 'Gold': return '#ffff99';
     case 'Diamond': return 'cyan';
     case 'Rainbow': return 'pink';
@@ -214,6 +198,5 @@ function getButtonColor(type){
   }
 }
 
-// 初期表示
 renderSelected();
 updateAll();

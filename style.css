@@ -1,4 +1,3 @@
-/* ベース */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   margin: 16px;
@@ -8,36 +7,33 @@ h2 {
   margin: 18px 0 8px;
 }
 
-/* 1) モンスター選択（ギャラリー） */
+/* ギャラリー */
 #gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 140 -> 120 */
-  gap: 6px; /* 8 -> 6 */
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
 }
 .gallery-img {
-  width: 120px;   /* 140 -> 120 */
-  height: 130px;  /* 150 -> 130 */
+  width: 110px;
+  height: 120px;
   object-fit: cover;
   cursor: pointer;
   border: 1px solid #ccc;
 }
 
-/* 2) 選択済み（5枠＋リセット） */
+/* 選択済み */
 #selection-area {
   display: flex;
-  align-items: flex-end; /* resetボタンを5枠下端に揃える */
+  align-items: flex-end;
   gap: 12px;
   margin-bottom: 12px;
 }
-
 #selected-container {
   display: flex;
-  gap: 8px; /* 10 -> 8 */
+  gap: 8px;
   justify-content: center;
   flex-wrap: nowrap;
 }
-
-/* 枠：角は立てる、濃いグレー塗り、常に見える */
 .selected-wrapper {
   display: flex;
   flex-direction: column;
@@ -45,32 +41,27 @@ h2 {
   background-color: #555;
   border-radius: 0;
   padding: 5px;
-  min-width: 144px;  /* 164 -> 144 (画像幅縮小に合わせる) */
-  height: 260px;     /* 280 -> 260 (全体を少し小さく) */
+  min-width: 134px;
+  height: 240px;
   align-items: center;
   justify-content: flex-start;
 }
-
 .selected-wrapper:empty::before {
   content: "";
   display: block;
-  width: 120px;
-  height: 160px; /* 画像130 + 余白 */
+  width: 110px;
+  height: 150px;
   background: #555;
 }
-
-/* 選択画像（強制サイズ） */
 .selected-img {
-  width: 120px;   /* 140 -> 120 */
-  height: 130px;  /* 150 -> 130 */
+  width: 110px;
+  height: 120px;
   object-fit: cover;
   border-width: 5px;
   border-style: solid;
   border-radius: 0;
   cursor: pointer;
 }
-
-/* ボタン群：2列 */
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -78,37 +69,34 @@ h2 {
   width: 100%;
   justify-items: center;
 }
-
-/* ボタン共通（枠幅縮小に合わせてボタン幅も縮める） */
 .button-container button {
-  width: 64px;  /* 74 -> 64 */
-  height: 30px; /* 34 -> 30 */
+  width: 58px;
+  height: 28px;
   border: 1px solid #888;
   cursor: pointer;
 }
-
-button.Normal { background: #fff; color: #000; }
+button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
 button.Rainbow { background: #ffcce5; }
 button.Halloween { background: #ffd1a6; }
 button.Other { background: #ddd; }
 
-/* リセットボタン（赤背景・白太字、5枠の底に揃える） */
+/* RESETボタン */
 #reset-btn {
-  background: #d10000;     /* 赤背景 */
-  color: #fff;             /* 白文字 */
-  font-weight: 800;        /* 太字 */
-  border: none;            /* 赤背景なので枠なし */
+  background: #d10000;
+  color: #fff;
+  font-weight: 900;
+  border: none;
   padding: 8px 14px;
-  height: 40px;            /* 少し小さめに */
-  align-self: flex-end;    /* 5枠の下端に揃える */
+  height: 38px;
+  align-self: flex-end;
   cursor: pointer;
-  text-transform: lowercase;
   border-radius: 4px;
+  letter-spacing: 1px;
 }
 
-/* 3) 確率（パネル） */
+/* 確率 */
 #stats {
   display: flex;
   flex-wrap: wrap;
@@ -116,7 +104,7 @@ button.Other { background: #ddd; }
   margin-bottom: 16px;
 }
 .panel {
-  border: 2px solid #999;   /* 四角で囲う */
+  border: 2px solid #999;
   padding: 10px;
   min-width: 260px;
   background: #fafafa;
@@ -124,6 +112,13 @@ button.Other { background: #ddd; }
 .panel-title {
   font-weight: 700;
   margin-bottom: 6px;
+}
+
+/* 合計値を6桁分くらいの幅に */
+.total-panel {
+  min-width: 120px;
+  max-width: 150px;
+  text-align: center;
 }
 .total-panel #total {
   font-size: 20px;
