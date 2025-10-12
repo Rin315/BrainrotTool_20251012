@@ -139,23 +139,36 @@ function updateAll(){
 }
 
 // 合計
-function updateTotal(){
-  const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
+function updateTotal() {
+  let sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
   totalEl.textContent = sum;
-}
 
-// ① Secret確率（合計による段階表示）
-function updateSecretProbability(){
-  const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
-  if (sum >= 1001) {
-    secretProbEl.innerHTML = `<strong>Secret：100%</strong>`;
-  } else if (sum >= 751) {
-    secretProbEl.innerHTML = `<strong>Secret：75%　BrainrotGod：25%</strong>`;
-  } else if (sum >= 501) {
-    secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
+  // Wait時間の設定
+  let waitText = "";
+  if (sum > 50000) {
+    waitText = "(2h0m later)";
+  } else if (sum > 10000) {
+    waitText = "(1h30m later)";
   } else {
-    secretProbEl.innerHTML = `<strong>Secret：15%以下</strong>`;
+    waitText = "(1h0m later)";
   }
+
+  // Waitテキストを改行して追加表示
+  totalEl.innerHTML = `${sum}<br><span style="font-size: 14px; color: #444;">${waitText}</span>`;
+
+  // Secret確率の表示
+  if(sum >= 1001) {
+    probabilityEl.textContent = "Secret：100%";
+  } else if(sum >= 751) {
+    probabilityEl.textContent = "Secret：75% BrainrotGod：25%";
+  } else if(sum >= 501) {
+    probabilityEl.textContent = "BrainrotGod：60% Secret：40%";
+  } else {
+    probabilityEl.textContent = "Secret：5%以下";
+  }
+
+  // 種類確率の更新（既存の確率計算処理）
+  updateTypeProbability();
 }
 
 // ② 種類確率（基本＋75%分配／降順／色付きバッジ）
