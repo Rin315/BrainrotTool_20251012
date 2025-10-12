@@ -111,7 +111,7 @@ function renderSelected() {
     } else {
       const placeholder = document.createElement('div');
       placeholder.style.width = '140px';
-      placeholder.style.height = '185px';
+      placeholder.style.height = '1200px';
       placeholder.style.backgroundColor = '#555';
       wrapper.appendChild(placeholder);
     }
