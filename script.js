@@ -39,11 +39,12 @@ const images = [
 ];
 // 選択処理
 const gallery = document.getElementById('gallery');
-const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 const totalEl = document.getElementById('total');
 const probabilityEl = document.getElementById('probability');
+const selectedImages = [null, null, null, null, null]; // 5枠
+const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 
-let selectedImages = [];
+
 
 function updateTotal() {
   let sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
@@ -68,47 +69,47 @@ images.forEach((imgObj, idx) => {
   img.addEventListener('click', () => selectImage(imgObj));
   gallery.appendChild(img);
 });
-
-function selectImage(imgObj) {
-  // すでに選択されている場合はキャンセル
-  const index = selectedImages.indexOf(imgObj);
-  if(index > -1) {
-    selectedImages.splice(index,1);
-    renderSelected();
-    updateTotal();
-    return;
+// 上部ギャラリーの画像クリック
+function selectFromGallery(imgObj) {
+  // 空き枠を探して追加
+  for (let i = 0; i < selectedImages.length; i++) {
+    if (!selectedImages[i]) {
+      selectedImages[i] = imgObj;
+      break;
+    }
   }
-
-  // 空いている枠に追加
-  if(selectedImages.length < 5) {
-    selectedImages.push(imgObj);
-    renderSelected();
-    updateTotal();
-  }
+  renderSelected();
 }
 
+// 下部選択枠の画像クリック（キャンセル）
+function removeFromSelected(index) {
+  selectedImages[index] = null;
+  renderSelected();
+}
+
+// 選択枠の描画
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
 
     const imgObj = selectedImages[idx];
 
-    if(imgObj){
-      // 選択されている場合は画像表示
+    if (imgObj) {
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      img.addEventListener('click', ()=> selectImage(imgObj));
+      // 下の選択枠でクリックしたらキャンセル
+      img.addEventListener('click', () => removeFromSelected(idx));
       wrapper.appendChild(img);
 
-      // ボタン作成
+      // ボタン
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'button-container';
       ['Normal','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
-        btn.addEventListener('click', ()=>{
+        btn.addEventListener('click', () => {
           img.style.borderColor = getButtonColor(type);
           updateTotal();
         });
@@ -117,11 +118,10 @@ function renderSelected() {
       wrapper.appendChild(buttonContainer);
 
     } else {
-      // 未選択枠用のダミー要素を追加
+      // 空枠
       const placeholder = document.createElement('div');
       placeholder.style.width = '140px';
-      placeholder.style.height = '180px';
-      // 背景色を枠の色にする
+      placeholder.style.height = '150px';
       placeholder.style.backgroundColor = '#555';
       wrapper.appendChild(placeholder);
     }
