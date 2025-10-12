@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>テストサイト</title>
+  <meta charset="UTF-8" />
+  <title>テストアプリ</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>こんにちは！これはNetlifyのテストです🎉</h1>
-  <p>このページはGitHubから自動でデプロイされています。</p>
+  <h1>テストページ</h1>
+
+  <!-- 画像 -->
+  <img src="https://placekitten.com/300/200" alt="かわいい猫" id="main-image">
+
+  <!-- ボタンたち -->
+  <div id="buttons">
+    <button onclick="showResult('Aが押されました')">ボタンA</button>
+    <button onclick="showResult('Bが押されました')">ボタンB</button>
+    <button onclick="showResult('Cが押されました')">ボタンC</button>
+  </div>
+
+  <!-- 結果表示欄 -->
+  <div id="result">ここに結果が表示されます</div>
+
+  <script src="script.js"></script>
 </body>
 </html>
