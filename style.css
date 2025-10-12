@@ -1,29 +1,50 @@
 /* ギャラリー全体 */
 #gallery {
   display: flex;
-  flex-wrap: wrap; /* 横幅が狭い場合に折り返す */
-  gap: 5px; /* 画像間の間隔 */
+  flex-wrap: wrap;
+  gap: 5px;
   justify-content: center;
   margin-bottom: 20px;
 }
 
 /* ギャラリー画像 */
 #gallery img {
-  width: 18vw; /* 画面幅に応じた幅 */
-  max-width: 120px; /* PCで大きくなりすぎないように */
+  width: 18vw;
+  max-width: 120px;
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 4px;
 }
 
+/* 選択画像枠 */
+#selected-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.selected-wrapper {
+  width: 25vw;
+  max-width: 150px;
+  min-height: 180px;
+  border: 2px dashed #aaa;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px;
+  position: relative;
+}
+
 /* 選択画像 */
 .selected-img {
-  width: 25vw; /* 画面幅に応じて大きめ */
-  max-width: 150px;
-  border-width: 6px; /* 太めの縁 */
+  width: 100%;
+  border-width: 6px;
   border-style: solid;
   border-radius: 6px;
-  margin-bottom: 10px;
+  cursor: pointer;
 }
 
 /* 選択画像のボタン（縦配置） */
@@ -31,7 +52,8 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  width: 100%;
 }
 
 /* 各ボタンのスタイル */
@@ -64,17 +86,8 @@ button.Halloween { background-color: orange; border-color: black; }
 
 /* スマホ向け調整 */
 @media (max-width: 600px) {
-  #gallery img {
-    width: 28vw;
-    max-width: 100px;
-  }
-  .selected-img {
-    width: 40vw;
-    max-width: 140px;
-    border-width: 6px;
-  }
-  button {
-    font-size: 16px;
-    padding: 8px 12px;
-  }
+  #gallery img { width: 28vw; max-width: 100px; }
+  .selected-wrapper { width: 40vw; min-height: 150px; }
+  .selected-img { border-width: 6px; }
+  button { font-size: 16px; padding: 8px 12px; }
 }
