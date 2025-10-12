@@ -37,150 +37,202 @@ const images = [
   { src: './img/secret1.png', value: 3, gold: 3.75, diamond: 4.5, halloween: 30 },
   { src: './img/secret2.png', value: 5, gold: 6.25, diamond: 7.5, halloween: 50 }
 ];
+
+// DOM取得
 const gallery = document.getElementById('gallery');
-const selectedWrappers = document.querySelectorAll('.selected-wrapper');
+const selectedWrappers = document.querySelectorAll('.selected-wrapper'); // 5個の枠
 const totalEl = document.getElementById('total');
 const probabilityEl = document.getElementById('probability');
 
-let selectedImages = [];
-let selectedColors = []; // 選択された色を保持
+// 選択枠（5枠固定）と色状態
+let selectedImages = [null, null, null, null, null]; // 各枠に入る画像オブジェクト（または null）
+let selectedColors = [null, null, null, null, null]; // 同じインデックスで対応する色 (Normal, Gold, ...)
 
-// ギャラリー表示
-images.forEach((imgObj) => {
+// 基本確率（変更された値）
+const baseProb = { Normal: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
+
+// ギャラリー表示（上部）
+images.forEach(imgObj => {
   const img = document.createElement('img');
   img.src = imgObj.src;
   img.className = 'gallery-img';
   img.style.width = '140px';
   img.style.height = '150px';
-  img.addEventListener('click', () => {
-    if(selectedImages.length < 5){
-      selectedImages.push(imgObj);
-      selectedColors.push('Normal'); // デフォルト色
-      renderSelected();
-      updateTotal();
-      updateProbability();
-    }
-  });
+  img.style.objectFit = 'cover';
+  img.addEventListener('click', () => selectFromGallery(imgObj));
   gallery.appendChild(img);
 });
 
-function selectFromSelected(idx){
-  selectedImages.splice(idx, 1);
-  selectedColors.splice(idx, 1);
+// ギャラリーから選択（同じ画像も複数追加可能）
+function selectFromGallery(imgObj) {
+  const emptyIndex = selectedImages.findIndex(v => v === null);
+  if (emptyIndex === -1) return; // 空き枠なし
+  selectedImages[emptyIndex] = { ...imgObj }; // コピーして格納
+  selectedColors[emptyIndex] = 'Normal'; // デフォルト色
   renderSelected();
-  updateTotal();
-  updateProbability();
+  updateTotalAndProb();
 }
 
+// 選択枠クリックでキャンセル（下側の枠をクリックしたとき）
+function removeFromSelected(index) {
+  selectedImages[index] = null;
+  selectedColors[index] = null;
+  renderSelected();
+  updateTotalAndProb();
+}
+
+// 選択枠を再描画（常に5枠表示）
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
+
     const imgObj = selectedImages[idx];
-    if(imgObj){
+    if (imgObj) {
+      // 実際の画像要素（強制サイズ）
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
       img.style.width = '140px';
       img.style.height = '150px';
-      img.style.border = `5px solid ${getButtonColor(selectedColors[idx])}`;
-      img.addEventListener('click', () => selectFromSelected(idx));
+      img.style.objectFit = 'cover';
+      // border 初期色は現在の選択色
+      const color = selectedColors[idx] || 'Normal';
+      img.style.border = `5px solid ${getButtonColor(color)}`;
+      img.addEventListener('click', () => removeFromSelected(idx));
       wrapper.appendChild(img);
 
-      // ボタン
+      // ボタン群（画像の下に配置）
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'button-container';
       ['Normal','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation(); // ボタンクリックで枠のremoveイベントが走らないように
           selectedColors[idx] = type;
-          img.style.borderColor = getButtonColor(type);
-          updateTotal();
-          updateProbability();
+          // 更新（ボーダー反映 + 再計算）
+          img.style.border = `5px solid ${getButtonColor(type)}`;
+          updateTotalAndProb();
         });
         buttonContainer.appendChild(btn);
       });
       wrapper.appendChild(buttonContainer);
+
     } else {
+      // 未選択枠（常に見えるダミー）
       const placeholder = document.createElement('div');
       placeholder.style.width = '140px';
-      placeholder.style.height = '180px';
+      placeholder.style.height = '180px'; // 画像+ボタン領域を意識した高さ
       placeholder.style.backgroundColor = '#555';
       wrapper.appendChild(placeholder);
     }
   });
 }
 
+// 合計値（Normal基準）と確率をまとめて更新
+function updateTotalAndProb() {
+  updateTotal();
+  updateProbability();
+}
+
+// 合計値（Normalの合計）を計算して表示
+function updateTotal() {
+  const sumNormal = selectedImages.reduce((acc, img) => {
+    if (!img) return acc;
+    return acc + (img.value || 0);
+  }, 0);
+  totalEl.textContent = sumNormal;
+}
+
+// 確率計算・表示（75%を分配する仕様、同色ボーナスなし、上書き条件あり）
+// 表示は確率の高い順にソートして出力。合計値閾値によるSecret/BrainrotGodの優先適用あり。
+function updateProbability() {
+  // 1) 基本確率を用意
+  const probs = { ...baseProb }; // shallow copy
+
+  // 2) collect color sums
+  // 色ごとの合計は、その色に応じた該当値を足す
+  const colorSums = { Normal:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
+  for (let i = 0; i < selectedImages.length; i++) {
+    const img = selectedImages[i];
+    const color = selectedColors[i];
+    if (!img || !color) continue;
+    // 色別の「合計値」：Normal/Other/Rainbow -> img.value, Gold -> img.gold, Diamond -> img.diamond, Halloween -> img.halloween
+    if (color === 'Gold') colorSums.Gold += (img.gold !== undefined ? img.gold : img.value || 0);
+    else if (color === 'Diamond') colorSums.Diamond += (img.diamond !== undefined ? img.diamond : img.value || 0);
+    else if (color === 'Halloween') colorSums.Halloween += (img.halloween !== undefined ? img.halloween : img.value || 0);
+    else if (color === 'Rainbow') colorSums.Rainbow += (img.value || 0);
+    else if (color === 'Other') colorSums.Other += (img.value || 0);
+    else colorSums.Normal += (img.value || 0);
+  }
+
+  // total of color sums (denominator for distribution)
+  const totalColorSum = Object.values(colorSums).reduce((a,b) => a+b, 0);
+
+  // 3) Special override by Normal-sum thresholds
+  const sumNormal = selectedImages.reduce((acc, img) => acc + (img ? (img.value||0) : 0), 0);
+
+  let specialText = ''; // will hold the BrainrotGod/Secret message if triggered
+  if (sumNormal >= 1001) {
+    specialText = 'Secret：100%';
+    // When special overrides apply, we set all color probs to 0 (per prior agreement)
+    for (const k in probs) probs[k] = 0;
+  } else if (sumNormal >= 751) {
+    specialText = 'Secret：75% BrainrotGod：25%';
+    for (const k in probs) probs[k] = 0;
+  } else if (sumNormal >= 501) {
+    specialText = 'BrainrotGod：60% Secret：40%';
+    for (const k in probs) probs[k] = 0;
+  } else {
+    specialText = ''; // no special override
+  }
+
+  // 4) If no override, distribute 75% across colors proportionally to colorSums
+  if (specialText === '') {
+    const bonusTotal = 75; // percent to distribute
+    if (totalColorSum > 0) {
+      for (const color in colorSums) {
+        if (colorSums[color] > 0) {
+          const add = (bonusTotal * (colorSums[color] / totalColorSum));
+          probs[color] = (probs[color] || 0) + add;
+        }
+      }
+    }
+    // If totalColorSum is zero (no selection), probs remains baseProb
+  }
+
+  // 5) Prepare display items (sort by prob desc)
+  // We'll show all color probabilities (Normal, Gold, Diamond, Rainbow, Halloween, Other)
+  const displayItems = Object.keys(probs).map(k => ({ name: k, prob: probs[k] || 0 }));
+  // Sort descending by prob
+  displayItems.sort((a,b) => b.prob - a.prob);
+
+  // 6) Render to probabilityEl
+  // First, render color probabilities sorted
+  const colorLines = displayItems.map(item => `${item.name}: ${item.prob.toFixed(2)}%`).join(' | ');
+
+  // Then append specialText (if any) as separate line under or after (per request)
+  if (specialText) {
+    probabilityEl.innerHTML = `${colorLines} <br><strong>${specialText}</strong>`;
+  } else {
+    probabilityEl.innerHTML = `${colorLines}`;
+  }
+}
+
+// ボタン色取得（表示用）
 function getButtonColor(type){
   switch(type){
     case 'Normal': return 'black';
-    case 'Gold': return 'yellow';
+    case 'Gold': return '#ffff99'; // うす黄色
     case 'Diamond': return 'cyan';
     case 'Rainbow': return 'pink';
     case 'Halloween': return 'orange';
     case 'Other': return 'gray';
+    default: return 'black';
   }
 }
 
-// 合計値（Normal基準）
-function updateTotal(){
-  let sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
-  totalEl.textContent = sum;
-  // 確率は別関数で更新
-}
-
-// 確率表示
-function updateProbability(){
-  const baseProb = { Normal:9, Gold:10, Diamond:5, Rainbow:0, Halloween:0, Other:0 };
-  const bonus = { Normal:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
-
-  if(selectedImages.length === 0){
-    probabilityEl.innerHTML = `
-      Normal: ${baseProb.Normal}% | Gold: ${baseProb.Gold}% | Diamond: ${baseProb.Diamond}% | Rainbow: ${baseProb.Rainbow}% | Halloween: ${baseProb.Halloween}% | Other: ${baseProb.Other}%
-    `;
-    return;
-  }
-
-  // 色ごとの合計値計算
-  const colorSums = { Normal:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
-  selectedImages.forEach((img, i) => {
-    const color = selectedColors[i];
-    if(color === 'Normal') colorSums.Normal += img.value;
-    if(color === 'Gold') colorSums.Gold += img.gold;
-    if(color === 'Diamond') colorSums.Diamond += img.diamond;
-    if(color === 'Rainbow') colorSums.Rainbow += img.value;
-    if(color === 'Halloween') colorSums.Halloween += img.halloween;
-    if(color === 'Other') colorSums.Other += img.value;
-  });
-
-  const totalValue = Object.values(colorSums).reduce((a,b)=>a+b,0);
-
-  const uniqueColors = new Set(selectedColors);
-  if(uniqueColors.size === 1 && selectedImages.length === 5){
-    // 全部同色 → その色に+75%
-    const onlyColor = [...uniqueColors][0];
-    bonus[onlyColor] = 75;
-  } else {
-    // 分配ボーナス
-    for(const color in colorSums){
-      if(colorSums[color] > 0){
-        bonus[color] = (75 / totalValue) * colorSums[color];
-      }
-    }
-  }
-
-  const finalProb = {};
-  for(const color in baseProb){
-    finalProb[color] = baseProb[color] + (bonus[color] || 0);
-  }
-
-  probabilityEl.innerHTML = `
-    Normal: ${finalProb.Normal.toFixed(2)}% | 
-    Gold: ${finalProb.Gold.toFixed(2)}% | 
-    Diamond: ${finalProb.Diamond.toFixed(2)}% | 
-    Rainbow: ${finalProb.Rainbow.toFixed(2)}% | 
-    Halloween: ${finalProb.Halloween.toFixed(2)}% | 
-    Other: ${finalProb.Other.toFixed(2)}%
-  `;
-}
+// 初期レンダリング（枠を表示）
+renderSelected();
+updateTotalAndProb();
