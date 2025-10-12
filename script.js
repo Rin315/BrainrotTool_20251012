@@ -33,10 +33,9 @@ const images = [
   { src: './img/chicleteira.png', value: 8000 },
   { src: './img/pad.png', value: 10000 },
   { src: './img/house.png', value: 20000 },
-  { src: './img/brainrot1.png', value: 4 },
-  { src: './img/secret1.png', value: 3 },
-  { src: './img/secret2.png', value: 5 },
-  { src: './img/trenostruzzo.png', value: 300 }
+  { src: './img/brainrot1.png', value: 500 },//不明
+  { src: './img/secret1.png', value: 50000 },//不明
+  { src: './img/secret2.png', value: 50000 },//不明
 ];
 // DOM要素
 const gallery = document.getElementById('gallery');
