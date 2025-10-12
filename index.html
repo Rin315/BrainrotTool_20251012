@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BrainrotTool</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Image Select App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="./style.css" rel="stylesheet" />
 </head>
 <body>
+  <h1>画像セレクト</h1>
 
-<h1>BrainrotTool</h1>
+  <!-- 選択エリア（5枠＋右にリセットボタン） -->
+  <div id="selection-area">
+    <div id="selected-container">
+      <div class="selected-wrapper" data-index="0"></div>
+      <div class="selected-wrapper" data-index="1"></div>
+      <div class="selected-wrapper" data-index="2"></div>
+      <div class="selected-wrapper" data-index="3"></div>
+      <div class="selected-wrapper" data-index="4"></div>
+    </div>
 
-<!-- 画像ギャラリー -->
-<div id="gallery"></div>
-
-<!-- 選択画像枠（5枠） -->
-<div id="selected-container">
-  <div class="selected-wrapper" data-index="0"></div>
-  <div class="selected-wrapper" data-index="1"></div>
-  <div class="selected-wrapper" data-index="2"></div>
-  <div class="selected-wrapper" data-index="3"></div>
-  <div class="selected-wrapper" data-index="4"></div>
-</div>
-
-<!-- 合計値＆確率 -->
-<div id="result-container">
-  <div id="total-container">
-    <span>合計値: </span><span id="total">0</span>
+    <button id="reset-btn" type="button">reset</button>
   </div>
-  <div id="probability-container">
-    <span>確率: </span><span id="probability"></span>
-  </div>
-</div>
 
-<script src="script.js"></script>
+  <!-- 合計と確率 -->
+  <div id="stats">
+    <div class="panel">
+      <div class="panel-title">種類確率</div>
+      <div id="probability"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Secret確率</div>
+      <div id="secret-probability"></div>
+    </div>
+    <div class="panel total-panel">
+      <div class="panel-title">合計値</div>
+      <div id="total">0</div>
+    </div>
+  </div>
+
+  <h2>ギャラリー</h2>
+  <div id="gallery"></div>
+
+  <script src="./script.js"></script>
 </body>
 </html>

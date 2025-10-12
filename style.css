@@ -1,110 +1,129 @@
-/* ギャラリー全体 */
-#gallery {
+/* レイアウト */
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  margin: 16px;
+}
+
+/* 選択エリア：5枠＋右にリセット */
+#selection-area {
   display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  justify-content: center;
-  margin-bottom: 20px;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-#gallery img {
-  width: 18vw;
-  max-width: 120px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 4px;
-}
-
-/* 選択画像枠を横に並べる */
+/* 5枠コンテナ（横並び） */
 #selected-container {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin-bottom: 20px;
+  flex-wrap: nowrap;
 }
+
+/* 各枠：角を立てる、背景濃グレー、常に見える大きさ */
 .selected-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
   background-color: #555;
   border-radius: 0;
   padding: 5px;
-  min-width: 164px;
-  height: 280px; /* 縦幅を275px程度に調整 */
+  min-width: 164px;        /* 指定どおり横幅+4px */
+  height: 280px;           /* 画像＋ボタンが収まる高さ */
   align-items: center;
   justify-content: flex-start;
 }
 
-/* 選択された画像 */
-.selected-wrapper img {
+/* 未選択のプレースホルダ */
+.selected-wrapper:empty::before {
+  content: "";
+  display: block;
   width: 140px;
-  height: 150px; /* 強制サイズ */
-  border-width: 6px;
-  border-style: solid;
-  border-radius: 0; /* 角を立てる */
-  cursor: pointer;
+  height: 180px;           /* 画像150 + 余白 */
+  background: #555;
 }
 
-
-
-/* 選択された画像 */
+/* 選択画像（強制サイズ、角は立てる） */
 .selected-img {
   width: 140px;
-  height: 150px; /* 強制サイズ */
-  border-width: 6px;
+  height: 150px;
+  object-fit: cover;
+  border-width: 5px;
   border-style: solid;
-  border-radius: 0; /* 角を立てる */
+  border-radius: 0;
   cursor: pointer;
 }
 
-/* ボタンの配置 */
+/* ボタン配置：2列 */
 .button-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2列 */
-  gap: 5px;
-  margin-top: 5px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  width: 100%;
+  justify-items: center;
 }
 
-
-/* ボタン共通スタイル */
-button {
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 4px;
-  font-size: 12px;
+/* ボタン共通 */
+.button-container button {
+  width: 74px;
+  height: 34px;
+  border: 1px solid #888;
   cursor: pointer;
-  width: 70px;
-  height: 35px;
-  padding: 0;
+}
+
+/* 各色（背景色指定） */
+button.Normal { background: #fff; color: #000; }
+button.Gold { background: #ffffcc; }
+button.Diamond { background: #ccf5ff; }
+button.Rainbow { background: #ffcce5; }
+button.Halloween { background: #ffd1a6; }
+button.Other { background: #ddd; }
+
+/* リセットボタン（赤枠・右側） */
+#reset-btn {
+  border: 2px solid #d00;
+  color: #d00;
+  background: #fff;
+  padding: 6px 10px;
+  height: 44px;
+  align-self: center;
+  cursor: pointer;
+  text-transform: lowercase;
+  font-weight: 700;
+}
+
+/* ギャラリー（画像を均等に並べる） */
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.gallery-img {
+  width: 140px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+/* 確率や合計値のボックス */
+#stats {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
 }
-
-/* ボタンの背景色 */
-button.Normal { background-color: white; border-color: black; }
-button.Gold { background-color: #ffff99; border-color: black; }
-button.Diamond { background-color: cyan; border-color: black; }
-button.Rainbow { background-color: pink; border-color: black; }
-button.Halloween { background-color: orange; border-color: black; }
-button.Other { background-color: gray; border-color: black; }
-
-/* 合計値＆確率表示 */
-#result-container {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-top: 15px;
-  font-size: 18px;
+.panel {
+  border: 2px solid #999;
+  padding: 10px;
+  min-width: 260px;
+  background: #fafafa;
 }
-
-#total-container, #probability-container {
-  font-weight: bold;
+.panel-title {
+  font-weight: 700;
+  margin-bottom: 6px;
 }
-
-/* スマホ向け */
-@media (max-width: 600px) {
-  #gallery img { width: 28vw; max-width: 100px; }
-  .selected-wrapper { min-width: 120px; }
-  button { width: 60px; height: 30px; font-size: 10px; }
+.total-panel #total {
+  font-size: 20px;
+  font-weight: 700;
 }
