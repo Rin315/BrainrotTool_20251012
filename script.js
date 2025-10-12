@@ -23,7 +23,7 @@ const images = [
   { src: './img/losorcaleritos.png', value: 400 },
   { src: './img/piccione.png', value: 500 },
   { src: './img/pakrah.png', value: 600 },
-  { src: './img/losjob.png', value: 1000 },
+  { src: './img/losjob.png', value: 700 },
   { src: './img/orcalero.png', value: 1000 },
   { src: './img/ketchuru.png', value: 1500 },
   { src: './img/pothotspot.png', value: 2000 },
