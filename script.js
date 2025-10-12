@@ -2,7 +2,6 @@ const gallery = document.getElementById('gallery');
 const selected = document.getElementById('selected');
 const totalDiv = document.getElementById('total');
 
-// 画像と数値を割り当て
 const images = [
   { src: './img/8.png', value: 5 },
   { src: './img/67.png', value: 3 },
@@ -45,10 +44,8 @@ const images = [
   { src: './img/trenostruzzo.png', value: 6 }
 ];
 
-// 選択した画像（最大5つ）
 let selectedImages = [];
 
-// ギャラリーに画像を生成
 images.forEach(imgData => {
   const img = document.createElement('img');
   img.src = imgData.src;
@@ -61,9 +58,7 @@ images.forEach(imgData => {
   gallery.appendChild(img);
 });
 
-// 画像選択処理
 function selectImage(imgData) {
-  // 5枚以上は古いものを削除
   if (selectedImages.length >= 5) {
     selectedImages.shift();
   }
@@ -73,17 +68,47 @@ function selectImage(imgData) {
   calculateTotal();
 }
 
-// 選択画像を表示
 function renderSelected() {
   selected.innerHTML = '';
-  selectedImages.forEach(imgData => {
+  selectedImages.forEach((imgData, index) => {
+    const container = document.createElement('div');
+    container.style.display = 'inline-block';
+    container.style.textAlign = 'center';
+
     const img = document.createElement('img');
     img.src = imgData.src;
-    selected.appendChild(img);
+    img.classList.add('selected-img');
+    container.appendChild(img);
+
+    // ボタンコンテナを作る
+    const btnContainer = document.createElement('div');
+    btnContainer.classList.add('button-container');
+
+    // ボタン情報
+    const buttonInfo = [
+      { name: 'Normal', color: 'black' },
+      { name: 'Gold', color: 'yellow' },
+      { name: 'Diamond', color: 'cyan' },
+      { name: 'Halloween', color: 'orange' }
+    ];
+
+    buttonInfo.forEach(btn => {
+      const button = document.createElement('button');
+      button.textContent = btn.name;
+      button.style.borderColor = btn.color;
+
+      button.addEventListener('click', () => {
+        img.style.borderColor = btn.color;
+      });
+
+      btnContainer.appendChild(button);
+    });
+
+    container.appendChild(btnContainer);
+    selected.appendChild(container);
   });
 }
 
-// 合計値を計算して表示
 function calculateTotal() {
   const sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
   totalDiv.textContent = sum;
