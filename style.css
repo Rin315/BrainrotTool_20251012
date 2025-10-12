@@ -1,16 +1,24 @@
-/* 基本 */
+/* 全体 */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   margin: 16px;
+  background-color: #e6f5e1; /* 薄緑の背景 */
 }
-h2 { margin: 0; }
+
+/* セクションタイトル */
+h2 {
+  margin: 0;
+  font-size: 22px; /* フォント少し大きく */
+}
+
+/* ヘッダー（Monster, Select, Result） */
 .section-header {
   display: flex;
   align-items: center;
   margin: 18px 0 8px;
 }
 
-/* RESETボタンをSelectの左に50px空けて配置 */
+/* RESETボタン（Select見出しの左50px） */
 #reset-btn {
   background: #d10000;
   color: #fff;
@@ -21,7 +29,7 @@ h2 { margin: 0; }
   cursor: pointer;
   border-radius: 4px;
   letter-spacing: 1px;
-  margin-left: 50px; /* ← 追加：Select文字から50px空ける */
+  margin-left: 50px;
 }
 
 /* ギャラリー（Monster） */
@@ -38,7 +46,7 @@ h2 { margin: 0; }
   border: 1px solid #ccc;
 }
 
-/* スマホ：5列固定 */
+/* スマホでは5列 */
 @media (max-width: 600px) {
   #gallery {
     grid-template-columns: repeat(5, 1fr);
@@ -46,7 +54,7 @@ h2 { margin: 0; }
   }
 }
 
-/* 選択枠（Select） */
+/* Selectセクション */
 #selection-area {
   display: flex;
   align-items: flex-end;
@@ -63,7 +71,7 @@ h2 { margin: 0; }
   gap: 6px;
   background-color: #555;
   padding: 5px;
-  min-width: 134px; /* 画像110px + パディング等の余白 */
+  min-width: 134px;
   height: 240px;
   align-items: center;
 }
@@ -83,7 +91,7 @@ h2 { margin: 0; }
   cursor: pointer;
 }
 
-/* 色ボタン（2列） */
+/* ボタンコンテナ */
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -96,7 +104,7 @@ h2 { margin: 0; }
   height: 28px;
   border: 1px solid #888;
   cursor: pointer;
-  font-size: 9px;      /* はみ出し対策 */
+  font-size: 9px;
   text-align: center;
   line-height: 1.1;
   white-space: normal;
@@ -110,13 +118,22 @@ button.Rainbow { background: #ffcce5; }
 button.Halloween { background: #ffd1a6; font-size: 8.5px; }
 button.Other { background: #ddd; }
 
-/* Result（確率/合計） */
+/* 結果表示エリア（Result） */
 #stats {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 16px;
 }
+
+/* Secret確率と種類確率の左右入れ替え */
+#stats .panel:nth-child(1) {
+  order: 2;
+}
+#stats .panel:nth-child(2) {
+  order: 1;
+}
+
 .panel {
   border: 2px solid #999;
   padding: 10px;
@@ -128,7 +145,7 @@ button.Other { background: #ddd; }
   margin-bottom: 6px;
 }
 
-/* 合計は6桁分くらいに */
+/* 合計値（少し狭く） */
 .total-panel {
   min-width: 120px;
   max-width: 150px;
@@ -139,7 +156,7 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
-/* 種類確率：色付きバッジ */
+/* 種類確率のバッジ */
 #probability span {
   display: inline-block;
   padding: 2px 6px;
@@ -155,3 +172,11 @@ button.Other { background: #ddd; }
 #probability .Rainbow { background: #ffcce5; }
 #probability .Halloween { background: #ffd1a6; }
 #probability .Other { background: #ddd; }
+
+/* 注意書き */
+.notice {
+  margin-top: 40px;
+  text-align: center;
+  color: #333;
+  font-size: 13px;
+}

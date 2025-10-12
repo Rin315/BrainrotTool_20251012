@@ -8,13 +8,11 @@
 </head>
 <body>
 
-  <!-- Monster（ギャラリー） -->
   <div class="section-header">
     <h2>Monster</h2>
   </div>
   <div id="gallery"></div>
 
-  <!-- Select（5枠＋RESET） -->
   <div class="section-header">
     <h2>Select</h2>
     <button id="reset-btn" type="button">RESET</button>
@@ -29,23 +27,29 @@
     </div>
   </div>
 
-  <!-- Result（確率・合計） -->
   <div class="section-header">
     <h2>Result</h2>
   </div>
   <div id="stats">
     <div class="panel">
-      <div class="panel-title">種類確率</div>
-      <div id="probability"></div>
-    </div>
-    <div class="panel">
       <div class="panel-title">Secret確率</div>
       <div id="secret-probability"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">種類確率</div>
+      <div id="probability"></div>
     </div>
     <div class="panel total-panel">
       <div class="panel-title">合計値</div>
       <div id="total">0</div>
     </div>
+  </div>
+
+  <!-- 注意書き -->
+  <div class="notice">
+    ・種類確率はゲームの確率とは一部異なる場合があります。
+    ・最新の情報とことなる可能性があります。
+    ・何か間違ってても責任は取りません。
   </div>
 
   <script src="./script.js"></script>
