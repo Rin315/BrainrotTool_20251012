@@ -62,7 +62,6 @@ h2 {
 .nav-links a:hover { text-decoration: underline; }
 
 /* ========= ギャラリー（Monster） ========= */
-/* 画像幅が変わっても崩れないよう minmax に CSS変数を使用 */
 #gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
@@ -108,8 +107,7 @@ h2 {
   content: "";
   display: block;
   width: var(--imgW);
-  /* プレースホルダは画像＋ボタン分の高さを概ね確保 */
-  height: calc(var(--imgH) + 30px);
+  height: calc(var(--imgH) + 30px); /* 画像＋ボタン分の高さ確保 */
   background: #555;
 }
 .selected-img {
@@ -158,7 +156,7 @@ button.Other { background: #ddd; }
   margin-bottom: 16px;
 }
 
-/* Secret確率 と 種類確率 の左右入れ替え（並び制御） */
+/* Secret確率 と 種類確率 の左右入れ替え（PC/タブレット時の並び） */
 #stats .panel:nth-child(1) { order: 2; } /* Secret */
 #stats .panel:nth-child(2) { order: 1; } /* 種類 */
 .panel {
@@ -200,73 +198,73 @@ button.Other { background: #ddd; }
 #probability .Halloween { background: #ffd1a6; }
 #probability .Other { background: #ddd; }
 
-/* 注意書き */
+/* 注意書き（左寄せに変更） */
 .notice {
   margin-top: 40px;
-  text-align: center;
+  text-align: left;   /* ← 左寄せ */
   color: #333;
   font-size: 13px;
 }
 
 /* ========= スマホ最適化 ========= */
-/* 360〜430px幅の端末でも「5列」を維持するには画像を小さくする必要があります。
-   ここでは 5列運用を優先し、画像を 64x70 に縮小します。 */
+/* スマホでは「6列」に増やし、画像をさらに小さくして収める */
 @media (max-width: 600px) {
-  /* 5列に固定しつつ、列幅に画像が収まるよう調整 */
   :root{
-    --imgW: 64px;
-    --imgH: 70px;
-    --slotMinW: 88px; /* 画像幅＋余白少し */
-    --btnW: 50px;
-    --btnH: 24px;
-    --btnFS: 8px;
+    --imgW: 54px;
+    --imgH: 60px;
+    --slotMinW: 80px;
+    --btnW: 46px;
+    --btnH: 22px;
+    --btnFS: 7.5px;
   }
 
-  /* ギャラリー：5列 */
+  /* ギャラリー：6列固定 */
   #gallery {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     justify-items: center;
   }
 
-  /* SelectヘッダーのRESET間隔は少し詰める */
+  /* SelectヘッダーのRESETを少し詰める */
   #reset-btn {
     margin-left: 12px;
-    height: 30px;
+    height: 28px;
     padding: 4px 10px;
     font-size: 12px;
   }
 
   /* 選択枠の高さを少し低めに */
   .selected-wrapper {
-    height: 210px;
+    height: 196px;
   }
   .selected-wrapper:empty::before {
-    height: calc(var(--imgH) + 26px);
+    height: calc(var(--imgH) + 24px);
   }
 
-  /* 結果パネルは縦積みで全幅に */
+  /* ==== Result：縦スクロール削減レイアウト ==== */
+  /* 1段目：種類確率（フル幅） / 2段目：Secret確率 + 合計 を横並び */
   #stats {
-    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
   }
-  .panel {
-    min-width: 0;
-    width: 100%;
-  }
+  /* 並びの定義（種類→Secret＆合計） */
+  #stats .panel:nth-child(2) { order: 1; width: 100%; }        /* 種類（フル幅） */
+  #stats .panel:nth-child(1) { order: 2; flex: 1 1 calc(50% - 6px); } /* Secret（半幅） */
+  #stats .total-panel        { order: 2; flex: 1 1 calc(50% - 6px); }  /* 合計（半幅） */
 
   /* ナビバーのリンクは折返しやすく */
   .nav-links { gap: 12px; }
   .nav-title { font-size: 18px; }
 }
 
-/* ========= さらに小さい端末（超小型）向けの微調整 ========= */
+/* ========= さらに小さい端末（超小型） ========= */
 @media (max-width: 360px) {
   :root{
-    --imgW: 58px;
-    --imgH: 64px;
-    --slotMinW: 82px;
-    --btnW: 46px;
-    --btnH: 22px;
-    --btnFS: 7.5px;
+    --imgW: 50px;
+    --imgH: 56px;
+    --slotMinW: 76px;
+    --btnW: 44px;
+    --btnH: 20px;
+    --btnFS: 7px;
   }
-  .selected-wrapper { height: 198px; }
+  .selected-wrapper { height: 188px; }
 }
