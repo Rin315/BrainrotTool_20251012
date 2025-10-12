@@ -179,11 +179,15 @@ function updateTypeProbability(){
     }
   }
 
-  const items = Object.keys(probs)
-    .map(k => ({ name: k, prob: Math.round(probs[k] || 0) }))
-    .sort((a,b) => b.prob - a.prob);
+// 種類確率の出力部分（最後の方）
+const items = Object.keys(probs)
+  .map(k => ({ name: k, prob: Math.round(probs[k] || 0) }))
+  .sort((a,b) => b.prob - a.prob);
 
-  typeProbEl.innerHTML = items.map(it => `${it.name}: ${it.prob}%`).join(' | ');
+// 色付き表示
+typeProbEl.innerHTML = items.map(it =>
+  `<span class="${it.name}">${it.name}: ${it.prob}%</span>`
+).join('');
 }
 
 function getButtonColor(type){
