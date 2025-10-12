@@ -80,11 +80,10 @@ function renderSelected() {
     img.classList.add('selected-img');
     container.appendChild(img);
 
-    // ボタンコンテナを作る
+    // 縦ボタンコンテナ
     const btnContainer = document.createElement('div');
     btnContainer.classList.add('button-container');
 
-    // ボタン情報
     const buttonInfo = [
       { name: 'Normal', color: 'black' },
       { name: 'Gold', color: 'yellow' },
@@ -95,6 +94,7 @@ function renderSelected() {
     buttonInfo.forEach(btn => {
       const button = document.createElement('button');
       button.textContent = btn.name;
+      button.classList.add(btn.name); // CSSで背景色指定用
       button.style.borderColor = btn.color;
 
       button.addEventListener('click', () => {

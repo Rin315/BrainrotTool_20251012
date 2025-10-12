@@ -1,26 +1,76 @@
-/* ボタンスタイル */
-.button-container {
+body {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 20px;
+}
+
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(10, 80px);
+  gap: 5px; /* 画像間を5px空ける */
+  justify-content: center;
+}
+
+#gallery img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.2s;
+}
+
+#gallery img:hover {
+  border: 2px solid #007BFF;
+}
+
+#selected {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 5px;
+  gap: 20px;
+}
+
+.selected-img {
+  border: 5px solid #007BFF; /* 縁を太く */
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+/* ボタンの縦配置 */
+.button-container {
+  display: flex;
+  flex-direction: column; /* 横ではなく縦に */
+  gap: 5px;
+  margin-top: 10px;
 }
 
 .button-container button {
   padding: 5px 10px;
   border: 2px solid black;
-  background-color: white;
   cursor: pointer;
   font-weight: bold;
-  flex: 1; /* 横長にする */
   transition: border 0.2s, color 0.2s;
 }
 
-.button-container button:hover {
-  opacity: 0.8;
+/* Normal以外のボタンに背景色を追加 */
+.button-container button.Normal {
+  background-color: white;
+  color: black;
 }
-
-/* 選択画像に縁を付けるクラス */
-.selected-img {
-  border: 2px solid #007BFF;
+.button-container button.Gold {
+  background-color: yellow;
+  color: black;
+  border-color: yellow;
+}
+.button-container button.Diamond {
+  background-color: cyan;
+  color: black;
+  border-color: cyan;
+}
+.button-container button.Halloween {
+  background-color: orange;
+  color: black;
+  border-color: orange;
 }
