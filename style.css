@@ -109,6 +109,23 @@ h2 {
   line-height: 1.1;
   white-space: normal;
 }
+/* モバイルでもボタンの文字色を黒固定に */
+.button-container button {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important; /* iOS Safari対策 */
+}
+/* ギャラリー画像クリック時に一瞬暗く見せる */
+.gallery-img:active {
+  filter: brightness(60%);
+  transition: filter 0.1s ease;
+}
+
+/* 選択枠内の画像クリック時も暗く */
+.selected-img:active {
+  filter: brightness(60%);
+  transition: filter 0.1s ease;
+}
+
 
 /* ボタン配色 */
 button.Default { background: #fff; color: #000; }
