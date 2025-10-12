@@ -16,63 +16,64 @@
   border-radius: 4px;
 }
 
-/* 選択画像枠を縦に並べる */
+/* 選択画像枠を横に並べる */
 #selected-container {
   display: flex;
-  flex-direction: column; /* 縦に並べる */
   gap: 10px;
-  align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
 .selected-wrapper {
-  display: flex; /* 画像とボタンを横並びに */
-  gap: 10px;
-  background-color: #555;
+  display: flex;
+  flex-direction: column; /* 画像とボタン縦配置 */
+  gap: 5px;
+  background-color: #555; /* 濃いめの灰色 */
   border-radius: 6px;
   padding: 5px;
-  align-items: flex-start;
-  min-height: 180px;
+  min-width: 160px;
+  align-items: center;
 }
 
 /* 選択画像 */
 .selected-img {
-  width: 150px;
+  width: 100%;
   border-width: 6px;
   border-style: solid;
   border-radius: 6px;
   cursor: pointer;
 }
 
-/* ボタン配置（画像右側） */
+/* ボタン配置（画像下、2列3行） */
 .button-container {
   display: grid;
-  grid-template-columns: repeat(2, 60px); /* 2列 */
-  grid-template-rows: repeat(2, 60px);    /* 2行 */
+  grid-template-columns: repeat(2, 70px);
+  grid-template-rows: repeat(3, 35px);
   gap: 5px;
 }
 
-/* 各ボタン共通 */
+/* ボタン共通スタイル */
 button {
-  cursor: pointer;
   border-width: 2px;
   border-style: solid;
   border-radius: 4px;
-  font-size: 14px;
-  width: 60px;
-  height: 60px;
+  font-size: 12px;
+  cursor: pointer;
+  width: 70px;
+  height: 35px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 背景色付きボタン */
-button.Normal { border-color: black; background-color: white; }
-button.Gold { background-color: yellow; border-color: black; }
+/* ボタンの背景色 */
+button.Normal { background-color: white; border-color: black; }
+button.Gold { background-color: #ffff99; border-color: black; }
 button.Diamond { background-color: cyan; border-color: black; }
+button.Rainbow { background-color: pink; border-color: black; }
 button.Halloween { background-color: orange; border-color: black; }
-
+button.Other { background-color: gray; border-color: black; }
 
 /* 合計値＆確率表示 */
 #result-container {
@@ -87,10 +88,9 @@ button.Halloween { background-color: orange; border-color: black; }
   font-weight: bold;
 }
 
-/* スマホ向け調整 */
+/* スマホ向け */
 @media (max-width: 600px) {
   #gallery img { width: 28vw; max-width: 100px; }
-  .selected-wrapper { width: 40vw; min-height: 150px; }
-  .selected-img { border-width: 6px; }
-  button { font-size: 16px; padding: 8px 12px; }
+  .selected-wrapper { min-width: 120px; }
+  button { width: 60px; height: 30px; font-size: 10px; }
 }
