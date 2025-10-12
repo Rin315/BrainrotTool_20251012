@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>画像クリックで計算</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrainrotTool</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>画像ギャラリー</h1>
 
-  <!-- 画像グリッド -->
-  <div id="gallery"></div>
+<h1>BrainrotTool</h1>
 
-  <h2>選択した画像</h2>
-  <div id="selected"></div>
+<!-- 画像ギャラリー -->
+<div id="gallery"></div>
 
-  <h2>合計値</h2>
-  <div id="total">0</div>
+<!-- 選択画像 -->
+<div id="selected-container"></div>
 
-  <script src="script.js"></script>
+<!-- 合計値＆確率 -->
+<div id="result-container">
+  <div id="total-container">
+    <span>合計値: </span><span id="total">0</span>
+  </div>
+  <div id="probability-container">
+    <span>確率: </span><span id="probability"></span>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

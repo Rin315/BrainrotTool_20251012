@@ -1,76 +1,80 @@
-body {
-  font-family: sans-serif;
-  text-align: center;
-  margin: 20px;
-}
-
+/* ギャラリー全体 */
 #gallery {
-  display: grid;
-  grid-template-columns: repeat(10, 80px);
-  gap: 5px; /* 画像間を5px空ける */
+  display: flex;
+  flex-wrap: wrap; /* 横幅が狭い場合に折り返す */
+  gap: 5px; /* 画像間の間隔 */
   justify-content: center;
+  margin-bottom: 20px;
 }
 
+/* ギャラリー画像 */
 #gallery img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  width: 18vw; /* 画面幅に応じた幅 */
+  max-width: 120px; /* PCで大きくなりすぎないように */
   cursor: pointer;
   border: 2px solid transparent;
-  transition: border 0.2s;
+  border-radius: 4px;
 }
 
-#gallery img:hover {
-  border: 2px solid #007BFF;
-}
-
-#selected {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
+/* 選択画像 */
 .selected-img {
-  border: 5px solid #007BFF; /* 縁を太く */
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  width: 25vw; /* 画面幅に応じて大きめ */
+  max-width: 150px;
+  border-width: 6px; /* 太めの縁 */
+  border-style: solid;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
 
-/* ボタンの縦配置 */
+/* 選択画像のボタン（縦配置） */
 .button-container {
   display: flex;
-  flex-direction: column; /* 横ではなく縦に */
+  flex-direction: column;
   gap: 5px;
-  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
-.button-container button {
-  padding: 5px 10px;
-  border: 2px solid black;
+/* 各ボタンのスタイル */
+button {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-width: 2px;
+  border-style: solid;
   cursor: pointer;
-  font-weight: bold;
-  transition: border 0.2s, color 0.2s;
+  border-radius: 4px;
 }
 
-/* Normal以外のボタンに背景色を追加 */
-.button-container button.Normal {
-  background-color: white;
-  color: black;
+/* 背景色付きボタン */
+button.Gold { background-color: yellow; border-color: black; }
+button.Diamond { background-color: cyan; border-color: black; }
+button.Halloween { background-color: orange; border-color: black; }
+
+/* 合計値＆確率表示 */
+#result-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 15px;
+  font-size: 18px;
 }
-.button-container button.Gold {
-  background-color: yellow;
-  color: black;
-  border-color: yellow;
+
+#total-container, #probability-container {
+  font-weight: bold;
 }
-.button-container button.Diamond {
-  background-color: cyan;
-  color: black;
-  border-color: cyan;
-}
-.button-container button.Halloween {
-  background-color: orange;
-  color: black;
-  border-color: orange;
+
+/* スマホ向け調整 */
+@media (max-width: 600px) {
+  #gallery img {
+    width: 28vw;
+    max-width: 100px;
+  }
+  .selected-img {
+    width: 40vw;
+    max-width: 140px;
+    border-width: 6px;
+  }
+  button {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
 }
