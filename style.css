@@ -21,6 +21,14 @@ h2 {
   border: 1px solid #ccc;
 }
 
+/* スマホで5列表示 */
+@media (max-width: 600px) {
+  #gallery {
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+  }
+}
+
 /* 選択済み */
 #selection-area {
   display: flex;
@@ -74,7 +82,14 @@ h2 {
   height: 28px;
   border: 1px solid #888;
   cursor: pointer;
+  font-size: 11px;         /* ⬅ フォントサイズ小さめ */
+  text-align: center;      /* ⬅ 中央揃え */
+  line-height: 1.2;        /* ⬅ 行間を狭めてはみ出し防止 */
+  white-space: normal;     /* ⬅ 折り返し可 */
+  word-break: keep-all;
 }
+
+/* ボタン色 */
 button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
