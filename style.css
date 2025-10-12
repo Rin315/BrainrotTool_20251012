@@ -23,7 +23,6 @@
   margin-bottom: 20px;
 }
 
-/* 5つの枠を常に表示、角を立て、幅を4px大きく */
 .selected-wrapper {
   display: flex;
   flex-direction: column; /* 画像とボタン縦配置 */
@@ -31,9 +30,20 @@
   background-color: #555; /* 濃いめの灰色 */
   border-radius: 0; /* 角を立てる */
   padding: 5px;
-  min-width: 164px; /* 元160px → +4px */
+  min-width: 164px; /* 横幅を4px大きく */
+  min-height: 180px; /* 空でも高さを確保 */
   align-items: center;
 }
+
+/* 選択されていない状態の枠に目印 */
+.selected-wrapper::before {
+  content: '';
+  display: block;
+  width: 140px;
+  height: 150px; /* 画像と同じサイズ */
+  background-color: #555; /* 枠の色と同じ */
+}
+
 
 /* 選択された画像 */
 .selected-img {
