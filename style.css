@@ -16,60 +16,63 @@
   border-radius: 4px;
 }
 
-/* 選択画像枠 */
+/* 選択画像枠を縦に並べる */
 #selected-container {
   display: flex;
+  flex-direction: column; /* 縦に並べる */
   gap: 10px;
-  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .selected-wrapper {
-  width: 25vw;
-  max-width: 150px;
-  min-height: 180px;
-  background-color: #555; /* 濃いめの灰色 */
+  display: flex; /* 画像とボタンを横並びに */
+  gap: 10px;
+  background-color: #555;
   border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   padding: 5px;
-  position: relative;
+  align-items: flex-start;
+  min-height: 180px;
 }
 
 /* 選択画像 */
 .selected-img {
-  width: 100%;
+  width: 150px;
   border-width: 6px;
   border-style: solid;
   border-radius: 6px;
   cursor: pointer;
 }
 
-/* 選択画像のボタン（縦配置） */
+/* ボタン配置（画像右側） */
 .button-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 60px); /* 2列 */
+  grid-template-rows: repeat(2, 60px);    /* 2行 */
   gap: 5px;
-  margin-top: 5px;
-  width: 100%;
 }
 
-/* 各ボタンのスタイル */
+/* 各ボタン共通 */
 button {
-  padding: 6px 10px;
-  font-size: 14px;
+  cursor: pointer;
   border-width: 2px;
   border-style: solid;
-  cursor: pointer;
   border-radius: 4px;
+  font-size: 14px;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 背景色付きボタン */
+button.Normal { border-color: black; background-color: white; }
 button.Gold { background-color: yellow; border-color: black; }
 button.Diamond { background-color: cyan; border-color: black; }
 button.Halloween { background-color: orange; border-color: black; }
+
 
 /* 合計値＆確率表示 */
 #result-container {
