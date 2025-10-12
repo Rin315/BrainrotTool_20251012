@@ -28,7 +28,7 @@
   width: 25vw;
   max-width: 150px;
   min-height: 180px;
-  border: 2px dashed #aaa;
+  background-color: #555; /* 濃いめの灰色 */
   border-radius: 6px;
   display: flex;
   flex-direction: column;

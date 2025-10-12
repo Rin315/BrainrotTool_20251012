@@ -1,3 +1,4 @@
+// 画像データ
 const images = [
   { src: './img/tob.png', value: 25, gold: 31.25, diamond: 37.5, halloween: 250 },
   { src: './img/tralalero.png', value: 50, gold: 62.5, diamond: 75, halloween: 500 },
@@ -18,16 +19,31 @@ const images = [
   { src: './img/iipiccione.png', value: 210, gold: 262.5, diamond: 315, halloween: 2100 },
   { src: './img/iimastodontico.png', value: 220, gold: 275, diamond: 330, halloween: 2200 },
   { src: './img/jobjobjob.png', value: 220, gold: 275, diamond: 330, halloween: 2200 },
-  { src: './img/ketchuru.png', value: 1500, gold: 1875, diamond: 2250, halloween: 15000 }
+  { src: './img/ketchuru.png', value: 1500, gold: 1875, diamond: 2250, halloween: 15000 },
+  { src: './img/losorcaleritos.png', value: 400, gold: 500, diamond: 600, halloween: 4000 },
+  { src: './img/piccione.png', value: 500, gold: 625, diamond: 750, halloween: 5000 },
+  { src: './img/pakrah.png', value: 600, gold: 750, diamond: 900, halloween: 6000 },
+  { src: './img/pothotspot.png', value: 2000, gold: 2500, diamond: 3000, halloween: 20000 },
+  { src: './img/nomyhotspot.png', value: 2500, gold: 3125, diamond: 3750, halloween: 25000 },
+  { src: './img/garamarama.png', value: 3000, gold: 3750, diamond: 4500, halloween: 30000 },
+  { src: './img/iisacro.png', value: 4000, gold: 5000, diamond: 6000, halloween: 40000 },
+  { src: './img/losjob.png', value: 1000, gold: 1250, diamond: 1500, halloween: 10000 }, // 不明
+  { src: './img/orcalero.png', value: 1000, gold: 1250, diamond: 1500, halloween: 10000 },
+  { src: './img/chicleteira.png', value: 8000, gold: 10000, diamond: 12000, halloween: 80000 },
+  { src: './img/pad.png', value: 10000, gold: 12500, diamond: 15000, halloween: 100000 },
+  { src: './img/house.png', value: 20000, gold: 25000, diamond: 30000, halloween: 200000 },
+  { src: './img/8.png', value: 5, gold: 6.25, diamond: 7.5, halloween: 50 }, // 不明
+  { src: './img/brainrot1.png', value: 4, gold: 5, diamond: 6, halloween: 40 }, // 不明
+  { src: './img/secret1.png', value: 3, gold: 3.75, diamond: 4.5, halloween: 30 }, // 不明
+  { src: './img/secret2.png', value: 5, gold: 6.25, diamond: 7.5, halloween: 50 }  // 不明
 ];
 
-// DOM取得
 const gallery = document.getElementById('gallery');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 const totalDiv = document.getElementById('total');
-let selectedImages = [];
+let selectedImages = new Array(selectedWrappers.length).fill(null);
 
-// ギャラリー生成
+// ギャラリー表示
 images.forEach(img => {
   const imageElement = document.createElement('img');
   imageElement.src = img.src;
@@ -37,48 +53,48 @@ images.forEach(img => {
 });
 
 // 画像選択
-function selectImage(img) {
-  if (selectedImages.find(s => s.img.src === img.src)) return; // 重複禁止
-  const emptyIndex = Array.from(selectedWrappers).findIndex(w => w.childElementCount === 0);
-  if (emptyIndex === -1) return; // 5枚以上は選択不可
+function selectImage(img){
+  if(selectedImages.find(s=>s && s.img.src===img.src)) return;
+
+  const emptyIndex = selectedImages.findIndex(s => s === null);
+  if(emptyIndex === -1) return; // 空き枠なし
 
   const wrapper = selectedWrappers[emptyIndex];
+  wrapper.innerHTML = '';
 
   const selectedImg = document.createElement('img');
   selectedImg.src = img.src;
   selectedImg.classList.add('selected-img');
-  selectedImg.dataset.index = emptyIndex;
-  selectedImg.addEventListener('click', () => removeImage(emptyIndex));
+  selectedImg.addEventListener('click', ()=> removeImage(emptyIndex));
   wrapper.appendChild(selectedImg);
 
   const btnContainer = document.createElement('div');
   btnContainer.classList.add('button-container');
-  ['Normal','Gold','Diamond','Halloween'].forEach(type => {
+  ['Normal','Gold','Diamond','Halloween'].forEach(type=>{
     const btn = document.createElement('button');
     btn.textContent = type;
     btn.classList.add(type);
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', ()=>{
       selectedImg.style.borderColor = getBorderColor(type);
       selectedImages[emptyIndex].currentType = type;
       updateTotal();
     });
     btnContainer.appendChild(btn);
   });
-
   wrapper.appendChild(btnContainer);
 
-  selectedImages[emptyIndex] = { ...img, currentType:'Normal', img: selectedImg };
+  selectedImages[emptyIndex] = { ...img, currentType:'Normal', img:selectedImg };
   updateTotal();
 }
 
 // 画像解除
 function removeImage(index){
-  const wrapper = selectedWrappers[index];
-  wrapper.innerHTML = '';
   selectedImages[index] = null;
+  selectedWrappers[index].innerHTML = '';
   updateTotal();
 }
 
+// 縁色取得
 function getBorderColor(type){
   switch(type){
     case 'Normal': return 'black';
@@ -88,13 +104,12 @@ function getBorderColor(type){
   }
 }
 
-// 合計値・確率計算
+// 合計値＆確率
 function updateTotal(){
   let sum = selectedImages.reduce((acc,img)=>{
-    if(img) return acc + img.value; // Normalの合計
+    if(img) return acc + img.value;
     return acc;
   },0);
-
   totalDiv.textContent = sum;
 
   const probDiv = document.getElementById('probability');
