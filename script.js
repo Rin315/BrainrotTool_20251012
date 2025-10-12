@@ -120,7 +120,7 @@ function renderSelected() {
       // 未選択枠用のダミー要素を追加
       const placeholder = document.createElement('div');
       placeholder.style.width = '140px';
-      placeholder.style.height = '150px';
+      placeholder.style.height = '180px';
       // 背景色を枠の色にする
       placeholder.style.backgroundColor = '#555';
       wrapper.appendChild(placeholder);
