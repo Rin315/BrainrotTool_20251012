@@ -1,52 +1,38 @@
-/* 全体 */
+/* ========= ベース設定 ========= */
+:root{
+  /* PC/タブレット既定の画像サイズ */
+  --imgW: 110px;
+  --imgH: 120px;
+
+  /* 選択枠の最低幅（画像幅＋余白ぶん） */
+  --slotMinW: 134px;
+
+  /* ボタンサイズ */
+  --btnW: 58px;
+  --btnH: 28px;
+  --btnFS: 9px;
+}
+
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   margin: 16px;
   background-color: #e6f5e1; /* 薄緑の背景 */
 }
-/* タイトルバー */
-.navbar {
-  background-color: #2f4f4f;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  font-family: "Arial", sans-serif;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-.nav-title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-  font-weight: 500;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
 
 /* セクションタイトル */
 h2 {
   margin: 0;
-  font-size: 30px; /* フォント少し大きく */
+  font-size: 22px; /* 少し大きく */
 }
 
-/* ヘッダー（Monster, Select, Result） */
+/* ヘッダー（Monster / Select / Result） */
 .section-header {
   display: flex;
   align-items: center;
   margin: 18px 0 8px;
 }
 
-/* RESETボタン（Select見出しの左50px） */
+/* RESETボタン（Select 見出しの左に50px空けて配置） */
 #reset-btn {
   background: #d10000;
   color: #fff;
@@ -60,29 +46,44 @@ h2 {
   margin-left: 50px;
 }
 
-/* ギャラリー（Monster） */
+/* ========= ナビバー（タイトルバー） ========= */
+.navbar {
+  background-color: #2f4f4f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.nav-title { font-size: 20px; font-weight: bold; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
+.nav-links a { color: white; text-decoration: none; font-weight: 500; }
+.nav-links a:hover { text-decoration: underline; }
+
+/* ========= ギャラリー（Monster） ========= */
+/* 画像幅が変わっても崩れないよう minmax に CSS変数を使用 */
 #gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
   gap: 6px;
 }
 .gallery-img {
-  width: 110px;
-  height: 120px;
+  width: var(--imgW);
+  height: var(--imgH);
   object-fit: cover;
   cursor: pointer;
   border: 1px solid #ccc;
 }
 
-/* スマホでは5列 */
-@media (max-width: 600px) {
-  #gallery {
-    grid-template-columns: repeat(5, 1fr);
-    justify-items: center;
-  }
+/* クリックフラッシュ（押した感） */
+.gallery-img:active,
+.selected-img:active {
+  filter: brightness(60%);
+  transition: filter 0.1s ease;
 }
 
-/* Selectセクション */
+/* ========= 選択済み（Select） ========= */
 #selection-area {
   display: flex;
   align-items: flex-end;
@@ -99,27 +100,28 @@ h2 {
   gap: 6px;
   background-color: #555;
   padding: 5px;
-  min-width: 134px;
+  min-width: var(--slotMinW);
   height: 240px;
   align-items: center;
 }
 .selected-wrapper:empty::before {
   content: "";
   display: block;
-  width: 110px;
-  height: 150px;
+  width: var(--imgW);
+  /* プレースホルダは画像＋ボタン分の高さを概ね確保 */
+  height: calc(var(--imgH) + 30px);
   background: #555;
 }
 .selected-img {
-  width: 110px;
-  height: 120px;
+  width: var(--imgW);
+  height: var(--imgH);
   object-fit: cover;
   border-width: 5px;
   border-style: solid;
   cursor: pointer;
 }
 
-/* ボタンコンテナ */
+/* ========= ボタン（2列） ========= */
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -128,42 +130,27 @@ h2 {
   justify-items: center;
 }
 .button-container button {
-  width: 58px;
-  height: 28px;
+  width: var(--btnW);
+  height: var(--btnH);
   border: 1px solid #888;
   cursor: pointer;
-  font-size: 9px;
+  font-size: var(--btnFS);
   text-align: center;
   line-height: 1.1;
   white-space: normal;
-}
-/* モバイルでもボタンの文字色を黒固定に */
-.button-container button {
   color: #000 !important;
   -webkit-text-fill-color: #000 !important; /* iOS Safari対策 */
 }
-/* ギャラリー画像クリック時に一瞬暗く見せる */
-.gallery-img:active {
-  filter: brightness(60%);
-  transition: filter 0.1s ease;
-}
 
-/* 選択枠内の画像クリック時も暗く */
-.selected-img:active {
-  filter: brightness(60%);
-  transition: filter 0.1s ease;
-}
-
-
-/* ボタン配色 */
+/* ボタン色 */
 button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
 button.Rainbow { background: #ffcce5; }
-button.Halloween { background: #ffd1a6; font-size: 8.5px; }
+button.Halloween { background: #ffd1a6; font-size: calc(var(--btnFS) - 0.5px); }
 button.Other { background: #ddd; }
 
-/* 結果表示エリア（Result） */
+/* ========= 結果表示（Result） ========= */
 #stats {
   display: flex;
   flex-wrap: wrap;
@@ -171,14 +158,9 @@ button.Other { background: #ddd; }
   margin-bottom: 16px;
 }
 
-/* Secret確率と種類確率の左右入れ替え */
-#stats .panel:nth-child(1) {
-  order: 2;
-}
-#stats .panel:nth-child(2) {
-  order: 1;
-}
-
+/* Secret確率 と 種類確率 の左右入れ替え（並び制御） */
+#stats .panel:nth-child(1) { order: 2; } /* Secret */
+#stats .panel:nth-child(2) { order: 1; } /* 種類 */
 .panel {
   border: 2px solid #999;
   padding: 10px;
@@ -190,7 +172,7 @@ button.Other { background: #ddd; }
   margin-bottom: 6px;
 }
 
-/* 合計値（少し狭く） */
+/* 合計（6桁幅くらい） */
 .total-panel {
   min-width: 120px;
   max-width: 150px;
@@ -201,7 +183,7 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
-/* 種類確率のバッジ */
+/* 種類確率：色付きバッジ */
 #probability span {
   display: inline-block;
   padding: 2px 6px;
@@ -221,7 +203,70 @@ button.Other { background: #ddd; }
 /* 注意書き */
 .notice {
   margin-top: 40px;
-  text-align: left;
+  text-align: center;
   color: #333;
-  font-size: 18px;
+  font-size: 13px;
+}
+
+/* ========= スマホ最適化 ========= */
+/* 360〜430px幅の端末でも「5列」を維持するには画像を小さくする必要があります。
+   ここでは 5列運用を優先し、画像を 64x70 に縮小します。 */
+@media (max-width: 600px) {
+  /* 5列に固定しつつ、列幅に画像が収まるよう調整 */
+  :root{
+    --imgW: 64px;
+    --imgH: 70px;
+    --slotMinW: 88px; /* 画像幅＋余白少し */
+    --btnW: 50px;
+    --btnH: 24px;
+    --btnFS: 8px;
+  }
+
+  /* ギャラリー：5列 */
+  #gallery {
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+  }
+
+  /* SelectヘッダーのRESET間隔は少し詰める */
+  #reset-btn {
+    margin-left: 12px;
+    height: 30px;
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  /* 選択枠の高さを少し低めに */
+  .selected-wrapper {
+    height: 210px;
+  }
+  .selected-wrapper:empty::before {
+    height: calc(var(--imgH) + 26px);
+  }
+
+  /* 結果パネルは縦積みで全幅に */
+  #stats {
+    flex-direction: column;
+  }
+  .panel {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* ナビバーのリンクは折返しやすく */
+  .nav-links { gap: 12px; }
+  .nav-title { font-size: 18px; }
+}
+
+/* ========= さらに小さい端末（超小型）向けの微調整 ========= */
+@media (max-width: 360px) {
+  :root{
+    --imgW: 58px;
+    --imgH: 64px;
+    --slotMinW: 82px;
+    --btnW: 46px;
+    --btnH: 22px;
+    --btnFS: 7.5px;
+  }
+  .selected-wrapper { height: 198px; }
 }
