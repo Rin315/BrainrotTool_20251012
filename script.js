@@ -158,14 +158,14 @@ function updateProbability(){
 
   const uniqueColors = new Set(selectedColors);
   if(uniqueColors.size === 1 && selectedImages.length === 5){
-    // 全部同色 → その色に+50%
+    // 全部同色 → その色に+75%
     const onlyColor = [...uniqueColors][0];
-    bonus[onlyColor] = 50;
+    bonus[onlyColor] = 75;
   } else {
     // 分配ボーナス
     for(const color in colorSums){
       if(colorSums[color] > 0){
-        bonus[color] = (50 / totalValue) * colorSums[color];
+        bonus[color] = (75 / totalValue) * colorSums[color];
       }
     }
   }
