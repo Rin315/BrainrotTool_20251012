@@ -2,16 +2,21 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>モンスター選択アプリ</title>
+  <title>Monster Select Tool</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="./style.css" rel="stylesheet" />
 </head>
 <body>
 
-  <h2>Monster</h2>
+  <div class="section-header">
+    <h2>Monster</h2>
+  </div>
   <div id="gallery"></div>
 
-  <h2>Select</h2>
+  <div class="section-header">
+    <h2>Select</h2>
+    <button id="reset-btn" type="button">RESET</button>
+  </div>
   <div id="selection-area">
     <div id="selected-container">
       <div class="selected-wrapper" data-index="0"></div>
@@ -20,10 +25,11 @@
       <div class="selected-wrapper" data-index="3"></div>
       <div class="selected-wrapper" data-index="4"></div>
     </div>
-    <button id="reset-btn" type="button">RESET</button>
   </div>
 
-  <h2>Result</h2>
+  <div class="section-header">
+    <h2>Result</h2>
+  </div>
   <div id="stats">
     <div class="panel">
       <div class="panel-title">種類確率</div>
