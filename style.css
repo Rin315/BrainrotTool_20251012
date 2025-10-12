@@ -4,27 +4,7 @@ body {
 }
 
 h2 {
-  margin: 0;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin: 18px 0 8px;
-}
-
-/* RESETボタン */
-#reset-btn {
-  background: #d10000;
-  color: #fff;
-  font-weight: 900;
-  border: none;
-  padding: 6px 12px;
-  height: 32px;
-  cursor: pointer;
-  border-radius: 4px;
-  letter-spacing: 1px;
 }
 
 /* ギャラリー */
@@ -53,22 +33,26 @@ h2 {
 #selection-area {
   display: flex;
   align-items: flex-end;
+  gap: 12px;
   margin-bottom: 12px;
 }
 #selected-container {
   display: flex;
   gap: 8px;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 .selected-wrapper {
   display: flex;
   flex-direction: column;
   gap: 6px;
   background-color: #555;
+  border-radius: 0;
   padding: 5px;
   min-width: 134px;
   height: 240px;
   align-items: center;
+  justify-content: flex-start;
 }
 .selected-wrapper:empty::before {
   content: "";
@@ -83,6 +67,7 @@ h2 {
   object-fit: cover;
   border-width: 5px;
   border-style: solid;
+  border-radius: 0;
   cursor: pointer;
 }
 .button-container {
@@ -97,10 +82,11 @@ h2 {
   height: 28px;
   border: 1px solid #888;
   cursor: pointer;
-  font-size: 9px;
+  font-size: 9.5px;        /* ← さらに小さく */
   text-align: center;
-  line-height: 1.1;
+  line-height: 1.1;        /* ← 行間を詰めて高さに収まるように */
   white-space: normal;
+  word-break: keep-all;
 }
 
 /* ボタン色 */
@@ -108,8 +94,22 @@ button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
 button.Rainbow { background: #ffcce5; }
-button.Halloween { background: #ffd1a6; font-size: 8.5px; }
+button.Halloween { background: #ffd1a6; }
 button.Other { background: #ddd; }
+
+/* RESETボタン */
+#reset-btn {
+  background: #d10000;
+  color: #fff;
+  font-weight: 900;
+  border: none;
+  padding: 8px 14px;
+  height: 38px;
+  align-self: flex-end;
+  cursor: pointer;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
 
 /* 確率 */
 #stats {
@@ -140,19 +140,20 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
-/* 種類確率の色背景 */
+/* 種類確率の見た目を改善 */
 #probability span {
   display: inline-block;
   padding: 2px 6px;
-  margin: 2px 4px 2px 0;
+  margin-right: 4px;
   border-radius: 4px;
   font-weight: 600;
   color: #000;
-  border: 1px solid #aaa;
 }
-#probability .Default { background: #fff; }
-#probability .Gold { background: #ffffcc; }
-#probability .Diamond { background: #ccf5ff; }
-#probability .Rainbow { background: #ffcce5; }
-#probability .Halloween { background: #ffd1a6; }
-#probability .Other { background: #ddd; }
+
+/* 背景色をボタンと同じに */
+#probability .Default { background: #fff; border: 1px solid #aaa; }
+#probability .Gold { background: #ffffcc; border: 1px solid #aaa; }
+#probability .Diamond { background: #ccf5ff; border: 1px solid #aaa; }
+#probability .Rainbow { background: #ffcce5; border: 1px solid #aaa; }
+#probability .Halloween { background: #ffd1a6; border: 1px solid #aaa; }
+#probability .Other { background: #ddd; border: 1px solid #aaa; }
