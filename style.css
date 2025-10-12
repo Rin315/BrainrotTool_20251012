@@ -8,7 +8,7 @@ body {
 /* セクションタイトル */
 h2 {
   margin: 0;
-  font-size: 25px; /* フォント少し大きく */
+  font-size: 30px; /* フォント少し大きく */
 }
 
 /* ヘッダー（Monster, Select, Result） */
@@ -176,7 +176,7 @@ button.Other { background: #ddd; }
 /* 注意書き */
 .notice {
   margin-top: 40px;
-  text-align: center;
+  text-align: left;
   color: #333;
-  font-size: 13px;
+  font-size: 18px;
 }
