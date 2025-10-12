@@ -1,13 +1,30 @@
+/* 基本 */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   margin: 16px;
 }
-
-h2 {
+h2 { margin: 0; }
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 18px 0 8px;
 }
 
-/* ギャラリー */
+/* RESETボタン（Select見出しの右） */
+#reset-btn {
+  background: #d10000;
+  color: #fff;
+  font-weight: 900;
+  border: none;
+  padding: 6px 12px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* ギャラリー（Monster） */
 #gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -21,7 +38,7 @@ h2 {
   border: 1px solid #ccc;
 }
 
-/* スマホで5列表示 */
+/* スマホ：5列固定 */
 @media (max-width: 600px) {
   #gallery {
     grid-template-columns: repeat(5, 1fr);
@@ -29,30 +46,26 @@ h2 {
   }
 }
 
-/* 選択済み */
+/* 選択枠（Select） */
 #selection-area {
   display: flex;
   align-items: flex-end;
-  gap: 12px;
   margin-bottom: 12px;
 }
 #selected-container {
   display: flex;
   gap: 8px;
   justify-content: center;
-  flex-wrap: nowrap;
 }
 .selected-wrapper {
   display: flex;
   flex-direction: column;
   gap: 6px;
   background-color: #555;
-  border-radius: 0;
   padding: 5px;
-  min-width: 134px;
+  min-width: 134px; /* 画像110px + パディング等の余白 */
   height: 240px;
   align-items: center;
-  justify-content: flex-start;
 }
 .selected-wrapper:empty::before {
   content: "";
@@ -67,9 +80,10 @@ h2 {
   object-fit: cover;
   border-width: 5px;
   border-style: solid;
-  border-radius: 0;
   cursor: pointer;
 }
+
+/* 色ボタン（2列） */
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -82,36 +96,21 @@ h2 {
   height: 28px;
   border: 1px solid #888;
   cursor: pointer;
-  font-size: 9.5px;        /* ← さらに小さく */
+  font-size: 9px;      /* はみ出し対策 */
   text-align: center;
-  line-height: 1.1;        /* ← 行間を詰めて高さに収まるように */
+  line-height: 1.1;
   white-space: normal;
-  word-break: keep-all;
 }
 
-/* ボタン色 */
+/* ボタン配色 */
 button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
 button.Rainbow { background: #ffcce5; }
-button.Halloween { background: #ffd1a6; }
+button.Halloween { background: #ffd1a6; font-size: 8.5px; }
 button.Other { background: #ddd; }
 
-/* RESETボタン */
-#reset-btn {
-  background: #d10000;
-  color: #fff;
-  font-weight: 900;
-  border: none;
-  padding: 8px 14px;
-  height: 38px;
-  align-self: flex-end;
-  cursor: pointer;
-  border-radius: 4px;
-  letter-spacing: 1px;
-}
-
-/* 確率 */
+/* Result（確率/合計） */
 #stats {
   display: flex;
   flex-wrap: wrap;
@@ -129,7 +128,7 @@ button.Other { background: #ddd; }
   margin-bottom: 6px;
 }
 
-/* 合計値を6桁分くらいの幅に */
+/* 合計は6桁分くらいに */
 .total-panel {
   min-width: 120px;
   max-width: 150px;
@@ -140,20 +139,19 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
-/* 種類確率の見た目を改善 */
+/* 種類確率：色付きバッジ */
 #probability span {
   display: inline-block;
   padding: 2px 6px;
-  margin-right: 4px;
+  margin: 2px 4px 2px 0;
   border-radius: 4px;
   font-weight: 600;
   color: #000;
+  border: 1px solid #aaa;
 }
-
-/* 背景色をボタンと同じに */
-#probability .Default { background: #fff; border: 1px solid #aaa; }
-#probability .Gold { background: #ffffcc; border: 1px solid #aaa; }
-#probability .Diamond { background: #ccf5ff; border: 1px solid #aaa; }
-#probability .Rainbow { background: #ffcce5; border: 1px solid #aaa; }
-#probability .Halloween { background: #ffd1a6; border: 1px solid #aaa; }
-#probability .Other { background: #ddd; border: 1px solid #aaa; }
+#probability .Default { background: #fff; }
+#probability .Gold { background: #ffffcc; }
+#probability .Diamond { background: #ccf5ff; }
+#probability .Rainbow { background: #ffcce5; }
+#probability .Halloween { background: #ffd1a6; }
+#probability .Other { background: #ddd; }
