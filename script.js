@@ -140,34 +140,41 @@ function updateAll(){
 
 // 合計
 function updateTotal() {
-  let sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
-  totalEl.textContent = sum;
+  // 合計値（数値だけ）
+  const sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
+  totalEl.textContent = sum;  // ← 数値のみを保持（innerHTMLは使わない）
 
-  // Wait時間の設定
-  let waitText = "";
-  if (sum > 50000) {
-    waitText = "(2h0m later)";
-  } else if (sum > 10000) {
-    waitText = "(1h30m later)";
-  } else {
-    waitText = "(1h0m later)";
+  // Wait表示用の要素を用意（なければ作成）
+  let waitEl = document.getElementById('total-wait');
+  if (!waitEl) {
+    waitEl = document.createElement('div');
+    waitEl.id = 'total-wait';
+    waitEl.className = 'wait-note';
+    // 合計値の直下に差し込む
+    totalEl.insertAdjacentElement('afterend', waitEl);
   }
 
-  // Waitテキストを改行して追加表示
-  totalEl.innerHTML = `${sum}<br><span style="font-size: 14px; color: #444;">${waitText}</span>`;
+  // 待ち時間テキスト（条件分岐）
+  let waitText = "(Wait 1h0m)";
+  if (sum > 50000) {
+    waitText = "(Wait 2h0m)";
+  } else if (sum > 10000) {
+    waitText = "(Wait 1h30m)";
+  }
+  waitEl.textContent = waitText;
 
-  // Secret確率の表示
-  if(sum >= 1001) {
+  // Secret確率の表示（既存仕様）
+  if (sum >= 1001) {
     probabilityEl.textContent = "Secret：100%";
-  } else if(sum >= 751) {
+  } else if (sum >= 751) {
     probabilityEl.textContent = "Secret：75% BrainrotGod：25%";
-  } else if(sum >= 501) {
+  } else if (sum >= 501) {
     probabilityEl.textContent = "BrainrotGod：60% Secret：40%";
   } else {
     probabilityEl.textContent = "Secret：5%以下";
   }
 
-  // 種類確率の更新（既存の確率計算処理）
+  // 種類確率の更新（既存の関数）
   updateTypeProbability();
 }
 

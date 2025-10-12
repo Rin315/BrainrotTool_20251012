@@ -262,6 +262,13 @@ button.Other { background: #ddd; }
     height: var(--btnH);
     font-size: var(--btnFS);
   }
+  /* 合計値の下に出す Wait 行の見た目 */
+.wait-note {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.2;
+}
 
   #stats { display: flex; flex-wrap: wrap; }
   #stats .panel:nth-child(2) { order: 1; width: 100%; }
