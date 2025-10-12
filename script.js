@@ -90,31 +90,44 @@ function selectImage(imgObj) {
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
+
     const imgObj = selectedImages[idx];
-    if(!imgObj) return;
 
-    const img = document.createElement('img');
-    img.src = imgObj.src;
-    img.className = 'selected-img';
-    img.addEventListener('click', () => selectImage(imgObj));
-    wrapper.appendChild(img);
+    if(imgObj){
+      // 選択されている場合は画像表示
+      const img = document.createElement('img');
+      img.src = imgObj.src;
+      img.className = 'selected-img';
+      img.addEventListener('click', ()=> selectImage(imgObj));
+      wrapper.appendChild(img);
 
-    // ボタン作成
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'button-container';
-    ['Normal','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
-      const btn = document.createElement('button');
-      btn.textContent = type;
-      btn.className = type;
-      btn.addEventListener('click', ()=>{
-        img.style.borderColor = getButtonColor(type);
-        updateTotal(); // Normalのみを合計する場合はここで条件分岐可能
+      // ボタン作成
+      const buttonContainer = document.createElement('div');
+      buttonContainer.className = 'button-container';
+      ['Normal','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
+        const btn = document.createElement('button');
+        btn.textContent = type;
+        btn.className = type;
+        btn.addEventListener('click', ()=>{
+          img.style.borderColor = getButtonColor(type);
+          updateTotal();
+        });
+        buttonContainer.appendChild(btn);
       });
-      buttonContainer.appendChild(btn);
-    });
-    wrapper.appendChild(buttonContainer);
+      wrapper.appendChild(buttonContainer);
+
+    } else {
+      // 未選択枠用のダミー要素を追加
+      const placeholder = document.createElement('div');
+      placeholder.style.width = '140px';
+      placeholder.style.height = '150px';
+      // 背景色を枠の色にする
+      placeholder.style.backgroundColor = '#555';
+      wrapper.appendChild(placeholder);
+    }
   });
 }
+
 
 function getButtonColor(type){
   switch(type){
