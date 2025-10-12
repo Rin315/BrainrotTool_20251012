@@ -37,84 +37,92 @@ const images = [
   { src: './img/secret1.png', value: 3, gold: 3.75, diamond: 4.5, halloween: 30 }, // 不明
   { src: './img/secret2.png', value: 5, gold: 6.25, diamond: 7.5, halloween: 50 }  // 不明
 ];
-
+// 選択処理
 const gallery = document.getElementById('gallery');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
-const totalDiv = document.getElementById('total');
-let selectedImages = new Array(selectedWrappers.length).fill(null);
+const totalEl = document.getElementById('total');
+const probabilityEl = document.getElementById('probability');
 
-// ギャラリー表示
-images.forEach(img => {
-  const imageElement = document.createElement('img');
-  imageElement.src = img.src;
-  imageElement.alt = '';
-  imageElement.addEventListener('click', () => selectImage(img));
-  gallery.appendChild(imageElement);
-});
+let selectedImages = [];
 
-// 画像選択
-function selectImage(img){
-  if(selectedImages.find(s=>s && s.img.src===img.src)) return;
+function updateTotal() {
+  let sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
+  totalEl.textContent = sum;
 
-  const emptyIndex = selectedImages.findIndex(s => s === null);
-  if(emptyIndex === -1) return; // 空き枠なし
-
-  const wrapper = selectedWrappers[emptyIndex];
-  wrapper.innerHTML = '';
-
-  const selectedImg = document.createElement('img');
-  selectedImg.src = img.src;
-  selectedImg.classList.add('selected-img');
-  selectedImg.addEventListener('click', ()=> removeImage(emptyIndex));
-  wrapper.appendChild(selectedImg);
-
-  const btnContainer = document.createElement('div');
-  btnContainer.classList.add('button-container');
-  ['Normal','Gold','Diamond','Halloween'].forEach(type=>{
-    const btn = document.createElement('button');
-    btn.textContent = type;
-    btn.classList.add(type);
-    btn.addEventListener('click', ()=>{
-      selectedImg.style.borderColor = getBorderColor(type);
-      selectedImages[emptyIndex].currentType = type;
-      updateTotal();
-    });
-    btnContainer.appendChild(btn);
-  });
-  wrapper.appendChild(btnContainer);
-
-  selectedImages[emptyIndex] = { ...img, currentType:'Normal', img:selectedImg };
-  updateTotal();
-}
-
-// 画像解除
-function removeImage(index){
-  selectedImages[index] = null;
-  selectedWrappers[index].innerHTML = '';
-  updateTotal();
-}
-
-// 縁色取得
-function getBorderColor(type){
-  switch(type){
-    case 'Normal': return 'black';
-    case 'Gold': return 'gold';
-    case 'Diamond': return 'cyan';
-    case 'Halloween': return 'orange';
+  if(sum >= 1001) {
+    probabilityEl.textContent = "Secret：100%";
+  } else if(sum >= 751) {
+    probabilityEl.textContent = "Secret：75% BrainrotGod：25%";
+  } else if(sum >= 501) {
+    probabilityEl.textContent = "BrainrotGod：60% Secret：40%";
+  } else {
+    probabilityEl.textContent = "";
   }
 }
 
-// 合計値＆確率
-function updateTotal(){
-  let sum = selectedImages.reduce((acc,img)=>{
-    if(img) return acc + img.value;
-    return acc;
-  },0);
-  totalDiv.textContent = sum;
+// ギャラリー表示
+images.forEach((imgObj, idx) => {
+  const img = document.createElement('img');
+  img.src = imgObj.src;
+  img.className = 'gallery-img';
+  img.addEventListener('click', () => selectImage(imgObj));
+  gallery.appendChild(img);
+});
 
-  const probDiv = document.getElementById('probability');
-  if(sum>=1001) probDiv.textContent = 'Secret：100%';
-  else if(sum>=751) probDiv.textContent = 'Secret：75% BrainrotGod：25%';
-  else if(sum>=501) probDiv.textContent = 'BrainrotGod：60% Secret：40%';
-  else probDiv.textContent = '';
+function selectImage(imgObj) {
+  // すでに選択されている場合はキャンセル
+  const index = selectedImages.indexOf(imgObj);
+  if(index > -1) {
+    selectedImages.splice(index,1);
+    renderSelected();
+    updateTotal();
+    return;
+  }
+
+  // 空いている枠に追加
+  if(selectedImages.length < 5) {
+    selectedImages.push(imgObj);
+    renderSelected();
+    updateTotal();
+  }
+}
+
+function renderSelected() {
+  selectedWrappers.forEach((wrapper, idx) => {
+    wrapper.innerHTML = '';
+    const imgObj = selectedImages[idx];
+    if(!imgObj) return;
+
+    const img = document.createElement('img');
+    img.src = imgObj.src;
+    img.className = 'selected-img';
+    img.addEventListener('click', () => selectImage(imgObj));
+    wrapper.appendChild(img);
+
+    // ボタン作成
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'button-container';
+    ['Normal','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
+      const btn = document.createElement('button');
+      btn.textContent = type;
+      btn.className = type;
+      btn.addEventListener('click', ()=>{
+        img.style.borderColor = getButtonColor(type);
+        updateTotal(); // Normalのみを合計する場合はここで条件分岐可能
+      });
+      buttonContainer.appendChild(btn);
+    });
+    wrapper.appendChild(buttonContainer);
+  });
+}
+
+function getButtonColor(type){
+  switch(type){
+    case 'Normal': return 'black';
+    case 'Gold': return 'yellow';
+    case 'Diamond': return 'cyan';
+    case 'Rainbow': return 'pink';
+    case 'Halloween': return 'orange';
+    case 'Other': return 'gray';
+  }
 }

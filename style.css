@@ -7,7 +7,6 @@
   margin-bottom: 20px;
 }
 
-/* ギャラリー画像 */
 #gallery img {
   width: 18vw;
   max-width: 120px;
@@ -35,7 +34,6 @@
   align-items: center;
 }
 
-/* 選択画像 */
 .selected-img {
   width: 100%;
   border-width: 6px;
