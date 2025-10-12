@@ -24,21 +24,21 @@
 }
 .selected-wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* 画像＋ボタンを縦に並べる */
   gap: 5px;
   background-color: #555;  /* 濃いめの灰色 */
   border-radius: 0;        /* 角を立てる */
   padding: 5px;
-  min-width: 164px;        /* 横幅を4px大きく */
-  height: 180px;           /* 固定高さ */
+  min-width: 164px;        /* 横幅はそのまま */
+  height: 380px;           /* 縦幅を十分に確保 */
   align-items: center;
   justify-content: flex-start;
 }
 
-/* 選択画像の上に置かれる疑似要素は不要に変更 */
+/* 選択された画像 */
 .selected-wrapper img {
   width: 140px;
-  height: 180px; /* 強制サイズ */
+  height: 150px; /* 強制サイズ */
   border-width: 6px;
   border-style: solid;
   border-radius: 0; /* 角を立てる */
@@ -57,13 +57,14 @@
   cursor: pointer;
 }
 
-/* ボタン配置（画像下、2列3行） */
+/* ボタンの配置 */
 .button-container {
   display: grid;
-  grid-template-columns: repeat(2, 70px);
-  grid-template-rows: repeat(3, 35px);
+  grid-template-columns: repeat(2, 1fr); /* 2列 */
   gap: 5px;
+  margin-top: 5px;
 }
+
 
 /* ボタン共通スタイル */
 button {
