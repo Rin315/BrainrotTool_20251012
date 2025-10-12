@@ -132,7 +132,7 @@ function updateTotal(){
 
 // 確率表示
 function updateProbability(){
-  const baseProb = { Normal:34, Gold:10, Diamond:5, Rainbow:0, Halloween:0, Other:0 };
+  const baseProb = { Normal:9, Gold:10, Diamond:5, Rainbow:0, Halloween:0, Other:0 };
   const bonus = { Normal:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
 
   if(selectedImages.length === 0){
