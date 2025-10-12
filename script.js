@@ -37,57 +37,46 @@ const images = [
   { src: './img/secret1.png', value: 3, gold: 3.75, diamond: 4.5, halloween: 30 }, // 不明
   { src: './img/secret2.png', value: 5, gold: 6.25, diamond: 7.5, halloween: 50 }  // 不明
 ];
-// 選択処理
+
+// DOM取得
 const gallery = document.getElementById('gallery');
+const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 const totalEl = document.getElementById('total');
 const probabilityEl = document.getElementById('probability');
-const selectedImages = [null, null, null, null, null]; // 5枠
-const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 
-
-
-function updateTotal() {
-  let sum = selectedImages.reduce((acc, img) => acc + img.value, 0);
-  totalEl.textContent = sum;
-
-  if(sum >= 1001) {
-    probabilityEl.textContent = "Secret：100%";
-  } else if(sum >= 751) {
-    probabilityEl.textContent = "Secret：75% BrainrotGod：25%";
-  } else if(sum >= 501) {
-    probabilityEl.textContent = "BrainrotGod：60% Secret：40%";
-  } else {
-    probabilityEl.textContent = "";
-  }
-}
+// 選択画像配列（5枠固定）
+let selectedImages = [null, null, null, null, null];
 
 // ギャラリー表示
-images.forEach((imgObj, idx) => {
+images.forEach(imgObj => {
   const img = document.createElement('img');
   img.src = imgObj.src;
   img.className = 'gallery-img';
-  img.addEventListener('click', () => selectImage(imgObj));
+  img.addEventListener('click', () => selectFromGallery(imgObj));
   gallery.appendChild(img);
 });
-// 上部ギャラリーの画像クリック
+
+// ギャラリーから選択
 function selectFromGallery(imgObj) {
   // 空き枠を探して追加
   for (let i = 0; i < selectedImages.length; i++) {
     if (!selectedImages[i]) {
-      selectedImages[i] = imgObj;
+      selectedImages[i] = { ...imgObj }; // 複製して同じ画像も追加可能
       break;
     }
   }
   renderSelected();
+  updateTotal();
 }
 
-// 下部選択枠の画像クリック（キャンセル）
+// 選択枠クリックでキャンセル
 function removeFromSelected(index) {
   selectedImages[index] = null;
   renderSelected();
+  updateTotal();
 }
 
-// 選択枠の描画
+// 選択枠描画
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
@@ -98,11 +87,10 @@ function renderSelected() {
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      // 下の選択枠でクリックしたらキャンセル
       img.addEventListener('click', () => removeFromSelected(idx));
       wrapper.appendChild(img);
 
-      // ボタン
+      // ボタン作成
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'button-container';
       ['Normal','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
@@ -118,17 +106,45 @@ function renderSelected() {
       wrapper.appendChild(buttonContainer);
 
     } else {
-      // 空枠
+      // 未選択枠
       const placeholder = document.createElement('div');
       placeholder.style.width = '140px';
-      placeholder.style.height = '150px';
+      placeholder.style.height = '180px';
       placeholder.style.backgroundColor = '#555';
       wrapper.appendChild(placeholder);
     }
   });
 }
 
+// 合計値計算
+function updateTotal() {
+  // Normalの合計値
+  let sum = 0;
+  selectedWrappers.forEach((wrapper, idx) => {
+    const imgObj = selectedImages[idx];
+    if (imgObj) {
+      const imgEl = wrapper.querySelector('img');
+      const borderColor = imgEl.style.borderColor || 'black';
+      if (borderColor === 'black' || borderColor === '') {
+        sum += imgObj.value;
+      }
+    }
+  });
+  totalEl.textContent = sum;
 
+  // 確率表示
+  if(sum >= 1001) {
+    probabilityEl.textContent = "Secret：100%";
+  } else if(sum >= 751) {
+    probabilityEl.textContent = "Secret：75% BrainrotGod：25%";
+  } else if(sum >= 501) {
+    probabilityEl.textContent = "BrainrotGod：60% Secret：40%";
+  } else {
+    probabilityEl.textContent = "";
+  }
+}
+
+// ボタン色取得
 function getButtonColor(type){
   switch(type){
     case 'Normal': return 'black';
