@@ -153,7 +153,7 @@ function updateSecretProbability(){
   } else if (sum >= 501) {
     secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
   } else {
-    secretProbEl.innerHTML = `<strong>Secret：5%以下</strong>`;
+    secretProbEl.innerHTML = `<strong>Secret：15%以下</strong>`;
   }
 }
 
