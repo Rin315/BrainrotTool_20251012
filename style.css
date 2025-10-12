@@ -24,13 +24,13 @@
 }
 .selected-wrapper {
   display: flex;
-  flex-direction: column; /* 画像＋ボタンを縦に並べる */
+  flex-direction: column;
   gap: 5px;
-  background-color: #555;  /* 濃いめの灰色 */
-  border-radius: 0;        /* 角を立てる */
+  background-color: #555;
+  border-radius: 0;
   padding: 5px;
-  min-width: 164px;        /* 横幅はそのまま */
-  height: 380px;           /* 縦幅を十分に確保 */
+  min-width: 164px;
+  height: 280px; /* 縦幅を275px程度に調整 */
   align-items: center;
   justify-content: flex-start;
 }
