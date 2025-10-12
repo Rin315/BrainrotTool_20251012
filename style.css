@@ -6,12 +6,11 @@ body {
 h2 { margin: 0; }
 .section-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin: 18px 0 8px;
 }
 
-/* RESETボタン（Select見出しの右） */
+/* RESETボタンをSelectの左に50px空けて配置 */
 #reset-btn {
   background: #d10000;
   color: #fff;
@@ -22,6 +21,7 @@ h2 { margin: 0; }
   cursor: pointer;
   border-radius: 4px;
   letter-spacing: 1px;
+  margin-left: 50px; /* ← 追加：Select文字から50px空ける */
 }
 
 /* ギャラリー（Monster） */
