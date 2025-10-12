@@ -209,22 +209,23 @@ button.Other { background: #ddd; }
 /* ========= スマホ最適化 ========= */
 /* スマホでは「6列」に増やし、画像をさらに小さくして収める */
 @media (max-width: 600px) {
+  /* スマホ用サイズをやや小さめに */
   :root{
-    --imgW: 60px;
-    --imgH: 66px;
-    --slotMinW: 90px;
-    --btnW: 48px;
-    --btnH: 24px;
-    --btnFS: 8px;
+    --imgW: 56px;
+    --imgH: 62px;
+    --slotMinW: 100px;
+    --btnW: 46px;
+    --btnH: 22px;
+    --btnFS: 7.5px;
   }
 
-  /* ギャラリーは6列のまま維持 */
+  /* ギャラリーは6列固定のまま */
   #gallery {
     grid-template-columns: repeat(6, 1fr);
     justify-items: center;
   }
 
-  /* Select のヘッダー部分（RESETボタンなど） */
+  /* Select見出しのRESETを少し詰める */
   #reset-btn {
     margin-left: 12px;
     height: 28px;
@@ -232,59 +233,71 @@ button.Other { background: #ddd; }
     font-size: 12px;
   }
 
-  /* ▼▼ ここから 2列×3段の選択枠 ▼▼ */
+  /* ▼▼ 縦1列：各枠を「画像＋ボタン横並び」に ▼▼ */
   #selection-area {
     justify-content: center;
   }
   #selected-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    width: 100%;
-    max-width: 360px;
+    grid-template-columns: 1fr;         /* 1列縦積み */
+    gap: 8px;
+    width: min(520px, 100%);
     margin: 0 auto;
   }
 
-  /* 最後（5枠目）は中央寄せ */
-  .selected-wrapper:nth-child(5) {
-    grid-column: 1 / -1;
-    justify-self: center;
+  .selected-wrapper {
+    height: auto;                        /* 自動高さ */
+    min-width: auto;
+    padding: 6px;
+    display: flex;
+    flex-direction: row;                 /* 画像とボタンを横並び */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
-  /* 枠の見た目をコンパクト化 */
-  .selected-wrapper {
-    height: 188px;
-    min-width: auto;
-    padding: 4px;
-  }
+  /* 空枠のプレースホルダは横並びでも崩れないよう小さめに */
   .selected-wrapper:empty::before {
-    height: calc(var(--imgH) + 22px);
-  }
-  .selected-img {
     width: var(--imgW);
     height: var(--imgH);
   }
-  .button-container { gap: 4px; }
+
+  .selected-img {
+    width: var(--imgW);
+    height: var(--imgH);
+    flex: 0 0 auto;
+  }
+
+  /* ボタン群は3×2のグリッド（省スペース＆押しやすい） */
+  .button-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    width: auto;
+    justify-items: center;
+    align-items: center;
+  }
   .button-container button {
     width: var(--btnW);
     height: var(--btnH);
     font-size: var(--btnFS);
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
   }
-  /* ▲▲ ここまで 2列×3段 ▲▲ */
+  /* Halloweenの長文対策（さらに小さく） */
+  button.Halloween { font-size: calc(var(--btnFS) - 0.7px); }
 
-  /* Result：種類は1段目（フル幅）、Secret＋合計を2段目横並び */
-  #stats {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  #stats .panel:nth-child(2) { order: 1; width: 100%; }              /* 種類確率 */
-  #stats .panel:nth-child(1) { order: 2; flex: 1 1 calc(50% - 6px);} /* Secret確率 */
-  #stats .total-panel        { order: 2; flex: 1 1 calc(50% - 6px);} /* 合計 */
+  /* ▼▼ Result：縦スクロール削減：種類（1段目フル幅）、下段でSecret＋合計を横並び ▼▼ */
+  #stats { display: flex; flex-wrap: wrap; }
+  #stats .panel:nth-child(2) { order: 1; width: 100%; }               /* 種類確率（フル幅） */
+  #stats .panel:nth-child(1) { order: 2; flex: 1 1 calc(50% - 6px);}  /* Secret確率（半幅） */
+  #stats .total-panel        { order: 2; flex: 1 1 calc(50% - 6px);}  /* 合計（半幅） */
 
-  /* ナビバー調整 */
+  /* ナビ微調整 */
   .nav-links { gap: 12px; }
   .nav-title { font-size: 18px; }
 }
+
 
 
 
