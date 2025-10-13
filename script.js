@@ -1,3 +1,4 @@
+// ========== 画像データ ==========
 const images = [
   { src: './img/tob.png', value: 25 },
   { src: './img/tralalero.png', value: 50 },
@@ -34,25 +35,25 @@ const images = [
   { src: './img/chicleteira.png', value: 8000 },
   { src: './img/pad.png', value: 10000 },
   { src: './img/house.png', value: 20000 },
-  { src: './img/brainrot1.png', value: 500 },//不明
-  { src: './img/secret1.png', value: 50000 },//不明
-  { src: './img/secret2.png', value: 50000 },//不明
+  { src: './img/brainrot1.png', value: 500 }, // 不明
+  { src: './img/secret1.png', value: 50000 }, // 不明
+  { src: './img/secret2.png', value: 50000 }, // 不明
 ];
-// DOM要素
+
+// ========== DOM要素 ==========
 const gallery = document.getElementById('gallery');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
-const totalEl = document.getElementById('total');
-const typeProbEl = document.getElementById('probability');
-const secretProbEl = document.getElementById('secret-probability');
-const resetBtn = document.getElementById('reset-btn');
 const totalValueEl = document.getElementById('total-value');
 const totalWaitEl  = document.getElementById('total-wait');
+const typeProbEl   = document.getElementById('probability');
+const secretProbEl = document.getElementById('secret-probability');
+const resetBtn     = document.getElementById('reset-btn');
 
-// 状態
+// ========== 状態 ==========
 let selectedImages = [null, null, null, null, null];
-let selectedColors  = [null, null, null, null, null];
+let selectedColors = [null, null, null, null, null];
 
-// 種類確率の基本値（Defaultに名称変更済み）
+// ========== 基本確率（Defaultへ変更） ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
 // ========== ギャラリー生成 ==========
@@ -64,7 +65,6 @@ images.forEach((imgObj) => {
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
     if (emptyIndex === -1) return; // 空きなし
-    // 同じ画像でも独立運用
     selectedImages[emptyIndex] = { ...imgObj };
     selectedColors[emptyIndex]  = 'Default';
     renderSelected();
@@ -77,8 +77,8 @@ images.forEach((imgObj) => {
 function renderSelected(){
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
-
     const imgObj = selectedImages[idx];
+
     if (imgObj) {
       const img = document.createElement('img');
       img.src = imgObj.src;
@@ -103,9 +103,7 @@ function renderSelected(){
         btnContainer.appendChild(btn);
       });
       wrapper.appendChild(btnContainer);
-
     } else {
-      // プレースホルダ（高さ維持用）
       const ph = document.createElement('div');
       ph.style.width = '110px';
       ph.style.height = '150px';
@@ -128,50 +126,30 @@ function removeFromSelected(index){
 // ========== RESET ==========
 resetBtn.addEventListener('click', () => {
   selectedImages = [null, null, null, null, null];
-  selectedColors  = [null, null, null, null, null];
+  selectedColors = [null, null, null, null, null];
   renderSelected();
   updateAll();
 });
 
-// ========== 合計・確率更新 ==========
+// ========== 総更新 ==========
 function updateAll(){
   updateTotal();
   updateSecretProbability();
   updateTypeProbability();
 }
 
+// ========== 合計＆Wait ==========
 function updateTotal() {
-  // 合計（DOMは読まず、選択配列から算出）
-  const sum = selectedImages.reduce((acc, img) => acc + Number(img.value || 0), 0);
+  const sum = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
+  totalValueEl.textContent = sum;
 
-  // 数値だけを更新（リアルタイム安定）
-  if (totalValueEl) totalValueEl.textContent = sum;
-
-  // Wait 表示（条件は「超えた場合」なので > を使用）
   let waitText = "(Wait 1h0m)";
-  if (sum > 50000) {
-    waitText = "(Wait 2h0m)";
-  } else if (sum > 10000) {
-    waitText = "(Wait 1h30m)";
-  }
-  if (totalWaitEl) totalWaitEl.textContent = waitText;
-
-  // Secret確率（①）
-  if (sum >= 1001) {
-    probabilityEl.textContent = "Secret：100%";
-  } else if (sum >= 751) {
-    probabilityEl.textContent = "Secret：75% BrainrotGod：25%";
-  } else if (sum >= 501) {
-    probabilityEl.textContent = "BrainrotGod：60% Secret：40%";
-  } else {
-    probabilityEl.textContent = "Secret：5%以下";
-  }
-
-  // 種類確率（②）
-  updateTypeProbability();
+  if (sum > 50000) waitText = "(Wait 2h0m)";
+  else if (sum > 10000) waitText = "(Wait 1h30m)";
+  totalWaitEl.textContent = waitText;
 }
 
-// ① Secret確率（合計による段階表示）
+// ========== Secret確率 ==========
 function updateSecretProbability(){
   const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
   if (sum >= 1001) {
@@ -181,34 +159,31 @@ function updateSecretProbability(){
   } else if (sum >= 501) {
     secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
   } else {
-    secretProbEl.innerHTML = `<strong>Secret：15%以下</strong>`;
+    secretProbEl.innerHTML = `<strong>Secret：5%以下</strong>`;
   }
 }
 
-// ② 種類確率（基本＋75%分配／降順／色付きバッジ）
+// ========== 種類確率 ==========
 function updateTypeProbability(){
-  const hasAny = selectedImages.some(img => img);
   const probs = { ...baseProb };
   const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
 
-  if (hasAny) {
-    for (let i = 0; i < selectedImages.length; i++){
-      const img = selectedImages[i];
-      const color = selectedColors[i];
-      if (!img || !color) continue;
-      colorSums[color] += img.value;
-    }
-    const totalColorSum = Object.values(colorSums).reduce((a,b)=>a+b, 0);
-    if (totalColorSum > 0) {
-      const bonus = 75;
-      for (const c in colorSums) {
-        if (colorSums[c] > 0) probs[c] += bonus * (colorSums[c] / totalColorSum);
-      }
+  // 選択状態に応じて加算
+  for (let i = 0; i < selectedImages.length; i++){
+    const img = selectedImages[i];
+    const color = selectedColors[i];
+    if (!img || !color) continue;
+    colorSums[color] += img.value;
+  }
+
+  const totalColorSum = Object.values(colorSums).reduce((a,b)=>a+b,0);
+  if (totalColorSum > 0) {
+    const bonus = 75;
+    for (const c in colorSums) {
+      if (colorSums[c] > 0) probs[c] += bonus * (colorSums[c] / totalColorSum);
     }
   } else {
-    // 何も選択されていない時の固定表示（背景付き）
     probs.Default = 84; probs.Gold = 10; probs.Diamond = 5;
-    probs.Rainbow = 0; probs.Halloween = 0; probs.Other = 0;
   }
 
   const items = Object.keys(probs)
@@ -220,7 +195,7 @@ function updateTypeProbability(){
     .join('');
 }
 
-// 枠色
+// ========== 枠色取得 ==========
 function getButtonColor(type){
   switch(type){
     case 'Default': return 'black';
@@ -233,6 +208,6 @@ function getButtonColor(type){
   }
 }
 
-// 初期描画
+// 初期表示
 renderSelected();
 updateAll();
