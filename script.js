@@ -77,7 +77,7 @@ images.forEach((imgObj) => {
   img.src = imgObj.src;
   img.alt = imgObj.src.split('/').pop();
   img.className = 'gallery-img';
-  attachPressFeedback(img); // ← スマホでも暗転させる
+  attachPressFeedback(img); // スマホでも暗転させる
 
   const label = document.createElement('div');
   label.className = 'value-label';
@@ -97,7 +97,7 @@ images.forEach((imgObj) => {
   gallery.appendChild(box);
 });
 
-// ========== 選択エリア描画（画像→帯→縁 の順に重ねる） ==========
+// ========== 選択エリア描画（画像→帯→縁 の順で重ねる） ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
@@ -111,7 +111,8 @@ function renderSelected() {
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      attachPressFeedback(img); // ← スマホでも暗転
+      img.style.border = "0 solid transparent"; // 念のため初期は枠なし
+      attachPressFeedback(img);
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
@@ -121,15 +122,23 @@ function renderSelected() {
       label.className = 'value-label';
       box.appendChild(label);
 
-      // 縁（最上層）：オーバーレイリング
+      // 縁（最上層）: CSSに依存しないようJSで必要なスタイルを全指定
       const ring = document.createElement('div');
-      ring.className = 'border-ring'; // CSSで絶対配置＆z-index:3
-      // すでに色が選ばれていれば再現
+      ring.className = 'border-ring';
+      ring.style.position = 'absolute';
+      ring.style.top = '0';
+      ring.style.left = '0';
+      ring.style.right = '0';
+      ring.style.bottom = '0';
+      ring.style.pointerEvents = 'none';
+      ring.style.boxSizing = 'border-box';
+      ring.style.zIndex = '99';                // 画像と帯より最前面
+      // 既存色の復元
       if (selectedColors[idx]) {
         const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
         ring.style.border = `${bw}px solid ${getButtonColor(selectedColors[idx])}`;
       } else {
-        ring.style.border = '0px solid transparent'; // 初期は枠なし
+        ring.style.border = '0px solid transparent';
       }
       box.appendChild(ring);
 
@@ -146,7 +155,7 @@ function renderSelected() {
           e.stopPropagation();
           selectedColors[idx] = type;
           const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
-          ring.style.border = `${bw}px solid ${getButtonColor(type)}`; // ← 縁は常に最上層
+          ring.style.border = `${bw}px solid ${getButtonColor(type)}`; // 縁は常に最上層
           updateAll();
         });
         btnContainer.appendChild(btn);
@@ -154,10 +163,9 @@ function renderSelected() {
       wrapper.appendChild(btnContainer);
 
     } else {
-      // 未選択時のプレースホルダ（画像と帯分の高さを確保）
+      // 未選択時のプレースホルダ
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
-      // 画像なしでも重なり順の箱は確保（帯や縁は不要）
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
