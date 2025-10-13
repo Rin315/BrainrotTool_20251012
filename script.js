@@ -53,7 +53,7 @@ const resetBtn     = document.getElementById('reset-btn');
 let selectedImages = [null, null, null, null, null];
 let selectedColors = [null, null, null, null, null];
 
-// ========== 基本確率（Defaultへ変更） ==========
+// ========== 基本確率 ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
 // ========== ギャラリー生成 ==========
@@ -64,7 +64,7 @@ images.forEach((imgObj) => {
   img.alt = imgObj.src.split('/').pop();
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
-    if (emptyIndex === -1) return; // 空きなし
+    if (emptyIndex === -1) return;
     selectedImages[emptyIndex] = { ...imgObj };
     selectedColors[emptyIndex]  = 'Default';
     renderSelected();
@@ -143,10 +143,13 @@ function updateTotal() {
   const sum = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
   totalValueEl.textContent = sum;
 
+  // Wait条件を変更：750超で1h30m
   let waitText = "(Wait 1h0m)";
   if (sum > 50000) waitText = "(Wait 2h0m)";
-  else if (sum > 10000) waitText = "(Wait 1h30m)";
+  else if (sum > 750) waitText = "(Wait 1h30m)";
+
   totalWaitEl.textContent = waitText;
+  totalWaitEl.style.fontSize = "12px"; // ← Waitを小さく
 }
 
 // ========== Secret確率 ==========
@@ -159,7 +162,7 @@ function updateSecretProbability(){
   } else if (sum >= 501) {
     secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
   } else {
-    secretProbEl.innerHTML = `<strong>Secret：5%以下</strong>`;
+    secretProbEl.innerHTML = `<strong>Secret：15%以下</strong>`; // ← 修正
   }
 }
 
@@ -168,7 +171,6 @@ function updateTypeProbability(){
   const probs = { ...baseProb };
   const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
 
-  // 選択状態に応じて加算
   for (let i = 0; i < selectedImages.length; i++){
     const img = selectedImages[i];
     const color = selectedColors[i];
@@ -203,7 +205,7 @@ function getButtonColor(type){
     case 'Diamond': return 'cyan';
     case 'Rainbow': return 'pink';
     case 'Halloween': return 'orange';
-    case 'Other': return 'gray';
+    case 'Other': return 'white'; // ← 修正
     default: return 'black';
   }
 }
