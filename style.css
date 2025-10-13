@@ -14,40 +14,20 @@ body {
   background-color: #e6f5e1;
 }
 
-/* ========= 見出しなど ========= */
-h2 {
-  margin: 0;
-  font-size: 22px;
-}
+h2 { margin: 0; font-size: 22px; }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  margin: 18px 0 8px;
-}
+.section-header { display: flex; align-items: center; margin: 18px 0 8px; }
 
 #reset-btn {
-  background: #d10000;
-  color: #fff;
-  font-weight: 900;
-  border: none;
-  padding: 6px 12px;
-  height: 32px;
-  cursor: pointer;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  margin-left: 50px;
+  background: #d10000; color: #fff; font-weight: 900; border: none;
+  padding: 6px 12px; height: 32px; cursor: pointer; border-radius: 4px;
+  letter-spacing: 1px; margin-left: 50px;
 }
 
 /* ========= ナビバー ========= */
 .navbar {
-  background-color: #2f4f4f;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  background-color: #2f4f4f; color: white; display: flex; justify-content: space-between;
+  align-items: center; padding: 12px 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .nav-title { font-size: 20px; font-weight: bold; }
 .nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
@@ -60,12 +40,29 @@ h2 {
   grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
   gap: 6px;
 }
-.gallery-img {
+
+/* 画像コンテナ（ギャラリー＆選択共通） */
+.imgbox{
+  position: relative;
+  width: var(--imgW);
+  height: var(--imgH);
+}
+
+.gallery-img,
+.selected-img{
   width: var(--imgW);
   height: var(--imgH);
   object-fit: cover;
-  cursor: pointer;
+  display: block;
   border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.selected-img{
+  border-width: 5px;
+  border-style: solid;
+  border-color: black;
+  border-left-color: black; /* 明示 */
 }
 
 .gallery-img:active,
@@ -75,94 +72,56 @@ h2 {
 }
 
 /* ========= 選択欄 ========= */
-#selection-area {
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 12px;
-}
-#selected-container {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
+#selection-area { display: flex; align-items: flex-end; margin-bottom: 12px; }
+#selected-container { display: flex; gap: 8px; justify-content: center; }
 
-.selected-wrapper {
+/* 未選択・選択で高さ差が出ないようにする */
+.selected-wrapper{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 6px;
   background-color: #555;
+  padding: 6px;
   min-width: var(--slotMinW);
   height: auto;
 }
 
-/* ✅ 未選択状態の枠も選択時と同じ高さを確保 */
-.selected-wrapper:empty::before {
+/* ✅ 未選択状態でも “画像＋帯＋ボタン相当” の高さを確保（枠が小さくならない） */
+.selected-wrapper:empty::before{
   content: "";
   display: block;
   width: var(--imgW);
-  height: calc(var(--imgH) + 70px); /* ← 画像＋ボタン分確保 */
+  /* 画像高さ + 帯(18px) + ボタン2段(= var(--btnH)*2) + 余白(12px) */
+  height: calc(var(--imgH) + 18px + (var(--btnH) * 2) + 12px);
   background: #555;
-  border-radius: 0;
 }
 
-.selected-wrapper div[style*="position: relative"] {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: var(--imgW);
-  height: var(--imgH);
-  position: relative;
-}
-
-.selected-img {
-  width: var(--imgW);
-  height: var(--imgH);
-  object-fit: cover;
-  border-width: 5px;
-  border-style: solid;
-  cursor: pointer;
-}
-
-/* ========= 黒帯＋黄色文字（valueラベル） ========= */
-.value-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+/* 黒帯＋黄色文字（valueラベル） */
+.value-label{
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 18px;
+  background: rgba(0,0,0,0.8);
   color: #ffeb3b;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  padding: 2px 0;
-  user-select: none;
-  pointer-events: none;
+  font-size: 12px; font-weight: bold;
+  text-align: center; line-height: 18px;
+  user-select: none; pointer-events: none;
 }
 
-/* ========= ボタン ========= */
-.button-container {
+/* ========= ボタン（2列） ========= */
+.button-container{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  width: 100%;
-  justify-items: center;
-  margin-top: 9px;
+  gap: 6px; width: 100%; justify-items: center;
+  margin-top: 12px; /* ← PCで画像とボタンの間を+3px */
 }
-.button-container button {
-  width: var(--btnW);
-  height: var(--btnH);
-  border: 1px solid #888;
-  cursor: pointer;
-  font-size: var(--btnFS);
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.button-container button{
+  width: var(--btnW); height: var(--btnH);
+  border: 1px solid #888; cursor: pointer;
+  font-size: var(--btnFS); color: #000 !important; -webkit-text-fill-color: #000 !important;
+  display: flex; justify-content: center; align-items: center;
 }
 
+/* ボタン色 */
 button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
@@ -171,68 +130,33 @@ button.Halloween { background: #ffd1a6; font-size: calc(var(--btnFS) - 0.5px); }
 button.Other { background: #ddd; }
 
 /* ========= 結果欄 ========= */
-#stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-#stats .panel:nth-child(1) { order: 2; }
-#stats .panel:nth-child(2) { order: 1; }
+#stats{ display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+#stats .panel:nth-child(1) { order: 2; }  /* Secret */
+#stats .panel:nth-child(2) { order: 1; }  /* 種類 */
 
-.panel {
-  border: 2px solid #999;
-  padding: 10px;
-  min-width: 260px;
-  background: #fafafa;
-}
-.panel-title {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.total-panel {
-  min-width: 120px;
-  max-width: 150px;
-  text-align: center;
-}
-.total-panel #total {
-  font-size: 20px;
-  font-weight: 700;
-}
+.panel{ border: 2px solid #999; padding: 10px; min-width: 260px; background: #fafafa; }
+.panel-title{ font-weight: 700; margin-bottom: 6px; }
 
-.wait-note {
-  margin-top: 4px;
-  font-size: 14px;
-  color: #444;
-  line-height: 1.2;
-}
+.total-panel{ min-width: 120px; max-width: 150px; text-align: center; }
+.total-panel #total{ font-size: 20px; font-weight: 700; }
+.wait-note{ margin-top: 4px; font-size: 14px; color: #444; line-height: 1.2; }
 
-/* ========= 種類確率タグ ========= */
-#probability span {
-  display: inline-block;
-  padding: 2px 6px;
-  margin: 2px 4px 2px 0;
-  border-radius: 4px;
-  font-weight: 600;
-  color: #000;
-  border: 1px solid #aaa;
+/* 種類確率タグ */
+#probability span{
+  display: inline-block; padding: 2px 6px; margin: 2px 4px 2px 0;
+  border-radius: 4px; font-weight: 600; color: #000; border: 1px solid #aaa;
 }
-#probability .Default { background: #fff; }
-#probability .Gold { background: #ffffcc; }
-#probability .Diamond { background: #ccf5ff; }
-#probability .Rainbow { background: #ffcce5; }
-#probability .Halloween { background: #ffd1a6; }
-#probability .Other { background: #ddd; }
+#probability .Default{ background:#fff; }
+#probability .Gold{ background:#ffffcc; }
+#probability .Diamond{ background:#ccf5ff; }
+#probability .Rainbow{ background:#ffcce5; }
+#probability .Halloween{ background:#ffd1a6; }
+#probability .Other{ background:#ddd; }
 
-.notice {
-  margin-top: 40px;
-  text-align: left;
-  color: #333;
-  font-size: 13px;
-}
+.notice{ margin-top: 40px; text-align: left; color:#333; font-size:13px; }
 
 /* ========= スマホ最適化 ========= */
-@media (max-width: 600px) {
+@media (max-width: 600px){
   :root{
     --imgW: 54px;
     --imgH: 60px;
@@ -242,71 +166,41 @@ button.Other { background: #ddd; }
     --btnFS: 7.5px;
   }
 
-  #gallery {
-    grid-template-columns: repeat(6, 1fr);
+  #gallery{ grid-template-columns: repeat(6, 1fr); justify-items: center; }
+
+  #reset-btn{ margin-left: 12px; height: 28px; padding: 4px 10px; font-size: 12px; }
+
+  #selection-area{ justify-content: center; }
+  #selected-container{
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; width: 100%; max-width: 440px; margin: 0 auto;
     justify-items: center;
   }
 
-  #reset-btn {
-    margin-left: 12px;
-    height: 28px;
-    padding: 4px 10px;
-    font-size: 12px;
+  .selected-wrapper{
+    width: 120px; height: auto; padding: 3px; border-radius: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    background: #555; gap: 6px;
   }
 
-  #selection-area { justify-content: center; }
-  #selected-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    width: 100%;
-    max-width: 440px;
-    margin: 0 auto;
-    justify-items: center;
-  }
-
-  .selected-wrapper {
-    width: 120px;
-    height: auto;
-    padding: 3px;
-    border-radius: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #555;
-    gap: 6px;
-  }
-
-  /* ✅ スマホ時も未選択枠の高さ確保 */
-  .selected-wrapper:empty::before {
-    content: "";
-    display: block;
-    width: var(--imgW);
-    height: calc(var(--imgH) + 46px);
+  /* ✅ スマホでも未選択枠の高さを“画像＋帯＋ボタン相当”に合わせる */
+  .selected-wrapper:empty::before{
+    content: ""; display: block; width: var(--imgW);
+    height: calc(var(--imgH) + 12px + (var(--btnH) * 2) + 10px);
     background: #555;
   }
 
-  /* ✅ スマホで数値帯を画像内に収める */
-  .value-label {
-    font-size: 8px;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: var(--imgW);
-    height: 12px;
-    line-height: 12px;
+  /* ✅ 帯を画像内に確実に収める（中央揃え不要：幅100%でOK） */
+  .value-label{
+    font-size: 9px; height: 12px; line-height: 12px;
+    width: 100%; left: 0; transform: none;
   }
 
-  .button-container { gap: 4px; margin-top: 5px; }
-  .button-container button {
-    width: var(--btnW);
-    height: var(--btnH);
-    font-size: var(--btnFS);
-  }
+  .button-container{ gap: 4px; margin-top: 6px; }
+  .button-container button{ width: var(--btnW); height: var(--btnH); font-size: var(--btnFS); }
 
-  #stats { display: flex; flex-wrap: wrap; }
-  #stats .panel:nth-child(2) { order: 1; width: 100%; }
-  #stats .panel:nth-child(1) { order: 2; flex: 1 1 calc(50% - 6px);}
-  #stats .total-panel        { order: 2; flex: 1 1 calc(50% - 6px);}
+  #stats{ display: flex; flex-wrap: wrap; }
+  #stats .panel:nth-child(2){ order: 1; width: 100%; }
+  #stats .panel:nth-child(1){ order: 2; flex: 1 1 calc(50% - 6px); }
+  #stats .total-panel       { order: 2; flex: 1 1 calc(50% - 6px); }
 }
