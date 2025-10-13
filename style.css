@@ -2,13 +2,12 @@
 :root{
   --imgW: 110px;
   --imgH: 120px;
-  --labelH: 18px;      /* value帯の高さ */
-  --slotGap: 6px;      /* ボタンの行間 */
+  --labelH: 18px;
+  --slotGap: 6px;
   --slotMinW: 134px;
-
   --btnW: 58px;
   --btnH: 28px;
-  --btnFS: 11px;       /* PCのボタン文字サイズ */
+  --btnFS: 11px;
 }
 
 body {
@@ -17,25 +16,41 @@ body {
   background-color: #e6f5e1;
 }
 
-h2 { margin: 0; font-size: 22px; }
-
-.section-header { display: flex; align-items: center; margin: 18px 0 8px; }
-
-#reset-btn {
-  background: #d10000; color: #fff; font-weight: 900; border: none;
-  padding: 6px 12px; height: 32px; cursor: pointer; border-radius: 4px;
-  letter-spacing: 1px; margin-left: 50px;
-}
-
 /* ========= ナビバー ========= */
 .navbar {
-  background-color: #2f4f4f; color: white; display: flex; justify-content: space-between;
-  align-items: center; padding: 12px 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  background-color: #2f4f4f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .nav-title { font-size: 20px; font-weight: bold; }
 .nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
 .nav-links a { color: white; text-decoration: none; font-weight: 500; }
 .nav-links a:hover { text-decoration: underline; }
+
+h2 { margin: 0; font-size: 22px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin: 18px 0 8px;
+}
+
+#reset-btn {
+  background: #d10000;
+  color: #fff;
+  font-weight: 900;
+  border: none;
+  padding: 6px 12px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  margin-left: 50px;
+}
 
 /* ========= ギャラリー ========= */
 #gallery {
@@ -44,94 +59,86 @@ h2 { margin: 0; font-size: 22px; }
   gap: 6px;
 }
 
-/* 画像コンテナ（ギャラリー＆選択共通） */
-.imgbox{
+.imgbox {
   position: relative;
   width: var(--imgW);
-  height: var(--imgH);
+  height: calc(var(--imgH) + var(--labelH));
 }
 
-.gallery-img,
-.selected-img{
-  width: var(--imgW);
+.gallery-img, .selected-img {
+  width: 100%;
   height: var(--imgH);
   object-fit: cover;
   display: block;
-  cursor: pointer;
-
-  /* 帯と幅を一致させるために境界線も含めて箱の内側で完結させる */
   box-sizing: border-box;
+  cursor: pointer;
 }
+.gallery-img { border: 1px solid #ccc; }
+.selected-img { border: 5px solid black; }
 
-.gallery-img{
-  border: 1px solid #ccc;
-}
-
-.selected-img{
-  border: 5px solid black;  /* 色はJSで変更 */
-}
-
-.gallery-img:active,
-.selected-img:active {
+.gallery-img:active, .selected-img:active {
   filter: brightness(60%);
   transition: filter 0.1s ease;
+}
+
+/* ========= value帯 ========= */
+.value-label {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: var(--labelH);
+  background: rgba(0,0,0,0.8);
+  color: #ffeb3b;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: var(--labelH);
+  user-select: none;
+  pointer-events: none;
 }
 
 /* ========= 選択欄 ========= */
 #selection-area { display: flex; align-items: flex-end; margin-bottom: 12px; }
 #selected-container { display: flex; gap: 8px; justify-content: center; }
 
-/* ★ 枠の見た目を “常に” 一定に：未選択でも高さが保たれる */
-.selected-wrapper{
+.selected-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #555;
   padding: 6px;
   min-width: var(--slotMinW);
-
-  /* 画像＋帯＋ボタン3段（2列×3段）＋行間2つ＋余白の合計を最低高さに */
-  min-height: calc(
-    var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2) + 12px
-  );
+  min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 18px);
 }
 
-/* 未選択でも高さを維持（旧 :empty::before は廃止してOK） */
-.selected-wrapper:empty::before{
+.selected-wrapper:empty::before {
   content: "";
   display: block;
   width: var(--imgW);
-  height: calc(
-    var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2)
-  );
+  height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 18px);
   background: #555;
 }
 
-/* ========= 黒帯＋黄色文字（valueラベル） ========= */
-.value-label{
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: var(--labelH);
-  background: rgba(0,0,0,0.8);
-  color: #ffeb3b;
-  font-size: 12px; font-weight: bold;
-  text-align: center; line-height: var(--labelH);
-  user-select: none; pointer-events: none;
-}
-
-/* ========= ボタン（2列×3段） ========= */
-.button-container{
+/* ========= ボタン ========= */
+.button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--slotGap);
   width: 100%;
   justify-items: center;
-  margin-top: 12px; /* PCで画像とボタンの間を少し広めに */
+  margin-top: 10px;
 }
-.button-container button{
-  width: var(--btnW); height: var(--btnH);
-  border: 1px solid #888; cursor: pointer;
-  font-size: var(--btnFS); color: #000 !important; -webkit-text-fill-color: #000 !important;
-  display: flex; justify-content: center; align-items: center;
+.button-container button {
+  width: var(--btnW);
+  height: var(--btnH);
+  border: 1px solid #888;
+  cursor: pointer;
+  font-size: var(--btnFS);
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button.Default { background: #fff; color: #000; }
@@ -142,88 +149,117 @@ button.Halloween { background: #ffd1a6; font-size: calc(var(--btnFS) - 0.5px); }
 button.Other { background: #ddd; }
 
 /* ========= 結果欄 ========= */
-#stats{ display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-#stats .panel:nth-child(1) { order: 2; }  /* Secret */
-#stats .panel:nth-child(2) { order: 1; }  /* 種類 */
-
-.panel{ border: 2px solid #999; padding: 10px; min-width: 260px; background: #fafafa; }
-.panel-title{ font-weight: 700; margin-bottom: 6px; }
-
-.total-panel{ min-width: 120px; max-width: 150px; text-align: center; }
-.total-panel #total{ font-size: 20px; font-weight: 700; }
-.wait-note{ margin-top: 4px; font-size: 14px; color: #444; line-height: 1.2; }
-
-/* 種類確率タグ */
-#probability span{
-  display: inline-block; padding: 2px 6px; margin: 2px 4px 2px 0;
-  border-radius: 4px; font-weight: 600; color: #000; border: 1px solid #aaa;
+#stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
 }
-#probability .Default{ background:#fff; }
-#probability .Gold{ background:#ffffcc; }
-#probability .Diamond{ background:#ccf5ff; }
-#probability .Rainbow{ background:#ffcce5; }
-#probability .Halloween{ background:#ffd1a6; }
-#probability .Other{ background:#ddd; }
+#stats .panel:nth-child(1) { order: 2; }
+#stats .panel:nth-child(2) { order: 1; }
 
-.notice{ margin-top: 40px; text-align: left; color:#333; font-size:13px; }
+.panel {
+  border: 2px solid #999;
+  padding: 10px;
+  min-width: 260px;
+  background: #fafafa;
+}
+.panel-title { font-weight: 700; margin-bottom: 6px; }
 
-/* ========= スマホ最適化 ========= */
-@media (max-width: 600px){
+.total-panel { min-width: 120px; max-width: 150px; text-align: center; }
+.total-panel #total { font-size: 20px; font-weight: 700; }
+.wait-note { margin-top: 4px; font-size: 14px; color: #444; line-height: 1.2; }
+
+/* ========= 種類確率タグ ========= */
+#probability span {
+  display: inline-block;
+  padding: 2px 6px;
+  margin: 2px 4px 2px 0;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #000;
+  border: 1px solid #aaa;
+}
+#probability .Default { background: #fff; }
+#probability .Gold { background: #ffffcc; }
+#probability .Diamond { background: #ccf5ff; }
+#probability .Rainbow { background: #ffcce5; }
+#probability .Halloween { background: #ffd1a6; }
+#probability .Other { background: #ddd; }
+
+.notice {
+  margin-top: 40px;
+  text-align: left;
+  color: #333;
+  font-size: 13px;
+}
+
+/* ========= スマホ最適化（横3×縦2表示） ========= */
+@media (max-width: 600px) {
   :root{
-    --imgW: 54px;
-    --imgH: 60px;
+    --imgW: 70px;      /* ← 以前より大きめに戻す */
+    --imgH: 80px;
     --labelH: 12px;
     --slotGap: 4px;
-
     --slotMinW: 80px;
     --btnW: 46px;
     --btnH: 22px;
-    --btnFS: 7.5px;
+    --btnFS: 8px;
   }
 
-  #gallery{ grid-template-columns: repeat(6, 1fr); justify-items: center; }
-
-  #reset-btn{ margin-left: 12px; height: 28px; padding: 4px 10px; font-size: 12px; }
-
-  #selection-area{ justify-content: center; }
-  #selected-container{
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 8px; width: 100%; max-width: 440px; margin: 0 auto;
+  #gallery {
+    grid-template-columns: repeat(6, 1fr);
     justify-items: center;
   }
 
-  .selected-wrapper{
-    width: 120px; padding: 3px; border-radius: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-    background: #555; gap: var(--slotGap);
-
-    /* ★ スマホでも同じ最低高さを強制 */
-    min-height: calc(
-      var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2) + 10px
-    );
+  /* 選択欄 3×2 グリッド */
+  #selected-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    justify-items: center;
   }
 
-  /* 未選択でも高さを維持 */
-  .selected-wrapper:empty::before{
-    content: ""; display: block; width: var(--imgW);
-    height: calc(
-      var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2)
-    );
+  .selected-wrapper {
+    width: 120px;
+    min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 14px);
+    padding: 3px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .selected-wrapper:empty::before {
+    content: "";
+    display: block;
+    width: var(--imgW);
+    height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 14px);
     background: #555;
   }
 
-  /* 帯は画像幅に100%で追従（ズレ防止） */
-  .value-label{
-    font-size: 9px;
-    width: 100%; left: 0; transform: none;
-    height: var(--labelH); line-height: var(--labelH);
+  .imgbox {
+    width: var(--imgW);
+    height: calc(var(--imgH) + var(--labelH));
   }
 
-  .button-container{ gap: var(--slotGap); margin-top: 6px; }
-  .button-container button{ width: var(--btnW); height: var(--btnH); font-size: var(--btnFS); }
+  .value-label {
+    font-size: 9px;
+    height: var(--labelH);
+    line-height: var(--labelH);
+  }
 
-  #stats{ display: flex; flex-wrap: wrap; }
-  #stats .panel:nth-child(2){ order: 1; width: 100%; }
-  #stats .panel:nth-child(1){ order: 2; flex: 1 1 calc(50% - 6px); }
-  #stats .total-panel       { order: 2; flex: 1 1 calc(50% - 6px); }
+  /* Resultエリア整列（種類→Secret&合計 横並び） */
+  #stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #stats .panel:nth-child(2) { order: 1; width: 100%; }
+  #stats .panel:nth-child(1),
+  #stats .total-panel {
+    order: 2;
+    flex: 1 1 calc(50% - 6px);
+  }
 }
