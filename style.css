@@ -1,20 +1,13 @@
 /* ========= ベース設定 ========= */
 :root{
-  /* PCの画像サイズ（Monster / Select 共通） */
   --imgW: 110px;
   --imgH: 120px;
-
-  /* 黒帯（value） */
   --labelH: 18px;
-
-  /* Select枠・ボタン */
   --slotMinW: 134px;
-  --gapImgButtons: 4px;    /* 画像とボタンの隙間は常に4px */
+  --gapImgButtons: 4px;
   --btnW: 58px;
   --btnH: 28px;
   --btnFS: 11px;
-
-  /* ボーダー（PC既定）→ 画像ではなく .imgbox に当てる */
   --galleryBorderW: 1px;
   --galleryBorderC: #ccc;
   --selectedBorderW: 5px;
@@ -27,7 +20,7 @@ body{
   background-color: #e6f5e1;
 }
 
-/* ========= 見出し（Monster / Select / Result） ========= */
+/* ========= 見出し ========= */
 h2{ margin: 0; font-size: 22px; }
 .section-header{
   display:flex;
@@ -35,7 +28,6 @@ h2{ margin: 0; font-size: 22px; }
   gap:12px;
   margin:18px 0 8px;
 }
-/* RESETボタン：Select見出しの横に赤背景・白太文字で配置 */
 #reset-btn{
   background:#d10000;
   color:#fff;
@@ -64,27 +56,26 @@ h2{ margin: 0; font-size: 22px; }
 .nav-links a{ color:#fff; text-decoration:none; font-weight:500; }
 .nav-links a:hover{ text-decoration:underline; }
 
-/* ========= 画像コンテナ（Monster/Select 共通：ここで寸法固定 & 枠線） ========= */
+/* ========= 画像コンテナ ========= */
 .imgbox{
   position:relative;
   width:var(--imgW);
   height:var(--imgH);
-  margin:0 auto;        /* 枠内で中央配置（Selectの中央寄せ条件を満たす） */
+  margin:0 auto;
   box-sizing:border-box;
-  overflow:hidden;      /* 帯をはみ出させない保険 */
+  overflow:hidden;
 }
-/* ギャラリー用とセレクト用で枠線を切り替える（帯は常に内側100%でOK） */
 .imgbox--gallery{
   border: var(--galleryBorderW) solid var(--galleryBorderC);
 }
-/* 既存の .imgbox--selected をこれに置き換え */
 .imgbox--selected{
-  /* border: var(--selectedBorderW) solid var(--selectedBorderC); ←削除 */
-  border: none;            /* ← 最初は枠なしにする */
-  margin-bottom: 7px;      /* 画像とボタンの間に余白（≈3px増し） */
+  border:none;
+  margin-bottom:7px;
+  position:relative;
+  z-index:0; /* 帯より下にしない（次で調整） */
 }
 
-/* 実画像は .imgbox の内側100%にフィット（画像側には枠線を当てない） */
+/* ========= 画像 ========= */
 .gallery-img, .selected-img{
   width:100%;
   height:100%;
@@ -92,10 +83,11 @@ h2{ margin: 0; font-size: 22px; }
   display:block;
   box-sizing:border-box;
   cursor:pointer;
-  transition: border-color 0.2s ease; /* ボタン押下時の縁色変化を反映 */
+  transition:filter 0.1s ease, border 0.2s ease;
+  z-index:1; /* 画像を最前面へ */
 }
 
-/* 押下フィードバック */
+/* 🔸クリック時に暗く（スマホ対応強化） */
 .gallery-img:active, .selected-img:active{
   filter:brightness(60%);
   transition:filter 0.1s ease;
@@ -109,8 +101,7 @@ h2{ margin: 0; font-size: 22px; }
   gap:6px;
 }
 
-/* ========= 黒帯（value ラベル：Monster/Select 共通） ========= */
-/* 帯は .imgbox の内側で 0,0 から 100% → 枠線の有無に影響されない */
+/* ========= 黒帯（value ラベル） ========= */
 .value-label{
   position:absolute;
   top:0; left:0;
@@ -124,9 +115,8 @@ h2{ margin: 0; font-size: 22px; }
   line-height:var(--labelH);
   user-select:none;
   pointer-events:none;
-  border-top-left-radius:2px;
-  border-top-right-radius:2px;
-  white-space: nowrap; /* 改行防止 */
+  white-space:nowrap;
+  z-index:2; /* 🔸帯を縁の下にしないよう最前面に */
 }
 
 /* ========= Select（選択済み） ========= */
@@ -134,19 +124,15 @@ h2{ margin: 0; font-size: 22px; }
 #selected-container{
   display:flex;
   gap:8px;
-  justify-content:center;   /* PCは中央寄せのまま */
+  justify-content:center;
 }
-
 .selected-wrapper{
-  position:relative;
   background:#555;
   display:flex;
   flex-direction:column;
   align-items:center;
   padding:6px;
-  padding-bottom: 6px; /* 枠下に少し余裕を追加 */
   min-width:var(--slotMinW);
-  /* 画像 + 隙間 + ボタン3段 + 余白 */
   min-height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
   box-sizing:border-box;
 }
@@ -157,14 +143,9 @@ h2{ margin: 0; font-size: 22px; }
   height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
   background:#555;
 }
-/* 画像とボタンの隙間は常に4px */
-/* 既存の .gallery-img, .selected-img に追記（または selected-img 用に追加） */
-.selected-img{
-  border: 0 solid transparent;  /* ← 初期は枠なし */
-  transition: border-color 0.2s ease, border-width 0.2s ease;
-}
+.selected-img{ margin-bottom: var(--gapImgButtons); }
 
-/* ========= ボタン（2列×最大3段） ========= */
+/* ========= ボタン ========= */
 .button-container{
   display:grid;
   grid-template-columns: repeat(2, 1fr);
@@ -191,17 +172,17 @@ button.Rainbow{ background:#ffcce5; }
 button.Halloween{ background:#ffd1a6; }
 button.Other{ background:#ddd; }
 
-/* ========= Result（結果） ========= */
+/* ========= Result ========= */
 #stats{
   display:flex;
   flex-wrap:wrap;
   gap:12px;
   margin-bottom:16px;
-  justify-content:flex-start;   /* PCで左寄せに固定 */
+  justify-content:flex-start;
   align-items:flex-start;
 }
 .panel{
-  border:2px solid #999;        /* 枠で囲む（維持） */
+  border:2px solid #999;
   padding:10px;
   min-width:260px;
   background:#fafafa;
@@ -211,7 +192,7 @@ button.Other{ background:#ddd; }
 .total-panel #total{ font-size:20px; font-weight:700; }
 .wait-note{ margin-top:4px; font-size:14px; color:#444; line-height:1.2; }
 
-/* 種類確率の色バッジ（背景色あり） */
+/* ========= 種類確率バッジ ========= */
 #probability span{
   display:inline-block;
   padding:2px 6px;
@@ -230,44 +211,36 @@ button.Other{ background:#ddd; }
 
 .notice{ margin-top:40px; text-align:left; color:#333; font-size:13px; }
 
-/* ========= スマホ最適化（Monster / Select 完全一致） ========= */
+/* ========= スマホ最適化 ========= */
 @media (max-width: 600px){
   :root{
-    /* Monster / Select 共通のスマホ画像サイズ（小さめに統一） */
     --imgW: 60px;
     --imgH: 66px;
     --labelH: 12px;
-
-    /* ボタン／枠サイズ（はみ出さないよう再計算） */
-    --slotMinW: 128px;           /* ← ボタン2列が確実に収まる幅 */
+    --slotMinW: 128px;
     --btnW: 52px;
     --btnH: 22px;
     --btnFS: 8px;
-
-    /* スマホ用の枠線（見やすさ） */
     --galleryBorderW: 1px;
     --galleryBorderC: #ccc;
     --selectedBorderW: 3px;
     --selectedBorderC: #000;
   }
 
+  /* 🔸Monster欄：画像間を3pxに */
   #gallery{
     grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
     justify-items:center;
-    gap:5px;
+    gap:3px; /* ← 修正：間隔3px */
   }
 
-  /* 念のため：直 img でも .imgbox と同寸にロック（保険） */
   img.gallery-img, img.selected-img{
     width: var(--imgW) !important;
     height: var(--imgH) !important;
-    max-width: var(--imgW) !important;
-    max-height: var(--imgH) !important;
     object-fit: contain !important;
-    box-sizing: border-box !important;
   }
 
-  /* Select：3列×2段（5枠） */
+  /* Select：3列×2段 */
   #selected-container{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
@@ -279,11 +252,10 @@ button.Other{ background:#ddd; }
   }
 
   .selected-wrapper{
-    width: calc((var(--btnW) * 2) + 24px);  /* 52*2 + 24 = 128px */
+    width: calc((var(--btnW) * 2) + 24px);
     height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 26px);
     background:#555;
     padding:4px;
-    padding-bottom:6px; /* 余白を確保 */
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -291,25 +263,25 @@ button.Other{ background:#ddd; }
     overflow:hidden;
     box-sizing:border-box;
   }
-  .selected-wrapper:empty::before{
-    content:"";
-    display:block;
-    width: var(--imgW);
-    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 26px);
-    background:#555;
-  }
 
-  /* 帯フォントサイズを少し小さくし、改行防止 */
+  /* 🔸帯が枠に完全一致するように */
   .value-label{
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
     font-size:8px;
-    white-space:nowrap;
-    line-height:1.1;
-    padding:1px 0;
+    z-index:2;
   }
 
-  /* ボタン押下時の反応（見た目改善） */
-  .button-container button:active {
-    transform: scale(0.96);
-    opacity: 0.9;
+  /* クリック時暗くなる（スマホにも反映） */
+  .gallery-img:active, .selected-img:active{
+    filter:brightness(60%);
+    transition:filter 0.1s ease;
+  }
+
+  /* 🔸画像の縁が帯に隠れないように */
+  .selected-img{
+    position:relative;
+    z-index:3; /* 帯より上に表示 */
   }
 }
