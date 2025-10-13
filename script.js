@@ -56,7 +56,19 @@ let selectedColors = [null, null, null, null, null];
 // ========== 基本確率 ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
-// ギャラリー生成
+// ========== ユーティリティ：タッチ/クリックの暗転クラス付与 ==========
+function attachPressFeedback(el) {
+  const add = () => el.classList.add('pressed');
+  const rm  = () => el.classList.remove('pressed');
+  el.addEventListener('touchstart', add, {passive:true});
+  el.addEventListener('touchend', rm, {passive:true});
+  el.addEventListener('touchcancel', rm, {passive:true});
+  el.addEventListener('mousedown', add);
+  el.addEventListener('mouseup', rm);
+  el.addEventListener('mouseleave', rm);
+}
+
+// ========== ギャラリー生成 ==========
 images.forEach((imgObj) => {
   const box = document.createElement('div');
   box.className = 'imgbox imgbox--gallery';
@@ -65,6 +77,7 @@ images.forEach((imgObj) => {
   img.src = imgObj.src;
   img.alt = imgObj.src.split('/').pop();
   img.className = 'gallery-img';
+  attachPressFeedback(img); // ← スマホでも暗転させる
 
   const label = document.createElement('div');
   label.className = 'value-label';
@@ -84,7 +97,7 @@ images.forEach((imgObj) => {
   gallery.appendChild(box);
 });
 
-// ========== 選択エリア描画 ==========
+// ========== 選択エリア描画（画像→帯→縁 の順に重ねる） ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
@@ -94,20 +107,35 @@ function renderSelected() {
       const box = document.createElement('div');
       box.className = 'imgbox imgbox--selected';
 
+      // 画像（最下層）
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      img.style.border = "0 solid transparent"; // 初期は枠なし
+      attachPressFeedback(img); // ← スマホでも暗転
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
+      // 帯（中層）
       const label = document.createElement('div');
       label.textContent = `${imgObj.value} K/s`;
       label.className = 'value-label';
       box.appendChild(label);
 
+      // 縁（最上層）：オーバーレイリング
+      const ring = document.createElement('div');
+      ring.className = 'border-ring'; // CSSで絶対配置＆z-index:3
+      // すでに色が選ばれていれば再現
+      if (selectedColors[idx]) {
+        const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
+        ring.style.border = `${bw}px solid ${getButtonColor(selectedColors[idx])}`;
+      } else {
+        ring.style.border = '0px solid transparent'; // 初期は枠なし
+      }
+      box.appendChild(ring);
+
       wrapper.appendChild(box);
 
+      // ボタン群
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
       ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
@@ -117,8 +145,8 @@ function renderSelected() {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           selectedColors[idx] = type;
-          const bw = window.matchMedia('(max-width: 600px)').matches ? '3px' : '5px';
-          img.style.border = `${bw} solid ${getButtonColor(type)}`;
+          const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
+          ring.style.border = `${bw}px solid ${getButtonColor(type)}`; // ← 縁は常に最上層
           updateAll();
         });
         btnContainer.appendChild(btn);
@@ -126,8 +154,10 @@ function renderSelected() {
       wrapper.appendChild(btnContainer);
 
     } else {
+      // 未選択時のプレースホルダ（画像と帯分の高さを確保）
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
+      // 画像なしでも重なり順の箱は確保（帯や縁は不要）
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
