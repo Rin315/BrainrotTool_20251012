@@ -7,10 +7,10 @@ const images = [
   { src: './img/ecco.png', value: 110 },
   { src: './img/losvaguitas.png', value: 115 },
   { src: './img/bulbito.png', value: 120 },
-  { src: './img/bambini.png', value: 130 },
   { src: './img/brri.png', value: 135 },
   { src: './img/brrestrh.png', value: 145 },
   { src: './img/torrtuginni.png', value: 150 },
+  { src: './img/bambini.png', value: 160 },
   { src: './img/los.png', value: 170 },
   { src: './img/alessio.png', value: 180 },
   { src: './img/karkerkar.png', value: 190 },
@@ -45,6 +45,8 @@ const totalEl = document.getElementById('total');
 const typeProbEl = document.getElementById('probability');
 const secretProbEl = document.getElementById('secret-probability');
 const resetBtn = document.getElementById('reset-btn');
+const totalValueEl = document.getElementById('total-value');
+const totalWaitEl  = document.getElementById('total-wait');
 
 // 状態
 let selectedImages = [null, null, null, null, null];
@@ -138,10 +140,35 @@ function updateAll(){
   updateTypeProbability();
 }
 
-// 合計
-function updateTotal(){
-  const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
-  totalEl.textContent = sum;
+function updateTotal() {
+  // 合計（DOMは読まず、選択配列から算出）
+  const sum = selectedImages.reduce((acc, img) => acc + Number(img.value || 0), 0);
+
+  // 数値だけを更新（リアルタイム安定）
+  if (totalValueEl) totalValueEl.textContent = sum;
+
+  // Wait 表示（条件は「超えた場合」なので > を使用）
+  let waitText = "(Wait 1h0m)";
+  if (sum > 50000) {
+    waitText = "(Wait 2h0m)";
+  } else if (sum > 10000) {
+    waitText = "(Wait 1h30m)";
+  }
+  if (totalWaitEl) totalWaitEl.textContent = waitText;
+
+  // Secret確率（①）
+  if (sum >= 1001) {
+    probabilityEl.textContent = "Secret：100%";
+  } else if (sum >= 751) {
+    probabilityEl.textContent = "Secret：75% BrainrotGod：25%";
+  } else if (sum >= 501) {
+    probabilityEl.textContent = "BrainrotGod：60% Secret：40%";
+  } else {
+    probabilityEl.textContent = "Secret：5%以下";
+  }
+
+  // 種類確率（②）
+  updateTypeProbability();
 }
 
 // ① Secret確率（合計による段階表示）
