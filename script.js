@@ -182,7 +182,7 @@ function updateTotal() {
 
   // Wait条件を変更：750超で1h30m
   let waitText = "(Wait 1h0m)";
-  if (sum > 50000) waitText = "(Wait 2h0m)";
+  if (sum > 5000) waitText = "(Wait 2h0m)";
   else if (sum > 750) waitText = "(Wait 1h30m)";
 
   totalWaitEl.textContent = waitText;
