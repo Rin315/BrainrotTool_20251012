@@ -116,51 +116,54 @@ images.forEach((imgObj) => {
 });
 
 // ========== 選択エリア描画（画像→帯→縁=outline の順 / 縁は画像外側） ==========
+// ========== 選択エリア描画 ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
     const imgObj = selectedImages[idx];
 
     if (imgObj) {
+      // 画像と帯を含むコンテナ
       const box = document.createElement('div');
       box.className = 'imgbox imgbox--selected';
-      attachPressFeedbackBox(box); // ← 枠ごと縮小でスマホでも綺麗
 
-      // 画像（最下）
+      // 画像本体
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      // 画像自体にはボーダーを当てない（数字帯や押下でズレる問題を避ける）
-      img.style.border = "0 solid transparent";
+      img.style.objectFit = 'cover'; // ← 縁と画像の間に隙間を作らない
+      const color = selectedColors[idx] || 'Default'; // ← 既定でDefaultに
+      selectedColors[idx] = color; // ← 自動的にDefault状態に設定
+      img.style.outline = `3px solid ${getButtonColor(color)}`; // ← Default縁を追加
+
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
-      // 数値帯（中）
+      // 値ラベル（黒帯＋黄色文字＋単位 K/s）
       const label = document.createElement('div');
       label.textContent = `${imgObj.value} K/s`;
       label.className = 'value-label';
       box.appendChild(label);
 
-      // 縁（外側 / outlineで画像の外につける → 数字に被らない）
-      applyOutline(box, idx);
-
-      // DOMに追加
+      // コンテナを枠に追加
       wrapper.appendChild(box);
 
-      // ボタン群（このスロットだけ更新）
+      // ボタン群
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
       ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
+
+        // 押下イベント：縁色変更＆確率再計算
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
-          selectedColors[idx]  = type;     // ← この idx だけ更新
-          selectedHasBorder[idx] = true;    // ← 枠を表示
-          applyOutline(box, idx);           // ← 見た目即時反映（外枠）
-          updateAll();                      // ← 計算更新
+          selectedColors[idx] = type;
+          img.style.outline = `3px solid ${getButtonColor(type)}`;
+          updateAll();
         });
+
         btnContainer.appendChild(btn);
       });
       wrapper.appendChild(btnContainer);
@@ -169,13 +172,12 @@ function renderSelected() {
       // 未選択時のプレースホルダ
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
-      // 縁は表示しない
-      ph.style.outline = 'none';
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
   });
 }
+
 
 // 画像外側の枠（outline）を適用
 function applyOutline(boxEl, idx){

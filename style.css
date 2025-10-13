@@ -275,10 +275,17 @@ button.Other{ background:#ddd; }
     transition:filter 0.1s ease;
   }
 
-  .selected-img{
-    position:relative;
-    z-index:3;
-  }
+ .selected-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ← contain → cover に変更 */
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: filter 0.1s ease, border 0.2s ease;
+  z-index: 1;
+}
+
 
   .gallery-img,
   .selected-img {
