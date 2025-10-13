@@ -16,21 +16,6 @@ body {
   background-color: #e6f5e1;
 }
 
-/* ========= ナビバー ========= */
-.navbar {
-  background-color: #2f4f4f;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.nav-title { font-size: 20px; font-weight: bold; }
-.nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
-.nav-links a { color: white; text-decoration: none; font-weight: 500; }
-.nav-links a:hover { text-decoration: underline; }
-
 h2 { margin: 0; font-size: 22px; }
 
 .section-header {
@@ -52,10 +37,26 @@ h2 { margin: 0; font-size: 22px; }
   margin-left: 50px;
 }
 
-/* ========= ギャラリー ========= */
+/* ========= ナビバー ========= */
+.navbar {
+  background-color: #2f4f4f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.nav-title { font-size: 20px; font-weight: bold; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
+.nav-links a { color: white; text-decoration: none; font-weight: 500; }
+.nav-links a:hover { text-decoration: underline; }
+
+/* ========= ギャラリー（Monster欄） ========= */
 #gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+  justify-items: center;
   gap: 6px;
 }
 
@@ -68,7 +69,7 @@ h2 { margin: 0; font-size: 22px; }
 .gallery-img, .selected-img {
   width: 100%;
   height: var(--imgH);
-  object-fit: cover;
+  object-fit: contain; /* ← 比率維持でトリミング防止 */
   display: block;
   box-sizing: border-box;
   cursor: pointer;
@@ -97,7 +98,7 @@ h2 { margin: 0; font-size: 22px; }
   pointer-events: none;
 }
 
-/* ========= 選択欄 ========= */
+/* ========= 選択欄（Select） ========= */
 #selection-area { display: flex; align-items: flex-end; margin-bottom: 12px; }
 #selected-container { display: flex; gap: 8px; justify-content: center; }
 
@@ -126,7 +127,7 @@ h2 { margin: 0; font-size: 22px; }
   gap: var(--slotGap);
   width: 100%;
   justify-items: center;
-  margin-top: 10px;
+  margin-top: 13px; /* ← PC時 画像とボタンの間を3px広げる */
 }
 .button-container button {
   width: var(--btnW);
@@ -148,7 +149,7 @@ button.Rainbow { background: #ffcce5; }
 button.Halloween { background: #ffd1a6; font-size: calc(var(--btnFS) - 0.5px); }
 button.Other { background: #ddd; }
 
-/* ========= 結果欄 ========= */
+/* ========= 結果欄（Result） ========= */
 #stats {
   display: flex;
   flex-wrap: wrap;
@@ -194,10 +195,10 @@ button.Other { background: #ddd; }
   font-size: 13px;
 }
 
-/* ========= スマホ最適化（横3×縦2表示） ========= */
+/* ========= スマホ最適化（Monster ＝ 自動列数 / Select ＝ 3×2） ========= */
 @media (max-width: 600px) {
   :root{
-    --imgW: 70px;      /* ← 以前より大きめに戻す */
+    --imgW: 70px;
     --imgH: 80px;
     --labelH: 12px;
     --slotGap: 4px;
@@ -207,12 +208,14 @@ button.Other { background: #ddd; }
     --btnFS: 8px;
   }
 
+  /* Monster欄は自動列数で横スクロール防止 */
   #gallery {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
     justify-items: center;
+    gap: 5px;
   }
 
-  /* 選択欄 3×2 グリッド */
+  /* Select欄：3列×2段 */
   #selected-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -221,6 +224,12 @@ button.Other { background: #ddd; }
     max-width: 440px;
     margin: 0 auto;
     justify-items: center;
+  }
+
+  .selected-img {
+    object-fit: contain; /* ← トリミング防止 */
+    width: var(--imgW);
+    height: var(--imgH);
   }
 
   .selected-wrapper {
@@ -239,18 +248,13 @@ button.Other { background: #ddd; }
     background: #555;
   }
 
-  .imgbox {
-    width: var(--imgW);
-    height: calc(var(--imgH) + var(--labelH));
-  }
-
   .value-label {
     font-size: 9px;
     height: var(--labelH);
     line-height: var(--labelH);
   }
 
-  /* Resultエリア整列（種類→Secret&合計 横並び） */
+  /* Result欄の整列（種類→Secret＆合計 横並び） */
   #stats {
     display: flex;
     flex-wrap: wrap;
