@@ -7,14 +7,13 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="nav-title">Brainrot Tool</div>
-    <nav class="nav-links">
-      <a href="index.html">トップページ</a>
-      <a href="privacy.html">プライバシーポリシー</a>
-      <a href="contact.html">お問い合わせ</a>
-    </nav>
-  </header>
+  <!-- ✅ 共通ナビバー読み込み -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("navbar").innerHTML = html);
+  </script>
 
   <main style="padding: 20px;">
     <h2>プライバシーポリシー</h2>

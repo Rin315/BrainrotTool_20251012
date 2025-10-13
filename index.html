@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>BrainrotMachine計算ツール</title>
-  <link rel="icon" type="image/png" href="./img/trarafabicon.PNG">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brainrot Tool</title>
-  <link href="./style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainrot Probability</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="img/trarafabicon.PNG" type="image/png">
 </head>
 <body>
-    <!-- 🟢 タイトルバー -->
-<!-- ========= ナビバー ========= -->
-<div class="navbar">
-  <div class="nav-title">BrainrotMachine計算ツール</div>
-  <div class="nav-links">
-    <a href="./index.html">ホーム</a>
-    <a href="./calculation.html">計算の仕組み</a>
-    <a href="./privacy.html">プライバシーポリシー</a> <!-- ← 新リンク追加 -->
-    <a href="mailto:info@example.com">お問い合わせ</a>
-  </div>
-</div>
+
+  <!-- ✅ 共通ナビバー読み込み -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("navbar").innerHTML = html);
+  </script>
 
 
   <div class="section-header">
