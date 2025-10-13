@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>確率シミュレーターの仕組みと計算ロジック</title>
+  <link rel="icon" type="image/png" href="./img/trarafabicon.PNG" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #f7faf7;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      color: #222;
+      line-height: 1.7;
+      margin: 20px;
+    }
+    h1, h2, h3 {
+      color: #2f4f4f;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      margin-top: 36px;
+      font-size: 20px;
+      border-left: 6px solid #2f4f4f;
+      padding-left: 8px;
+    }
+    p {
+      margin-bottom: 14px;
+    }
+    ul {
+      margin-left: 24px;
+      margin-bottom: 12px;
+    }
+    .highlight {
+      background: #e6f5e1;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #c4e3c2;
+    }
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <h1>確率シミュレーターの仕組みと計算ロジック</h1>
+
+  <p>このページでは、本サイトに実装されている確率シミュレーターの内部ロジックや仕組みをわかりやすく解説します。  
+  数値やレアリティの変化がどのように確率へ反映されているかを知ることで、より深く楽しめるはずです。</p>
+
+  <h2>1. シミュレーターの基本構造</h2>
+  <p>シミュレーターでは、選択したモンスターやキャラクターの「価値（Value）」を元に、合計値を算出しています。  
+  各モンスターには固有の <strong>Value（価値スコア）</strong> が設定されており、選択した5体の合計に応じて、出現確率やシークレット発生率が変動します。</p>
+
+  <div class="highlight">
+    <strong>例：</strong><br>
+    ・合計が 500 以下 → Secret 出現率 約15%以下<br>
+    ・合計が 750〜1000 → Secret 出現率 75%、BrainrotGod 25%<br>
+    ・合計が 1000 以上 → Secret 確定（100%）
+  </div>
+
+  <h2>2. 色（レアリティ）ごとの確率補正</h2>
+  <p>各画像に設定できる「色ボタン（Default / Gold / Diamond / Rainbow / Halloween / Other）」は、内部的に確率を補正しています。</p>
+  <ul>
+    <li>Default：標準的な9%</li>
+    <li>Gold：ボーナス率が高め（約+10%）</li>
+    <li>Diamond：やや希少（+5%前後）</li>
+    <li>Rainbow / Halloween：特殊ボーナス（イベント時限定）</li>
+  </ul>
+  <p>選択した画像群の合計値に応じて、各色の割合が自動で再計算され、確率バッジに反映されます。</p>
+
+  <h2>3. 合計値と待機時間（Wait Time）</h2>
+  <p>合計値によって、結果が反映されるまでの待機時間を擬似的に設定しています。これは、ゲーム内でのレアリティ演出や成長速度のシミュレーションを再現するためです。</p>
+  <ul>
+    <li>合計が 750 以下：<strong>(Wait 1h0m)</strong></li>
+    <li>合計が 751〜5000：<strong>(Wait 1h30m)</strong></li>
+    <li>合計が 5001 以上：<strong>(Wait 2h0m)</strong></li>
+  </ul>
+
+  <h2>4. 表示上の工夫</h2>
+  <p>画像選択エリア（Select欄）は、モンスター画像と確率調整ボタンをわかりやすく並べた構成になっています。  
+  画像上部の黒帯に表示される数値（K/s）は、内部Valueを表しており、演出上は「生成速度」や「エネルギー効率」を意味します。</p>
+
+  <h2>5. よくある質問（FAQ）</h2>
+  <h3>Q1. この確率は実際のゲーム内確率と同じですか？</h3>
+  <p>いいえ。本シミュレーターの確率はあくまで参考値であり、ゲーム内の実際の抽選ロジックを再現したものではありません。</p>
+
+  <h3>Q2. 数値を変更したい場合は？</h3>
+  <p>本ツールはオープンソース構成に準じているため、JavaScriptファイル内の <code>images[]</code> 配列を編集すれば自由に調整できます。</p>
+
+  <h3>Q3. 広告掲載や収益化は可能ですか？</h3>
+  <p>Google AdSense等の利用を想定しています。サイトポリシーに違反しない限り、このページを情報コンテンツとして申請することで審査対象となります。</p>
+
+  <h2>6. 運営ポリシーと免責事項</h2>
+  <p>当サイトはユーザーの学習・分析・検証目的で提供されています。確率や結果を利用した損失やトラブルについては責任を負いかねます。</p>
+  <p>また、本サイトに掲載された画像・名称・数値はすべて非公式のものを含みます。</p>
+
+  <h2>7. 今後のアップデート予定</h2>
+  <ul>
+    <li>画像アップロードによるオリジナルキャラシミュレーション</li>
+    <li>履歴保存・共有機能の追加</li>
+    <li>スマホUIのさらなる改善</li>
+  </ul>
+
+  <p>ご意見や不具合報告などがありましたら、フィードバックフォームからお気軽にお知らせください。</p>
+
+  <footer>
+    © 2025 確率シミュレーター公式サイト（非公式プロジェクト）<br>
+    Created by ChatGPT 5 &lt;あなたのサイト名&gt;
+  </footer>
+</body>
+</html>
