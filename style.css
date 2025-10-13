@@ -14,6 +14,7 @@ body {
   background-color: #e6f5e1;
 }
 
+/* ========= 見出しなど ========= */
 h2 {
   margin: 0;
   font-size: 22px;
@@ -38,6 +39,7 @@ h2 {
   margin-left: 50px;
 }
 
+/* ========= ナビバー ========= */
 .navbar {
   background-color: #2f4f4f;
   color: white;
@@ -95,13 +97,14 @@ h2 {
   height: auto;
 }
 
-/* ✅ 未選択状態でも大きさを確保（画像＋ボタン相当） */
+/* ✅ 未選択状態の枠も選択時と同じ高さを確保 */
 .selected-wrapper:empty::before {
   content: "";
   display: block;
   width: var(--imgW);
-  height: calc(var(--imgH) + 60px); /* ← 高さを拡大して統一 */
+  height: calc(var(--imgH) + 70px); /* ← 画像＋ボタン分確保 */
   background: #555;
+  border-radius: 0;
 }
 
 .selected-wrapper div[style*="position: relative"] {
@@ -127,18 +130,15 @@ h2 {
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--imgW);
-  height: 18px;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   color: #ffeb3b;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
-  line-height: 18px;
+  padding: 2px 0;
   user-select: none;
   pointer-events: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
 }
 
 /* ========= ボタン ========= */
@@ -148,7 +148,7 @@ h2 {
   gap: 6px;
   width: 100%;
   justify-items: center;
-  margin-top: 9px; /* ← 画像との間に3px追加 */
+  margin-top: 9px;
 }
 .button-container button {
   width: var(--btnW);
@@ -207,6 +207,7 @@ button.Other { background: #ddd; }
   line-height: 1.2;
 }
 
+/* ========= 種類確率タグ ========= */
 #probability span {
   display: inline-block;
   padding: 2px 6px;
@@ -277,16 +278,16 @@ button.Other { background: #ddd; }
     gap: 6px;
   }
 
-  /* ✅ 未選択時でも十分な高さを確保 */
+  /* ✅ スマホ時も未選択枠の高さ確保 */
   .selected-wrapper:empty::before {
     content: "";
     display: block;
     width: var(--imgW);
-    height: calc(var(--imgH) + 40px);
+    height: calc(var(--imgH) + 46px);
     background: #555;
   }
 
-  /* ✅ 数値帯（value-label）を画像内に収める */
+  /* ✅ スマホで数値帯を画像内に収める */
   .value-label {
     font-size: 8px;
     top: 0;
