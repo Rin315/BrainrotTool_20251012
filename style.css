@@ -200,48 +200,51 @@ button.Other{ background:#ddd; }
 
 .notice{ margin-top:40px; text-align:left; color:#333; font-size:13px; }
 
-/* ========= スマホ最適化 ========= */
+/* ========= スマホ最適化（画像サイズ・比率修正版） ========= */
 @media (max-width: 600px){
   :root{
-    /* スマホ用に十分な横幅を確保（はみ出し防止） */
-    --imgW: 78px;
-    --imgH: 88px;
+    --imgW: 66px;       /* Monster欄とSelect欄の横幅を統一 */
+    --imgH: 72px;       /* 同じ縦横比（トリミングなし） */
     --labelH: 12px;
-    --slotMinW: 118px;    /* ← 枠幅を拡張（ボタン切れ対策） */
-    --btnW: 54px;         /* ← ボタン幅も微調整 */
+    --slotMinW: 108px;  /* ← 枠の横幅も再計算（ボタンが収まるよう） */
+    --btnW: 50px;
     --btnH: 22px;
     --btnFS: 8px;
   }
 
-  /* Monster は自動列にして横スクロール防止 */
+  /* Monster欄 */
   #gallery{
     grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
     justify-items:center;
     gap:5px;
   }
+  .gallery-img{
+    width:var(--imgW);
+    height:var(--imgH);
+    object-fit:contain;     /* トリミングなしで表示 */
+    border:1px solid #ccc;
+  }
 
-  /* Select は 3列×2段（5枠だが2段構成） */
+  /* Select欄 */
   #selected-container{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     gap:8px;
     width:100%;
-    max-width:520px;      /* 余裕を持たせて切れないように */
+    max-width:500px;
     margin:0 auto;
     justify-items:center;
   }
 
   .selected-wrapper{
-    /* 画像幅 + 枠内余白分。画像と帯を中央＆等幅で収め、ボタンも切れない */
-    width: calc(var(--imgW) + 30px);
-    /* 画像 + 隙間4px + ボタン3段 + 余白 */
-    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+    width:calc(var(--imgW) + 28px);
+    height:calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 22px);
+    background:#555;
     padding:4px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:flex-start;
-    background:#555;
     overflow:hidden;
     box-sizing:border-box;
   }
@@ -250,35 +253,40 @@ button.Other{ background:#ddd; }
     content:"";
     display:block;
     width:var(--imgW);
-    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+    height:calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 22px);
     background:#555;
   }
 
-  /* 画像と帯を“中央かつ一致”させる */
-  .imgbox{                /* ← select/gallary 共通の画像コンテナ */
+  /* 画像と帯を中央＆一致 */
+  .imgbox{
     position:relative;
     width:var(--imgW);
     height:var(--imgH);
+    margin:0 auto;
     box-sizing:border-box;
-    margin:0 auto;        /* ← 枠内で中央配置 */
   }
   .selected-img{
     width:100%;
     height:100%;
     object-fit:contain;
-    border:3px solid black; /* スマホは縁を3pxにして見た目のズレを回避 */
+    border:3px solid black;
     box-sizing:border-box;
-    margin:0 0 var(--gapImgButtons) 0;
+    margin:0 0 4px 0;
   }
   .value-label{
-    top:0; left:0;
+    position:absolute;
+    top:0;
+    left:0;
     width:100%;
     height:var(--labelH);
     line-height:var(--labelH);
     font-size:9px;
+    background:rgba(0,0,0,0.8);
+    color:#ffeb3b;
+    text-align:center;
   }
 
-  /* ボタン一式：はみ出さないように幅とギャップを調整 */
+  /* ボタン配置 */
   .button-container{
     width:100%;
     display:grid;
@@ -296,7 +304,7 @@ button.Other{ background:#ddd; }
   /* Result：種類→その下に Secret と 合計を横並び */
   #stats{
     gap:8px;
-    justify-content:flex-start;  /* ← 左寄せ維持 */
+    justify-content:flex-start;
   }
   #stats .panel:nth-child(2){ order:1; width:100%; }
   #stats .panel:nth-child(1),
