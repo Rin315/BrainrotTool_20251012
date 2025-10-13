@@ -1,194 +1,11 @@
-/* ========= ベース設定 ========= */
-:root {
-  --imgW: 110px;
-  --imgH: 120px;
-  --labelH: 18px;
-  --slotMinW: 134px;
-  --btnW: 58px;
-  --btnH: 28px;
-  --btnFS: 11px;
-}
-
-body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-  margin: 16px;
-  background-color: #e6f5e1;
-}
-
-h2 { margin: 0; font-size: 22px; }
-
-.section-header {
-  display: flex;
-  align-items: center;
-  margin: 18px 0 8px;
-}
-
-#reset-btn {
-  background: #d10000;
-  color: #fff;
-  font-weight: 900;
-  border: none;
-  padding: 6px 12px;
-  height: 32px;
-  cursor: pointer;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  margin-left: 50px;
-}
-
-/* ========= ナビバー ========= */
-.navbar {
-  background-color: #2f4f4f;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.nav-title { font-size: 20px; font-weight: bold; }
-.nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
-.nav-links a { color: white; text-decoration: none; font-weight: 500; }
-.nav-links a:hover { text-decoration: underline; }
-
-/* ========= Monster欄 ========= */
-#gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
-  justify-items: center;
-  gap: 6px;
-}
-.gallery-img {
-  width: var(--imgW);
-  height: var(--imgH);
-  object-fit: contain;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
-.gallery-img:active, .selected-img:active {
-  filter: brightness(60%);
-  transition: filter 0.1s ease;
-}
-
-/* ========= 黒帯（value） ========= */
-.value-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--labelH);
-  background: rgba(0,0,0,0.8);
-  color: #ffeb3b;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  line-height: var(--labelH);
-  user-select: none;
-  pointer-events: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-}
-
-/* ========= Select欄 ========= */
-#selection-area {
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 12px;
-}
-#selected-container {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
-.selected-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #555;
-  padding: 6px;
-  min-width: var(--slotMinW);
-  min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 20px);
-  box-sizing: border-box;
-}
-.selected-wrapper:empty::before {
-  content: "";
-  display: block;
-  width: var(--imgW);
-  height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 20px);
-  background: #555;
-}
-.selected-img {
-  width: var(--imgW);
-  height: var(--imgH);
-  object-fit: contain;
-  border: 5px solid black;
-}
-
-/* ========= ボタン ========= */
-.button-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  width: 100%;
-  justify-items: center;
-  margin-top: 4px;
-}
-.button-container button {
-  width: var(--btnW);
-  height: var(--btnH);
-  border: 1px solid #888;
-  cursor: pointer;
-  font-size: var(--btnFS);
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-button.Default { background: #fff; }
-button.Gold { background: #ffffcc; }
-button.Diamond { background: #ccf5ff; }
-button.Rainbow { background: #ffcce5; }
-button.Halloween { background: #ffd1a6; }
-button.Other { background: #ddd; }
-
-/* ========= 結果欄 ========= */
-#stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-#stats .panel:nth-child(1) { order: 2; }
-#stats .panel:nth-child(2) { order: 1; }
-.panel {
-  border: 2px solid #999;
-  padding: 10px;
-  min-width: 260px;
-  background: #fafafa;
-}
-.panel-title { font-weight: 700; margin-bottom: 6px; }
-
-.total-panel {
-  min-width: 120px;
-  max-width: 150px;
-  text-align: center;
-}
-.total-panel #total {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-/* ========= スマホ最適化（完全修正版） ========= */
+/* ========= スマホ最適化（Select欄修正版） ========= */
 @media (max-width: 600px) {
   :root {
-    --imgW: 70px;
-    --imgH: 80px;
+    --imgW: 72px;
+    --imgH: 82px;
     --labelH: 12px;
-    --slotMinW: 90px;
-    --btnW: 46px;
+    --slotMinW: 96px; /* ← 横幅を拡張 */
+    --btnW: 50px;
     --btnH: 22px;
     --btnFS: 8px;
   }
@@ -206,20 +23,20 @@ button.Other { background: #ddd; }
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 440px;
+    max-width: 460px; /* 横幅をやや拡大 */
     margin: 0 auto;
     justify-items: center;
   }
 
   .selected-wrapper {
     position: relative;
-    width: calc(var(--imgW) + 12px);
-    height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 16px);
+    width: calc(var(--imgW) + 20px); /* ← ボタンが切れないよう拡張 */
+    height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 18px);
     background: #555;
     padding: 4px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;     /* 中央揃え（画像・ボタン） */
     justify-content: flex-start;
     overflow: hidden;
     box-sizing: border-box;
@@ -229,7 +46,7 @@ button.Other { background: #ddd; }
     content: "";
     display: block;
     width: var(--imgW);
-    height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 16px);
+    height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 18px);
     background: #555;
   }
 
@@ -238,6 +55,8 @@ button.Other { background: #ddd; }
     height: var(--imgH);
     object-fit: contain;
     border: 3px solid black;
+    display: block;
+    margin: 0 auto; /* ← 左寄り修正 */
   }
 
   .value-label {
@@ -245,13 +64,32 @@ button.Other { background: #ddd; }
     height: var(--labelH);
     font-size: 9px;
     line-height: var(--labelH);
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%); /* ← 帯も中央揃え */
   }
 
   .button-container {
     margin-top: 4px;
     gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+    width: 100%;
   }
 
+  .button-container button {
+    width: var(--btnW);
+    height: var(--btnH);
+    font-size: var(--btnFS);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Result欄整列 */
   #stats {
     display: flex;
     flex-wrap: wrap;
