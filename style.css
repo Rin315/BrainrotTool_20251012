@@ -51,10 +51,21 @@ h2{ margin: 0; font-size: 22px; }
   padding:12px 24px;
   box-shadow:0 2px 6px rgba(0,0,0,0.2);
 }
-.nav-title{ font-size:20px; font-weight:bold; color:#fff; text-decoration:underline; }
-.nav-links{ display:flex; flex-wrap:wrap; gap:16px; }
 
-/* 🔸リンク色と装飾を統一（常時アンダーライン＋白） */
+/* 🔸タイトル（下線なし・白） */
+.nav-title{
+  font-size:20px;
+  font-weight:bold;
+  color:#fff;
+  text-decoration:none; /* ← 下線削除 */
+}
+
+/* 🔸ナビゲーションリンク */
+.nav-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
 .nav-links a{
   color:#fff;
   text-decoration:underline;
@@ -62,7 +73,7 @@ h2{ margin: 0; font-size: 22px; }
   transition:color 0.2s ease;
 }
 .nav-links a:hover{
-  color:#ffeb3b; /* ホバー時に少し明るく */
+  color:#ffeb3b;
 }
 
 /* ========= 画像コンテナ ========= */
@@ -190,20 +201,20 @@ button.Other{ background:#ddd; }
   align-items:flex-start;
 }
 
-/* 🔸高さ統一＋左上寄せ */
+/* 🔸高さ2/3に削減（120→80px）＋左上寄せ */
 .panel{
   border:2px solid #999;
   padding:10px;
   min-width:260px;
   background:#fafafa;
-  height:120px;
+  height:80px; /* ← 高さを削減 */
   display:flex;
   flex-direction:column;
-  justify-content:flex-start; /* ← 上寄せ */
-  align-items:flex-start;     /* ← 左寄せ */
+  justify-content:flex-start;
+  align-items:flex-start;
 }
 .panel-title{ font-weight:700; margin-bottom:6px; }
-.total-panel{ min-width:120px; max-width:150px; text-align:left; } /* ← 左寄せ */
+.total-panel{ min-width:120px; max-width:150px; text-align:left; }
 .total-panel #total{ font-size:20px; font-weight:700; }
 .wait-note{ margin-top:4px; font-size:14px; color:#444; line-height:1.2; }
 
@@ -285,17 +296,17 @@ button.Other{ background:#ddd; }
     z-index:2;
   }
 
-  /* 🔸スマホナビバー：右寄せ配置 */
+  /* 🔸スマホナビバー */
   .navbar {
     flex-direction: column;
-    align-items: flex-end; /* ← 右寄せ */
+    align-items: flex-start; /* ← 左寄せに変更 */
     padding: 10px 16px;
   }
 
   .nav-title {
     font-size: 18px;
     margin-bottom: 8px;
-    text-align: right;
+    text-align: left; /* ← 左寄せ */
   }
 
   .nav-links {
@@ -303,7 +314,7 @@ button.Other{ background:#ddd; }
     flex-direction: column;
     gap: 6px;
     width: 100%;
-    align-items: flex-end; /* ← 右側に揃える */
+    align-items: flex-start; /* ← 左寄せ */
   }
 
   .nav-links a {
