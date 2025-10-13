@@ -326,4 +326,30 @@ button.Other{ background:#ddd; }
     z-index: 200; /* 最前面に */
     pointer-events: none;
   }
+  /* ========= スマホナビバー最適化 ========= */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;           /* 縦並びに変更 */
+    align-items: flex-start;
+    padding: 10px 16px;
+  }
+
+  .nav-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;           /* ← 各リンクを縦に並べる */
+    gap: 6px;
+    width: 100%;
+  }
+
+  .nav-links a {
+    font-size: 14px;                  /* ← 文字サイズを小さく */
+    padding: 4px 0;
+  }
+}
+
 }
