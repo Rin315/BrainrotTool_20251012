@@ -290,6 +290,15 @@ button.Other{ background:#ddd; }
   transition: transform 0.1s ease, filter 0.15s ease; /* ← ぬるっと */
 }
 
+/* ぬるっと縮小アニメ（画像すべてに適用） */
+.imgbox img {
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+.imgbox img.pressed {
+  filter: brightness(70%) !important;
+  transform: scale(0.92);
+}
+
 .pressed {
   filter: brightness(70%) !important; /* 少し暗く */
   transform: scale(0.92);              /* ← ぬるっと縮小 */

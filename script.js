@@ -56,16 +56,35 @@ let selectedColors = [null, null, null, null, null];
 // ========== 基本確率 ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
-// ========== ユーティリティ：タッチ/クリックの暗転クラス付与 ==========
+// ========== ユーティリティ：押下フィードバック（スマホ確実反応 & 最低表示時間） ==========
 function attachPressFeedback(el) {
-  const add = () => el.classList.add('pressed');
-  const rm  = () => el.classList.remove('pressed');
-  el.addEventListener('touchstart', add, {passive:true});
-  el.addEventListener('touchend', rm, {passive:true});
-  el.addEventListener('touchcancel', rm, {passive:true});
-  el.addEventListener('mousedown', add);
-  el.addEventListener('mouseup', rm);
-  el.addEventListener('mouseleave', rm);
+  let timer = null;
+  let pressed = false;
+
+  const add = () => {
+    if (pressed) return;
+    pressed = true;
+    el.classList.add('pressed');
+    // 最低表示時間 120ms 確保
+    timer = setTimeout(() => {
+      timer = null;
+      if (!pressed) el.classList.remove('pressed');
+    }, 120);
+  };
+
+  const rm = () => {
+    if (!pressed) return;
+    pressed = false;
+    // 最低表示時間未満ならタイムアウトで外す
+    if (timer) return;
+    el.classList.remove('pressed');
+  };
+
+  // pointer系で統一（マウス/タッチ共通）
+  el.addEventListener('pointerdown', add);
+  el.addEventListener('pointerup', rm);
+  el.addEventListener('pointercancel', rm);
+  el.addEventListener('pointerleave', rm);
 }
 
 // ========== ギャラリー生成 ==========
@@ -77,7 +96,7 @@ images.forEach((imgObj) => {
   img.src = imgObj.src;
   img.alt = imgObj.src.split('/').pop();
   img.className = 'gallery-img';
-  attachPressFeedback(img); // スマホでも暗転させる
+  attachPressFeedback(img); // ← ぬるっと縮小 & 暗転
 
   const label = document.createElement('div');
   label.className = 'value-label';
@@ -112,7 +131,7 @@ function renderSelected() {
       img.src = imgObj.src;
       img.className = 'selected-img';
       img.style.border = "0 solid transparent"; // 念のため初期は枠なし
-      attachPressFeedback(img);
+      attachPressFeedback(img); // ← ぬるっと縮小 & 暗転
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
@@ -132,7 +151,7 @@ function renderSelected() {
       ring.style.bottom = '0';
       ring.style.pointerEvents = 'none';
       ring.style.boxSizing = 'border-box';
-      ring.style.zIndex = '99';                // 画像と帯より最前面
+      ring.style.zIndex = '99'; // 最前面
       // 既存色の復元
       if (selectedColors[idx]) {
         const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
@@ -155,7 +174,7 @@ function renderSelected() {
           e.stopPropagation();
           selectedColors[idx] = type;
           const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
-          ring.style.border = `${bw}px solid ${getButtonColor(type)}`; // 縁は常に最上層
+          ring.style.border = `${bw}px solid ${getButtonColor(type)}`; // 縁は最上層
           updateAll();
         });
         btnContainer.appendChild(btn);
