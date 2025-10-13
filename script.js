@@ -58,51 +58,37 @@ const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, O
 
 // ========== ギャラリー生成（上段のモンスター選択） ==========
 images.forEach((imgObj) => {
-  // コンテナを追加して relative に（valueラベル重ね用）
   const imgContainer = document.createElement('div');
   imgContainer.style.position = 'relative';
   imgContainer.style.display = 'inline-block';
   imgContainer.style.width = 'var(--imgW)';
   imgContainer.style.height = 'var(--imgH)';
 
-  // 画像本体
   const img = document.createElement('img');
   img.src = imgObj.src;
   img.className = 'gallery-img';
   img.alt = imgObj.src.split('/').pop();
   img.style.display = 'block';
 
-  // クリックイベント
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
-    if (emptyIndex === -1) return; // 空きなし
+    if (emptyIndex === -1) return;
     selectedImages[emptyIndex] = { ...imgObj };
     selectedColors[emptyIndex]  = 'Default';
     renderSelected();
     updateAll();
   });
-
   imgContainer.appendChild(img);
 
-  // 🔸 value表示（黒帯＋黄色文字）
+  // 🔸 値ラベル（黒帯＋黄色文字＋単位K/s）
   const valueLabel = document.createElement('div');
-  valueLabel.textContent = imgObj.value;
-  valueLabel.style.position = 'absolute';
-  valueLabel.style.top = '0';
-  valueLabel.style.left = '0';
-  valueLabel.style.width = '100%';
-  valueLabel.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
-  valueLabel.style.color = '#ffeb3b';
-  valueLabel.style.fontSize = '11px';
-  valueLabel.style.fontWeight = 'bold';
-  valueLabel.style.textAlign = 'center';
-  valueLabel.style.padding = '1px 0';
-  valueLabel.style.userSelect = 'none';
-  valueLabel.style.pointerEvents = 'none'; // ← クリックに干渉しない
-
+  valueLabel.textContent = `${imgObj.value} K/s`;
+  valueLabel.className = 'value-label';
   imgContainer.appendChild(valueLabel);
+
   gallery.appendChild(imgContainer);
 });
+
 
 
 // ========== 選択エリア描画 ==========
@@ -112,7 +98,7 @@ function renderSelected(){
     const imgObj = selectedImages[idx];
 
     if (imgObj) {
-      // 画像を包むコンテナ（重ねるためにrelative指定）
+      // 画像を包むコンテナ
       const imgContainer = document.createElement('div');
       imgContainer.style.position = 'relative';
       imgContainer.style.width = '110px';
@@ -127,22 +113,12 @@ function renderSelected(){
       img.addEventListener('click', () => removeFromSelected(idx));
       imgContainer.appendChild(img);
 
-      // 🔸 ここで value ラベルを追加
+      // 🔸 値ラベル（黒帯＋黄色文字＋単位K/s）
       const valueLabel = document.createElement('div');
-      valueLabel.textContent = imgObj.value;
-      valueLabel.style.position = 'absolute';
-      valueLabel.style.top = '0';
-      valueLabel.style.left = '0';
-      valueLabel.style.width = '100%';
-      valueLabel.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
-      valueLabel.style.color = '#ffeb3b'; // 黄色
-      valueLabel.style.fontSize = '12px';
-      valueLabel.style.fontWeight = 'bold';
-      valueLabel.style.textAlign = 'center';
-      valueLabel.style.padding = '2px 0';
-      valueLabel.style.userSelect = 'none';
-      valueLabel.style.pointerEvents = 'none'; // ← クリック操作の邪魔をしない
+      valueLabel.textContent = `${imgObj.value} K/s`;
+      valueLabel.className = 'value-label';
       imgContainer.appendChild(valueLabel);
+
 
       wrapper.appendChild(imgContainer);
 

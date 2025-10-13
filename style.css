@@ -189,6 +189,50 @@ button.Other { background: #ddd; }
   font-size: 13px;
 }
 
+/* 黒帯＋黄色文字の value 表示 */
+.value-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #ffeb3b;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  padding: 2px 0;
+  user-select: none;
+  pointer-events: none;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+/* 選択済み枠の調整（画像とボタンの重なり防止） */
+.selected-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ← 画像とボタンの間に余裕を確保 */
+  align-items: center;
+  padding: 6px;
+  background-color: #555;
+  min-width: var(--slotMinW);
+  height: 230px; /* ← 少し伸ばすことでボタン重なり防止 */
+}
+
+/* スマホ対応（帯と画像のズレ修正） */
+@media (max-width: 600px) {
+  .value-label {
+    font-size: 9px;
+    padding: 1px 0;
+    width: var(--imgW);
+  }
+
+  .selected-wrapper {
+    height: 180px; /* ← 選択枠を少しコンパクトに */
+  }
+}
+
+
 /* ========= スマホ最適化（案①） ========= */
 @media (max-width: 600px) {
   :root{
