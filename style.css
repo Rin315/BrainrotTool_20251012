@@ -79,7 +79,7 @@ h2{ margin: 0; font-size: 22px; }
 .gallery-img, .selected-img{
   width:100%;
   height:100%;
-  object-fit:contain;
+  object-fit:cover;
   display:block;
   box-sizing:border-box;
   cursor:pointer;
@@ -236,7 +236,7 @@ button.Other{ background:#ddd; }
   img.gallery-img, img.selected-img{
     width: var(--imgW) !important;
     height: var(--imgH) !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
   }
 
   #selected-container{

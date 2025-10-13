@@ -50,51 +50,41 @@ const secretProbEl = document.getElementById('secret-probability');
 const resetBtn     = document.getElementById('reset-btn');
 
 // ========== 状態 ==========
-let selectedImages = [null, null, null, null, null];
-// 色は常に保持（初期は Default 扱い）。ただし「枠を出す/出さない」は別フラグで管理。
-let selectedColors = ['Default','Default','Default','Default','Default'];
-let selectedHasBorder = [false, false, false, false, false]; // 押すまでは枠を出さない
+let selectedImages   = [null, null, null, null, null];
+let selectedColors   = ['Default','Default','Default','Default','Default'];
+let selectedHasBorder= [false, false, false, false, false];
 
 // ========== 基本確率 ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
-// ========== 押下フィードバック（枠ごと縮小 & 暗転 / 最低表示時間あり） ==========
+// ========== 押下フィードバック（枠ごと縮小 & 暗転） ==========
 function attachPressFeedbackBox(boxEl) {
   let timer = null;
   let pressed = false;
-
   const add = () => {
     if (pressed) return;
     pressed = true;
-    boxEl.classList.add('pressed'); // ← .imgbox に付与（画像だけ縮めると隙間が見えるため）
-    timer = setTimeout(() => {
-      timer = null;
-      if (!pressed) boxEl.classList.remove('pressed');
-    }, 120);
+    boxEl.classList.add('pressed');
+    timer = setTimeout(() => { timer = null; if (!pressed) boxEl.classList.remove('pressed'); }, 120);
   };
-  const rm = () => {
-    if (!pressed) return;
-    pressed = false;
-    if (timer) return;
-    boxEl.classList.remove('pressed');
-  };
-
+  const rm = () => { if (!pressed) return; pressed = false; if (timer) return; boxEl.classList.remove('pressed'); };
   boxEl.addEventListener('pointerdown', add);
   boxEl.addEventListener('pointerup', rm);
   boxEl.addEventListener('pointercancel', rm);
   boxEl.addEventListener('pointerleave', rm);
 }
 
-// ========== ギャラリー生成 ==========
+// ========== ギャラリー生成（画像は cover で隙間なし） ==========
 images.forEach((imgObj) => {
   const box = document.createElement('div');
   box.className = 'imgbox imgbox--gallery';
-  attachPressFeedbackBox(box); // ← 枠ごと縮小で白い縁が見えない
+  attachPressFeedbackBox(box);
 
   const img = document.createElement('img');
   img.src = imgObj.src;
   img.alt = imgObj.src.split('/').pop();
   img.className = 'gallery-img';
+  img.style.objectFit = 'cover'; // ← ギャラリーも余白なくぴったり
 
   const label = document.createElement('div');
   label.className = 'value-label';
@@ -103,9 +93,10 @@ images.forEach((imgObj) => {
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
     if (emptyIndex === -1) return;
-    selectedImages[emptyIndex]  = { ...imgObj };
-    selectedColors[emptyIndex]  = 'Default'; // 計算上は Default 扱い
-    selectedHasBorder[emptyIndex] = false;   // ただし見た目の枠は出さない
+    // 画像選択：即 Default を適用＆枠を出す
+    selectedImages[emptyIndex]    = { ...imgObj };
+    selectedColors[emptyIndex]    = 'Default';
+    selectedHasBorder[emptyIndex] = true;
     renderSelected();
     updateAll();
   });
@@ -115,78 +106,72 @@ images.forEach((imgObj) => {
   gallery.appendChild(box);
 });
 
-// ========== 選択エリア描画（画像→帯→縁=outline の順 / 縁は画像外側） ==========
-// ========== 選択エリア描画 ==========
+// ========== 選択エリア描画（画像→帯→縁=outline） ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
     const imgObj = selectedImages[idx];
 
     if (imgObj) {
-      // 画像と帯を含むコンテナ
       const box = document.createElement('div');
       box.className = 'imgbox imgbox--selected';
+      attachPressFeedbackBox(box);
 
-      // 画像本体
+      // 画像：枠いっぱいに cover（隙間ゼロ）
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      img.style.objectFit = 'cover'; // ← 縁と画像の間に隙間を作らない
-      const color = selectedColors[idx] || 'Default'; // ← 既定でDefaultに
-      selectedColors[idx] = color; // ← 自動的にDefault状態に設定
-      img.style.outline = `3px solid ${getButtonColor(color)}`; // ← Default縁を追加
-
+      img.style.objectFit = 'cover';
+      img.style.border = '0 solid transparent';
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
-      // 値ラベル（黒帯＋黄色文字＋単位 K/s）
+      // 数値帯
       const label = document.createElement('div');
       label.textContent = `${imgObj.value} K/s`;
       label.className = 'value-label';
       box.appendChild(label);
 
-      // コンテナを枠に追加
+      // 縁（outline を .imgbox に当てる＝数字に被らない）
+      applyOutline(box, idx);
+
       wrapper.appendChild(box);
 
-      // ボタン群
+      // ボタン（このスロットだけを更新）
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
       ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
-
-        // 押下イベント：縁色変更＆確率再計算
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
-          selectedColors[idx] = type;
-          img.style.outline = `3px solid ${getButtonColor(type)}`;
-          updateAll();
+          selectedColors[idx]    = type;
+          selectedHasBorder[idx] = true;
+          applyOutline(box, idx); // 即見た目更新
+          updateAll();            // 計算更新
         });
-
         btnContainer.appendChild(btn);
       });
       wrapper.appendChild(btnContainer);
-
     } else {
-      // 未選択時のプレースホルダ
+      // 未選択プレースホルダ（枠サイズ維持）
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
+      ph.style.outline = 'none';
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
   });
 }
 
-
-// 画像外側の枠（outline）を適用
+// ========== 枠（outline）適用：画像外側に表示 ==========
 function applyOutline(boxEl, idx){
-  const color  = getButtonColor(selectedColors[idx] || 'Default');
-  const width  = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
+  const color = getButtonColor(selectedColors[idx] || 'Default');
+  const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
   if (selectedHasBorder[idx]) {
-    // outline はボックス外側に描かれるので数字帯と重ならない
-    boxEl.style.outline = `${width}px solid ${color}`;
-    boxEl.style.outlineOffset = '0px';
+    boxEl.style.outline = `${bw}px solid ${color}`;
+    boxEl.style.outlineOffset = '0';
   } else {
     boxEl.style.outline = 'none';
   }
@@ -197,17 +182,17 @@ function removeFromSelected(index){
   selectedImages.splice(index, 1);
   selectedImages.push(null);
   selectedColors.splice(index, 1);
-  selectedColors.push('Default');      // デフォルトに戻す
+  selectedColors.push('Default');
   selectedHasBorder.splice(index, 1);
-  selectedHasBorder.push(false);       // 枠非表示
+  selectedHasBorder.push(false);
   renderSelected();
   updateAll();
 }
 
 // ========== RESET ==========
 resetBtn.addEventListener('click', () => {
-  selectedImages   = [null, null, null, null, null];
-  selectedColors   = ['Default','Default','Default','Default','Default'];
+  selectedImages    = [null, null, null, null, null];
+  selectedColors    = ['Default','Default','Default','Default','Default'];
   selectedHasBorder = [false, false, false, false, false];
   renderSelected();
   updateAll();
@@ -224,7 +209,6 @@ function updateAll(){
 function updateTotal() {
   const sum = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
   totalValueEl.textContent = sum;
-
   let waitText = "(Wait 1h0m)";
   if (sum > 5000) waitText = "(Wait 2h0m)";
   else if (sum > 750) waitText = "(Wait 1h30m)";
@@ -246,7 +230,7 @@ function updateSecretProbability(){
   }
 }
 
-// ========== 種類確率（各スロットの色だけ加算） ==========
+// ========== 種類確率（スロット毎の色だけ加算） ==========
 function updateTypeProbability(){
   const probs = { ...baseProb };
   const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
@@ -254,7 +238,7 @@ function updateTypeProbability(){
   for (let i = 0; i < selectedImages.length; i++){
     const img = selectedImages[i];
     if (!img) continue;
-    const color = selectedColors[i] || 'Default'; // スロットごとに色を反映
+    const color = selectedColors[i] || 'Default';
     colorSums[color] += img.value;
   }
 
@@ -265,7 +249,6 @@ function updateTypeProbability(){
       if (colorSums[c] > 0) probs[c] += bonus * (colorSums[c] / totalColorSum);
     }
   } else {
-    // 未選択時の固定表示
     probs.Default = 84; probs.Gold = 10; probs.Diamond = 5;
   }
 
@@ -278,7 +261,7 @@ function updateTypeProbability(){
     .join('');
 }
 
-// ========== 枠色取得 ==========
+// ========== 枠色 ==========
 function getButtonColor(type){
   switch(type){
     case 'Default': return 'black';
