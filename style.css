@@ -52,6 +52,7 @@ h2 {
 .nav-links a { color: white; text-decoration: none; font-weight: 500; }
 .nav-links a:hover { text-decoration: underline; }
 
+/* ========= ギャラリー ========= */
 #gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
@@ -71,6 +72,7 @@ h2 {
   transition: filter 0.1s ease;
 }
 
+/* ========= 選択欄 ========= */
 #selection-area {
   display: flex;
   align-items: flex-end;
@@ -81,16 +83,19 @@ h2 {
   gap: 8px;
   justify-content: center;
 }
+
+/* 画像とボタンの重なり防止 */
 .selected-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  background-color: #555;
-  padding: 5px;
-  min-width: var(--slotMinW);
-  height: 240px;
+  justify-content: space-between; /* ← 上下に余裕 */
   align-items: center;
+  padding: 6px;
+  background-color: #555;
+  min-width: var(--slotMinW);
+  height: auto; /* ← 自動高さで重なり防止 */
 }
+
 .selected-wrapper:empty::before {
   content: "";
   display: block;
@@ -98,6 +103,17 @@ h2 {
   height: calc(var(--imgH) + 30px);
   background: #555;
 }
+
+/* 選択画像コンテナ */
+.selected-wrapper div[style*="position: relative"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--imgW);
+  height: var(--imgH);
+  position: relative;
+}
+
 .selected-img {
   width: var(--imgW);
   height: var(--imgH);
@@ -107,6 +123,22 @@ h2 {
   cursor: pointer;
 }
 
+/* ========= 黒帯＋黄色文字（valueラベル） ========= */
+.value-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* ← 幅を画像いっぱいに */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffeb3b;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  padding: 2px 0;
+  user-select: none;
+  pointer-events: none;
+}
+
 /* ========= ボタン（2列） ========= */
 .button-container {
   display: grid;
@@ -114,6 +146,7 @@ h2 {
   gap: 6px;
   width: 100%;
   justify-items: center;
+  margin-top: 6px; /* ← 画像との間隔確保 */
 }
 .button-container button {
   width: var(--btnW);
@@ -124,7 +157,7 @@ h2 {
   text-align: center;
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
-  display: flex;                  /* Halloween文字中央寄せ対策 */
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -137,6 +170,7 @@ button.Rainbow { background: #ffcce5; }
 button.Halloween { background: #ffd1a6; font-size: calc(var(--btnFS) - 0.5px); }
 button.Other { background: #ddd; }
 
+/* ========= 結果欄 ========= */
 #stats {
   display: flex;
   flex-wrap: wrap;
@@ -166,6 +200,14 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
+/* K/s の下に表示される Wait 表示 */
+.wait-note {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.2;
+}
+
 #probability span {
   display: inline-block;
   padding: 2px 6px;
@@ -189,51 +231,7 @@ button.Other { background: #ddd; }
   font-size: 13px;
 }
 
-/* 黒帯＋黄色文字の value 表示 */
-.value-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
-  color: #ffeb3b;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  padding: 2px 0;
-  user-select: none;
-  pointer-events: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-}
-
-/* 選択済み枠の調整（画像とボタンの重なり防止） */
-.selected-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* ← 画像とボタンの間に余裕を確保 */
-  align-items: center;
-  padding: 6px;
-  background-color: #555;
-  min-width: var(--slotMinW);
-  height: 230px; /* ← 少し伸ばすことでボタン重なり防止 */
-}
-
-/* スマホ対応（帯と画像のズレ修正） */
-@media (max-width: 600px) {
-  .value-label {
-    font-size: 9px;
-    padding: 1px 0;
-    width: var(--imgW);
-  }
-
-  .selected-wrapper {
-    height: 180px; /* ← 選択枠を少しコンパクトに */
-  }
-}
-
-
-/* ========= スマホ最適化（案①） ========= */
+/* ========= スマホ最適化 ========= */
 @media (max-width: 600px) {
   :root{
     --imgW: 54px;
@@ -269,50 +267,37 @@ button.Other { background: #ddd; }
 
   .selected-wrapper {
     width: 120px;
-    height: 160px;
+    height: auto; /* ← 高さ自動でボタン重なり防止 */
     padding: 3px;
     border-radius: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between; /* ← 上下に余裕 */
     background-color: #555;
     gap: 6px;
   }
 
-  .selected-wrapper:empty::before {
-    width: var(--imgW);
-    height: calc(var(--imgH) + 16px);
-    background: #555;
-    content: "";
-    display: block;
-  }
-
-  .selected-img {
-    width: var(--imgW);
-    height: var(--imgH);
-  }
-
-  /* Halloweenボタンの文字中央寄せ強化 */
-  .button-container button {
+  /* スマホ時、画像を中央に配置 */
+  .selected-wrapper div[style*="position: relative"] {
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
   }
 
-  .button-container { gap: 4px; }
+  .value-label {
+    font-size: 9px;
+    padding: 1px 0;
+    width: 100%;
+  }
+
+  .button-container { gap: 4px; margin-top: 4px; }
   .button-container button {
     width: var(--btnW);
     height: var(--btnH);
     font-size: var(--btnFS);
   }
-/* 合計値の下に出す Wait 行の見た目 */
-.wait-note {
-  margin-top: 4px;
-  font-size: 14px;
-  color: #444;
-  line-height: 1.2;
-}
 
   #stats { display: flex; flex-wrap: wrap; }
   #stats .panel:nth-child(2) { order: 1; width: 100%; }
