@@ -5,7 +5,7 @@
   --slotMinW: 134px;
   --btnW: 58px;
   --btnH: 28px;
-  --btnFS: 11px; /* ← PCでボタン文字を少し大きく */
+  --btnFS: 11px;
 }
 
 body {
@@ -88,12 +88,12 @@ h2 {
 .selected-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* ← 上下に余裕 */
+  justify-content: space-between;
   align-items: center;
   padding: 6px;
   background-color: #555;
   min-width: var(--slotMinW);
-  height: auto; /* ← 自動高さで重なり防止 */
+  height: auto;
 }
 
 .selected-wrapper:empty::before {
@@ -104,7 +104,6 @@ h2 {
   background: #555;
 }
 
-/* 選択画像コンテナ */
 .selected-wrapper div[style*="position: relative"] {
   display: flex;
   justify-content: center;
@@ -128,25 +127,26 @@ h2 {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* ← 幅を画像いっぱいに */
+  width: var(--imgW); /* ← 幅を画像と完全一致 */
+  height: 18px;
   background-color: rgba(0, 0, 0, 0.8);
   color: #ffeb3b;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
-  padding: 2px 0;
+  line-height: 18px;
   user-select: none;
   pointer-events: none;
 }
 
-/* ========= ボタン（2列） ========= */
+/* ========= ボタン ========= */
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 6px;
   width: 100%;
   justify-items: center;
-  margin-top: 6px; /* ← 画像との間隔確保 */
+  margin-top: 9px; /* ← 画像との間に3px追加 */
 }
 .button-container button {
   width: var(--btnW);
@@ -154,7 +154,6 @@ h2 {
   border: 1px solid #888;
   cursor: pointer;
   font-size: var(--btnFS);
-  text-align: center;
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
   display: flex;
@@ -200,7 +199,7 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
-/* K/s の下に表示される Wait 表示 */
+/* Wait 表示 */
 .wait-note {
   margin-top: 4px;
   font-size: 14px;
@@ -267,13 +266,13 @@ button.Other { background: #ddd; }
 
   .selected-wrapper {
     width: 120px;
-    height: auto; /* ← 高さ自動でボタン重なり防止 */
+    height: auto;
     padding: 3px;
     border-radius: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* ← 上下に余裕 */
+    justify-content: space-between;
     background-color: #555;
     gap: 6px;
   }
@@ -286,13 +285,18 @@ button.Other { background: #ddd; }
     align-items: center;
   }
 
+  /* 帯が画像内に収まるよう修正 */
   .value-label {
     font-size: 9px;
-    padding: 1px 0;
-    width: 100%;
+    padding: 0;
+    line-height: 12px;
+    top: 0;
+    width: var(--imgW);
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  .button-container { gap: 4px; margin-top: 4px; }
+  .button-container { gap: 4px; margin-top: 5px; }
   .button-container button {
     width: var(--btnW);
     height: var(--btnH);
