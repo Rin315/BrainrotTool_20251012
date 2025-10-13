@@ -1,224 +1,307 @@
 /* ========= ベース設定 ========= */
-:root {
+:root{
+  /* 画像サイズ（PC） */
   --imgW: 110px;
   --imgH: 120px;
+
+  /* ラベル（黒帯） */
   --labelH: 18px;
+
+  /* Select枠・ボタン */
   --slotMinW: 134px;
+  --gapImgButtons: 4px;    /* ← 画像とボタンの間を常に4pxに固定 */
   --btnW: 58px;
   --btnH: 28px;
   --btnFS: 11px;
 }
 
-body {
+body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   margin: 16px;
   background-color: #e6f5e1;
 }
 
-/* ========= ナビバー ========= */
-.navbar {
-  background-color: #2f4f4f;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+/* ========= 見出し（Monster / Select / Result） ========= */
+h2{ margin: 0; font-size: 22px; }
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;               /* ← タイトル横にボタンを寄せるための隙間 */
+  margin:18px 0 8px;
 }
-.nav-title { font-size: 20px; font-weight: bold; }
-.nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
-.nav-links a { color: white; text-decoration: none; font-weight: 500; }
-.nav-links a:hover { text-decoration: underline; }
+/* Select 見出し行の RESET ボタン：タイトルの“横”に配置 */
+#reset-btn{
+  background:#d10000;
+  color:#fff;
+  font-weight:900;
+  border:none;
+  padding:6px 12px;
+  height:32px;
+  cursor:pointer;
+  border-radius:4px;
+  letter-spacing:1px;
+  margin:0;               /* ← 以前の margin-left を撤廃して見出し横にぴったり */
+}
 
-/* ========= ギャラリー（Monster欄） ========= */
-#gallery {
-  display: grid;
+/* ========= ナビバー（タイトルバー） ========= */
+.navbar{
+  background-color:#2f4f4f;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 24px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+.nav-title{ font-size:20px; font-weight:bold; }
+.nav-links{ display:flex; flex-wrap:wrap; gap:16px; }
+.nav-links a{ color:#fff; text-decoration:none; font-weight:500; }
+.nav-links a:hover{ text-decoration:underline; }
+
+/* ========= ギャラリー（Monster） ========= */
+#gallery{
+  display:grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
-  justify-items: center;
-  gap: 6px;
+  justify-items:center;
+  gap:6px;
 }
-.gallery-img {
-  width: var(--imgW);
-  height: var(--imgH);
-  object-fit: contain;
-  border: 1px solid #ccc;
-  cursor: pointer;
+/* 画像を包むコンテナ（Monster/Select 共通） */
+.imgbox{
+  position:relative;
+  width:var(--imgW);
+  height:var(--imgH);       /* ← 黒帯はオーバーレイ。高さには含めない */
+  box-sizing:border-box;
+}
+.gallery-img, .selected-img{
+  width:100%;
+  height:100%;
+  object-fit:contain;       /* ← トリミングなしで比率維持 */
+  display:block;
+  box-sizing:border-box;    /* border を含めたサイズでフィット */
+  cursor:pointer;
+}
+.gallery-img{ border:1px solid #ccc; }
+.selected-img{ border:5px solid black; }
+
+.gallery-img:active, .selected-img:active{
+  filter:brightness(60%);
+  transition:filter 0.1s ease;
 }
 
-/* ========= 黒帯（value） ========= */
-.value-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--labelH);
-  background: rgba(0,0,0,0.8);
-  color: #ffeb3b;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  line-height: var(--labelH);
-  user-select: none;
-  pointer-events: none;
+/* ========= 黒帯（value ラベル） ========= */
+.value-label{
+  position:absolute; top:0; left:0;   /* ← 画像の内側ぴったり */
+  width:100%;
+  height:var(--labelH);
+  background:rgba(0,0,0,0.8);
+  color:#ffeb3b;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+  line-height:var(--labelH);
+  user-select:none;
+  pointer-events:none;
+  border-top-left-radius:2px;
+  border-top-right-radius:2px;
 }
 
-/* ========= Select欄 ========= */
-#selected-container {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
+/* ========= Select（選択済み） ========= */
+#selection-area{ display:flex; align-items:flex-end; margin-bottom:12px; }
+#selected-container{
+  display:flex;
+  gap:8px;
+  justify-content:center;   /* PCは中央寄せのまま（以前どおり） */
 }
-.selected-wrapper {
-  position: relative;
-  background: #555;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px;
-  min-width: var(--slotMinW);
-  min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 28px);
-  box-sizing: border-box;
+.selected-wrapper{
+  position:relative;
+  background:#555;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:6px;
+  min-width:var(--slotMinW);
+  /* 画像(=imgH) + 画像とボタン間隔 + ボタン3段 + 余白 */
+  min-height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+  box-sizing:border-box;
 }
-.selected-wrapper:empty::before {
-  content: "";
-  display: block;
-  width: var(--imgW);
-  height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 28px);
-  background: #555;
+.selected-wrapper:empty::before{
+  content:"";
+  display:block;
+  width:var(--imgW);
+  height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+  background:#555;
 }
-.selected-img {
-  width: var(--imgW);
-  height: var(--imgH);
-  object-fit: contain;
-  border: 5px solid black;
-  box-sizing: border-box;
-  margin-bottom: 4px;
-}
+/* ボタンとの間隔を常に4px確保 */
+.selected-img{ margin-bottom: var(--gapImgButtons); }
 
-/* ========= ボタン ========= */
-.button-container {
-  display: grid;
+/* ========= ボタン（2列×最大3段） ========= */
+.button-container{
+  display:grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  width: 100%;
-  justify-items: center;
-  margin-top: 4px;
+  gap:6px;
+  width:100%;
+  justify-items:center;
 }
-.button-container button {
-  width: var(--btnW);
-  height: var(--btnH);
-  border: 1px solid #888;
-  cursor: pointer;
-  font-size: var(--btnFS);
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.button-container button{
+  width:var(--btnW);
+  height:var(--btnH);
+  border:1px solid #888;
+  cursor:pointer;
+  font-size:var(--btnFS);
+  color:#000 !important;
+  -webkit-text-fill-color:#000 !important; /* iOS 対策 */
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
-button.Default { background: #fff; }
-button.Gold { background: #ffffcc; }
-button.Diamond { background: #ccf5ff; }
-button.Rainbow { background: #ffcce5; }
-button.Halloween { background: #ffd1a6; }
-button.Other { background: #ddd; }
+button.Default{ background:#fff; }
+button.Gold{ background:#ffffcc; }
+button.Diamond{ background:#ccf5ff; }
+button.Rainbow{ background:#ffcce5; }
+button.Halloween{ background:#ffd1a6; }
+button.Other{ background:#ddd; }
 
-/* ========= 種類確率背景（復元） ========= */
-#probability span {
-  display: inline-block;
-  padding: 2px 6px;
-  margin: 2px 4px 2px 0;
-  border-radius: 4px;
-  font-weight: 600;
-  color: #000;
-  border: 1px solid #aaa;
+/* ========= Result（結果） ========= */
+#stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:16px;
+  justify-content:flex-start;   /* ← PCで左寄せに戻す（中央寄せを解除） */
+  align-items:flex-start;
 }
-#probability .Default { background: #fff; }
-#probability .Gold { background: #ffffcc; }
-#probability .Diamond { background: #ccf5ff; }
-#probability .Rainbow { background: #ffcce5; }
-#probability .Halloween { background: #ffd1a6; }
-#probability .Other { background: #ddd; }
+.panel{
+  border:2px solid #999;        /* ← 「枠で囲む」を復元 */
+  padding:10px;
+  min-width:260px;
+  background:#fafafa;
+}
+.panel-title{ font-weight:700; margin-bottom:6px; }
+.total-panel{ min-width:120px; max-width:150px; text-align:center; }
+.total-panel #total{ font-size:20px; font-weight:700; }
+.wait-note{ margin-top:4px; font-size:14px; color:#444; line-height:1.2; }
 
-/* ========= スマホ最適化（安定版） ========= */
-@media (max-width: 600px) {
-  :root {
+/* 種類確率の色バッジ（背景色ありを維持） */
+#probability span{
+  display:inline-block;
+  padding:2px 6px;
+  margin:2px 4px 2px 0;
+  border-radius:4px;
+  font-weight:600;
+  color:#000;
+  border:1px solid #aaa;
+}
+#probability .Default{ background:#fff; }
+#probability .Gold{ background:#ffffcc; }
+#probability .Diamond{ background:#ccf5ff; }
+#probability .Rainbow{ background:#ffcce5; }
+#probability .Halloween{ background:#ffd1a6; }
+#probability .Other{ background:#ddd; }
+
+.notice{ margin-top:40px; text-align:left; color:#333; font-size:13px; }
+
+/* ========= スマホ最適化 ========= */
+@media (max-width: 600px){
+  :root{
+    /* スマホ用に十分な横幅を確保（はみ出し防止） */
     --imgW: 78px;
     --imgH: 88px;
     --labelH: 12px;
-    --slotMinW: 112px; /* ← 幅を拡張してボタン切れ防止 */
-    --btnW: 52px;
+    --slotMinW: 118px;    /* ← 枠幅を拡張（ボタン切れ対策） */
+    --btnW: 54px;         /* ← ボタン幅も微調整 */
     --btnH: 22px;
     --btnFS: 8px;
   }
 
-  /* Monster欄 */
-  #gallery {
+  /* Monster は自動列にして横スクロール防止 */
+  #gallery{
     grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
-    justify-items: center;
-    gap: 5px;
+    justify-items:center;
+    gap:5px;
   }
 
-  /* Select欄（3×2配置） */
-  #selected-container {
-    display: grid;
+  /* Select は 3列×2段（5枠だが2段構成） */
+  #selected-container{
+    display:grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-    justify-items: center;
+    gap:8px;
+    width:100%;
+    max-width:520px;      /* 余裕を持たせて切れないように */
+    margin:0 auto;
+    justify-items:center;
   }
 
-  .selected-wrapper {
-    width: calc(var(--imgW) + 26px);
-    height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 26px);
-    background: #555;
-    padding: 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow: hidden;
-    box-sizing: border-box;
+  .selected-wrapper{
+    /* 画像幅 + 枠内余白分。画像と帯を中央＆等幅で収め、ボタンも切れない */
+    width: calc(var(--imgW) + 30px);
+    /* 画像 + 隙間4px + ボタン3段 + 余白 */
+    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+    padding:4px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    background:#555;
+    overflow:hidden;
+    box-sizing:border-box;
   }
 
-  .selected-wrapper:empty::before {
-    content: "";
-    display: block;
-    width: var(--imgW);
-    height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 26px);
-    background: #555;
+  .selected-wrapper:empty::before{
+    content:"";
+    display:block;
+    width:var(--imgW);
+    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+    background:#555;
   }
 
-  .selected-img {
-    width: var(--imgW);
-    height: var(--imgH);
-    object-fit: contain;
-    border: 3px solid black;
-    box-sizing: border-box;
-    margin: 0 auto 4px;
+  /* 画像と帯を“中央かつ一致”させる */
+  .imgbox{                /* ← select/gallary 共通の画像コンテナ */
+    position:relative;
+    width:var(--imgW);
+    height:var(--imgH);
+    box-sizing:border-box;
+    margin:0 auto;        /* ← 枠内で中央配置 */
+  }
+  .selected-img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    border:3px solid black; /* スマホは縁を3pxにして見た目のズレを回避 */
+    box-sizing:border-box;
+    margin:0 0 var(--gapImgButtons) 0;
+  }
+  .value-label{
+    top:0; left:0;
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:9px;
   }
 
-  .value-label {
-    width: var(--imgW);
-    height: var(--labelH);
-    font-size: 9px;
-    line-height: var(--labelH);
-    position: absolute;
-    top: 4px;
-    left: 50%;
-    transform: translateX(-50%);
+  /* ボタン一式：はみ出さないように幅とギャップを調整 */
+  .button-container{
+    width:100%;
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items:center;
+    align-items:center;
+    gap:4px;
+  }
+  .button-container button{
+    width:var(--btnW);
+    height:var(--btnH);
+    font-size:var(--btnFS);
   }
 
-  .button-container {
-    margin-top: 4px;
-    gap: 4px;
+  /* Result：種類→その下に Secret と 合計を横並び */
+  #stats{
+    gap:8px;
+    justify-content:flex-start;  /* ← 左寄せ維持 */
   }
-
-  .button-container button {
-    width: var(--btnW);
-    height: var(--btnH);
-    font-size: var(--btnFS);
+  #stats .panel:nth-child(2){ order:1; width:100%; }
+  #stats .panel:nth-child(1),
+  #stats .total-panel{
+    order:2;
+    flex:1 1 calc(50% - 6px);
   }
 }
