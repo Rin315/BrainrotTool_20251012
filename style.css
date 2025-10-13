@@ -53,8 +53,18 @@ h2{ margin: 0; font-size: 22px; }
 }
 .nav-title{ font-size:20px; font-weight:bold; }
 .nav-links{ display:flex; flex-wrap:wrap; gap:16px; }
-.nav-links a{ color:#fff; text-decoration:none; font-weight:500; }
-.nav-links a:hover{ text-decoration:underline; }
+
+/* 🔸リンクを押せる色に変更 */
+.nav-links a{
+  color:#1e90ff;
+  text-decoration:none;
+  font-weight:600;
+  transition:color 0.2s ease, text-decoration 0.2s ease;
+}
+.nav-links a:hover{
+  color:#005bbb;
+  text-decoration:underline;
+}
 
 /* ========= 画像コンテナ ========= */
 .imgbox{
@@ -181,11 +191,17 @@ button.Other{ background:#ddd; }
   justify-content:flex-start;
   align-items:flex-start;
 }
+
+/* 🔸高さ統一 */
 .panel{
   border:2px solid #999;
   padding:10px;
   min-width:260px;
   background:#fafafa;
+  height:120px;                     /* ← 合計値パネルの高さに統一 */
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 .panel-title{ font-weight:700; margin-bottom:6px; }
 .total-panel{ min-width:120px; max-width:150px; text-align:center; }
@@ -230,7 +246,7 @@ button.Other{ background:#ddd; }
   #gallery{
     grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
     justify-items:center;
-    gap:3px; /* ← 修正：Monster欄の間隔 */
+    gap:3px;
   }
 
   img.gallery-img, img.selected-img{
@@ -270,66 +286,9 @@ button.Other{ background:#ddd; }
     z-index:2;
   }
 
-  .gallery-img:active, .selected-img:active{
-    filter:brightness(60%);
-    transition:filter 0.1s ease;
-  }
-
- .selected-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* ← contain → cover に変更 */
-  display: block;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: filter 0.1s ease, border 0.2s ease;
-  z-index: 1;
-}
-
-
-  .gallery-img,
-  .selected-img {
-    transition: transform 0.1s ease, filter 0.15s ease;
-  }
-
-  .imgbox img {
-    transition: transform 0.12s ease, filter 0.12s ease;
-  }
-
-  .imgbox img.pressed {
-    filter: brightness(70%) !important;
-    transform: scale(0.92);
-  }
-
-  .pressed {
-    filter: brightness(70%) !important;
-    transform: scale(0.92);
-  }
-
-  /* 🔸Selectの数値ラベルが縁に隠れないよう修正 */
-  .imgbox--selected {
-    overflow: visible !important;
-  }
-
-  .imgbox--selected .value-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--labelH);
-    background: rgba(0, 0, 0, 0.85);
-    color: #ffeb3b;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
-    line-height: var(--labelH);
-    z-index: 200; /* 最前面に */
-    pointer-events: none;
-  }
-  /* ========= スマホナビバー最適化 ========= */
-@media (max-width: 600px) {
+  /* 🔸スマホナビバー縦並び＋小文字 */
   .navbar {
-    flex-direction: column;           /* 縦並びに変更 */
+    flex-direction: column;
     align-items: flex-start;
     padding: 10px 16px;
   }
@@ -341,15 +300,13 @@ button.Other{ background:#ddd; }
 
   .nav-links {
     display: flex;
-    flex-direction: column;           /* ← 各リンクを縦に並べる */
+    flex-direction: column;
     gap: 6px;
     width: 100%;
   }
 
   .nav-links a {
-    font-size: 14px;                  /* ← 文字サイズを小さく */
+    font-size: 14px;
     padding: 4px 0;
   }
-}
-
 }
