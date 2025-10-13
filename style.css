@@ -51,19 +51,18 @@ h2{ margin: 0; font-size: 22px; }
   padding:12px 24px;
   box-shadow:0 2px 6px rgba(0,0,0,0.2);
 }
-.nav-title{ font-size:20px; font-weight:bold; }
+.nav-title{ font-size:20px; font-weight:bold; color:#fff; text-decoration:underline; }
 .nav-links{ display:flex; flex-wrap:wrap; gap:16px; }
 
-/* 🔸リンクを押せる色に変更 */
+/* 🔸リンク色と装飾を統一（常時アンダーライン＋白） */
 .nav-links a{
-  color:#1e90ff;
-  text-decoration:none;
+  color:#fff;
+  text-decoration:underline;
   font-weight:600;
-  transition:color 0.2s ease, text-decoration 0.2s ease;
+  transition:color 0.2s ease;
 }
 .nav-links a:hover{
-  color:#005bbb;
-  text-decoration:underline;
+  color:#ffeb3b; /* ホバー時に少し明るく */
 }
 
 /* ========= 画像コンテナ ========= */
@@ -97,7 +96,6 @@ h2{ margin: 0; font-size: 22px; }
   z-index:1;
 }
 
-/* 🔸クリック時に暗く（スマホ対応強化） */
 .gallery-img:active, .selected-img:active{
   filter:brightness(60%);
   transition:filter 0.1s ease;
@@ -192,19 +190,20 @@ button.Other{ background:#ddd; }
   align-items:flex-start;
 }
 
-/* 🔸高さ統一 */
+/* 🔸高さ統一＋左上寄せ */
 .panel{
   border:2px solid #999;
   padding:10px;
   min-width:260px;
   background:#fafafa;
-  height:120px;                     /* ← 合計値パネルの高さに統一 */
+  height:120px;
   display:flex;
   flex-direction:column;
-  justify-content:center;
+  justify-content:flex-start; /* ← 上寄せ */
+  align-items:flex-start;     /* ← 左寄せ */
 }
 .panel-title{ font-weight:700; margin-bottom:6px; }
-.total-panel{ min-width:120px; max-width:150px; text-align:center; }
+.total-panel{ min-width:120px; max-width:150px; text-align:left; } /* ← 左寄せ */
 .total-panel #total{ font-size:20px; font-weight:700; }
 .wait-note{ margin-top:4px; font-size:14px; color:#444; line-height:1.2; }
 
@@ -286,16 +285,17 @@ button.Other{ background:#ddd; }
     z-index:2;
   }
 
-  /* 🔸スマホナビバー縦並び＋小文字 */
+  /* 🔸スマホナビバー：右寄せ配置 */
   .navbar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end; /* ← 右寄せ */
     padding: 10px 16px;
   }
 
   .nav-title {
     font-size: 18px;
     margin-bottom: 8px;
+    text-align: right;
   }
 
   .nav-links {
@@ -303,10 +303,13 @@ button.Other{ background:#ddd; }
     flex-direction: column;
     gap: 6px;
     width: 100%;
+    align-items: flex-end; /* ← 右側に揃える */
   }
 
   .nav-links a {
     font-size: 14px;
     padding: 4px 0;
+    color: #fff;
+    text-decoration: underline;
   }
 }
