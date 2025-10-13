@@ -72,7 +72,7 @@ h2{ margin: 0; font-size: 22px; }
   border:none;
   margin-bottom:7px;
   position:relative;
-  z-index:0; /* 帯より下にしない（次で調整） */
+  z-index:0;
 }
 
 /* ========= 画像 ========= */
@@ -84,7 +84,7 @@ h2{ margin: 0; font-size: 22px; }
   box-sizing:border-box;
   cursor:pointer;
   transition:filter 0.1s ease, border 0.2s ease;
-  z-index:1; /* 画像を最前面へ */
+  z-index:1;
 }
 
 /* 🔸クリック時に暗く（スマホ対応強化） */
@@ -116,7 +116,7 @@ h2{ margin: 0; font-size: 22px; }
   user-select:none;
   pointer-events:none;
   white-space:nowrap;
-  z-index:2; /* 🔸帯を縁の下にしないよう最前面に */
+  z-index:2;
 }
 
 /* ========= Select（選択済み） ========= */
@@ -227,11 +227,10 @@ button.Other{ background:#ddd; }
     --selectedBorderC: #000;
   }
 
-  /* 🔸Monster欄：画像間を3pxに */
   #gallery{
     grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
     justify-items:center;
-    gap:3px; /* ← 修正：間隔3px */
+    gap:3px; /* ← 修正：Monster欄の間隔 */
   }
 
   img.gallery-img, img.selected-img{
@@ -240,7 +239,6 @@ button.Other{ background:#ddd; }
     object-fit: contain !important;
   }
 
-  /* Select：3列×2段 */
   #selected-container{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
@@ -264,7 +262,6 @@ button.Other{ background:#ddd; }
     box-sizing:border-box;
   }
 
-  /* 🔸帯が枠に完全一致するように */
   .value-label{
     width:100%;
     height:var(--labelH);
@@ -273,35 +270,53 @@ button.Other{ background:#ddd; }
     z-index:2;
   }
 
-  /* クリック時暗くなる（スマホにも反映） */
   .gallery-img:active, .selected-img:active{
     filter:brightness(60%);
     transition:filter 0.1s ease;
   }
 
-  /* 🔸画像の縁が帯に隠れないように */
   .selected-img{
     position:relative;
-    z-index:3; /* 帯より上に表示 */
+    z-index:3;
   }
-  /* 押下時のアニメーション（ぬるっと縮小） */
-.gallery-img,
-.selected-img {
-  transition: transform 0.1s ease, filter 0.15s ease; /* ← ぬるっと */
-}
 
-/* ぬるっと縮小アニメ（画像すべてに適用） */
-.imgbox img {
-  transition: transform 0.12s ease, filter 0.12s ease;
-}
-.imgbox img.pressed {
-  filter: brightness(70%) !important;
-  transform: scale(0.92);
-}
+  .gallery-img,
+  .selected-img {
+    transition: transform 0.1s ease, filter 0.15s ease;
+  }
 
-.pressed {
-  filter: brightness(70%) !important; /* 少し暗く */
-  transform: scale(0.92);              /* ← ぬるっと縮小 */
-}
+  .imgbox img {
+    transition: transform 0.12s ease, filter 0.12s ease;
+  }
 
+  .imgbox img.pressed {
+    filter: brightness(70%) !important;
+    transform: scale(0.92);
+  }
+
+  .pressed {
+    filter: brightness(70%) !important;
+    transform: scale(0.92);
+  }
+
+  /* 🔸Selectの数値ラベルが縁に隠れないよう修正 */
+  .imgbox--selected {
+    overflow: visible !important;
+  }
+
+  .imgbox--selected .value-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--labelH);
+    background: rgba(0, 0, 0, 0.85);
+    color: #ffeb3b;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: var(--labelH);
+    z-index: 200; /* 最前面に */
+    pointer-events: none;
+  }
 }
