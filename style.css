@@ -77,9 +77,11 @@ h2{ margin: 0; font-size: 22px; }
 .imgbox--gallery{
   border: var(--galleryBorderW) solid var(--galleryBorderC);
 }
+/* 既存の .imgbox--selected をこれに置き換え */
 .imgbox--selected{
-  border: var(--selectedBorderW) solid var(--selectedBorderC);
-  margin-bottom: 7px; /* 画像とボタン群の間を3pxほどあける */
+  /* border: var(--selectedBorderW) solid var(--selectedBorderC); ←削除 */
+  border: none;            /* ← 最初は枠なしにする */
+  margin-bottom: 7px;      /* 画像とボタンの間に余白（≈3px増し） */
 }
 
 /* 実画像は .imgbox の内側100%にフィット（画像側には枠線を当てない） */
@@ -156,7 +158,11 @@ h2{ margin: 0; font-size: 22px; }
   background:#555;
 }
 /* 画像とボタンの隙間は常に4px */
-.selected-img{ margin-bottom: var(--gapImgButtons); }
+/* 既存の .gallery-img, .selected-img に追記（または selected-img 用に追加） */
+.selected-img{
+  border: 0 solid transparent;  /* ← 初期は枠なし */
+  transition: border-color 0.2s ease, border-width 0.2s ease;
+}
 
 /* ========= ボタン（2列×最大3段） ========= */
 .button-container{

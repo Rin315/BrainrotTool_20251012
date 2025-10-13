@@ -74,7 +74,7 @@ images.forEach((imgObj) => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
     if (emptyIndex === -1) return;
     selectedImages[emptyIndex] = { ...imgObj };
-    selectedColors[emptyIndex]  = 'Default';
+    selectedColors[emptyIndex]  = null; // 初期は枠なし
     renderSelected();
     updateAll();
   });
@@ -84,8 +84,6 @@ images.forEach((imgObj) => {
   gallery.appendChild(box);
 });
 
-
-
 // ========== 選択エリア描画 ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
@@ -93,29 +91,23 @@ function renderSelected() {
     const imgObj = selectedImages[idx];
 
     if (imgObj) {
-      // 画像と帯を含むコンテナ（.imgbox--selected）
       const box = document.createElement('div');
       box.className = 'imgbox imgbox--selected';
 
-      // 画像本体
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
-      const color = selectedColors[idx] || 'Default';
-      img.style.borderColor = getButtonColor(color);
+      img.style.border = "0 solid transparent"; // 初期は枠なし
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
-      // 値ラベル（黒帯＋黄色文字＋単位 K/s）
       const label = document.createElement('div');
       label.textContent = `${imgObj.value} K/s`;
       label.className = 'value-label';
       box.appendChild(label);
 
-      // コンテナを枠に追加
       wrapper.appendChild(box);
 
-      // ボタン群
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
       ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
@@ -125,7 +117,8 @@ function renderSelected() {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           selectedColors[idx] = type;
-          img.style.borderColor = getButtonColor(type);
+          const bw = window.matchMedia('(max-width: 600px)').matches ? '3px' : '5px';
+          img.style.border = `${bw} solid ${getButtonColor(type)}`;
           updateAll();
         });
         btnContainer.appendChild(btn);
@@ -133,7 +126,6 @@ function renderSelected() {
       wrapper.appendChild(btnContainer);
 
     } else {
-      // 未選択時のプレースホルダ（画像と帯分の高さを確保）
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
       ph.style.backgroundColor = '#555';
@@ -141,8 +133,6 @@ function renderSelected() {
     }
   });
 }
-
-
 
 // ========== 画像削除（左詰め） ==========
 function removeFromSelected(index){
@@ -174,13 +164,12 @@ function updateTotal() {
   const sum = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
   totalValueEl.textContent = sum;
 
-  // Wait条件を変更：750超で1h30m
   let waitText = "(Wait 1h0m)";
   if (sum > 5000) waitText = "(Wait 2h0m)";
   else if (sum > 750) waitText = "(Wait 1h30m)";
 
   totalWaitEl.textContent = waitText;
-  totalWaitEl.style.fontSize = "12px"; // ← Waitを小さく
+  totalWaitEl.style.fontSize = "12px";
 }
 
 // ========== Secret確率 ==========
@@ -193,7 +182,7 @@ function updateSecretProbability(){
   } else if (sum >= 501) {
     secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
   } else {
-    secretProbEl.innerHTML = `<strong>Secret：15%以下</strong>`; // ← 修正
+    secretProbEl.innerHTML = `<strong>Secret：15%以下</strong>`;
   }
 }
 
@@ -236,7 +225,7 @@ function getButtonColor(type){
     case 'Diamond': return 'cyan';
     case 'Rainbow': return 'pink';
     case 'Halloween': return 'orange';
-    case 'Other': return 'white'; // ← 修正
+    case 'Other': return 'white';
     default: return 'black';
   }
 }
