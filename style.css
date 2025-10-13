@@ -15,27 +15,6 @@ body {
   background-color: #e6f5e1;
 }
 
-h2 { margin: 0; font-size: 22px; }
-
-.section-header {
-  display: flex;
-  align-items: center;
-  margin: 18px 0 8px;
-}
-
-#reset-btn {
-  background: #d10000;
-  color: #fff;
-  font-weight: 900;
-  border: none;
-  padding: 6px 12px;
-  height: 32px;
-  cursor: pointer;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  margin-left: 50px;
-}
-
 /* ========= ナビバー ========= */
 .navbar {
   background-color: #2f4f4f;
@@ -51,7 +30,7 @@ h2 { margin: 0; font-size: 22px; }
 .nav-links a { color: white; text-decoration: none; font-weight: 500; }
 .nav-links a:hover { text-decoration: underline; }
 
-/* ========= Monster欄 ========= */
+/* ========= ギャラリー（Monster欄） ========= */
 #gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
@@ -64,10 +43,6 @@ h2 { margin: 0; font-size: 22px; }
   object-fit: contain;
   border: 1px solid #ccc;
   cursor: pointer;
-}
-.gallery-img:active, .selected-img:active {
-  filter: brightness(60%);
-  transition: filter 0.1s ease;
 }
 
 /* ========= 黒帯（value） ========= */
@@ -85,16 +60,9 @@ h2 { margin: 0; font-size: 22px; }
   line-height: var(--labelH);
   user-select: none;
   pointer-events: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
 }
 
 /* ========= Select欄 ========= */
-#selection-area {
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 12px;
-}
 #selected-container {
   display: flex;
   gap: 8px;
@@ -102,20 +70,20 @@ h2 { margin: 0; font-size: 22px; }
 }
 .selected-wrapper {
   position: relative;
+  background: #555;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #555;
   padding: 6px;
   min-width: var(--slotMinW);
-  min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 20px);
+  min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 28px);
   box-sizing: border-box;
 }
 .selected-wrapper:empty::before {
   content: "";
   display: block;
   width: var(--imgW);
-  height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 20px);
+  height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 28px);
   background: #555;
 }
 .selected-img {
@@ -123,6 +91,8 @@ h2 { margin: 0; font-size: 22px; }
   height: var(--imgH);
   object-fit: contain;
   border: 5px solid black;
+  box-sizing: border-box;
+  margin-bottom: 4px;
 }
 
 /* ========= ボタン ========= */
@@ -146,7 +116,6 @@ h2 { margin: 0; font-size: 22px; }
   justify-content: center;
   align-items: center;
 }
-
 button.Default { background: #fff; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
@@ -154,42 +123,31 @@ button.Rainbow { background: #ffcce5; }
 button.Halloween { background: #ffd1a6; }
 button.Other { background: #ddd; }
 
-/* ========= 結果欄 ========= */
-#stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 16px;
+/* ========= 種類確率背景（復元） ========= */
+#probability span {
+  display: inline-block;
+  padding: 2px 6px;
+  margin: 2px 4px 2px 0;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #000;
+  border: 1px solid #aaa;
 }
-#stats .panel:nth-child(1) { order: 2; }
-#stats .panel:nth-child(2) { order: 1; }
-.panel {
-  border: 2px solid #999;
-  padding: 10px;
-  min-width: 260px;
-  background: #fafafa;
-}
-.panel-title { font-weight: 700; margin-bottom: 6px; }
+#probability .Default { background: #fff; }
+#probability .Gold { background: #ffffcc; }
+#probability .Diamond { background: #ccf5ff; }
+#probability .Rainbow { background: #ffcce5; }
+#probability .Halloween { background: #ffd1a6; }
+#probability .Other { background: #ddd; }
 
-.total-panel {
-  min-width: 120px;
-  max-width: 150px;
-  text-align: center;
-}
-.total-panel #total {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-/* ========= スマホ最適化（完全修正版） ========= */
-/* ========= スマホ最適化（Select欄修正版） ========= */
+/* ========= スマホ最適化（安定版） ========= */
 @media (max-width: 600px) {
   :root {
-    --imgW: 72px;
-    --imgH: 82px;
+    --imgW: 78px;
+    --imgH: 88px;
     --labelH: 12px;
-    --slotMinW: 96px; /* ← 横幅を拡張 */
-    --btnW: 50px;
+    --slotMinW: 112px; /* ← 幅を拡張してボタン切れ防止 */
+    --btnW: 52px;
     --btnH: 22px;
     --btnFS: 8px;
   }
@@ -207,20 +165,19 @@ button.Other { background: #ddd; }
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 460px; /* 横幅をやや拡大 */
+    max-width: 480px;
     margin: 0 auto;
     justify-items: center;
   }
 
   .selected-wrapper {
-    position: relative;
-    width: calc(var(--imgW) + 20px); /* ← ボタンが切れないよう拡張 */
-    height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 18px);
+    width: calc(var(--imgW) + 26px);
+    height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 26px);
     background: #555;
     padding: 4px;
     display: flex;
     flex-direction: column;
-    align-items: center;     /* 中央揃え（画像・ボタン） */
+    align-items: center;
     justify-content: flex-start;
     overflow: hidden;
     box-sizing: border-box;
@@ -230,7 +187,7 @@ button.Other { background: #ddd; }
     content: "";
     display: block;
     width: var(--imgW);
-    height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 18px);
+    height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 26px);
     background: #555;
   }
 
@@ -239,8 +196,8 @@ button.Other { background: #ddd; }
     height: var(--imgH);
     object-fit: contain;
     border: 3px solid black;
-    display: block;
-    margin: 0 auto; /* ← 左寄り修正 */
+    box-sizing: border-box;
+    margin: 0 auto 4px;
   }
 
   .value-label {
@@ -251,39 +208,17 @@ button.Other { background: #ddd; }
     position: absolute;
     top: 4px;
     left: 50%;
-    transform: translateX(-50%); /* ← 帯も中央揃え */
+    transform: translateX(-50%);
   }
 
   .button-container {
     margin-top: 4px;
     gap: 4px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    align-items: center;
-    width: 100%;
   }
 
   .button-container button {
     width: var(--btnW);
     height: var(--btnH);
     font-size: var(--btnFS);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Result欄整列 */
-  #stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  #stats .panel:nth-child(2) { order: 1; width: 100%; }
-  #stats .panel:nth-child(1),
-  #stats .total-panel {
-    order: 2;
-    flex: 1 1 calc(50% - 6px);
   }
 }
-
