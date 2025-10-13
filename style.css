@@ -2,10 +2,13 @@
 :root{
   --imgW: 110px;
   --imgH: 120px;
+  --labelH: 18px;      /* value帯の高さ */
+  --slotGap: 6px;      /* ボタンの行間 */
   --slotMinW: 134px;
+
   --btnW: 58px;
   --btnH: 28px;
-  --btnFS: 11px;
+  --btnFS: 11px;       /* PCのボタン文字サイズ */
 }
 
 body {
@@ -54,15 +57,18 @@ h2 { margin: 0; font-size: 22px; }
   height: var(--imgH);
   object-fit: cover;
   display: block;
-  border: 1px solid #ccc;
   cursor: pointer;
+
+  /* 帯と幅を一致させるために境界線も含めて箱の内側で完結させる */
+  box-sizing: border-box;
+}
+
+.gallery-img{
+  border: 1px solid #ccc;
 }
 
 .selected-img{
-  border-width: 5px;
-  border-style: solid;
-  border-color: black;
-  border-left-color: black; /* 明示 */
+  border: 5px solid black;  /* 色はJSで変更 */
 }
 
 .gallery-img:active,
@@ -75,7 +81,7 @@ h2 { margin: 0; font-size: 22px; }
 #selection-area { display: flex; align-items: flex-end; margin-bottom: 12px; }
 #selected-container { display: flex; gap: 8px; justify-content: center; }
 
-/* 未選択・選択で高さ差が出ないようにする */
+/* ★ 枠の見た目を “常に” 一定に：未選択でも高さが保たれる */
 .selected-wrapper{
   display: flex;
   flex-direction: column;
@@ -83,36 +89,43 @@ h2 { margin: 0; font-size: 22px; }
   background-color: #555;
   padding: 6px;
   min-width: var(--slotMinW);
-  height: auto;
+
+  /* 画像＋帯＋ボタン3段（2列×3段）＋行間2つ＋余白の合計を最低高さに */
+  min-height: calc(
+    var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2) + 12px
+  );
 }
 
-/* ✅ 未選択状態でも “画像＋帯＋ボタン相当” の高さを確保（枠が小さくならない） */
+/* 未選択でも高さを維持（旧 :empty::before は廃止してOK） */
 .selected-wrapper:empty::before{
   content: "";
   display: block;
   width: var(--imgW);
-  /* 画像高さ + 帯(18px) + ボタン2段(= var(--btnH)*2) + 余白(12px) */
-  height: calc(var(--imgH) + 18px + (var(--btnH) * 2) + 12px);
+  height: calc(
+    var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2)
+  );
   background: #555;
 }
 
-/* 黒帯＋黄色文字（valueラベル） */
+/* ========= 黒帯＋黄色文字（valueラベル） ========= */
 .value-label{
   position: absolute; top: 0; left: 0;
-  width: 100%; height: 18px;
+  width: 100%; height: var(--labelH);
   background: rgba(0,0,0,0.8);
   color: #ffeb3b;
   font-size: 12px; font-weight: bold;
-  text-align: center; line-height: 18px;
+  text-align: center; line-height: var(--labelH);
   user-select: none; pointer-events: none;
 }
 
-/* ========= ボタン（2列） ========= */
+/* ========= ボタン（2列×3段） ========= */
 .button-container{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px; width: 100%; justify-items: center;
-  margin-top: 12px; /* ← PCで画像とボタンの間を+3px */
+  gap: var(--slotGap);
+  width: 100%;
+  justify-items: center;
+  margin-top: 12px; /* PCで画像とボタンの間を少し広めに */
 }
 .button-container button{
   width: var(--btnW); height: var(--btnH);
@@ -121,7 +134,6 @@ h2 { margin: 0; font-size: 22px; }
   display: flex; justify-content: center; align-items: center;
 }
 
-/* ボタン色 */
 button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
@@ -160,6 +172,9 @@ button.Other { background: #ddd; }
   :root{
     --imgW: 54px;
     --imgH: 60px;
+    --labelH: 12px;
+    --slotGap: 4px;
+
     --slotMinW: 80px;
     --btnW: 46px;
     --btnH: 22px;
@@ -178,25 +193,33 @@ button.Other { background: #ddd; }
   }
 
   .selected-wrapper{
-    width: 120px; height: auto; padding: 3px; border-radius: 0;
+    width: 120px; padding: 3px; border-radius: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-    background: #555; gap: 6px;
+    background: #555; gap: var(--slotGap);
+
+    /* ★ スマホでも同じ最低高さを強制 */
+    min-height: calc(
+      var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2) + 10px
+    );
   }
 
-  /* ✅ スマホでも未選択枠の高さを“画像＋帯＋ボタン相当”に合わせる */
+  /* 未選択でも高さを維持 */
   .selected-wrapper:empty::before{
     content: ""; display: block; width: var(--imgW);
-    height: calc(var(--imgH) + 12px + (var(--btnH) * 2) + 10px);
+    height: calc(
+      var(--imgH) + var(--labelH) + (var(--btnH) * 3) + (var(--slotGap) * 2)
+    );
     background: #555;
   }
 
-  /* ✅ 帯を画像内に確実に収める（中央揃え不要：幅100%でOK） */
+  /* 帯は画像幅に100%で追従（ズレ防止） */
   .value-label{
-    font-size: 9px; height: 12px; line-height: 12px;
+    font-size: 9px;
     width: 100%; left: 0; transform: none;
+    height: var(--labelH); line-height: var(--labelH);
   }
 
-  .button-container{ gap: 4px; margin-top: 6px; }
+  .button-container{ gap: var(--slotGap); margin-top: 6px; }
   .button-container button{ width: var(--btnW); height: var(--btnH); font-size: var(--btnFS); }
 
   #stats{ display: flex; flex-wrap: wrap; }
