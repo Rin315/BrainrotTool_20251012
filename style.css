@@ -84,7 +84,6 @@ h2 {
   justify-content: center;
 }
 
-/* 画像とボタンの重なり防止 */
 .selected-wrapper {
   display: flex;
   flex-direction: column;
@@ -96,11 +95,12 @@ h2 {
   height: auto;
 }
 
+/* ✅ 未選択状態でも大きさを確保（画像＋ボタン相当） */
 .selected-wrapper:empty::before {
   content: "";
   display: block;
   width: var(--imgW);
-  height: calc(var(--imgH) + 30px);
+  height: calc(var(--imgH) + 60px); /* ← 高さを拡大して統一 */
   background: #555;
 }
 
@@ -127,7 +127,7 @@ h2 {
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--imgW); /* ← 幅を画像と完全一致 */
+  width: var(--imgW);
   height: 18px;
   background-color: rgba(0, 0, 0, 0.8);
   color: #ffeb3b;
@@ -137,6 +137,8 @@ h2 {
   line-height: 18px;
   user-select: none;
   pointer-events: none;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
 }
 
 /* ========= ボタン ========= */
@@ -161,7 +163,6 @@ h2 {
   align-items: center;
 }
 
-/* ボタン色 */
 button.Default { background: #fff; color: #000; }
 button.Gold { background: #ffffcc; }
 button.Diamond { background: #ccf5ff; }
@@ -199,7 +200,6 @@ button.Other { background: #ddd; }
   font-weight: 700;
 }
 
-/* Wait 表示 */
 .wait-note {
   margin-top: 4px;
   font-size: 14px;
@@ -277,23 +277,24 @@ button.Other { background: #ddd; }
     gap: 6px;
   }
 
-  /* スマホ時、画像を中央に配置 */
-  .selected-wrapper div[style*="position: relative"] {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* ✅ 未選択時でも十分な高さを確保 */
+  .selected-wrapper:empty::before {
+    content: "";
+    display: block;
+    width: var(--imgW);
+    height: calc(var(--imgH) + 40px);
+    background: #555;
   }
 
-  /* 帯が画像内に収まるよう修正 */
+  /* ✅ 数値帯（value-label）を画像内に収める */
   .value-label {
-    font-size: 9px;
-    padding: 0;
-    line-height: 12px;
+    font-size: 8px;
     top: 0;
-    width: var(--imgW);
     left: 50%;
     transform: translateX(-50%);
+    width: var(--imgW);
+    height: 12px;
+    line-height: 12px;
   }
 
   .button-container { gap: 4px; margin-top: 5px; }
