@@ -3,7 +3,6 @@
   --imgW: 110px;
   --imgH: 120px;
   --labelH: 18px;
-  --slotGap: 6px;
   --slotMinW: 134px;
   --btnW: 58px;
   --btnH: 28px;
@@ -60,16 +59,10 @@ h2 { margin: 0; font-size: 22px; }
   gap: 6px;
 }
 
-.imgbox {
-  position: relative;
-  width: var(--imgW);
-  height: calc(var(--imgH) + var(--labelH));
-}
-
 .gallery-img, .selected-img {
   width: 100%;
   height: var(--imgH);
-  object-fit: contain; /* ← 比率維持でトリミング防止 */
+  object-fit: contain; /* トリミング防止 */
   display: block;
   box-sizing: border-box;
   cursor: pointer;
@@ -82,7 +75,7 @@ h2 { margin: 0; font-size: 22px; }
   transition: filter 0.1s ease;
 }
 
-/* ========= value帯 ========= */
+/* ========= 黒帯（value） ========= */
 .value-label {
   position: absolute;
   top: 0; left: 0;
@@ -106,17 +99,19 @@ h2 { margin: 0; font-size: 22px; }
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  position: relative;
   background-color: #555;
   padding: 6px;
   min-width: var(--slotMinW);
-  min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH) * 3) + 18px);
+  min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 20px);
 }
 
 .selected-wrapper:empty::before {
   content: "";
   display: block;
   width: var(--imgW);
-  height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 18px);
+  height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 20px);
   background: #555;
 }
 
@@ -124,10 +119,10 @@ h2 { margin: 0; font-size: 22px; }
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--slotGap);
+  gap: 6px;
   width: 100%;
   justify-items: center;
-  margin-top: 13px; /* ← PC時 画像とボタンの間を3px広げる */
+  margin-top: 4px; /* ← 画像との隙間を4pxに固定 */
 }
 .button-container button {
   width: var(--btnW);
@@ -195,27 +190,26 @@ button.Other { background: #ddd; }
   font-size: 13px;
 }
 
-/* ========= スマホ最適化（Monster ＝ 自動列数 / Select ＝ 3×2） ========= */
+/* ========= スマホ最適化（Monster自動列 / Select3×2） ========= */
 @media (max-width: 600px) {
   :root{
     --imgW: 70px;
     --imgH: 80px;
     --labelH: 12px;
-    --slotGap: 4px;
     --slotMinW: 80px;
     --btnW: 46px;
     --btnH: 22px;
     --btnFS: 8px;
   }
 
-  /* Monster欄は自動列数で横スクロール防止 */
+  /* Monster欄（自動列／横スクロール防止） */
   #gallery {
     grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
     justify-items: center;
     gap: 5px;
   }
 
-  /* Select欄：3列×2段 */
+  /* Select欄（3×2配置） */
   #selected-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -226,35 +220,46 @@ button.Other { background: #ddd; }
     justify-items: center;
   }
 
-  .selected-img {
-    object-fit: contain; /* ← トリミング防止 */
-    width: var(--imgW);
-    height: var(--imgH);
-  }
-
   .selected-wrapper {
-    width: 120px;
-    min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 14px);
+    position: relative;
+    width: calc(var(--imgW) + 10px);
+    min-height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 16px);
     padding: 3px;
+    background-color: #555;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
   }
 
   .selected-wrapper:empty::before {
     content: "";
     display: block;
     width: var(--imgW);
-    height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 14px);
+    height: calc(var(--imgH) + var(--labelH) + (var(--btnH)*3) + 16px);
     background: #555;
   }
 
-  .value-label {
-    font-size: 9px;
-    height: var(--labelH);
-    line-height: var(--labelH);
+  .selected-img {
+    width: var(--imgW);
+    height: var(--imgH);
+    object-fit: contain;
   }
 
-  /* Result欄の整列（種類→Secret＆合計 横並び） */
+  /* 帯を画像と完全に揃える */
+  .value-label {
+    width: var(--imgW);
+    height: var(--labelH);
+    line-height: var(--labelH);
+    font-size: 9px;
+  }
+
+  /* ボタン位置と隙間 */
+  .button-container {
+    margin-top: 4px;
+    gap: 4px;
+  }
+
+  /* Result欄整列 */
   #stats {
     display: flex;
     flex-wrap: wrap;
