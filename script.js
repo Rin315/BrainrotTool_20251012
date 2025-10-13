@@ -56,19 +56,19 @@ let selectedColors = [null, null, null, null, null];
 // ========== 基本確率 ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
-// ========== ギャラリー生成（上段のモンスター選択） ==========
+// ギャラリー生成
 images.forEach((imgObj) => {
-  const imgContainer = document.createElement('div');
-  imgContainer.style.position = 'relative';
-  imgContainer.style.display = 'inline-block';
-  imgContainer.style.width = 'var(--imgW)';
-  imgContainer.style.height = 'var(--imgH)';
+  const box = document.createElement('div');
+  box.className = 'imgbox imgbox--gallery';
 
   const img = document.createElement('img');
   img.src = imgObj.src;
-  img.className = 'gallery-img';
   img.alt = imgObj.src.split('/').pop();
-  img.style.display = 'block';
+  img.className = 'gallery-img';
+
+  const label = document.createElement('div');
+  label.className = 'value-label';
+  label.textContent = `${imgObj.value} K/s`;
 
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
@@ -78,31 +78,24 @@ images.forEach((imgObj) => {
     renderSelected();
     updateAll();
   });
-  imgContainer.appendChild(img);
 
-  // 🔸 値ラベル（黒帯＋黄色文字＋単位K/s）
-  const valueLabel = document.createElement('div');
-  valueLabel.textContent = `${imgObj.value} K/s`;
-  valueLabel.className = 'value-label';
-  imgContainer.appendChild(valueLabel);
-
-  gallery.appendChild(imgContainer);
+  box.appendChild(img);
+  box.appendChild(label);
+  gallery.appendChild(box);
 });
 
 
 
 // ========== 選択エリア描画 ==========
-function renderSelected(){
+function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
     const imgObj = selectedImages[idx];
 
     if (imgObj) {
-      // 画像を包むコンテナ
-      const imgContainer = document.createElement('div');
-      imgContainer.style.position = 'relative';
-      imgContainer.style.width = '110px';
-      imgContainer.style.height = '120px';
+      // 画像と帯を含むコンテナ（.imgbox--selected）
+      const box = document.createElement('div');
+      box.className = 'imgbox imgbox--selected';
 
       // 画像本体
       const img = document.createElement('img');
@@ -111,21 +104,21 @@ function renderSelected(){
       const color = selectedColors[idx] || 'Default';
       img.style.borderColor = getButtonColor(color);
       img.addEventListener('click', () => removeFromSelected(idx));
-      imgContainer.appendChild(img);
+      box.appendChild(img);
 
-      // 🔸 値ラベル（黒帯＋黄色文字＋単位K/s）
-      const valueLabel = document.createElement('div');
-      valueLabel.textContent = `${imgObj.value} K/s`;
-      valueLabel.className = 'value-label';
-      imgContainer.appendChild(valueLabel);
+      // 値ラベル（黒帯＋黄色文字＋単位 K/s）
+      const label = document.createElement('div');
+      label.textContent = `${imgObj.value} K/s`;
+      label.className = 'value-label';
+      box.appendChild(label);
 
-
-      wrapper.appendChild(imgContainer);
+      // コンテナを枠に追加
+      wrapper.appendChild(box);
 
       // ボタン群
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
-      ['Default','Gold','Diamond','Rainbow','Halloween','Other'].forEach(type => {
+      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
@@ -138,16 +131,17 @@ function renderSelected(){
         btnContainer.appendChild(btn);
       });
       wrapper.appendChild(btnContainer);
+
     } else {
-      // 未選択時のプレースホルダ
+      // 未選択時のプレースホルダ（画像と帯分の高さを確保）
       const ph = document.createElement('div');
-      ph.style.width = '110px';
-      ph.style.height = '150px';
+      ph.className = 'imgbox imgbox--selected';
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
   });
 }
+
 
 
 // ========== 画像削除（左詰め） ==========
