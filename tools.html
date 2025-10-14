@@ -9,18 +9,17 @@
   <meta name="description" content="Brainrot合成マシン確率計算ツールは、モンスターの組み合わせによる確率や合計値を自動で計算できる非公式ツールです。">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrainrotMachine計算ツール</title>
+  <title>BrainrotMachine計算ツール - ツール</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="img/trarafabicon.PNG" type="image/png">
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4LQTYSLN0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Z4LQTYSLN0');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4LQTYSLN0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Z4LQTYSLN0');
+  </script>
 </head>
 <body>
 
@@ -32,14 +31,15 @@
       .then(html => document.getElementById("navbar").innerHTML = html);
   </script>
 
-<h2>確率計算ツールとは？</h2>
-<p>
-このサイトでは、BrainrotMachineのレアリティごとの出現確率を自動計算できます。  
-ボタンで各シリーズを選択し、組み合わせによる変化をリアルタイムで確認可能です。
-</p>
-<p>
-確率の算出式や詳細なアルゴリズムは <a href="/calculation.html">こちらのページ</a> で説明しています。
-</p>
+  <!-- ▼▼ ここから 旧 index.html のツール本体をそのまま ▼▼ -->
+  <h2>確率計算ツールとは？</h2>
+  <p>
+    このサイトでは、BrainrotMachineのレアリティごとの出現確率を自動計算できます。  
+    ボタンで各シリーズを選択し、組み合わせによる変化をリアルタイムで確認可能です。
+  </p>
+  <p>
+    確率の算出式や詳細なアルゴリズムは <a href="/calculation.html">こちらのページ</a> で説明しています。
+  </p>
 
   <div class="section-header">
     <h2>Monster</h2>
@@ -74,13 +74,13 @@
     </div>
 
     <div class="total-panel panel">
-        <div class="panel-title">Total</div>
-        <div id="total">
-         <span id="total-value">0</span>
-         <div id="total-wait" class="wait-note">(Wait 1h0m)</div>
-        </div>
+      <div class="panel-title">Total</div>
+      <div id="total">
+        <span id="total-value">0</span>
+        <div id="total-wait" class="wait-note">(Wait 1h0m)</div>
+      </div>
     </div>
-   </div>
+  </div>
 
   <!-- 注意書き -->
   <div class="notice">
@@ -90,5 +90,7 @@
   </div>
 
   <script src="./script.js"></script>
+  <!-- ▲▲ ツール本体ここまで ▲▲ -->
+
 </body>
 </html>

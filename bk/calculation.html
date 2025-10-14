@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <!-- GoogleAds用 -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3610954254026120"
-     crossorigin="anonymous"></script>
-  <!-- GoogleSearchConsole用 -->
-  <meta name="google-site-verification" content="-ZNws2omcqRJFpwGFICeGzZEumuPMz7lcLG1UfigKSQ" />
   <meta name="description" content="Brainrot合成マシン確率計算ツールは、モンスターの組み合わせによる確率や合計値を自動で計算できる非公式ツールです。">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrainrotMachine計算ツール</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="img/trarafabicon.PNG" type="image/png">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4LQTYSLN0"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-Z4LQTYSLN0');
-  </script>
 
-  <!-- calculation.html に入っていた説明ページ用のスタイルをそのまま移植 -->
+    <!-- ✅ 共通ナビバー読み込み -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("navbar").innerHTML = html);
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>確率の計算について</title>
+  <link rel="icon" type="image/png" href="./img/trarafabicon.PNG" />
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       background-color: #f7faf7;
@@ -62,33 +55,9 @@
       color: #666;
       font-size: 13px;
     }
-    .tool-link {
-      display: inline-block;
-      background: #2f4f4f;
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 10px;
-      transition: background 0.2s;
-    }
-    .tool-link:hover {
-      background: #3b6b6b;
-    }
   </style>
 </head>
 <body>
-
-  <!-- ✅ 共通ナビバー読み込み（headではなくbodyに配置） -->
-  <div id="navbar"></div>
-  <script>
-    fetch("navbar.html")
-      .then(res => res.text())
-      .then(html => document.getElementById("navbar").innerHTML = html);
-  </script>
-
-  <!-- ▼▼ ここから calculation.html の本文をそのまま移植 ▼▼ -->
   <h1>確率の計算について</h1>
 
   <p>このページでは、Fortnite（フォートナイト）のクリエイティブマップ「STEAL THE BRAINROT（ブレインロットを盗め）」のBrairotMachineの排出確率の計算方法について説明します。  
@@ -114,35 +83,37 @@
     <li>その他：0%（Rainbowは1%以下の確率が内部的に設定されている可能性あり）</li>
   </ul>
   <p>
-    選択されたモンスターのスコアの合計値を集計し、シリーズごとの割合を算出します。
-    その割合をもとに、次の式で確率を補正します。
-  </p>
+        選択されたモンスターのスコアの合計値を集計し、シリーズごとの割合を算出します。
+        その割合をもとに、次の式で確率を補正します。
+      </p>
 
-  <pre style="background:#f8f8f8;padding:10px;border-radius:6px;overflow-x:auto;">
+      <pre style="background:#f8f8f8;padding:10px;border-radius:6px;overflow-x:auto;">
 (75 ÷ 全体のスコア合計値) × そのシリーズのスコア合計値 ＋ 基礎確率
-  </pre>
+      </pre>
 
-  <p>
-    ここでの<strong>75</strong>は合成マシン内のモンスターが1つのシリーズのみだった場合の固定値となります。<br>
-    全体の中でそのシリーズが占める割合が大きいほど、
-    追加のボーナスが加算され、確率が上昇します。
-  </p>
+      <p>
+        ここでの<strong>75</strong>は合成マシン内のモンスターが1つのシリーズのみだった場合の固定値となります。<br>
+        全体の中でそのシリーズが占める割合が大きいほど、
+        追加のボーナスが加算され、確率が上昇します。
+      </p>
 
-  <h4>📈 計算例</h4>
-  <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;margin:12px 0;width:100%;max-width:550px;">
-    <tr><th>シリーズ</th><th>合計値</th><th>割合</th><th>補正値</th><th>最終確率</th></tr>
-    <tr><td>Default</td><td>200</td><td>40%</td><td>75×0.4=30</td><td>9+30=39%</td></tr>
-    <tr><td>Gold</td><td>150</td><td>30%</td><td>75×0.3=22.5</td><td>10+22.5=約33%</td></tr>
-    <tr><td>Diamond</td><td>150</td><td>30%</td><td>75×0.3=22.5</td><td>5+22.5=約28%</td></tr>
-  </table>
+      <h4>📈 計算例</h4>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;margin:12px 0;width:100%;max-width:550px;">
+        <tr><th>シリーズ</th><th>合計値</th><th>割合</th><th>補正値</th><th>最終確率</th></tr>
+        <tr><td>Default</td><td>200</td><td>40%</td><td>75×0.4=30</td><td>9+30=39%</td></tr>
+        <tr><td>Gold</td><td>150</td><td>30%</td><td>75×0.3=22.5</td><td>10+22.5=約33%</td></tr>
+        <tr><td>Diamond</td><td>150</td><td>30%</td><td>75×0.3=22.5</td><td>5+22.5=約28%</td></tr>
+      </table>
 
-  <p>
-    このように、どのシリーズを多く選ぶかによって、
-    最終的な確率分布が大きく変わります。
-  </p>
+      <p>
+        このように、どのシリーズを多く選ぶかによって、
+        最終的な確率分布が大きく変わります。
+      </p>
+
 
   <p>※モンスター0体の場合はDefaultのみ投入されている扱いのため、75 + 9（Defaultの基礎確率）で84%となっています。</p>
   <p>選択したモンスターの合計値に応じて、各シリーズの割合が自動で再計算され、確率欄に反映されます。</p>
+  <p></p>
 
   <h2>3. 合計値と待機時間（Wait Time）</h2>
   <p>合計値によって、合成が完了するまでの待機時間が変化します。時間が変わると排出されるモンスターの最低保証が変わります。</p>
@@ -170,18 +141,13 @@
   <p>当サイトはユーザーの学習・分析・検証目的で提供されています。確率や結果を利用した損失やトラブルについては責任を負いかねます。</p>
   <p>また、本サイトに掲載された画像・名称・数値はすべて非公式のものを含みます。</p>
 
-  <p>ご意見や不具合報告などがありましたら、<a href="contact.html" style="color:#2f4f4f; font-weight:bold;">「お問い合わせ」</a>からお気軽にお知らせください。</p>
 
-  <!-- ツールへの導線 -->
-  <p style="margin-top:24px;">
-    <a href="tools.html" class="tool-link">▶ 計算ツールを使う</a>
-  </p>
+  <p>ご意見や不具合報告などがありましたら、<a href="contact.html" style="color:#2f4f4f; font-weight:bold;">「お問い合わせ」</a>からお気軽にお知らせください。</p>
 
   <footer>
     © 2025 BrainrotMachine計算ツール<br>
     Created by りん
   </footer>
-  <!-- ▲▲ calculation.html 本文ここまで ▲▲ -->
 
 </body>
 </html>
