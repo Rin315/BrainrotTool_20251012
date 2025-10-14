@@ -323,4 +323,25 @@ button.Other{ background:#ddd; }
     color: #fff;
     text-decoration: underline;
   }
+
+  /* 🔸シリーズごとの確率（#probability）の折返し修正 */
+  #probability {
+    display: flex;
+    flex-wrap: wrap;            /* 折返し許可 */
+    justify-content: flex-start;
+    gap: 4px;
+    font-size: 12px;            /* 少し小さく */
+    line-height: 1.4;
+    word-break: keep-all;
+    white-space: normal;
+    box-sizing: border-box;
+    padding: 4px;
+    max-height: none;           /* 枠からはみ出さない */
+  }
+
+  .panel {
+    min-height: unset;          /* 高さを可変にして収まりをよく */
+    height: auto;               /* 固定高さ解除 */
+    padding-bottom: 8px;
+  }
 }
