@@ -36,7 +36,7 @@ const images = [
   { src: './img/pad.png', value: 10000 },
   { src: './img/house.png', value: 20000 },
   { src: './img/brainrot1.png', value: 500 }, // 不明
-  { src: './img/secret1.png', value: 50000 }, // 不明
+  { src: './img/secret1.png', value: 5000 }, // 不明
   { src: './img/secret2.png', value: 50000 }, // 不明
 ];
 
