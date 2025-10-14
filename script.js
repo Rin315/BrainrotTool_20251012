@@ -31,13 +31,14 @@ const images = [
   { src: './img/nomyhotspot.png', value: 2500 },
   { src: './img/garamarama.png', value: 3000 },
   { src: './img/iisacro.png', value: 4000 },
+  { src: './img/lagrande.png', value: 5000 },
   { src: './img/67.png', value: 6700 },
   { src: './img/chicleteira.png', value: 8000 },
   { src: './img/pad.png', value: 10000 },
   { src: './img/house.png', value: 20000 },
   { src: './img/brainrot1.png', value: 500 }, // 不明
-  { src: './img/secret1.png', value: 5000 }, // 不明
-  { src: './img/secret2.png', value: 50000 }, // 不明
+
+  //{ src: './img/secret2.png', value: 50000 }, // 不明
 ];
 
 // ========== DOM要素 ==========
