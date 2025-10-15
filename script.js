@@ -20,6 +20,7 @@ const images = [
   { src: './img/iipiccione.png', value: 210 },
   { src: './img/iimastodontico.png', value: 220 },
   { src: './img/jobjobjob.png', value: 220 },
+  { src: './img/brainrot1.png', value: 250 }, // 不明
   { src: './img/trenostruzzo.png', value: 300 },
   { src: './img/losorcaleritos.png', value: 400 },
   { src: './img/piccione.png', value: 500 },
@@ -36,7 +37,7 @@ const images = [
   { src: './img/chicleteira.png', value: 8000 },
   { src: './img/pad.png', value: 10000 },
   { src: './img/house.png', value: 20000 },
-  { src: './img/brainrot1.png', value: 500 }, // 不明
+
 
   //{ src: './img/secret2.png', value: 50000 }, // 不明
 ];
