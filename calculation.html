@@ -6,74 +6,157 @@
      crossorigin="anonymous"></script>
   <!-- GoogleSearchConsole用 -->
   <meta name="google-site-verification" content="-ZNws2omcqRJFpwGFICeGzZEumuPMz7lcLG1UfigKSQ" />
-  <meta name="description" content="Brainro（ブレインロット）t合成マシン確率計算ツールは、モンスターの組み合わせによる確率や合計値を自動で計算できる非公式ツールです。">
+  <meta name="description" content="Brainrot（ブレインロット）合成マシン確率計算ツールは、モンスターの組み合わせによる確率や合計値を自動で計算できる非公式ツールです。">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>確率の計算について</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="img/trarafabicon.PNG" type="image/png">
 
-  <!-- 旧 index.html に含まれていた説明用スタイルをそのまま移植 -->
   <style>
-body {
-  background-color: #e6f5e1; /* ← 他ページと同じ薄緑 */
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-  color: #222;
-  line-height: 1.7;
-  margin: 20px;
-}
+  body {
+    background-color: #e6f5e1; /* 全ページ共通の背景色 */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+    color: #222;
+    line-height: 1.8;
+    margin: 24px auto;
+    padding: 0 18px;
+    max-width: 900px;
+  }
 
-    h1, h2, h3 {
-      color: #2f4f4f;
+  h1 {
+    font-size: 28px;
+    color: #2f4f4f;
+    border-bottom: 3px solid #2f4f4f;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+    color: #2f4f4f;
+    border-left: 6px solid #2f4f4f;
+    padding-left: 10px;
+    margin-top: 40px;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    font-size: 18px;
+    color: #2f4f4f;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  ul {
+    margin-left: 28px;
+    margin-bottom: 14px;
+    font-size: 15px;
+  }
+
+  strong {
+    color: #1a3d3d;
+  }
+
+  .highlight {
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border-left: 5px solid #2f4f4f;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin: 20px 0;
+    font-size: 15px;
+  }
+
+  pre {
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 600px;
+    margin: 16px auto;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  th, td {
+    border: 1px solid #bbb;
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  th {
+    background: #dbe8dc;
+    font-weight: 700;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .tool-link {
+    display: inline-block;
+    background: #2f4f4f;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background 0.2s ease;
+  }
+
+  .tool-link:hover {
+    background: #3b6b6b;
+  }
+
+  /* 📱 スマホ最適化 */
+  @media (max-width: 600px) {
+    body {
+      margin: 16px;
+      font-size: 14px;
     }
+
     h1 {
-      font-size: 26px;
-      margin-bottom: 16px;
+      font-size: 22px;
     }
+
     h2 {
-      margin-top: 36px;
-      font-size: 20px;
-      border-left: 6px solid #2f4f4f;
-      padding-left: 8px;
+      font-size: 18px;
     }
-    p {
-      margin-bottom: 14px;
-    }
-    ul {
-      margin-left: 24px;
-      margin-bottom: 12px;
-    }
-    .highlight {
-      background: #e6f5e1;
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: 1px solid #c4e3c2;
-    }
-    footer {
-      text-align: center;
-      margin-top: 60px;
-      color: #666;
+
+    table {
       font-size: 13px;
     }
+
     .tool-link {
-      display: inline-block;
-      background: #2f4f4f;
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 10px;
-      transition: background 0.2s;
+      display: block;
+      text-align: center;
+      margin: 16px auto;
     }
-    .tool-link:hover {
-      background: #3b6b6b;
-    }
+  }
   </style>
 </head>
 <body>
 
-  <!-- ✅ 共通ナビバー読み込み -->
+  <!-- ✅ 共通ナビバー -->
   <div id="navbar"></div>
   <script>
     fetch("navbar.html")
@@ -81,24 +164,27 @@ body {
       .then(html => document.getElementById("navbar").innerHTML = html);
   </script>
 
-  <!-- ▼▼ 旧 index.html の本文（説明ページ） ▼▼ -->
   <h1>本サイトについて</h1>
 
-  <p>このページでは、Fortnite（フォートナイト）のクリエイティブマップ「STEAL THE BRAINROT（ブレインロットを盗め）」のBrairotMachineの排出確率の計算方法について説明します。<br>
-  本確率はゲームの仕様変更により、最新のものと仕様が異なる可能性があります。<br>
-  計算ツールは以下よりアクセスしてください。<br>
-  <a href="index.html" class="tool-link">▶ 計算ツールを使う</a>
-</p>
+  <p>
+    このページでは、Fortnite（フォートナイト）のクリエイティブマップ「STEAL THE BRAINROT（ブレインロットを盗め）」のBrairotMachineの排出確率の計算方法について説明します。<br>
+    本確率はゲームの仕様変更により、最新のものと仕様が異なる可能性があります。<br>
+    計算ツールは以下よりアクセスしてください。<br>
+    <a href="index.html" class="tool-link">▶ 計算ツールを使う</a>
+  </p>
 
   <h2>1. シミュレーターの基本構造</h2>
-  <p>シミュレーターでは、選択したモンスターの1秒あたりに稼ぐキャッシュを元に、合計値を算出しています。<br>
-  各モンスターには固有の <strong>スコア（1秒あたりに稼ぐキャッシュ）</strong> が設定されており、選択した5体のスコアの合計に応じて、シリーズのごとの出現確率やシークレット出現率が変動します。</p>
+  <p>
+    シミュレーターでは、選択したモンスターの1秒あたりに稼ぐキャッシュを元に、合計値を算出しています。<br>
+    各モンスターには固有の <strong>スコア（1秒あたりに稼ぐキャッシュ）</strong> が設定されており、選択した5体のスコアの合計に応じて、シリーズのごとの出現確率やシークレット出現率が変動します。<br>
+    固有のスコアにレアリティは関係なく、すべてDefaultのスコアで計算されます。
+  </p>
 
   <div class="highlight">
     <strong>例：</strong><br>
-    ・合計スコアが 500 以下   → Secret 出現率 15%以下<br>
-    ・合計スコアが 750〜1000  → Secret 出現率 75%、BrainrotGod 25%<br>
-    ・合計スコアが 1000 以上  → Secret 確定（100%）
+    ・合計スコアが 500 以下 → Secret 出現率 15%以下<br>
+    ・合計スコアが 750〜1000 → Secret 出現率 75%、BrainrotGod 25%<br>
+    ・合計スコアが 1000 以上 → Secret 確定（100%）
   </div>
 
   <h2>2. シリーズごとの確率補正</h2>
@@ -109,36 +195,31 @@ body {
     <li>Diamond：5%</li>
     <li>その他：0%（Rainbowは1%以下の確率が内部的に設定されている可能性あり）</li>
   </ul>
+
   <p>
     選択されたモンスターのスコアの合計値を集計し、シリーズごとの割合を算出します。
     その割合をもとに、次の式で確率を補正します。
   </p>
 
-  <pre style="background:#f8f8f8;padding:10px;border-radius:6px;overflow-x:auto;">
-(75 ÷ 全体のスコア合計値) × そのシリーズのスコア合計値 ＋ 基礎確率
-  </pre>
+  <pre>(75 ÷ 全体のスコア合計値) × そのシリーズのスコア合計値 ＋ 基礎確率</pre>
 
   <p>
-    ここでの<strong>75</strong>は合成マシン内のモンスターが1つのシリーズのみだった場合の固定値となります。<br>
+    ここでの<strong>75</strong>は合成マシン内のモンスターが1つのシリーズのみだった場合の固定値です。<br>
     全体の中でそのシリーズが占める割合が大きいほど、
     追加のボーナスが加算され、確率が上昇します。
   </p>
 
-  <h4>📈 計算例</h4>
-  <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;margin:12px 0;width:100%;max-width:550px;">
+  <h3>📈 計算例</h3>
+  <table>
     <tr><th>シリーズ</th><th>合計値</th><th>割合</th><th>補正値</th><th>最終確率</th></tr>
     <tr><td>Default</td><td>200</td><td>40%</td><td>75×0.4=30</td><td>9+30=39%</td></tr>
     <tr><td>Gold</td><td>150</td><td>30%</td><td>75×0.3=22.5</td><td>10+22.5=約33%</td></tr>
     <tr><td>Diamond</td><td>150</td><td>30%</td><td>75×0.3=22.5</td><td>5+22.5=約28%</td></tr>
   </table>
 
-  <p>
-    このように、どのシリーズを多く選ぶかによって、
-    最終的な確率分布が大きく変わります。
-  </p>
+  <p>どのシリーズを多く選ぶかによって、最終的な確率分布が大きく変わります。</p>
 
   <p>※モンスター0体の場合はDefaultのみ投入されている扱いのため、75 + 9（Defaultの基礎確率）で84%となっています。</p>
-  <p>選択したモンスターの合計値に応じて、各シリーズの割合が自動で再計算され、確率欄に反映されます。</p>
 
   <h2>3. 合計値と待機時間（Wait Time）</h2>
   <p>合計値によって、合成が完了するまでの待機時間が変化します。時間が変わると排出されるモンスターの最低保証が変わります。</p>
@@ -157,7 +238,7 @@ body {
 
   <h3>Q3. 確率が全然違う</h3>
   <p>イベントや仕様変更によるものか、モンスターの設定値が誤っている可能性があります。<br>
-    お手数ですが<a href="contact.html" style="color:#2f4f4f; font-weight:bold;">「お問い合わせ」</a>よりご連絡ください。</p>
+  お手数ですが<a href="contact.html" style="color:#2f4f4f; font-weight:bold;">「お問い合わせ」</a>よりご連絡ください。</p>
 
   <h3>Q4. GalaxyやZonbieの確率も計算したい</h3>
   <p>Other等他のシリーズのボタンで代用してください。</p>
@@ -168,7 +249,6 @@ body {
 
   <p>ご意見や不具合報告などがありましたら、<a href="contact.html" style="color:#2f4f4f; font-weight:bold;">「お問い合わせ」</a>からお気軽にお知らせください。</p>
 
-  <!-- ツールへの導線 -->
   <p style="margin-top:24px;">
     <a href="index.html" class="tool-link">▶ 計算ツールを使う</a>
   </p>
@@ -177,7 +257,6 @@ body {
     © 2025 BrainrotMachine計算ツール<br>
     Created by りん
   </footer>
-  <!-- ▲▲ 説明ページ本文ここまで ▲▲ -->
 
 </body>
 </html>
