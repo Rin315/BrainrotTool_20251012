@@ -15,11 +15,11 @@
 
   <style>
     body {
-      background-color: #e6f5e1; /* 他ページと同じ */
+      background-color: #e6f5e1;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
       color: #222;
       line-height: 1.7;
-      margin: 16px; /* index.html に合わせる */
+      margin: 16px;
     }
 
     h1, h2, h3 { color: #2f4f4f; }
@@ -40,27 +40,27 @@
       border: 1px solid #c4e3c2;
     }
 
-    /* 数式部分（pre）を読みやすく・大きく */
+    /* 数式部分を左寄せ・フォント大きめで強調 */
     pre {
       background: #ffffff;
       padding: 14px 16px;
       border-radius: 6px;
       overflow-x: auto;
       border: 1px solid #c4e3c2;
-      font-size: 17px;       /* 👈 フォントを大きく */
-      font-weight: 600;      /* 👈 太字で見やすく */
-      color: #1e3c3c;        /* 落ち着いた濃緑 */
-      text-align: center;    /* 👈 中央寄せ */
+      font-size: 17px;
+      font-weight: 600;
+      color: #1e3c3c;
+      text-align: left;  /* 👈 中央寄せ→左寄せに変更 */
       line-height: 1.6;
     }
 
-    /* 計算例テーブルを白背景＋やわらかく */
+    /* 計算例テーブル：白背景＋左寄せ */
     table {
       border-collapse: collapse;
-      margin: 16px auto;
+      margin: 16px 0; /* 👈 左寄せに変更（auto削除） */
       width: 100%;
       max-width: 550px;
-      background: #fff; /* 👈 白背景に変更 */
+      background: #fff;
       border-radius: 6px;
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -148,7 +148,6 @@
     その割合をもとに、次の式で確率を補正します。
   </p>
 
-  <!-- 👇 数式部分を見やすく大きく -->
   <pre>(75 ÷ 全体のスコア合計値) × そのシリーズのスコア合計値 ＋ 基礎確率</pre>
 
   <p>
