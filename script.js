@@ -1,5 +1,6 @@
 // ========== 画像データ ==========
 const images = [
+  { src: './img/cocofanto.png', value: 10 },
   { src: './img/tob.png', value: 25 },
   { src: './img/tralalero.png', value: 50 },
   { src: './img/Odin.png', value: 75 },
