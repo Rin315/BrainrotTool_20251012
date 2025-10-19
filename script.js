@@ -12,7 +12,7 @@ const images = [
   { src: './img/brri.png', value: 135 },
   { src: './img/brrestrh.png', value: 145 },
   { src: './img/torrtuginni.png', value: 150 },
-  { src: './img/losbros.png', value: 150 },
+  { src: './img/losbros.png', value: 155 },
   { src: './img/bambini.png', value: 160 },
   { src: './img/los.png', value: 170 },
   { src: './img/alessio.png', value: 180 },
