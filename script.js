@@ -9,6 +9,7 @@ const images = [
   { src: './img/ecco.png', value: 110 },
   { src: './img/losvaguitas.png', value: 115 },
   { src: './img/bulbito.png', value: 120 },
+  { src: './img/chillin.png', value: 130 },
   { src: './img/brri.png', value: 135 },
   { src: './img/brrestrh.png', value: 145 },
   { src: './img/torrtuginni.png', value: 150 },
