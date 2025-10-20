@@ -233,7 +233,24 @@ button.Other{ background:#ddd; }
 }
 .panel-title{ font-weight:700; margin-bottom:6px; }
 .total-panel{ min-width:120px; max-width:150px; text-align:left; }
-.total-panel #total{ font-size:20px; font-weight:700; }
+/* ========= Total欄の文字サイズ調整 ========= */
+.total-panel #total {
+  font-size: 14px;     /* ← 小さくして枠内に収まるように */
+  font-weight: 600;    /* 少し軽めにして見やすく */
+  line-height: 1.5;    /* 行間を広げて3行でも読みやすく */
+  white-space: nowrap; /* 折り返し防止（縦3行構成のため安全） */
+  overflow: hidden;
+  text-align: left;
+}
+
+/* スマホ対応（さらに小さく） */
+@media (max-width: 600px) {
+  .total-panel #total {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+
 .wait-note{ margin-top:4px; font-size:14px; color:#444; line-height:1.2; }
 
 /* ========= 種類確率バッジ ========= */
