@@ -101,6 +101,16 @@ images.forEach((imgObj) => {
   const saleLabel = document.createElement('div');
   saleLabel.className = 'sale-label';
   saleLabel.textContent = `${imgObj.sale} M`;
+
+  if (imgObj.sale >= 1000) {
+    imgObj.sale = imgObj.sale/1000;
+    saleLabel.textContent = `$ ${imgObj.sale} B`;
+  }
+  else{
+    saleLabel.textContent = `$ ${imgObj.sale} M`;
+  }
+
+
   box.appendChild(saleLabel);
 
   img.addEventListener('click', () => {
@@ -147,7 +157,7 @@ function renderSelected() {
 
       // 🔽 追加：sale（下部表示）
       const saleLabel = document.createElement('div');
-      if (imgObj.sale > 1000) {
+      if (imgObj.sale >= 1000) {
         imgObj.sale = imgObj.sale/1000;
         saleLabel.textContent = `$${imgObj.sale} B`;
       }
