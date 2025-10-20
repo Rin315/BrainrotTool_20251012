@@ -147,7 +147,14 @@ function renderSelected() {
 
       // 🔽 追加：sale（下部表示）
       const saleLabel = document.createElement('div');
-      saleLabel.textContent = `${imgObj.sale} M`;
+      if (imgObj.sale > 1000) {
+        imgObj.sale = imgObj.sale/1000;
+        saleLabel.textContent = `$${imgObj.sale} B`;
+      }
+      else{
+        saleLabel.textContent = `$${imgObj.sale} M`;
+      }
+        
       saleLabel.className = 'sale-label';
       box.appendChild(saleLabel);
 
