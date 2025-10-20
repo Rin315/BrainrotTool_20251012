@@ -42,16 +42,15 @@ const images = [
   { src: './img/chicleteira.png', value: 8000 ,sale:2000},
   { src: './img/pad.png', value: 10000 ,sale:3000},
   //{ src: './img/house.png', value: 20000 },
-
-
   //{ src: './img/secret2.png', value: 50000 }, // 不明
 ];
 
 // ========== DOM要素 ==========
 const gallery = document.getElementById('gallery');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
-const totalValueEl = document.getElementById('total-value');
-const totalWaitEl  = document.getElementById('total-wait');
+// const totalValueEl = document.getElementById('total-value'); // ← 使わなくなるので未使用化
+// const totalWaitEl  = document.getElementById('total-wait');  // ← 使わなくなるので未使用化
+const totalBox      = document.getElementById('total');          // ← 追加：Totalコンテナ全体を書き換える
 const typeProbEl   = document.getElementById('probability');
 const secretProbEl = document.getElementById('secret-probability');
 const resetBtn     = document.getElementById('reset-btn');
@@ -63,6 +62,20 @@ let selectedHasBorder= [false, false, false, false, false];
 
 // ========== 基本確率 ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
+
+// ========== ユーティリティ ==========
+/** sale(M) を表示用に "$ x M" / "$ y B" に整形（元データは不変） */
+function formatSaleLabelM(valueM){
+  if (valueM >= 1000) {
+    const b = valueM / 1000;
+    return `$ ${trimNum(b)} B`;
+  }
+  return `$ ${trimNum(valueM)} M`;
+}
+/** 小数の末尾.0を削るなど軽く整える */
+function trimNum(n){
+  return Number.isInteger(n) ? String(n) : String(+parseFloat(n.toFixed(2)));
+}
 
 // ========== 押下フィードバック（枠ごと縮小 & 暗転） ==========
 function attachPressFeedbackBox(boxEl) {
@@ -91,41 +104,32 @@ images.forEach((imgObj) => {
   img.src = imgObj.src;
   img.alt = imgObj.src.split('/').pop();
   img.className = 'gallery-img';
-  img.style.objectFit = 'cover'; // ← ギャラリーも余白なくぴったり
+  img.style.objectFit = 'cover';
 
   const label = document.createElement('div');
   label.className = 'value-label';
   label.textContent = `${imgObj.value} K/s`;
 
-  // 🔽 追加：sale の表示
+  // 🔽 追加：sale の表示（データは不変、表示だけ単位変換）
   const saleLabel = document.createElement('div');
   saleLabel.className = 'sale-label';
-  saleLabel.textContent = `${imgObj.sale} M`;
-
-  if (imgObj.sale >= 1000) {
-    imgObj.sale = imgObj.sale/1000;
-    saleLabel.textContent = `$ ${imgObj.sale} B`;
-  }
-  else{
-    saleLabel.textContent = `$ ${imgObj.sale} M`;
-  }
-
-
-  box.appendChild(saleLabel);
+  saleLabel.textContent = formatSaleLabelM(imgObj.sale);
 
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
     if (emptyIndex === -1) return;
     // 画像選択：即 Default を適用＆枠を出す
-    selectedImages[emptyIndex]    = { ...imgObj };
+    selectedImages[emptyIndex]    = { ...imgObj }; // ← 元データはそのままコピー
     selectedColors[emptyIndex]    = 'Default';
     selectedHasBorder[emptyIndex] = true;
     renderSelected();
     updateAll();
   });
 
+  // ラベルは上下（value=上 / sale=下）で重ならない
   box.appendChild(img);
   box.appendChild(label);
+  box.appendChild(saleLabel);
   gallery.appendChild(box);
 });
 
@@ -149,22 +153,15 @@ function renderSelected() {
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
-      // 数値帯
+      // 数値帯（上）
       const label = document.createElement('div');
       label.textContent = `${imgObj.value} K/s`;
       label.className = 'value-label';
       box.appendChild(label);
 
-      // 🔽 追加：sale（下部表示）
+      // 🔽 追加：sale（下）
       const saleLabel = document.createElement('div');
-      if (imgObj.sale >= 1000) {
-        imgObj.sale = imgObj.sale/1000;
-        saleLabel.textContent = `$${imgObj.sale} B`;
-      }
-      else{
-        saleLabel.textContent = `$${imgObj.sale} M`;
-      }
-        
+      saleLabel.textContent = formatSaleLabelM(imgObj.sale);
       saleLabel.className = 'sale-label';
       box.appendChild(saleLabel);
 
@@ -241,15 +238,25 @@ function updateAll(){
   updateTypeProbability();
 }
 
-// ========== 合計＆Wait ==========
+// ========== 合計＆Wait（表示を3行に統一） ==========
 function updateTotal() {
-  const sum = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
-  totalValueEl.textContent = sum;
-  let waitText = "(Wait 1h0m)";
-  if (sum > 5000) waitText = "(Wait 2h0m)";
-  else if (sum > 750) waitText = "(Wait 1h30m)";
-  totalWaitEl.textContent = waitText;
-  totalWaitEl.style.fontSize = "12px";
+  const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
+  const sumSaleM = selectedImages.reduce((acc, img) => acc + Number(img?.sale  || 0), 0);
+
+  // Wait文字列（括弧なし）
+  let waitStr = "1h0m";
+  if (sumValue > 5000) waitStr = "2h0m";
+  else if (sumValue > 750) waitStr = "1h30m";
+
+  // 合計saleは単位整形（M→B）して表示
+  const sumSaleLabel = formatSaleLabelM(sumSaleM).replace('$ ', ''); // 「Total $：」と二重$回避
+
+  // 指定フォーマットで3行表示（value, sale, wait）
+  totalBox.innerHTML = [
+    `Total K/s：${sumValue}`,
+    `Total $　：${sumSaleLabel}`,
+    `Wait　　：${waitStr}`
+  ].map(t => `<div>${t}</div>`).join('');
 }
 
 // ========== Secret確率 ==========
