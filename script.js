@@ -1,47 +1,47 @@
 // ========== 画像データ ==========
 const images = [
-  { src: './img/cocofanto.png', value: 10 },
-  { src: './img/tob.png', value: 25 },
-  { src: './img/tralalero.png', value: 50 },
-  { src: './img/Odin.png', value: 75 },
-  { src: './img/Espressona.png', value: 90 },
-  { src: './img/lavaca.png', value: 100 },
-  { src: './img/ecco.png', value: 110 },
-  { src: './img/losvaguitas.png', value: 115 },
-  { src: './img/bulbito.png', value: 120 },
-  { src: './img/chillin.png', value: 130 },
-  { src: './img/brri.png', value: 135 },
-  { src: './img/brrestrh.png', value: 145 },
-  { src: './img/torrtuginni.png', value: 150 },
-  { src: './img/losbros.png', value: 155 },
-  { src: './img/bambini.png', value: 160 },
-  { src: './img/los.png', value: 170 },
-  { src: './img/alessio.png', value: 180 },
-  { src: './img/karkerkar.png', value: 190 },
-  { src: './img/lostralaleritas.png', value: 200 },
-  { src: './img/lostralaletitos.png', value: 200 },
-  { src: './img/iipiccione.png', value: 210 },
-  { src: './img/iimastodontico.png', value: 220 },
-  { src: './img/jobjobjob.png', value: 220 },
-  { src: './img/brainrot1.png', value: 250 }, // 不明
-  { src: './img/trenostruzzo.png', value: 300 },
-  { src: './img/losorcaleritos.png', value: 400 },
-  { src: './img/loscouples.png', value: 450 },
-  { src: './img/piccione.png', value: 500 },
-  { src: './img/pakrah.png', value: 600 },
-  { src: './img/losjob.png', value: 700 },
-  { src: './img/orcalero.png', value: 1000 },
-  { src: './img/ketchuru.png', value: 1500 },
-  { src: './img/pothotspot.png', value: 2000 },
-  { src: './img/losmobilis.png', value: 2200 },
-  { src: './img/nomyhotspot.png', value: 2500 },
-  { src: './img/garamarama.png', value: 3000 },
-  { src: './img/iisacro.png', value: 4000 },
-  { src: './img/lagrande.png', value: 5000 },
-  { src: './img/67.png', value: 6700 },
-  { src: './img/chicleteira.png', value: 8000 },
-  { src: './img/pad.png', value: 10000 },
-  { src: './img/house.png', value: 20000 },
+  { src: './img/cocofanto.png', value: 10 ,sale:5},
+  { src: './img/tob.png', value: 25 ,sale:7.5},
+  { src: './img/tralalero.png', value: 50 ,sale:10},
+  { src: './img/Odin.png', value: 75 ,sale:15},
+  { src: './img/Espressona.png', value: 90 ,sale:20},
+  { src: './img/lavaca.png', value: 100 ,sale:25},//
+  { src: './img/ecco.png', value: 110 ,sale:10},//
+  { src: './img/losvaguitas.png', value: 115 ,sale:10},//
+  { src: './img/bulbito.png', value: 120 ,sale:30},//
+  { src: './img/chillin.png', value: 130 ,sale:33},
+  { src: './img/brri.png', value: 135 ,sale:10},//
+  { src: './img/brrestrh.png', value: 145 ,sale:38},
+  { src: './img/torrtuginni.png', value: 150 ,sale:40},
+  { src: './img/losbros.png', value: 155 ,sale:10},//
+  { src: './img/bambini.png', value: 160 ,sale:10},//
+  { src: './img/los.png', value: 170 ,sale:10},//
+  { src: './img/alessio.png', value: 180 ,sale:60},
+  { src: './img/karkerkar.png', value: 190,sale:10 },//
+  { src: './img/lostralaleritas.png', value: 200 ,sale:60},//
+  { src: './img/lostralaletitos.png', value: 200 ,sale:60},//
+  { src: './img/iipiccione.png', value: 210 ,sale:75},
+  { src: './img/iimastodontico.png', value: 220 ,sale:10},//
+  { src: './img/jobjobjob.png', value: 220 ,sale:80},//
+  { src: './img/brainrot1.png', value: 250 ,sale:10}, // 画像なし
+  { src: './img/trenostruzzo.png', value: 300 ,sale:170},
+  { src: './img/losorcaleritos.png', value: 400 ,sale:10},//
+  { src: './img/loscouples.png', value: 450 ,sale:150},
+  { src: './img/piccione.png', value: 500 ,sale:125},
+  { src: './img/pakrah.png', value: 600 ,sale:300},
+  { src: './img/losjob.png', value: 700 ,sale:150},
+  { src: './img/orcalero.png', value: 1000 ,sale:200},
+  { src: './img/ketchuru.png', value: 1500 ,sale:250},
+  { src: './img/pothotspot.png', value: 2000 ,sale:400},
+  { src: './img/losmobilis.png', value: 2200 ,sale:425},
+  { src: './img/nomyhotspot.png', value: 2500 ,sale:450},
+  { src: './img/garamarama.png', value: 3000 ,sale:500},
+  { src: './img/iisacro.png', value: 4000 ,sale:800},
+  { src: './img/lagrande.png', value: 5000 ,sale:1000},
+  { src: './img/67.png', value: 6700 ,sale:6700},
+  { src: './img/chicleteira.png', value: 8000 ,sale:2000},
+  { src: './img/pad.png', value: 10000 ,sale:3000},
+  //{ src: './img/house.png', value: 20000 },
 
 
   //{ src: './img/secret2.png', value: 50000 }, // 不明
@@ -97,6 +97,12 @@ images.forEach((imgObj) => {
   label.className = 'value-label';
   label.textContent = `${imgObj.value} K/s`;
 
+  // 🔽 追加：sale の表示
+  const saleLabel = document.createElement('div');
+  saleLabel.className = 'sale-label';
+  saleLabel.textContent = `${imgObj.sale} M`;
+  box.appendChild(saleLabel);
+
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
     if (emptyIndex === -1) return;
@@ -138,6 +144,12 @@ function renderSelected() {
       label.textContent = `${imgObj.value} K/s`;
       label.className = 'value-label';
       box.appendChild(label);
+
+      // 🔽 追加：sale（下部表示）
+      const saleLabel = document.createElement('div');
+      saleLabel.textContent = `${imgObj.sale} M`;
+      saleLabel.className = 'sale-label';
+      box.appendChild(saleLabel);
 
       // 縁（outline を .imgbox に当てる＝数字に被らない）
       applyOutline(box, idx);

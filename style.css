@@ -344,4 +344,24 @@ button.Other{ background:#ddd; }
     height: auto;               /* 固定高さ解除 */
     padding-bottom: 8px;
   }
+
+  /* ========= 画像下部 sale ラベル ========= */
+.sale-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--labelH);
+  background: rgba(0, 0, 0, 0.7);
+  color: #00ff66;               /* 緑文字 */
+  font-size: 12px;              /* value と同じサイズ */
+  font-weight: bold;
+  text-align: center;
+  line-height: var(--labelH);
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 2;
+}
+
 }
