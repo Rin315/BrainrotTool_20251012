@@ -83,7 +83,7 @@ h2{ margin: 0; font-size: 22px; }
   height:var(--imgH);
   margin:0 auto;
   box-sizing:border-box;
-  overflow:hidden;
+  overflow:hidden; /* ラベルも含めて枠内で完結 */
 }
 .imgbox--gallery{
   border: var(--galleryBorderW) solid var(--galleryBorderC);
@@ -120,7 +120,8 @@ h2{ margin: 0; font-size: 22px; }
   gap:6px;
 }
 
-/* ========= 黒帯（value ラベル） ========= */
+/* ========= ラベル ========= */
+/* 上部 value（黄） */
 .value-label{
   position:absolute;
   top:0; left:0;
@@ -131,6 +132,23 @@ h2{ margin: 0; font-size: 22px; }
   font-size:12px;
   font-weight:bold;
   text-align:center;
+  line-height:var(--labelH);
+  user-select:none;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:2;
+}
+/* 下部 sale（緑）— 中央揃え・valueと同フォントサイズ */
+.sale-label{
+  position:absolute;
+  bottom:0; left:0;           /* ← 下に固定（重なり防止） */
+  width:100%;
+  height:var(--labelH);
+  background:rgba(0,0,0,0.75);
+  color:#00c853;              /* 緑 */
+  font-size:12px;             /* value と同じ */
+  font-weight:bold;
+  text-align:center;          /* 中央揃え */
   line-height:var(--labelH);
   user-select:none;
   pointer-events:none;
@@ -288,11 +306,23 @@ button.Other{ background:#ddd; }
     box-sizing:border-box;
   }
 
+  /* ラベル（スマホでも上下で被らない & 同フォント） */
   .value-label{
     width:100%;
     height:var(--labelH);
     line-height:var(--labelH);
     font-size:8px;
+    z-index:2;
+  }
+  .sale-label{
+    position:absolute;
+    bottom:0; left:0;          /* ← 念のため再指定（上と被らせない） */
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:8px;             /* value と同じ */
+    background:rgba(0,0,0,0.75);
+    color:#00c853;
     z-index:2;
   }
 
@@ -344,24 +374,4 @@ button.Other{ background:#ddd; }
     height: auto;               /* 固定高さ解除 */
     padding-bottom: 8px;
   }
-
-  /* ========= 画像下部 sale ラベル ========= */
-.sale-label {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: var(--labelH);
-  background: rgba(0, 0, 0, 0.7);
-  color: #00ff66;               /* 緑文字 */
-  font-size: 12px;              /* value と同じサイズ */
-  font-weight: bold;
-  text-align: center;
-  line-height: var(--labelH);
-  user-select: none;
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 2;
-}
-
 }
