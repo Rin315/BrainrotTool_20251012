@@ -391,4 +391,26 @@ button.Other{ background:#ddd; }
     height: auto;               /* 固定高さ解除 */
     padding-bottom: 8px;
   }
+
+  /* スマホ広告用レイアウト */
+.ad-container {
+  display: flex;
+  flex-wrap: wrap;        /* 狭い画面では自動的に折り返す */
+  justify-content: center;
+  gap: 8px;               /* 2つの広告の間に少し余白 */
+}
+
+/* iframeのサイズを小さくして横並び対応しやすくする（任意） */
+.ad-container iframe {
+  width: 180px;
+  height: 180px;
+}
+
+/* 特に狭い画面では強制的に縦並びにする */
+@media (max-width: 400px) {
+  .ad-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 }
