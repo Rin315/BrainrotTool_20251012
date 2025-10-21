@@ -6,7 +6,7 @@ const images = [
   { src: './img/Odin.png', value: 75 ,sale:15},
   { src: './img/Espressona.png', value: 90 ,sale:20},
   { src: './img/lavaca.png', value: 100 ,sale:25},//
-  { src: './img/ecco.png', value: 110 ,sale:10},//
+  { src: './img/ecco.png', value: 110 ,sale:27},//
   { src: './img/losvaguitas.png', value: 115 ,sale:10},//
   { src: './img/bulbito.png', value: 120 ,sale:30},//
   { src: './img/chillin.png', value: 130 ,sale:33},
