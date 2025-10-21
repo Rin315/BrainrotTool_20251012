@@ -6,7 +6,7 @@ const images = [
   { src: './img/Odin.png', value: 75 ,sale:15},
   { src: './img/Espressona.png', value: 90 ,sale:20},
   { src: './img/lavaca.png', value: 100 ,sale:25},//
-  { src: './img/ecco.png', value: 110 ,sale:27},//
+  { src: './img/ecco.png', value: 110 ,sale:27},
   { src: './img/losvaguitas.png', value: 115 ,sale:10},//
   { src: './img/bulbito.png', value: 120 ,sale:30},//
   { src: './img/chillin.png', value: 130 ,sale:33},
@@ -17,15 +17,15 @@ const images = [
   { src: './img/bambini.png', value: 160 ,sale:10},//
   { src: './img/los.png', value: 170 ,sale:10},//
   { src: './img/alessio.png', value: 180 ,sale:60},
-  { src: './img/karkerkar.png', value: 190,sale:10 },//
+  { src: './img/karkerkar.png', value: 190,sale:70 },//
   { src: './img/lostralaleritas.png', value: 200 ,sale:60},//
   { src: './img/lostralaletitos.png', value: 200 ,sale:60},//
   { src: './img/iipiccione.png', value: 210 ,sale:75},
-  { src: './img/iimastodontico.png', value: 220 ,sale:10},//
+  { src: './img/iimastodontico.png', value: 220 ,sale:80},//
   { src: './img/jobjobjob.png', value: 220 ,sale:80},//
-  { src: './img/brainrot1.png', value: 250 ,sale:10}, // 画像なし
+  { src: './img/malame.png', value: 250 ,sale:90}, //
   { src: './img/trenostruzzo.png', value: 300 ,sale:170},
-  { src: './img/losorcaleritos.png', value: 400 ,sale:10},//
+  { src: './img/losorcaleritos.png', value: 400 ,sale:160},//
   { src: './img/loscouples.png', value: 450 ,sale:150},
   { src: './img/piccione.png', value: 500 ,sale:125},
   { src: './img/pakrah.png', value: 600 ,sale:300},
