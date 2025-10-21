@@ -402,8 +402,10 @@ button.Other{ background:#ddd; }
 
 /* iframeのサイズを小さくして横並び対応しやすくする（任意） */
 .ad-container iframe {
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
+  transform: scale(0.95);
+  transform-origin: center;
 }
 
 /* 特に狭い画面では強制的に縦並びにする */
