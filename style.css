@@ -270,7 +270,7 @@ button.Other{ background:#ddd; }
 #probability .Halloween{ background:#ffd1a6; }
 #probability .Other{ background:#ddd; }
 
-.notice{ margin-top:40px; text-align:left; color:#333; font-size:13px; }
+.notice{ margin-top:40px; text-align:left; color:#333; font-size:15px; }
 
 /* ========= スマホ最適化 ========= */
 @media (max-width: 600px){
