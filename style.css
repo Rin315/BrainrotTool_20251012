@@ -415,4 +415,30 @@ button.Other{ background:#ddd; }
     align-items: center;
   }
 }
+/* 広告2つを横並びに配置 */
+.ad-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px; /* 2つの広告の間の隙間 */
+  flex-wrap: wrap; /* 画面が狭いときは自動で縦並びに */
+  margin: 16px 0;
+}
+
+.ad-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px; /* 広告サイズに合わせる */
+  height: 200px;
+}
+
+/* スマホ用：狭い画面では縦並び */
+@media (max-width: 420px) {
+  .ad-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 }
