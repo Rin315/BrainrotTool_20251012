@@ -446,7 +446,7 @@ button.Other{ background:#ddd; }
   display: none;
 }
 .ad-pc {
-  margin: 16px 0; /* 上下に16pxの余白を入れる（横は0） */
+  margin: 5px 0; /* 上下に16pxの余白を入れる（横は0） */
 }
 
 /* スマホではPC広告を非表示、スマホ広告を表示 */
