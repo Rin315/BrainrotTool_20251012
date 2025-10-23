@@ -443,7 +443,7 @@ button.Other{ background:#ddd; }
 }
 /* PCではスマホ広告を非表示 */
 .ad-sp {
-  display: none !important;
+  display: none;
 }
 
 /* スマホではPC広告を非表示、スマホ広告を表示 */
