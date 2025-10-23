@@ -440,6 +440,7 @@ button.Other{ background:#ddd; }
     align-items: center;
   }
 }
+}
 /* PCではスマホ広告を非表示 */
 .ad-sp {
   display: none !important;
@@ -454,7 +455,4 @@ button.Other{ background:#ddd; }
     display: block;
     text-align: center;
   }
-}
-
-
 }
