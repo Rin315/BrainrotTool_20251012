@@ -440,5 +440,21 @@ button.Other{ background:#ddd; }
     align-items: center;
   }
 }
+/* PCではスマホ広告を非表示 */
+.ad-sp {
+  display: none;
+}
+
+/* スマホではPC広告を非表示、スマホ広告を表示 */
+@media (max-width: 768px) {
+  .ad-pc {
+    display: none;
+  }
+  .ad-sp {
+    display: block;
+    text-align: center;
+  }
+}
+
 
 }

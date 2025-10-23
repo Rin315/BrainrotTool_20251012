@@ -22,7 +22,7 @@ const images = [
   { src: './img/lostralaletitos.png', value: 200 ,sale:60},//
   { src: './img/iipiccione.png', value: 210 ,sale:75},
   { src: './img/iimastodontico.png', value: 240 ,sale:90},
-  { src: './img/jobjobjob.png', value: 220 ,sale:150},//
+  { src: './img/jobjobjob.png', value: 220 ,sale:80},//
   { src: './img/malame.png', value: 250 ,sale:90}, //
   { src: './img/trenostruzzo.png', value: 300 ,sale:170},
   { src: './img/losorcaleritos.png', value: 400 ,sale:160},//
