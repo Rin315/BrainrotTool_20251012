@@ -464,15 +464,16 @@ button.Other{ background:#ddd; }
 }
 /* ======= 既存すべてそのまま ======= */
 
-/* ========= モンスターごとの確率欄 ========= */
+/* ========= モンスターごとの確率欄（PC調整済） ========= */
 #monster-probability {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 12px;
-  padding: 8px 0;
+  gap: 10px;
+  padding: 4px 0;
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .monster-box {
@@ -480,45 +481,51 @@ button.Other{ background:#ddd; }
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 80px;      /* 枠幅固定でズレ防止 */
-  height: 100px;    /* 枠高さ固定でレイアウト安定 */
+  width: 72px;      /* ← 少し小さめに */
+  height: 92px;     /* ← 枠からはみ出ない高さ */
   background: transparent;
-  border: none;     /* ← 二重枠を防止 */
+  border: none;
+  margin-top: 0;
 }
 
 .monster-box img {
-  width: 60px;
-  height: 60px;
+  width: 54px;      /* ← 小さく */
+  height: 54px;
   object-fit: contain;
-  border: 1px solid #aaa;  /* 軽い枠線のみ */
+  border: 2px solid #000;   /* ← 黒い縁を追加 */
   border-radius: 4px;
   background: #fff;
+  box-sizing: border-box;
 }
 
 .monster-prob-text {
-  margin-top: 4px;
+  margin-top: 2px;
   font-size: 13px;
   font-weight: 600;
   text-align: center;
-  color: #333;
+  color: #222;
+  line-height: 1.2;
 }
 
-/* スマホ対応 */
+/* ===== スマホ用調整 ===== */
 @media (max-width: 600px) {
   #monster-probability {
     gap: 8px;
+    padding: 2px 0;
   }
   .monster-box {
     width: 60px;
-    height: 80px;
+    height: 78px;
   }
   .monster-box img {
     width: 48px;
     height: 48px;
+    border-width: 1.5px;
   }
   .monster-prob-text {
     font-size: 11px;
   }
 }
+
 
 
