@@ -120,19 +120,180 @@
     <a href="index.html" class="tool-link">▶ 計算ツールを使う</a>
   </p>
 
-  <h2>1. シミュレーターの基本構造</h2>
-  <p>
-    シミュレーターでは、選択したモンスターの1秒あたりに稼ぐキャッシュを元に、合計値を算出しています。<br>
-    各モンスターには固有の <strong>スコア（1秒あたりに稼ぐキャッシュ）</strong> が設定されており、選択した5体のスコアの合計に応じて、シリーズのごとの出現確率やシークレット出現率が変動します。<br>
-    固有のスコアにレアリティは関係なく、すべてDefaultのスコアで計算されます。
-  </p>
+<h2>1. モンスターごとの確率について</h2>
 
-  <div class="highlight">
-    <strong>例：</strong><br>
-    ・合計スコアが 500 以下 → Secret 出現率 15%以下<br>
-    ・合計スコアが 750〜1000 → Secret 出現率 75%、BrainrotGod 25%<br>
-    ・合計スコアが 1000 以上 → Secret 確定（100%）
-  </div>
+<p>
+  合計値（Total K/s）に応じて、どのモンスターが出現しやすくなるかが決まります。<br>
+  下表は合計値の範囲ごとに、出現モンスターとその確率をまとめたものです。<br>
+  計算ツールの「Result」欄では、これらの確率が自動的に参照されています。
+</p>
+
+<table>
+  <tr>
+    <th>合計K/s</th>
+    <th>出現モンスター</th>
+    <th>出現確率</th>
+  </tr>
+  <tr>
+    <td>〜500</td>
+    <td>
+      <img src="img/bambini.png" width="48">40%<br>
+      <img src="img/alessio.png" width="48">25%<br>
+      <img src="img/karkerkar.png" width="48">20%<br>
+      <img src="img/piccione.png" width="48">15%
+    </td>
+    <td>基本形</td>
+  </tr>
+  <tr>
+    <td>501〜750</td>
+    <td>
+      <img src="img/alessio.png" width="48">25%<br>
+      <img src="img/karkerkar.png" width="48">25%<br>
+      <img src="img/piccione.png" width="48">35%<br>
+      <img src="img/ketchuru.png" width="48">10%<br>
+      <img src="img/pothotspot.png" width="48">5%
+    </td>
+    <td>バランス型</td>
+  </tr>
+  <tr>
+    <td>751〜1000</td>
+    <td>
+      <img src="img/alessio.png" width="48">15%<br>
+      <img src="img/karkerkar.png" width="48">10%<br>
+      <img src="img/piccione.png" width="48">55%<br>
+      <img src="img/ketchuru.png" width="48">15%<br>
+      <img src="img/pothotspot.png" width="48">5%
+    </td>
+    <td>高速帯</td>
+  </tr>
+  <tr>
+    <td>1001〜1500</td>
+    <td>
+      <img src="img/piccione.png" width="48">50%<br>
+      <img src="img/ketchuru.png" width="48">30%<br>
+      <img src="img/pothotspot.png" width="48">20%
+    </td>
+    <td>初級上限</td>
+  </tr>
+  <tr>
+    <td>1501〜2000</td>
+    <td>
+      <img src="img/piccione.png" width="48">30%<br>
+      <img src="img/ketchuru.png" width="48">30%<br>
+      <img src="img/pothotspot.png" width="48">35%<br>
+      <img src="img/iisacro.png" width="48">5%
+    </td>
+    <td>中級開始</td>
+  </tr>
+  <tr>
+    <td>2001〜3000</td>
+    <td>
+      <img src="img/ketchuru.png" width="48">30%<br>
+      <img src="img/pothotspot.png" width="48">55%<br>
+      <img src="img/iisacro.png" width="48">15%
+    </td>
+    <td>上級手前</td>
+  </tr>
+  <tr>
+    <td>3001〜4000</td>
+    <td>
+      <img src="img/ketchuru.png" width="48">10%<br>
+      <img src="img/pothotspot.png" width="48">60%<br>
+      <img src="img/iisacro.png" width="48">25%<br>
+      <img src="img/chicleteira.png" width="48">5%
+    </td>
+    <td>上級帯</td>
+  </tr>
+  <tr>
+    <td>4001〜5000</td>
+    <td>
+      <img src="img/pothotspot.png" width="48">55%<br>
+      <img src="img/iisacro.png" width="48">35%<br>
+      <img src="img/chicleteira.png" width="48">10%
+    </td>
+    <td>上級帯後半</td>
+  </tr>
+  <tr>
+    <td>5001〜6500</td>
+    <td>
+      <img src="img/pothotspot.png" width="48">35%<br>
+      <img src="img/iisacro.png" width="48">40%<br>
+      <img src="img/chicleteira.png" width="48">25%
+    </td>
+    <td>Expertクラス</td>
+  </tr>
+  <tr>
+    <td>6501〜8000</td>
+    <td>
+      <img src="img/pothotspot.png" width="48">15%<br>
+      <img src="img/iisacro.png" width="48">50%<br>
+      <img src="img/chicleteira.png" width="48">30%<br>
+      <img src="img/dulduldul.png" width="48">5%
+    </td>
+    <td>高難易度</td>
+  </tr>
+  <tr>
+    <td>8001〜10000</td>
+    <td>
+      <img src="img/iisacro.png" width="48">45%<br>
+      <img src="img/chicleteira.png" width="48">45%<br>
+      <img src="img/dulduldul.png" width="48">10%
+    </td>
+    <td>Master帯</td>
+  </tr>
+  <tr>
+    <td>10001〜12000</td>
+    <td>
+      <img src="img/iisacro.png" width="48">30%<br>
+      <img src="img/chicleteira.png" width="48">50%<br>
+      <img src="img/dulduldul.png" width="48">20%
+    </td>
+    <td>Elite帯</td>
+  </tr>
+  <tr>
+    <td>12001〜16000</td>
+    <td>
+      <img src="img/iisacro.png" width="48">20%<br>
+      <img src="img/chicleteira.png" width="48">45%<br>
+      <img src="img/dulduldul.png" width="48">30%<br>
+      <img src="img/chinpanking.png" width="48">5%
+    </td>
+    <td>Legend帯</td>
+  </tr>
+  <tr>
+    <td>16001〜20000</td>
+    <td>
+      <img src="img/chicleteira.png" width="48">45%<br>
+      <img src="img/dulduldul.png" width="48">45%<br>
+      <img src="img/chinpanking.png" width="48">10%
+    </td>
+    <td>Ultimate帯</td>
+  </tr>
+  <tr>
+    <td>20001〜25000</td>
+    <td>
+      <img src="img/chicleteira.png" width="48">35%<br>
+      <img src="img/dulduldul.png" width="48">50%<br>
+      <img src="img/chinpanking.png" width="48">15%
+    </td>
+    <td>Ultimate+</td>
+  </tr>
+  <tr>
+    <td>25001〜</td>
+    <td>
+      <img src="img/chicleteira.png" width="48">25%<br>
+      <img src="img/dulduldul.png" width="48">55%<br>
+      <img src="img/chinpanking.png" width="48">20%
+    </td>
+    <td>GOD帯</td>
+  </tr>
+</table>
+
+<p class="highlight">
+  ※ 各モンスターの確率はツール内「Result」欄でリアルタイムに反映されます。<br>
+  ここでの数値はデータ参照用であり、実際のゲーム内仕様とは異なる場合があります。
+</p>
+
 
   <h2>2. シリーズごとの確率補正</h2>
   <p>シリーズごとの基礎確率は以下が設定されています。</p>
