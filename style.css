@@ -70,7 +70,9 @@ h2{ margin: 0; font-size: 22px; }
   font-weight:600;
   transition:color 0.2s ease;
 }
-.nav-links a:hover{ color:#ffeb3b; }
+.nav-links a:hover{
+  color:#ffeb3b;
+}
 
 /* ========= 画像コンテナ ========= */
 .imgbox{
@@ -79,16 +81,16 @@ h2{ margin: 0; font-size: 22px; }
   height:var(--imgH);
   margin:0 auto;
   box-sizing:border-box;
-  overflow:hidden; /* value/saleラベルも含めて枠内で完結 */
+  overflow:hidden; /* value/saleラベル込みで枠内に閉じ込める */
 }
 .imgbox--gallery{
   border: var(--galleryBorderW) solid var(--galleryBorderC);
 }
 .imgbox--selected{
   border:none;
-  margin-bottom:7px;
+  margin-bottom:10px; /* ← ボタンと被らないよう少し余白を増やす */
   position:relative;
-  z-index:0;
+  z-index: 1; /* ボタンより低くするので1に留める */
 }
 
 /* ========= 画像 ========= */
@@ -99,7 +101,7 @@ h2{ margin: 0; font-size: 22px; }
   display:block;
   cursor:pointer;
   transition:filter 0.1s ease, border 0.2s ease;
-  z-index:1;
+  box-sizing:border-box;
 }
 .gallery-img:active, .selected-img:active{
   filter:brightness(60%);
@@ -114,8 +116,7 @@ h2{ margin: 0; font-size: 22px; }
   gap:6px;
 }
 
-/* ========= ラベル ========= */
-/* 上部 value（黄） */
+/* ========= ラベル（value / sale） ========= */
 .value-label{
   position:absolute;
   top:0; left:0;
@@ -132,7 +133,6 @@ h2{ margin: 0; font-size: 22px; }
   white-space:nowrap;
   z-index:2;
 }
-/* 下部 sale（緑） */
 .sale-label{
   position:absolute;
   bottom:0; left:0;
@@ -151,7 +151,6 @@ h2{ margin: 0; font-size: 22px; }
 }
 
 /* ========= Select（選択済み） ========= */
-/* ← ここを「昔の安定版」に戻す */
 #selection-area{
   display:flex;
   align-items:flex-end;
@@ -164,7 +163,6 @@ h2{ margin: 0; font-size: 22px; }
   flex-wrap:nowrap;
 }
 
-/* 各スロットは「画像＋ボタン全部」が必ず入るだけの高さを用意しておく */
 .selected-wrapper{
   background:#555;
   display:flex;
@@ -172,19 +170,30 @@ h2{ margin: 0; font-size: 22px; }
   align-items:center;
   padding:6px;
   min-width:var(--slotMinW);
-  /* 画像(=var(--imgH)) +
-     画像下のsaleラベルぶん(だいたい ~18px=var(--labelH)) +
-     ギャップ(var(--gapImgButtons)) +
-     ボタン3段分(=var(--btnH)*3) +
-     余白(24pxくらい)
-     → もともとの式を復元 */
-  min-height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px + var(--labelH));
+  /* 十分な高さを確保して「画像＋ボタン」がはみ出さないように大きめに取る */
+  min-height: calc(
+    var(--imgH)               /* 画像本体の高さ */
+    + var(--gapImgButtons)    /* 画像とボタンの間のすき間 */
+    + (var(--btnH) * 3)       /* ボタン3段ぶんの高さ */
+    + 40px                    /* 余白マージンの安全枠をちょい増やす */
+  );
   box-sizing:border-box;
+  position:relative;
+  overflow:visible;
 }
 
-/* 画像を入れる箱（.imgbox--selected）は上に来て、その下にボタン */
-.selected-img{
-  margin-bottom: var(--gapImgButtons);
+/* 空スロットのときも同じサイズを保つための見た目（JS側で:emptyにならない場合もあるが念のため） */
+.selected-wrapper:empty::before{
+  content:"";
+  display:block;
+  width:var(--imgW);
+  height: calc(
+    var(--imgH)
+    + var(--gapImgButtons)
+    + (var(--btnH) * 3)
+    + 40px
+  );
+  background:#555;
 }
 
 /* ========= ボタン ========= */
@@ -195,8 +204,8 @@ h2{ margin: 0; font-size: 22px; }
   width:100%;
   justify-items:center;
   margin-top:6px;
-  overflow:visible; /* ボタンが切れないように */
-  z-index:5;
+  position:relative;
+  z-index:10;          /* ← ボタンを最前面に押し出す（これが大事） */
 }
 .button-container button{
   width:var(--btnW);
@@ -209,6 +218,7 @@ h2{ margin: 0; font-size: 22px; }
   display:flex;
   justify-content:center;
   align-items:center;
+  background:#fff;
 }
 button.Default{ background:#fff; }
 button.Gold{ background:#ffffcc; }
@@ -237,26 +247,23 @@ button.Other{ background:#ddd; }
   flex-direction:column;
   justify-content:flex-start;
   align-items:flex-start;
-  /* ← 高さ固定しない。中身に合わせて伸びる */
+  /* 高さ固定をやめて中身に合わせて伸びる */
   min-height:100px;
   height:auto;
   box-sizing:border-box;
   overflow:visible;
 }
-
 .panel-title{
   font-weight:700;
   margin-bottom:6px;
 }
 
-/* Total用だけちょっと狭い */
+/* Totalパネル（少し狭い） */
 .total-panel{
   min-width:120px;
   max-width:150px;
   text-align:left;
 }
-
-/* Total欄の3行テキスト */
 .total-panel #total{
   font-size:14px;
   font-weight:600;
@@ -265,7 +272,6 @@ button.Other{ background:#ddd; }
   overflow:hidden;
   text-align:left;
 }
-
 @media (max-width: 600px){
   .total-panel #total{
     font-size:12px;
@@ -291,7 +297,6 @@ button.Other{ background:#ddd; }
   box-sizing:border-box;
   flex-wrap:nowrap;
 }
-
 .monster-box{
   display:flex;
   flex-direction:column;
@@ -302,7 +307,6 @@ button.Other{ background:#ddd; }
   background:transparent;
   border:none;
 }
-
 .monster-box img{
   width:80px;
   height:auto;
@@ -315,7 +319,6 @@ button.Other{ background:#ddd; }
   box-sizing:border-box;
   background:#fff;
 }
-
 .monster-prob-text{
   margin-top:4px;
   font-size:13px;
@@ -401,11 +404,15 @@ button.Other{ background:#ddd; }
     justify-items:center;
   }
 
-  /* 選択枠（スマホ版も十分な高さを確保してボタンが見えるように） */
+  /* スマホ版の各スロットも十分な高さを確保し、ボタンを見えるように */
   .selected-wrapper{
     width: calc((var(--btnW) * 2) + 24px);
-    /* スマホ用は高さ少し詰めるが、3段ボタンが入るだけは確保する */
-    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 26px + var(--labelH));
+    min-height: calc(
+      var(--imgH)
+      + var(--gapImgButtons)
+      + (var(--btnH) * 3)
+      + 40px
+    );
     background:#555;
     padding:4px;
     display:flex;
@@ -416,7 +423,7 @@ button.Other{ background:#ddd; }
     box-sizing:border-box;
   }
 
-  /* ラベルのフォント縮小 */
+  /* ラベルを小さく */
   .value-label{
     width:100%;
     height:var(--labelH);
@@ -435,7 +442,7 @@ button.Other{ background:#ddd; }
     z-index:2;
   }
 
-  /* ナビ（スマホは縦並び） */
+  /* ナビ（スマホ縦並び） */
   .navbar{
     flex-direction:column;
     align-items:flex-start;
@@ -459,7 +466,7 @@ button.Other{ background:#ddd; }
     text-decoration:underline;
   }
 
-  /* シリーズごとの確率の折返し調整 */
+  /* シリーズごとの確率：折り返し許可 */
   #probability{
     display:flex;
     flex-wrap:wrap;
@@ -480,7 +487,7 @@ button.Other{ background:#ddd; }
     padding-bottom:8px;
   }
 
-  /* モンスターごとの確率欄：スマホ時は5体横1列のまま縮小して入れる */
+  /* モンスターごとの確率欄：5体横1列のまま縮小 */
   #monster-probability{
     gap:4px;
     justify-content:space-around;
@@ -496,5 +503,11 @@ button.Other{ background:#ddd; }
   }
   .monster-prob-text{
     font-size:11px;
+  }
+
+  /* Totalテキスト少し小さめ */
+  .total-panel #total{
+    font-size:12px;
+    line-height:1.4;
   }
 }
