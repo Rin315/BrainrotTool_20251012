@@ -100,8 +100,8 @@
     }
     .tool-link:hover { background: #3b6b6b; }
 
-    /* ============================
-   ▼ モンスター確率テーブル用（修正版）
+  /* ============================
+   ▼ モンスター確率テーブル用（最終調整版）
    ============================ */
 
 /* PC用：2カラム並列のコンテナ */
@@ -117,7 +117,8 @@
 
 /* 各カラム（左右） */
 .monster-col {
-  flex: 0 0 42%; /* ← 横幅を狭くして5体が自然に収まる */
+  flex: 0 0 auto;
+  width: 400px; /* 全体を5体分に制限 */
   background: #fff;
   border-radius: 6px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -125,7 +126,7 @@
   overflow: hidden;
 }
 
-/* ヘッダー行（幅をrange-cell/monsters-cellに合わせる） */
+/* ヘッダー行 */
 .monster-header {
   display: flex;
   background: #eaf6ea;
@@ -134,10 +135,26 @@
   color: #2f4f4f;
 }
 
-.monster-header .range-header {
-  width: 90px;
-  min-width: 90px;
+/* 左列（合計K/s範囲） */
+.monster-header .range-header,
+.range-cell {
+  width: 92px;
+  min-width: 92px;
+  background: #eaf6ea;
   border-right: 1px solid #c4e3c2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+  font-size: 13px;
+  font-weight: bold;
+  color: #2f4f4f;
+}
+
+/* 右列（出現モンスター） */
+.monster-header .monster-header-cell {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,12 +162,10 @@
   box-sizing: border-box;
 }
 
-.monster-header .monster-header-cell {
+.monsters-cell {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 8px;
+  max-width: 300px; /* ← モンスター5体分に制限 */
   box-sizing: border-box;
 }
 
@@ -161,27 +176,7 @@
 }
 .monster-row-block:last-child { border-bottom: none; }
 
-.range-cell {
-  width: 90px;
-  min-width: 90px;
-  background: #eaf6ea;
-  border-right: 1px solid #c4e3c2;
-  font-weight: bold;
-  color: #2f4f4f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  padding: 8px;
-  text-align: center;
-}
-
-.monsters-cell {
-  flex: 1;
-  padding: 8px;
-}
-
-/* モンスター画像を左寄せ・横一列で表示 */
+/* モンスター画像配置 */
 .monster-row {
   display: flex;
   flex-wrap: nowrap;
@@ -189,17 +184,16 @@
   gap: 10px;
 }
 
-/* モンスター1体分（画像＋確率） */
+/* モンスター1体分 */
 .monster-set {
   display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: 1.2;
   font-size: 12px;
   font-weight: 600;
   color: #222;
-  min-width: 50px;
   text-align: center;
+  min-width: 50px;
 }
 .monster-set img {
   width: 46px;
@@ -211,10 +205,14 @@
   margin-bottom: 3px;
 }
 
-/* スマホ：1列表示（変更なし） */
-@media (max-width: 768px) {
-  .monster-table-wrapper { display: none; }
-  .monster-table-mobile { display: block; }
+/* スマホ表示切替 */
+@media screen and (max-width: 768px) {
+  .monster-table-wrapper {
+    display: none !important;
+  }
+  .monster-table-mobile {
+    display: block !important;
+  }
 }
 
   </style>
