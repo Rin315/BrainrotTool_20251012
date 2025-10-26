@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="img/trarafabicon.PNG" type="image/png">
 
- <style>
+  <style>
     body {
       background-color: #e6f5e1;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
@@ -100,120 +100,221 @@
     }
     .tool-link:hover { background: #3b6b6b; }
 
-  /* ============================
-   ▼ モンスター確率テーブル用（最終調整版）
-   ============================ */
+    /* ============================
+       ▼ モンスター確率テーブル用（最終版）
+       ============================ */
 
-/* PC用：2カラム並列のコンテナ */
-.monster-table-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  gap: 16px;
-  margin-top: 16px;
-  width: 100%;
-  box-sizing: border-box;
-}
+    /* PC用：2カラム並列のコンテナ（左寄せ） */
+    .monster-table-wrapper {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 16px;
+      margin-top: 16px;
+      width: 100%;
+      box-sizing: border-box;
+      justify-content: flex-start; /* 左寄せ */
+    }
 
-/* 各カラム（左右） */
-.monster-col {
-  flex: 0 0 auto;
-  width: 400px; /* 全体を5体分に制限 */
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  border: 1px solid #c4e3c2;
-  overflow: hidden;
-}
+    /* 各カラム（左右） */
+    .monster-col {
+      flex: 0 0 auto;
+      width: 360px; /* ← PC版テーブルの横幅をコンパクトに固定 */
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid #c4e3c2;
+      overflow: hidden;
+    }
 
-/* ヘッダー行 */
-.monster-header {
-  display: flex;
-  background: #eaf6ea;
-  border-bottom: 1px solid #c4e3c2;
-  font-weight: bold;
-  color: #2f4f4f;
-}
+    /* ヘッダー行（range/monsters の2列と幅を合わせる） */
+    .monster-header {
+      display: flex;
+      background: #eaf6ea;
+      border-bottom: 1px solid #c4e3c2;
+      font-weight: bold;
+      color: #2f4f4f;
+    }
 
-/* 左列（合計K/s範囲） */
-.monster-header .range-header,
-.range-cell {
-  width: 92px;
-  min-width: 92px;
-  background: #eaf6ea;
-  border-right: 1px solid #c4e3c2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  box-sizing: border-box;
-  font-size: 13px;
-  font-weight: bold;
-  color: #2f4f4f;
-}
+    .monster-header .range-header {
+      width: 90px;
+      min-width: 90px;
+      background: #eaf6ea;
+      border-right: 1px solid #c4e3c2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      box-sizing: border-box;
+      font-size: 13px;
+      line-height: 1.3;
+      text-align: center;
+    }
 
-/* 右列（出現モンスター） */
-.monster-header .monster-header-cell {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  box-sizing: border-box;
-}
+    .monster-header .monster-header-cell {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      box-sizing: border-box;
+      font-size: 13px;
+      line-height: 1.3;
+      text-align: center;
+    }
 
-.monsters-cell {
-  flex: 1;
-  padding: 8px;
-  max-width: 300px; /* ← モンスター5体分に制限 */
-  box-sizing: border-box;
-}
+    /* 各行 */
+    .monster-row-block {
+      display: flex;
+      border-bottom: 1px solid #c4e3c2;
+    }
+    .monster-row-block:last-child { border-bottom: none; }
 
-/* 各行 */
-.monster-row-block {
-  display: flex;
-  border-bottom: 1px solid #c4e3c2;
-}
-.monster-row-block:last-child { border-bottom: none; }
+    .range-cell {
+      width: 90px;
+      min-width: 90px;
+      background: #eaf6ea;
+      border-right: 1px solid #c4e3c2;
+      font-weight: bold;
+      color: #2f4f4f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      padding: 8px;
+      text-align: center;
+      line-height: 1.3;
+      box-sizing: border-box;
+    }
 
-/* モンスター画像配置 */
-.monster-row {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  gap: 10px;
-}
+    .monsters-cell {
+      flex: 1;
+      min-width: 0;
+      padding: 8px;
+      box-sizing: border-box;
+    }
 
-/* モンスター1体分 */
-.monster-set {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: #222;
-  text-align: center;
-  min-width: 50px;
-}
-.monster-set img {
-  width: 46px;
-  height: 46px;
-  object-fit: cover;
-  border: 1.5px solid #000;
-  border-radius: 4px;
-  background: #fff;
-  margin-bottom: 3px;
-}
+    /* モンスター画像を左寄せ・横一列で表示（必ず1行） */
+    .monster-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 10px;
+    }
 
-/* スマホ表示切替 */
-@media screen and (max-width: 768px) {
-  .monster-table-wrapper {
-    display: none !important;
-  }
-  .monster-table-mobile {
-    display: block !important;
-  }
-}
+    /* モンスター1体分（画像＋確率） */
+    .monster-set {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.2;
+      font-size: 12px;
+      font-weight: 600;
+      color: #222;
+      min-width: 50px;
+      text-align: center;
+    }
+    .monster-set img {
+      width: 46px;
+      height: 46px;
+      object-fit: cover;
+      border: 1.5px solid #000;
+      border-radius: 4px;
+      background: #fff;
+      display: block;
+      margin-bottom: 3px;
+      box-sizing: border-box;
+    }
+
+    /* スマホ側の縦1カラム用テーブル */
+    .monster-table-mobile {
+      display: none; /* PCでは非表示 */
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid #c4e3c2;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .monster-mobile-row-block {
+      border-bottom: 1px solid #c4e3c2;
+      padding: 8px 10px;
+      box-sizing: border-box;
+    }
+    .monster-mobile-row-block:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-range {
+      background: #eaf6ea;
+      color: #2f4f4f;
+      font-weight: bold;
+      font-size: 14px;
+      border: 1px solid #c4e3c2;
+      border-radius: 4px;
+      padding: 4px 8px;
+      display: inline-block;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .mobile-monsters-cell {
+      /* 横スクロール許可（5体いても折り返さない） */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-monster-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 10px;
+      min-width: max-content;
+    }
+
+    .mobile-monster-set {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.2;
+      font-size: 12px;
+      font-weight: 600;
+      color: #222;
+      text-align: center;
+      min-width: 50px;
+    }
+    .mobile-monster-set img {
+      width: 46px;
+      height: 46px;
+      object-fit: cover;
+      border: 1.5px solid #000;
+      border-radius: 4px;
+      background: #fff;
+      display: block;
+      margin-bottom: 3px;
+      box-sizing: border-box;
+    }
+
+    /* ▼ レスポンシブ切り替え
+       768px以下はスマホ表示：mobileだけ表示
+       769px以上はPC表示：2カラムだけ表示 */
+    @media (max-width: 768px) {
+      .monster-table-wrapper {
+        display: none;
+      }
+      .monster-table-mobile {
+        display: block;
+      }
+    }
+    @media (min-width: 769px) {
+      .monster-table-wrapper {
+        display: flex;
+      }
+      .monster-table-mobile {
+        display: none;
+      }
+    }
 
   </style>
 </head>
@@ -227,8 +328,7 @@
       .then(html => document.getElementById("navbar").innerHTML = html);
   </script>
 
-
-    <!-- ✅ 広告群（変更なし） -->
+  <!-- ✅ 広告群（変更なし） -->
   <div class="ad-pc">
     <div id="im-8c46e961e3824a7696004187218a7684">
       <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
@@ -261,8 +361,8 @@
 
   <!-- ▼▼ PC版: 2カラムの並列表 ▼▼ -->
   <div class="monster-table-wrapper">
-
-    <!-- 左カラム -->
+    <!-- （このあと Part 2/4 で、左カラムと右カラムの中身を置きます） -->
+        <!-- 左カラム -->
     <div class="monster-col">
       <div class="monster-header">
         <div class="range-header">合計K/s範囲</div>
@@ -371,16 +471,13 @@
           </div>
         </div>
       </div>
-    </div><!-- /monster-col (左) -->
-
-
+    </div>
     <!-- 右カラム -->
     <div class="monster-col">
       <div class="monster-header">
         <div class="range-header">合計K/s範囲</div>
         <div class="monster-header-cell">出現モンスター</div>
       </div>
-
 
       <!-- 5001〜6500 -->
       <div class="monster-row-block">
@@ -480,14 +577,18 @@
         </div>
       </div>
     </div><!-- /monster-col (右) -->
-
   </div>
-  <!-- ▲▲ PC版ここまで ▲▲ -->
 
-
-  <!-- ▼▼ スマホ版: 1カラム縦並び（全範囲を順番に） ▼▼ -->
+    <!-- ▼▼ スマホ版: 1カラム縦並び（全範囲を順番に） ▼▼ -->
   <div class="monster-table-mobile">
 
+    <!-- 共通ヘッダー -->
+    <div class="monster-header">
+      <div class="range-header">合計K/s範囲</div>
+      <div class="monster-header-cell">出現モンスター</div>
+    </div>
+
+    <!-- ▼ 各範囲 ▼ -->
     <!-- 〜500 -->
     <div class="monster-mobile-row-block">
       <div class="mobile-range">〜500</div>
