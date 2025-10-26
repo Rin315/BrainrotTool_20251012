@@ -109,12 +109,14 @@ images.forEach((imgObj) => {
 });
 
 // ========== 選択エリア描画 ==========
+// ========== 選択エリア描画 ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
     const imgObj = selectedImages[idx];
 
     if (imgObj) {
+      // 画像ボックス生成
       const box = document.createElement('div');
       box.className = 'imgbox imgbox--selected';
 
@@ -136,7 +138,31 @@ function renderSelected() {
 
       applyOutline(box, idx);
       wrapper.appendChild(box);
+
+      // ===== 🔽 ボタンコンテナ生成（抜けていた部分） =====
+      const btnContainer = document.createElement('div');
+      btnContainer.className = 'button-container';
+
+      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
+        const btn = document.createElement('button');
+        btn.textContent = type;
+        btn.className = type;
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectedColors[idx] = type;
+          selectedHasBorder[idx] = true;
+          applyOutline(box, idx); // 枠色を即時反映
+          updateAll();            // 計算更新
+        });
+
+        btnContainer.appendChild(btn);
+      });
+
+      wrapper.appendChild(btnContainer);
+      // ===== 🔼 ここまでボタン生成 =====
     } else {
+      // 未選択時のプレースホルダ
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
       ph.style.backgroundColor = '#555';
@@ -144,6 +170,7 @@ function renderSelected() {
     }
   });
 }
+
 
 // ========== 枠色 ==========
 function applyOutline(boxEl, idx){
