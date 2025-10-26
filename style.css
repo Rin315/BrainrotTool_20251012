@@ -79,9 +79,11 @@ h2{ margin: 0; font-size: 22px; }
   height:var(--imgH);
   margin:0 auto;
   box-sizing:border-box;
-  overflow:hidden;
+  overflow:hidden; /* value/saleラベルも含めて枠内で完結 */
 }
-.imgbox--gallery{ border: var(--galleryBorderW) solid var(--galleryBorderC); }
+.imgbox--gallery{
+  border: var(--galleryBorderW) solid var(--galleryBorderC);
+}
 .imgbox--selected{
   border:none;
   margin-bottom:7px;
@@ -99,7 +101,10 @@ h2{ margin: 0; font-size: 22px; }
   transition:filter 0.1s ease, border 0.2s ease;
   z-index:1;
 }
-.gallery-img:active, .selected-img:active{ filter:brightness(60%); }
+.gallery-img:active, .selected-img:active{
+  filter:brightness(60%);
+  transition:filter 0.1s ease;
+}
 
 /* ========= Monster（ギャラリー） ========= */
 #gallery{
@@ -110,6 +115,7 @@ h2{ margin: 0; font-size: 22px; }
 }
 
 /* ========= ラベル ========= */
+/* 上部 value（黄） */
 .value-label{
   position:absolute;
   top:0; left:0;
@@ -123,8 +129,10 @@ h2{ margin: 0; font-size: 22px; }
   line-height:var(--labelH);
   user-select:none;
   pointer-events:none;
+  white-space:nowrap;
   z-index:2;
 }
+/* 下部 sale（緑） */
 .sale-label{
   position:absolute;
   bottom:0; left:0;
@@ -138,16 +146,25 @@ h2{ margin: 0; font-size: 22px; }
   line-height:var(--labelH);
   user-select:none;
   pointer-events:none;
+  white-space:nowrap;
   z-index:2;
 }
 
-/* ========= Select ========= */
-#selection-area{ display:flex; align-items:flex-end; margin-bottom:12px; }
+/* ========= Select（選択済み） ========= */
+/* ← ここを「昔の安定版」に戻す */
+#selection-area{
+  display:flex;
+  align-items:flex-end;
+  margin-bottom:12px;
+}
 #selected-container{
   display:flex;
   gap:8px;
   justify-content:center;
+  flex-wrap:nowrap;
 }
+
+/* 各スロットは「画像＋ボタン全部」が必ず入るだけの高さを用意しておく */
 .selected-wrapper{
   background:#555;
   display:flex;
@@ -155,9 +172,20 @@ h2{ margin: 0; font-size: 22px; }
   align-items:center;
   padding:6px;
   min-width:var(--slotMinW);
+  /* 画像(=var(--imgH)) +
+     画像下のsaleラベルぶん(だいたい ~18px=var(--labelH)) +
+     ギャップ(var(--gapImgButtons)) +
+     ボタン3段分(=var(--btnH)*3) +
+     余白(24pxくらい)
+     → もともとの式を復元 */
+  min-height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px + var(--labelH));
   box-sizing:border-box;
 }
-.selected-img{ margin-bottom: var(--gapImgButtons); }
+
+/* 画像を入れる箱（.imgbox--selected）は上に来て、その下にボタン */
+.selected-img{
+  margin-bottom: var(--gapImgButtons);
+}
 
 /* ========= ボタン ========= */
 .button-container{
@@ -167,7 +195,7 @@ h2{ margin: 0; font-size: 22px; }
   width:100%;
   justify-items:center;
   margin-top:6px;
-  overflow:visible;
+  overflow:visible; /* ボタンが切れないように */
   z-index:5;
 }
 .button-container button{
@@ -177,6 +205,7 @@ h2{ margin: 0; font-size: 22px; }
   cursor:pointer;
   font-size:var(--btnFS);
   color:#000 !important;
+  -webkit-text-fill-color:#000 !important;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -198,23 +227,37 @@ button.Other{ background:#ddd; }
   align-items:flex-start;
 }
 
+/* パネル（Resultの各枠） */
 .panel{
   border:2px solid #999;
   padding:10px;
   min-width:260px;
   background:#fafafa;
-  min-height:100px;        /* ← 高さ固定を解除し自動調整に変更 */
-  height:auto !important;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
   align-items:flex-start;
-  overflow:visible;         /* ← ボタンや画像が切れないように */
+  /* ← 高さ固定しない。中身に合わせて伸びる */
+  min-height:100px;
+  height:auto;
+  box-sizing:border-box;
+  overflow:visible;
 }
-.panel-title{ font-weight:700; margin-bottom:6px; }
-.total-panel{ min-width:120px; max-width:150px; text-align:left; }
 
-.total-panel #total {
+.panel-title{
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+/* Total用だけちょっと狭い */
+.total-panel{
+  min-width:120px;
+  max-width:150px;
+  text-align:left;
+}
+
+/* Total欄の3行テキスト */
+.total-panel #total{
   font-size:14px;
   font-weight:600;
   line-height:1.3;
@@ -223,8 +266,22 @@ button.Other{ background:#ddd; }
   text-align:left;
 }
 
+@media (max-width: 600px){
+  .total-panel #total{
+    font-size:12px;
+    line-height:1.4;
+  }
+}
+
+.wait-note{
+  margin-top:4px;
+  font-size:14px;
+  color:#444;
+  line-height:1.2;
+}
+
 /* ========= モンスターごとの確率欄 ========= */
-#monster-probability {
+#monster-probability{
   display:flex;
   justify-content:center;
   align-items:flex-start;
@@ -232,15 +289,20 @@ button.Other{ background:#ddd; }
   padding:8px 0;
   width:100%;
   box-sizing:border-box;
+  flex-wrap:nowrap;
 }
-.monster-box {
+
+.monster-box{
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:flex-start;
   width:90px;
   height:auto;
+  background:transparent;
+  border:none;
 }
+
 .monster-box img{
   width:80px;
   height:auto;
@@ -250,7 +312,10 @@ button.Other{ background:#ddd; }
   display:block;
   margin:0;
   padding:0;
+  box-sizing:border-box;
+  background:#fff;
 }
+
 .monster-prob-text{
   margin-top:4px;
   font-size:13px;
@@ -277,31 +342,159 @@ button.Other{ background:#ddd; }
 #probability .Halloween{ background:#ffd1a6; }
 #probability .Other{ background:#ddd; }
 
-.notice{ margin-top:40px; text-align:left; color:#333; font-size:15px; }
+.notice{
+  margin-top:40px;
+  text-align:left;
+  color:#333;
+  font-size:15px;
+}
+
+/* ========= 広告レイアウト ========= */
+.ad-sp { display:none; }
+.ad-pc { margin:5px 0; }
+.ad-sp { margin:5px 0; }
+
+@media (max-width:768px){
+  .ad-pc{ display:none; }
+  .ad-sp{
+    display:block;
+    text-align:center;
+  }
+}
 
 /* ========= スマホ最適化 ========= */
 @media (max-width:600px){
   :root{
-    --imgW:60px; --imgH:66px; --labelH:12px;
-    --btnW:52px; --btnH:22px; --btnFS:8px;
-    --selectedBorderW:3px;
+    --imgW: 60px;
+    --imgH: 66px;
+    --labelH: 12px;
+    --slotMinW: 128px;
+    --btnW: 52px;
+    --btnH: 22px;
+    --btnFS: 8px;
+    --galleryBorderW: 1px;
+    --galleryBorderC: #ccc;
+    --selectedBorderW: 3px;
+    --selectedBorderC: #000;
   }
 
+  #gallery{
+    grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+    justify-items:center;
+    gap:3px;
+  }
+
+  img.gallery-img,
+  img.selected-img{
+    width: var(--imgW) !important;
+    height: var(--imgH) !important;
+    object-fit: cover !important;
+  }
+
+  #selected-container{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:8px;
+    width:100%;
+    max-width:520px;
+    margin:0 auto;
+    justify-items:center;
+  }
+
+  /* 選択枠（スマホ版も十分な高さを確保してボタンが見えるように） */
+  .selected-wrapper{
+    width: calc((var(--btnW) * 2) + 24px);
+    /* スマホ用は高さ少し詰めるが、3段ボタンが入るだけは確保する */
+    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 26px + var(--labelH));
+    background:#555;
+    padding:4px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    overflow:visible;
+    box-sizing:border-box;
+  }
+
+  /* ラベルのフォント縮小 */
+  .value-label{
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:8px;
+    z-index:2;
+  }
+  .sale-label{
+    bottom:0;
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:8px;
+    background:rgba(0,0,0,0.75);
+    color:#00c853;
+    z-index:2;
+  }
+
+  /* ナビ（スマホは縦並び） */
+  .navbar{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:10px 16px;
+  }
+  .nav-title{
+    font-size:18px;
+    margin-bottom:8px;
+    text-align:left;
+  }
+  .nav-links{
+    flex-direction:column;
+    gap:6px;
+    width:100%;
+    align-items:flex-start;
+  }
+  .nav-links a{
+    font-size:14px;
+    padding:4px 0;
+    color:#fff;
+    text-decoration:underline;
+  }
+
+  /* シリーズごとの確率の折返し調整 */
+  #probability{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    gap:4px;
+    font-size:12px;
+    line-height:1.4;
+    word-break:keep-all;
+    white-space:normal;
+    box-sizing:border-box;
+    padding:4px;
+    max-height:none;
+  }
+
+  .panel{
+    min-height:unset;
+    height:auto;
+    padding-bottom:8px;
+  }
+
+  /* モンスターごとの確率欄：スマホ時は5体横1列のまま縮小して入れる */
   #monster-probability{
     gap:4px;
     justify-content:space-around;
     flex-wrap:nowrap;
   }
-  .monster-box{ width:18vw; }
+  .monster-box{
+    width:18vw;
+  }
   .monster-box img{
     width:100%;
+    height:auto;
     border-width:1.5px;
   }
-  .monster-prob-text{ font-size:11px; }
-
-  .panel{
-    min-height:unset;
-    height:auto;
-    overflow:visible;
+  .monster-prob-text{
+    font-size:11px;
   }
 }

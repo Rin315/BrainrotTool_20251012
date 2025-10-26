@@ -37,11 +37,13 @@ const images = [
   { src: './img/nomyhotspot.png', value: 2500 ,sale:450},
   { src: './img/garamarama.png', value: 3000 ,sale:500},
   { src: './img/iisacro.png', value: 4000 ,sale:800},
+  { src: './img/chari2.png', value: 4500 ,sale:900},
   { src: './img/lagrande.png', value: 5000 ,sale:1000},
   { src: './img/67.png', value: 6700 ,sale:6700},
   { src: './img/chicleteira.png', value: 8000 ,sale:2000},
   { src: './img/pad.png', value: 10000 ,sale:3000},
   { src: './img/dulduldul.png', value: 12000 ,sale:5000},
+  { src: './img/chinpanking.png', value: 25000 ,sale:10000},
 ];
 
 // ========== DOM要素 ==========
