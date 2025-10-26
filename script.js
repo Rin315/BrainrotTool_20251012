@@ -177,7 +177,7 @@ resetBtn.addEventListener('click', () => {
 // ========== 更新 ==========
 function updateAll(){
   updateTotal();
-  updateMonsterProbability();
+  updateMonsterProbability(); // ← Secret確率の代わりにこれを呼ぶ
   updateTypeProbability();
 }
 
@@ -199,33 +199,30 @@ function updateTotal() {
   ].map(t => `<div>${t}</div>`).join('');
 }
 
-// ========== モンスターごとの確率（仮表示） ==========
+// ========== モンスターごとの確率表示（仮：cocofanto5体・20%） ==========
 function updateMonsterProbability() {
-  monsterProbEl.innerHTML = ''; // 一旦クリア
+  const container = document.getElementById('monster-probability');
+  if (!container) return;
+  container.innerHTML = ''; // 初期化
 
-  const container = document.createElement('div');
-  container.className = 'monster-prob-container';
-
-  // 仮：同じ画像5つ & 各20%
   for (let i = 0; i < 5; i++) {
     const box = document.createElement('div');
-    box.className = 'monster-prob-box';
+    box.className = 'monster-box';
 
     const img = document.createElement('img');
     img.src = './img/cocofanto.png';
     img.alt = 'cocofanto';
-    box.appendChild(img);
 
     const probText = document.createElement('div');
-    probText.textContent = '20%';
     probText.className = 'monster-prob-text';
-    box.appendChild(probText);
+    probText.textContent = '20%';
 
+    box.appendChild(img);
+    box.appendChild(probText);
     container.appendChild(box);
   }
-
-  monsterProbEl.appendChild(container);
 }
+
 
 // ========== 種類確率 ==========
 function updateTypeProbability(){
