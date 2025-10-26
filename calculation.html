@@ -151,7 +151,7 @@
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     margin-top: 16px;
-    table-layout: fixed; /* ←列幅固定して整列 */
+    table-layout: fixed;
   }
 
   th, td {
@@ -167,9 +167,19 @@
     text-align: center;
   }
 
-  td {
-    text-align: left;
-    width: 25%;
+  /* ====== 列幅を広げる ====== */
+  th:nth-child(1),
+  th:nth-child(3),
+  td:nth-child(1),
+  td:nth-child(3) {
+    width: 20%;
+  }
+
+  th:nth-child(2),
+  th:nth-child(4),
+  td:nth-child(2),
+  td:nth-child(4) {
+    width: 30%;
   }
 
   /* ====== モンスター表示部分 ====== */
@@ -178,20 +188,18 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
-    flex-wrap: nowrap; /* 改行しない */
-    overflow-x: auto;  /* 横スクロール許可 */
+    flex-wrap: wrap; /* ←改行許可 */
   }
 
   .monster-set {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-shrink: 0;
     gap: 3px;
   }
 
   .monster-set img {
-    width: 40px;
+    width: 45px;
     height: auto;
     border: 1.5px solid #000;
     border-radius: 4px;
@@ -205,20 +213,19 @@
     color: #222;
   }
 
-  /* ====== スマホ時：1列表示に ====== */
+  /* ====== スマホ：縦1列で全表示 ====== */
   @media (max-width: 768px) {
     table.monster-table {
       table-layout: auto;
     }
-    th:nth-child(3),
-    td:nth-child(3),
-    th:nth-child(4),
-    td:nth-child(4) {
-      display: none;
+    tr {
+      display: block;
+      margin-bottom: 14px;
+      border-bottom: 2px solid #c4e3c2;
     }
     td, th {
-      width: 100%;
       display: block;
+      width: 100%;
     }
   }
 </style>
@@ -303,44 +310,7 @@
       </div>
     </td>
   </tr>
-
-  <tr>
-    <td>1501〜2000</td><td>
-      <div class="monster-row">
-        <div class="monster-set"><img src="img/piccione.png"><span>30%</span></div>
-        <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
-        <div class="monster-set"><img src="img/pothotspot.png"><span>35%</span></div>
-        <div class="monster-set"><img src="img/iisacro.png"><span>5%</span></div>
-      </div>
-    </td>
-    <td>8001〜10000</td><td>
-      <div class="monster-row">
-        <div class="monster-set"><img src="img/iisacro.png"><span>45%</span></div>
-        <div class="monster-set"><img src="img/chicleteira.png"><span>45%</span></div>
-        <div class="monster-set"><img src="img/dulduldul.png"><span>10%</span></div>
-      </div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>2001〜3000</td><td>
-      <div class="monster-row">
-        <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
-        <div class="monster-set"><img src="img/pothotspot.png"><span>55%</span></div>
-        <div class="monster-set"><img src="img/iisacro.png"><span>15%</span></div>
-      </div>
-    </td>
-    <td>10001〜12000</td><td>
-      <div class="monster-row">
-        <div class="monster-set"><img src="img/iisacro.png"><span>30%</span></div>
-        <div class="monster-set"><img src="img/chicleteira.png"><span>50%</span></div>
-        <div class="monster-set"><img src="img/dulduldul.png"><span>20%</span></div>
-      </div>
-    </td>
-  </tr>
 </table>
-
-
 
 
 
@@ -386,6 +356,15 @@
     <li>合計が 751〜5000：<strong>1時間30分</strong></li>
     <li>合計が 5001 以上：<strong>2時間</strong></li>
   </ul>
+
+  <!---PC バナー ---> 
+  <div class="ad-pc"> 
+    <div id="im-8286f20872994f20b2594b2827f5f96a">
+      <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+      <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588049,asid:1915081,type:"banner",display:"inline",elementid:"im-8286f20872994f20b2594b2827f5f96a"})</script>
+    </div>
+  </div>
+  <!---PC バナーここまで --->
 
   <h2>4. よくある質問（FAQ）</h2>
   <h3>Q1. この確率は実際のゲーム内確率と同じですか？</h3>
