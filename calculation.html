@@ -134,7 +134,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
   }
 
   /* 横並び配置 */
@@ -143,28 +143,34 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px; /* ← 余白も少し狭く */
   }
 
   .monster-row img {
-    width: 60px;
+    width: 45px;       /* 👈 サイズを小さく変更 */
     height: auto;
-    border: 2px solid #000;
-    border-radius: 6px;
+    border: 1.5px solid #000;
+    border-radius: 5px;
     background: #fff;
     object-fit: cover;
   }
 
   .monster-row span {
-    font-size: 13px;
+    font-size: 12px;   /* 👈 テキストもやや小さく */
     font-weight: 600;
     color: #222;
   }
 
   td {
     vertical-align: middle;
+    padding: 6px 8px;  /* 👈 セルの余白も圧縮 */
+  }
+
+  th {
+    padding: 8px 8px;
   }
 </style>
+
 
 <table>
   <tr>
