@@ -228,29 +228,133 @@ function updateTotal() {
   ].map(t => `<div>${t}</div>`).join('');
 }
 
-// ========== モンスターごとの確率表示（仮：cocofanto5体・20%） ==========
+// ========== モンスターごとの確率ルール ==========
+function getMonsterProbabilities(sumValue) {
+  const rules = [
+    { max: 500, list: [
+      {img:'bambini.png', p:40},
+      {img:'alessio.png', p:25},
+      {img:'karkerkar.png', p:20},
+      {img:'piccione.png', p:15},
+    ]},
+    { max: 750, list: [
+      {img:'alessio.png', p:25},
+      {img:'karkerkar.png', p:25},
+      {img:'piccione.png', p:35},
+      {img:'ketchuru.png', p:10},
+      {img:'pothotspot.png', p:5},
+    ]},
+    { max: 1000, list: [
+      {img:'alessio.png', p:15},
+      {img:'karkerkar.png', p:10},
+      {img:'piccione.png', p:55},
+      {img:'ketchuru.png', p:15},
+      {img:'pothotspot.png', p:5},
+    ]},
+    { max: 1500, list: [
+      {img:'piccione.png', p:50},
+      {img:'ketchuru.png', p:30},
+      {img:'pothotspot.png', p:20},
+    ]},
+    { max: 2000, list: [
+      {img:'piccione.png', p:30},
+      {img:'ketchuru.png', p:30},
+      {img:'pothotspot.png', p:35},
+      {img:'iisacro.png', p:5},
+    ]},
+    { max: 3000, list: [
+      {img:'ketchuru.png', p:30},
+      {img:'pothotspot.png', p:55},
+      {img:'iisacro.png', p:15},
+    ]},
+    { max: 4000, list: [
+      {img:'ketchuru.png', p:10},
+      {img:'pothotspot.png', p:60},
+      {img:'iisacro.png', p:25},
+      {img:'chicleteira.png', p:5},
+    ]},
+    { max: 5000, list: [
+      {img:'pothotspot.png', p:55},
+      {img:'iisacro.png', p:35},
+      {img:'chicleteira.png', p:10},
+    ]},
+    { max: 6500, list: [
+      {img:'pothotspot.png', p:35},
+      {img:'iisacro.png', p:40},
+      {img:'chicleteira.png', p:25},
+    ]},
+    { max: 8000, list: [
+      {img:'pothotspot.png', p:15},
+      {img:'iisacro.png', p:50},
+      {img:'chicleteira.png', p:30},
+      {img:'dulduldul.png', p:5},
+    ]},
+    { max: 10000, list: [
+      {img:'iisacro.png', p:45},
+      {img:'chicleteira.png', p:45},
+      {img:'dulduldul.png', p:10},
+    ]},
+    { max: 12000, list: [
+      {img:'iisacro.png', p:30},
+      {img:'chicleteira.png', p:50},
+      {img:'dulduldul.png', p:20},
+    ]},
+    { max: 16000, list: [
+      {img:'iisacro.png', p:20},
+      {img:'chicleteira.png', p:45},
+      {img:'dulduldul.png', p:30},
+      {img:'chinpanking.png', p:5},
+    ]},
+    { max: 20000, list: [
+      {img:'chicleteira.png', p:45},
+      {img:'dulduldul.png', p:45},
+      {img:'chinpanking.png', p:10},
+    ]},
+    { max: 25000, list: [
+      {img:'chicleteira.png', p:35},
+      {img:'dulduldul.png', p:50},
+      {img:'chinpanking.png', p:15},
+    ]},
+    { max: Infinity, list: [
+      {img:'chicleteira.png', p:25},
+      {img:'dulduldul.png', p:55},
+      {img:'chinpanking.png', p:20},
+    ]},
+  ];
+
+  return rules.find(r => sumValue <= r.max).list;
+}
+
+// ========== モンスターごとの確率表示（Total K/sに応じて動的更新） ==========
 function updateMonsterProbability() {
   const container = document.getElementById('monster-probability');
   if (!container) return;
-  container.innerHTML = ''; // 初期化
+  container.innerHTML = '';
 
-  for (let i = 0; i < 5; i++) {
+  // 現在の合計K/sを取得
+  const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
+  if (sumValue === 0) return;
+
+  const monsters = getMonsterProbabilities(sumValue);
+
+  monsters.forEach(({ img, p }) => {
     const box = document.createElement('div');
     box.className = 'monster-box';
 
-    const img = document.createElement('img');
-    img.src = './img/cocofanto.png';
-    img.alt = 'cocofanto';
+    const image = document.createElement('img');
+    image.src = `./img/${img}`;
+    image.alt = img;
 
     const probText = document.createElement('div');
     probText.className = 'monster-prob-text';
-    probText.textContent = '20%';
+    probText.textContent = `${p}%`;
 
-    box.appendChild(img);
+    box.appendChild(image);
     box.appendChild(probText);
     container.appendChild(box);
-  }
+  });
 }
+
 
 
 // ========== 種類確率 ==========
