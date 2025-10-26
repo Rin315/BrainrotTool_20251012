@@ -1,0 +1,464 @@
+/* ========= ベース設定 ========= */
+:root{
+  --imgW: 110px;
+  --imgH: 120px;
+  --labelH: 18px;
+  --slotMinW: 134px;
+  --gapImgButtons: 4px;
+  --btnW: 58px;
+  --btnH: 28px;
+  --btnFS: 11px;
+  --galleryBorderW: 1px;
+  --galleryBorderC: #ccc;
+  --selectedBorderW: 5px;
+  --selectedBorderC: #000;
+}
+
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  margin: 16px;
+  background-color: #e6f5e1;
+}
+
+/* ========= 見出し ========= */
+h2{ margin: 0; font-size: 22px; }
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:18px 0 8px;
+}
+#reset-btn{
+  background:#d10000;
+  color:#fff;
+  font-weight:900;
+  border:none;
+  padding:6px 12px;
+  height:32px;
+  cursor:pointer;
+  border-radius:4px;
+  letter-spacing:1px;
+  margin:0;
+}
+
+/* ========= ナビバー ========= */
+.navbar{
+  background-color:#2f4f4f;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 24px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* 🔸タイトル（下線なし・白） */
+.nav-title{
+  font-size:20px;
+  font-weight:bold;
+  color:#fff;
+  text-decoration:none; /* ← 下線削除 */
+}
+
+/* 🔸ナビゲーションリンク */
+.nav-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.nav-links a{
+  color:#fff;
+  text-decoration:underline;
+  font-weight:600;
+  transition:color 0.2s ease;
+}
+.nav-links a:hover{
+  color:#ffeb3b;
+}
+
+/* ========= 画像コンテナ ========= */
+.imgbox{
+  position:relative;
+  width:var(--imgW);
+  height:var(--imgH);
+  margin:0 auto;
+  box-sizing:border-box;
+  overflow:hidden; /* ラベルも含めて枠内で完結 */
+}
+.imgbox--gallery{
+  border: var(--galleryBorderW) solid var(--galleryBorderC);
+}
+.imgbox--selected{
+  border:none;
+  margin-bottom:7px;
+  position:relative;
+  z-index:0;
+}
+
+/* ========= 画像 ========= */
+.gallery-img, .selected-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  box-sizing:border-box;
+  cursor:pointer;
+  transition:filter 0.1s ease, border 0.2s ease;
+  z-index:1;
+}
+
+.gallery-img:active, .selected-img:active{
+  filter:brightness(60%);
+  transition:filter 0.1s ease;
+}
+
+/* ========= Monster（ギャラリー） ========= */
+#gallery{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+  justify-items:center;
+  gap:6px;
+}
+
+/* ========= ラベル ========= */
+/* 上部 value（黄） */
+.value-label{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height:var(--labelH);
+  background:rgba(0,0,0,0.8);
+  color:#ffeb3b;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+  line-height:var(--labelH);
+  user-select:none;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:2;
+}
+/* 下部 sale（緑）— 中央揃え・valueと同フォントサイズ */
+.sale-label{
+  position:absolute;
+  bottom:0; left:0;           /* ← 下に固定（重なり防止） */
+  width:100%;
+  height:var(--labelH);
+  background:rgba(0,0,0,0.75);
+  color:#00c853;              /* 緑 */
+  font-size:12px;             /* value と同じ */
+  font-weight:bold;
+  text-align:center;          /* 中央揃え */
+  line-height:var(--labelH);
+  user-select:none;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:2;
+}
+
+/* ========= Select（選択済み） ========= */
+#selection-area{ display:flex; align-items:flex-end; margin-bottom:12px; }
+#selected-container{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+}
+.selected-wrapper{
+  background:#555;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:6px;
+  min-width:var(--slotMinW);
+  min-height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+  box-sizing:border-box;
+}
+.selected-wrapper:empty::before{
+  content:"";
+  display:block;
+  width:var(--imgW);
+  height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 24px);
+  background:#555;
+}
+.selected-img{ margin-bottom: var(--gapImgButtons); }
+
+/* ========= ボタン ========= */
+.button-container{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:6px;
+  width:100%;
+  justify-items:center;
+}
+.button-container button{
+  width:var(--btnW);
+  height:var(--btnH);
+  border:1px solid #888;
+  cursor:pointer;
+  font-size:var(--btnFS);
+  color:#000 !important;
+  -webkit-text-fill-color:#000 !important;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+button.Default{ background:#fff; }
+button.Gold{ background:#ffffcc; }
+button.Diamond{ background:#ccf5ff; }
+button.Rainbow{ background:#ffcce5; }
+button.Halloween{ background:#ffd1a6; }
+button.Other{ background:#ddd; }
+
+/* ========= Result ========= */
+#stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:16px;
+  justify-content:flex-start;
+  align-items:flex-start;
+}
+
+/* 🔸高さ2/3に削減（120→80px）＋左上寄せ */
+.panel{
+  border:2px solid #999;
+  padding:10px;
+  min-width:260px;
+  background:#fafafa;
+  height:80px; /* ← 高さを削減 */
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-start;
+}
+.panel-title{ font-weight:700; margin-bottom:6px; }
+.total-panel{ min-width:120px; max-width:150px; text-align:left; }
+/* ========= Total欄の文字サイズ調整 ========= */
+.total-panel #total {
+  font-size: 14px;     /* ← 小さくして枠内に収まるように */
+  font-weight: 600;    /* 少し軽めにして見やすく */
+  line-height: 1.3;    /* 行間を広げて3行でも読みやすく */
+  white-space: nowrap; /* 折り返し防止（縦3行構成のため安全） */
+  overflow: hidden;
+  text-align: left;
+}
+
+/* スマホ対応（さらに小さく） */
+@media (max-width: 600px) {
+  .total-panel #total {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+
+.wait-note{ margin-top:4px; font-size:14px; color:#444; line-height:1.2; }
+
+/* ========= 種類確率バッジ ========= */
+#probability span{
+  display:inline-block;
+  padding:2px 6px;
+  margin:2px 4px 2px 0;
+  border-radius:4px;
+  font-weight:600;
+  color:#000;
+  border:1px solid #aaa;
+}
+#probability .Default{ background:#fff; }
+#probability .Gold{ background:#ffffcc; }
+#probability .Diamond{ background:#ccf5ff; }
+#probability .Rainbow{ background:#ffcce5; }
+#probability .Halloween{ background:#ffd1a6; }
+#probability .Other{ background:#ddd; }
+
+.notice{ margin-top:40px; text-align:left; color:#333; font-size:15px; }
+
+/* ========= スマホ最適化 ========= */
+@media (max-width: 600px){
+  :root{
+    --imgW: 60px;
+    --imgH: 66px;
+    --labelH: 12px;
+    --slotMinW: 128px;
+    --btnW: 52px;
+    --btnH: 22px;
+    --btnFS: 8px;
+    --galleryBorderW: 1px;
+    --galleryBorderC: #ccc;
+    --selectedBorderW: 3px;
+    --selectedBorderC: #000;
+  }
+
+  #gallery{
+    grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+    justify-items:center;
+    gap:3px;
+  }
+
+  img.gallery-img, img.selected-img{
+    width: var(--imgW) !important;
+    height: var(--imgH) !important;
+    object-fit: cover !important;
+  }
+
+  #selected-container{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:8px;
+    width:100%;
+    max-width:520px;
+    margin:0 auto;
+    justify-items:center;
+  }
+
+  .selected-wrapper{
+    width: calc((var(--btnW) * 2) + 24px);
+    height: calc(var(--imgH) + var(--gapImgButtons) + (var(--btnH) * 3) + 26px);
+    background:#555;
+    padding:4px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    overflow:hidden;
+    box-sizing:border-box;
+  }
+
+  /* ラベル（スマホでも上下で被らない & 同フォント） */
+  .value-label{
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:8px;
+    z-index:2;
+  }
+  .sale-label{
+    position:absolute;
+    bottom:0; left:0;          /* ← 念のため再指定（上と被らせない） */
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:8px;             /* value と同じ */
+    background:rgba(0,0,0,0.75);
+    color:#00c853;
+    z-index:2;
+  }
+
+  /* 🔸スマホナビバー */
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start; /* ← 左寄せに変更 */
+    padding: 10px 16px;
+  }
+
+  .nav-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+    text-align: left; /* ← 左寄せ */
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    align-items: flex-start; /* ← 左寄せ */
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    padding: 4px 0;
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  /* 🔸シリーズごとの確率（#probability）の折返し修正 */
+  #probability {
+    display: flex;
+    flex-wrap: wrap;            /* 折返し許可 */
+    justify-content: flex-start;
+    gap: 4px;
+    font-size: 12px;            /* 少し小さく */
+    line-height: 1.4;
+    word-break: keep-all;
+    white-space: normal;
+    box-sizing: border-box;
+    padding: 4px;
+    max-height: none;           /* 枠からはみ出さない */
+  }
+
+  .panel {
+    min-height: unset;          /* 高さを可変にして収まりをよく */
+    height: auto;               /* 固定高さ解除 */
+    padding-bottom: 8px;
+  }
+
+  /* スマホ広告用レイアウト */
+.ad-container {
+  display: flex;
+  flex-wrap: wrap;        /* 狭い画面では自動的に折り返す */
+  justify-content: center;
+  gap: 8px;               /* 2つの広告の間に少し余白 */
+}
+
+/* iframeのサイズを小さくして横並び対応しやすくする（任意） */
+.ad-container iframe {
+  width: 160px;
+  height: 160px;
+  transform: scale(0.95);
+  transform-origin: center;
+}
+
+/* 特に狭い画面では強制的に縦並びにする */
+@media (max-width: 400px) {
+  .ad-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* 広告2つを横並びに配置 */
+.ad-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px; /* 2つの広告の間の隙間 */
+  flex-wrap: wrap; /* 画面が狭いときは自動で縦並びに */
+  margin: 16px 0;
+}
+
+.ad-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px; /* 広告サイズに合わせる */
+  height: 200px;
+}
+
+/* スマホ用：狭い画面では縦並び */
+@media (max-width: 420px) {
+  .ad-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+}
+/* PCではスマホ広告を非表示 */
+.ad-sp {
+  display: none;
+}
+.ad-pc {
+  margin: 5px 0; /* 上下に16pxの余白を入れる（横は0） */
+}
+.ad-sp {
+  margin: 5px 0; /* 上下に16pxの余白を入れる（横は0） */
+}
+
+/* スマホではPC広告を非表示、スマホ広告を表示 */
+@media (max-width: 768px) {
+  .ad-pc {
+    display: none;
+  }
+  .ad-sp {
+    display: block;
+    text-align: center;
+  }
+}

@@ -5,27 +5,27 @@ const images = [
   { src: './img/tralalero.png', value: 50 ,sale:10},
   { src: './img/Odin.png', value: 75 ,sale:15},
   { src: './img/Espressona.png', value: 90 ,sale:20},
-  { src: './img/lavaca.png', value: 100 ,sale:25},
+  { src: './img/lavaca.png', value: 100 ,sale:25},//
   { src: './img/ecco.png', value: 110 ,sale:27},
-  { src: './img/losvaguitas.png', value: 115 ,sale:10},
-  { src: './img/bulbito.png', value: 120 ,sale:30},
+  { src: './img/losvaguitas.png', value: 115 ,sale:10},//
+  { src: './img/bulbito.png', value: 120 ,sale:30},//
   { src: './img/chillin.png', value: 130 ,sale:33},
-  { src: './img/brri.png', value: 135 ,sale:10},
+  { src: './img/brri.png', value: 135 ,sale:10},//
   { src: './img/brrestrh.png', value: 145 ,sale:38},
   { src: './img/torrtuginni.png', value: 150 ,sale:40},
-  { src: './img/losbros.png', value: 155 ,sale:10},
-  { src: './img/bambini.png', value: 160 ,sale:10},
-  { src: './img/los.png', value: 170 ,sale:10},
+  { src: './img/losbros.png', value: 155 ,sale:10},//
+  { src: './img/bambini.png', value: 160 ,sale:10},//
+  { src: './img/los.png', value: 170 ,sale:10},//
   { src: './img/alessio.png', value: 180 ,sale:60},
-  { src: './img/karkerkar.png', value: 190 ,sale:70},
-  { src: './img/lostralaleritas.png', value: 200 ,sale:60},
-  { src: './img/lostralaletitos.png', value: 200 ,sale:60},
+  { src: './img/karkerkar.png', value: 190,sale:70 },//
+  { src: './img/lostralaleritas.png', value: 200 ,sale:60},//
+  { src: './img/lostralaletitos.png', value: 200 ,sale:60},//
   { src: './img/iipiccione.png', value: 210 ,sale:75},
   { src: './img/iimastodontico.png', value: 240 ,sale:90},
-  { src: './img/jobjobjob.png', value: 220 ,sale:80},
-  { src: './img/malame.png', value: 250 ,sale:100},
+  { src: './img/jobjobjob.png', value: 220 ,sale:80},//
+  { src: './img/malame.png', value: 250 ,sale:100}, 
   { src: './img/trenostruzzo.png', value: 300 ,sale:170},
-  { src: './img/losorcaleritos.png', value: 400 ,sale:160},
+  { src: './img/losorcaleritos.png', value: 400 ,sale:160},//
   { src: './img/loscouples.png', value: 450 ,sale:150},
   { src: './img/piccione.png', value: 500 ,sale:125},
   { src: './img/pakrah.png', value: 600 ,sale:300},
@@ -42,15 +42,19 @@ const images = [
   { src: './img/chicleteira.png', value: 8000 ,sale:2000},
   { src: './img/pad.png', value: 10000 ,sale:3000},
   { src: './img/dulduldul.png', value: 12000 ,sale:5000},
+  //{ src: './img/house.png', value: 20000 },
+  //{ src: './img/secret2.png', value: 50000 }, // 不明
 ];
 
 // ========== DOM要素 ==========
 const gallery = document.getElementById('gallery');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
-const totalBox = document.getElementById('total');
-const typeProbEl = document.getElementById('probability');
-const monsterProbEl = document.getElementById('monster-probability'); // ← 新パネル
-const resetBtn = document.getElementById('reset-btn');
+// const totalValueEl = document.getElementById('total-value'); // ← 使わなくなるので未使用化
+// const totalWaitEl  = document.getElementById('total-wait');  // ← 使わなくなるので未使用化
+const totalBox      = document.getElementById('total');          // ← 追加：Totalコンテナ全体を書き換える
+const typeProbEl   = document.getElementById('probability');
+const secretProbEl = document.getElementById('secret-probability');
+const resetBtn     = document.getElementById('reset-btn');
 
 // ========== 状態 ==========
 let selectedImages   = [null, null, null, null, null];
@@ -61,6 +65,7 @@ let selectedHasBorder= [false, false, false, false, false];
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
 // ========== ユーティリティ ==========
+/** sale(M) を表示用に "$ x M" / "$ y B" に整形（元データは不変） */
 function formatSaleLabelM(valueM){
   if (valueM >= 1000) {
     const b = valueM / 1000;
@@ -68,17 +73,37 @@ function formatSaleLabelM(valueM){
   }
   return `$ ${trimNum(valueM)} M`;
 }
+/** 小数の末尾.0を削るなど軽く整える */
 function trimNum(n){
   return Number.isInteger(n) ? String(n) : String(+parseFloat(n.toFixed(2)));
 }
 
-// ========== ギャラリー生成 ==========
+// ========== 押下フィードバック（枠ごと縮小 & 暗転） ==========
+function attachPressFeedbackBox(boxEl) {
+  let timer = null;
+  let pressed = false;
+  const add = () => {
+    if (pressed) return;
+    pressed = true;
+    boxEl.classList.add('pressed');
+    timer = setTimeout(() => { timer = null; if (!pressed) boxEl.classList.remove('pressed'); }, 120);
+  };
+  const rm = () => { if (!pressed) return; pressed = false; if (timer) return; boxEl.classList.remove('pressed'); };
+  boxEl.addEventListener('pointerdown', add);
+  boxEl.addEventListener('pointerup', rm);
+  boxEl.addEventListener('pointercancel', rm);
+  boxEl.addEventListener('pointerleave', rm);
+}
+
+// ========== ギャラリー生成（画像は cover で隙間なし） ==========
 images.forEach((imgObj) => {
   const box = document.createElement('div');
   box.className = 'imgbox imgbox--gallery';
+  attachPressFeedbackBox(box);
 
   const img = document.createElement('img');
   img.src = imgObj.src;
+  img.alt = imgObj.src.split('/').pop();
   img.className = 'gallery-img';
   img.style.objectFit = 'cover';
 
@@ -86,6 +111,7 @@ images.forEach((imgObj) => {
   label.className = 'value-label';
   label.textContent = `${imgObj.value} K/s`;
 
+  // 🔽 追加：sale の表示（データは不変、表示だけ単位変換）
   const saleLabel = document.createElement('div');
   saleLabel.className = 'sale-label';
   saleLabel.textContent = formatSaleLabelM(imgObj.sale);
@@ -93,20 +119,22 @@ images.forEach((imgObj) => {
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
     if (emptyIndex === -1) return;
-    selectedImages[emptyIndex]    = { ...imgObj };
+    // 画像選択：即 Default を適用＆枠を出す
+    selectedImages[emptyIndex]    = { ...imgObj }; // ← 元データはそのままコピー
     selectedColors[emptyIndex]    = 'Default';
     selectedHasBorder[emptyIndex] = true;
     renderSelected();
     updateAll();
   });
 
+  // ラベルは上下（value=上 / sale=下）で重ならない
   box.appendChild(img);
   box.appendChild(label);
   box.appendChild(saleLabel);
   gallery.appendChild(box);
 });
 
-// ========== 選択エリア描画 ==========
+// ========== 選択エリア描画（画像→帯→縁=outline） ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
@@ -115,45 +143,75 @@ function renderSelected() {
     if (imgObj) {
       const box = document.createElement('div');
       box.className = 'imgbox imgbox--selected';
+      attachPressFeedbackBox(box);
 
+      // 画像：枠いっぱいに cover（隙間ゼロ）
       const img = document.createElement('img');
       img.src = imgObj.src;
       img.className = 'selected-img';
+      img.style.objectFit = 'cover';
+      img.style.border = '0 solid transparent';
       img.addEventListener('click', () => removeFromSelected(idx));
       box.appendChild(img);
 
+      // 数値帯（上）
       const label = document.createElement('div');
       label.textContent = `${imgObj.value} K/s`;
       label.className = 'value-label';
       box.appendChild(label);
 
+      // 🔽 追加：sale（下）
       const saleLabel = document.createElement('div');
       saleLabel.textContent = formatSaleLabelM(imgObj.sale);
       saleLabel.className = 'sale-label';
       box.appendChild(saleLabel);
 
+      // 縁（outline を .imgbox に当てる＝数字に被らない）
       applyOutline(box, idx);
+
       wrapper.appendChild(box);
+
+      // ボタン（このスロットだけを更新）
+      const btnContainer = document.createElement('div');
+      btnContainer.className = 'button-container';
+      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
+        const btn = document.createElement('button');
+        btn.textContent = type;
+        btn.className = type;
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectedColors[idx]    = type;
+          selectedHasBorder[idx] = true;
+          applyOutline(box, idx); // 即見た目更新
+          updateAll();            // 計算更新
+        });
+        btnContainer.appendChild(btn);
+      });
+      wrapper.appendChild(btnContainer);
     } else {
+      // 未選択プレースホルダ（枠サイズ維持）
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
+      ph.style.outline = 'none';
       ph.style.backgroundColor = '#555';
       wrapper.appendChild(ph);
     }
   });
 }
 
-// ========== 枠色 ==========
+// ========== 枠（outline）適用：画像外側に表示 ==========
 function applyOutline(boxEl, idx){
   const color = getButtonColor(selectedColors[idx] || 'Default');
   const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
   if (selectedHasBorder[idx]) {
     boxEl.style.outline = `${bw}px solid ${color}`;
+    boxEl.style.outlineOffset = '0';
   } else {
     boxEl.style.outline = 'none';
   }
 }
 
+// ========== 画像削除（左詰め） ==========
 function removeFromSelected(index){
   selectedImages.splice(index, 1);
   selectedImages.push(null);
@@ -174,24 +232,27 @@ resetBtn.addEventListener('click', () => {
   updateAll();
 });
 
-// ========== 更新 ==========
+// ========== 総更新 ==========
 function updateAll(){
   updateTotal();
-  updateMonsterProbability();
+  updateSecretProbability();
   updateTypeProbability();
 }
 
-// ========== Total欄 ==========
+// ========== 合計＆Wait（表示を3行に統一） ==========
 function updateTotal() {
   const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
   const sumSaleM = selectedImages.reduce((acc, img) => acc + Number(img?.sale  || 0), 0);
 
+  // Wait文字列（括弧なし）
   let waitStr = "1h0m";
   if (sumValue > 5000) waitStr = "2h0m";
   else if (sumValue > 750) waitStr = "1h30m";
 
-  const sumSaleLabel = formatSaleLabelM(sumSaleM).replace('$ ', '');
+  // 合計saleは単位整形（M→B）して表示
+  const sumSaleLabel = formatSaleLabelM(sumSaleM).replace('$ ', ''); // 「Total $：」と二重$回避
 
+  // 指定フォーマットで3行表示（value, sale, wait）
   totalBox.innerHTML = [
     `Total K/s：${sumValue}`,
     `Total $　：${sumSaleLabel}`,
@@ -199,35 +260,21 @@ function updateTotal() {
   ].map(t => `<div>${t}</div>`).join('');
 }
 
-// ========== モンスターごとの確率（仮表示） ==========
-function updateMonsterProbability() {
-  monsterProbEl.innerHTML = ''; // 一旦クリア
-
-  const container = document.createElement('div');
-  container.className = 'monster-prob-container';
-
-  // 仮：同じ画像5つ & 各20%
-  for (let i = 0; i < 5; i++) {
-    const box = document.createElement('div');
-    box.className = 'monster-prob-box';
-
-    const img = document.createElement('img');
-    img.src = './img/cocofanto.png';
-    img.alt = 'cocofanto';
-    box.appendChild(img);
-
-    const probText = document.createElement('div');
-    probText.textContent = '20%';
-    probText.className = 'monster-prob-text';
-    box.appendChild(probText);
-
-    container.appendChild(box);
+// ========== Secret確率 ==========
+function updateSecretProbability(){
+  const sum = selectedImages.reduce((acc, img) => acc + (img ? img.value : 0), 0);
+  if (sum >= 1001) {
+    secretProbEl.innerHTML = `<strong>Secret：100%</strong>`;
+  } else if (sum >= 751) {
+    secretProbEl.innerHTML = `<strong>Secret：75%　BrainrotGod：25%</strong>`;
+  } else if (sum >= 501) {
+    secretProbEl.innerHTML = `<strong>BrainrotGod：60%　Secret：40%</strong>`;
+  } else {
+    secretProbEl.innerHTML = `<strong>Secret：15%以下</strong>`;
   }
-
-  monsterProbEl.appendChild(container);
 }
 
-// ========== 種類確率 ==========
+// ========== 種類確率（スロット毎の色だけ加算） ==========
 function updateTypeProbability(){
   const probs = { ...baseProb };
   const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
@@ -258,6 +305,7 @@ function updateTypeProbability(){
     .join('');
 }
 
+// ========== 枠色 ==========
 function getButtonColor(type){
   switch(type){
     case 'Default': return 'black';
@@ -270,5 +318,6 @@ function getButtonColor(type){
   }
 }
 
+// 初期表示
 renderSelected();
 updateAll();
