@@ -549,4 +549,59 @@ button.Other{ background:#ddd; }
     font-size: 11px;
   }
 }
+/* ===== モンスターごとの確率欄：隙間なしで全面表示 ===== */
+.monster-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80px;
+  height: 110px;
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden; /* ← 枠外にはみ出させない */
+}
+
+.monster-box img {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #000;
+  border-radius: 4px;
+  background: #fff;
+  object-fit: cover; /* ← contain→cover に変更して隙間をゼロに */
+  display: block;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 確率テキスト */
+.monster-prob-text {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: #222;
+  line-height: 1.2;
+}
+
+/* スマホ用 */
+@media (max-width: 600px) {
+  .monster-box {
+    width: 18vw;
+    height: 18vw;        /* 正方形を確保し、余白を防ぐ */
+  }
+
+  .monster-box img {
+    width: 100%;
+    height: 100%;
+    border-width: 1.5px;
+    object-fit: cover;    /* スマホでも全面表示 */
+  }
+
+  .monster-prob-text {
+    font-size: 11px;
+  }
+}
 
