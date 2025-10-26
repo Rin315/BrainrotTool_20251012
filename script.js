@@ -333,7 +333,11 @@ function updateMonsterProbability() {
 
   // 現在の合計K/sを取得
   const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
-  if (sumValue === 0) return;
+
+  // 🔸 251以下なら何も表示しない
+  if (sumValue <= 250) {
+    return;
+  }
 
   const monsters = getMonsterProbabilities(sumValue);
 
@@ -354,6 +358,7 @@ function updateMonsterProbability() {
     container.appendChild(box);
   });
 }
+
 
 
 
