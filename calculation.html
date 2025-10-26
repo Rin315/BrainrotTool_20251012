@@ -128,6 +128,21 @@
 </p>
 
 <style>
+  /* ===== レイアウト全体 ===== */
+  .monster-table-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 16px;
+  }
+
+  .monster-column {
+    flex: 1 1 48%;
+    min-width: 320px;
+  }
+
+  /* ===== テーブル共通 ===== */
   table.monster-table {
     border-collapse: collapse;
     width: 100%;
@@ -135,7 +150,6 @@
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin-top: 16px;
   }
 
   th, td {
@@ -155,7 +169,7 @@
     text-align: left;
   }
 
-  /* モンスター行（左寄せ） */
+  /* ===== モンスター行（左寄せ） ===== */
   .monster-row {
     display: flex;
     justify-content: flex-start;
@@ -164,7 +178,6 @@
     flex-wrap: wrap;
   }
 
-  /* モンスター＋％表示 */
   .monster-set {
     display: flex;
     flex-direction: column;
@@ -187,161 +200,174 @@
     color: #222;
   }
 
-  /* スマホ時：1列 */
+  /* ===== スマホ時：1列 ===== */
   @media (max-width: 768px) {
-    .monster-row {
-      justify-content: flex-start;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 8px;
+    .monster-table-wrapper {
+      flex-direction: column;
     }
     .monster-set img {
       width: 12vw;
       min-width: 40px;
     }
+    .monster-row {
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
   }
 </style>
 
-<table class="monster-table">
-  <tr><th>合計K/s範囲</th><th>出現モンスター</th></tr>
+<div class="monster-table-wrapper">
+  <!-- ▼ 左列 -->
+  <div class="monster-column">
+    <table class="monster-table">
+      <tr><th>合計K/s範囲</th><th>出現モンスター</th></tr>
+      <tr><td>〜500</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/bambini.png"><span>40%</span></div>
+          <div class="monster-set"><img src="img/alessio.png"><span>25%</span></div>
+          <div class="monster-set"><img src="img/karkerkar.png"><span>20%</span></div>
+          <div class="monster-set"><img src="img/piccione.png"><span>15%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>〜500</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/bambini.png"><span>40%</span></div>
-      <div class="monster-set"><img src="img/alessio.png"><span>25%</span></div>
-      <div class="monster-set"><img src="img/karkerkar.png"><span>20%</span></div>
-      <div class="monster-set"><img src="img/piccione.png"><span>15%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>501〜750</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/alessio.png"><span>25%</span></div>
+          <div class="monster-set"><img src="img/karkerkar.png"><span>25%</span></div>
+          <div class="monster-set"><img src="img/piccione.png"><span>35%</span></div>
+          <div class="monster-set"><img src="img/ketchuru.png"><span>10%</span></div>
+          <div class="monster-set"><img src="img/pothotspot.png"><span>5%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>501〜750</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/alessio.png"><span>25%</span></div>
-      <div class="monster-set"><img src="img/karkerkar.png"><span>25%</span></div>
-      <div class="monster-set"><img src="img/piccione.png"><span>35%</span></div>
-      <div class="monster-set"><img src="img/ketchuru.png"><span>10%</span></div>
-      <div class="monster-set"><img src="img/pothotspot.png"><span>5%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>751〜1000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/alessio.png"><span>15%</span></div>
+          <div class="monster-set"><img src="img/karkerkar.png"><span>10%</span></div>
+          <div class="monster-set"><img src="img/piccione.png"><span>55%</span></div>
+          <div class="monster-set"><img src="img/ketchuru.png"><span>15%</span></div>
+          <div class="monster-set"><img src="img/pothotspot.png"><span>5%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>751〜1000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/alessio.png"><span>15%</span></div>
-      <div class="monster-set"><img src="img/karkerkar.png"><span>10%</span></div>
-      <div class="monster-set"><img src="img/piccione.png"><span>55%</span></div>
-      <div class="monster-set"><img src="img/ketchuru.png"><span>15%</span></div>
-      <div class="monster-set"><img src="img/pothotspot.png"><span>5%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>1001〜1500</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/piccione.png"><span>50%</span></div>
+          <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
+          <div class="monster-set"><img src="img/pothotspot.png"><span>20%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>1001〜1500</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/piccione.png"><span>50%</span></div>
-      <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
-      <div class="monster-set"><img src="img/pothotspot.png"><span>20%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>1501〜2000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/piccione.png"><span>30%</span></div>
+          <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
+          <div class="monster-set"><img src="img/pothotspot.png"><span>35%</span></div>
+          <div class="monster-set"><img src="img/iisacro.png"><span>5%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>1501〜2000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/piccione.png"><span>30%</span></div>
-      <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
-      <div class="monster-set"><img src="img/pothotspot.png"><span>35%</span></div>
-      <div class="monster-set"><img src="img/iisacro.png"><span>5%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>2001〜3000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
+          <div class="monster-set"><img src="img/pothotspot.png"><span>55%</span></div>
+          <div class="monster-set"><img src="img/iisacro.png"><span>15%</span></div>
+        </div>
+      </td></tr>
+    </table>
+  </div>
 
-  <tr><td>2001〜3000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/ketchuru.png"><span>30%</span></div>
-      <div class="monster-set"><img src="img/pothotspot.png"><span>55%</span></div>
-      <div class="monster-set"><img src="img/iisacro.png"><span>15%</span></div>
-    </div>
-  </td></tr>
+  <!-- ▼ 右列 -->
+  <div class="monster-column">
+    <table class="monster-table">
+      <tr><th>合計K/s範囲</th><th>出現モンスター</th></tr>
+      <tr><td>3001〜4000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/ketchuru.png"><span>10%</span></div>
+          <div class="monster-set"><img src="img/pothotspot.png"><span>60%</span></div>
+          <div class="monster-set"><img src="img/iisacro.png"><span>25%</span></div>
+          <div class="monster-set"><img src="img/chicleteira.png"><span>5%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>3001〜4000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/ketchuru.png"><span>10%</span></div>
-      <div class="monster-set"><img src="img/pothotspot.png"><span>60%</span></div>
-      <div class="monster-set"><img src="img/iisacro.png"><span>25%</span></div>
-      <div class="monster-set"><img src="img/chicleteira.png"><span>5%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>4001〜5000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/pothotspot.png"><span>55%</span></div>
+          <div class="monster-set"><img src="img/iisacro.png"><span>35%</span></div>
+          <div class="monster-set"><img src="img/chicleteira.png"><span>10%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>4001〜5000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/pothotspot.png"><span>55%</span></div>
-      <div class="monster-set"><img src="img/iisacro.png"><span>35%</span></div>
-      <div class="monster-set"><img src="img/chicleteira.png"><span>10%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>5001〜6500</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/pothotspot.png"><span>35%</span></div>
+          <div class="monster-set"><img src="img/iisacro.png"><span>40%</span></div>
+          <div class="monster-set"><img src="img/chicleteira.png"><span>25%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>5001〜6500</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/pothotspot.png"><span>35%</span></div>
-      <div class="monster-set"><img src="img/iisacro.png"><span>40%</span></div>
-      <div class="monster-set"><img src="img/chicleteira.png"><span>25%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>6501〜8000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/pothotspot.png"><span>15%</span></div>
+          <div class="monster-set"><img src="img/iisacro.png"><span>50%</span></div>
+          <div class="monster-set"><img src="img/chicleteira.png"><span>30%</span></div>
+          <div class="monster-set"><img src="img/dulduldul.png"><span>5%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>6501〜8000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/pothotspot.png"><span>15%</span></div>
-      <div class="monster-set"><img src="img/iisacro.png"><span>50%</span></div>
-      <div class="monster-set"><img src="img/chicleteira.png"><span>30%</span></div>
-      <div class="monster-set"><img src="img/dulduldul.png"><span>5%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>8001〜10000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/iisacro.png"><span>45%</span></div>
+          <div class="monster-set"><img src="img/chicleteira.png"><span>45%</span></div>
+          <div class="monster-set"><img src="img/dulduldul.png"><span>10%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>8001〜10000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/iisacro.png"><span>45%</span></div>
-      <div class="monster-set"><img src="img/chicleteira.png"><span>45%</span></div>
-      <div class="monster-set"><img src="img/dulduldul.png"><span>10%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>10001〜12000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/iisacro.png"><span>30%</span></div>
+          <div class="monster-set"><img src="img/chicleteira.png"><span>50%</span></div>
+          <div class="monster-set"><img src="img/dulduldul.png"><span>20%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>10001〜12000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/iisacro.png"><span>30%</span></div>
-      <div class="monster-set"><img src="img/chicleteira.png"><span>50%</span></div>
-      <div class="monster-set"><img src="img/dulduldul.png"><span>20%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>12001〜16000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/iisacro.png"><span>20%</span></div>
+          <div class="monster-set"><img src="img/chicleteira.png"><span>45%</span></div>
+          <div class="monster-set"><img src="img/dulduldul.png"><span>30%</span></div>
+          <div class="monster-set"><img src="img/chinpanking.png"><span>5%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>12001〜16000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/iisacro.png"><span>20%</span></div>
-      <div class="monster-set"><img src="img/chicleteira.png"><span>45%</span></div>
-      <div class="monster-set"><img src="img/dulduldul.png"><span>30%</span></div>
-      <div class="monster-set"><img src="img/chinpanking.png"><span>5%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>16001〜20000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/chicleteira.png"><span>45%</span></div>
+          <div class="monster-set"><img src="img/dulduldul.png"><span>45%</span></div>
+          <div class="monster-set"><img src="img/chinpanking.png"><span>10%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>16001〜20000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/chicleteira.png"><span>45%</span></div>
-      <div class="monster-set"><img src="img/dulduldul.png"><span>45%</span></div>
-      <div class="monster-set"><img src="img/chinpanking.png"><span>10%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>20001〜25000</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/chicleteira.png"><span>35%</span></div>
+          <div class="monster-set"><img src="img/dulduldul.png"><span>50%</span></div>
+          <div class="monster-set"><img src="img/chinpanking.png"><span>15%</span></div>
+        </div>
+      </td></tr>
 
-  <tr><td>20001〜25000</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/chicleteira.png"><span>35%</span></div>
-      <div class="monster-set"><img src="img/dulduldul.png"><span>50%</span></div>
-      <div class="monster-set"><img src="img/chinpanking.png"><span>15%</span></div>
-    </div>
-  </td></tr>
+      <tr><td>25001〜</td><td>
+        <div class="monster-row">
+          <div class="monster-set"><img src="img/chicleteira.png"><span>25%</span></div>
+          <div class="monster-set"><img src="img/dulduldul.png"><span>55%</span></div>
+          <div class="monster-set"><img src="img/chinpanking.png"><span>20%</span></div>
+        </div>
+      </td></tr>
+    </table>
+  </div>
+</div>
 
-  <tr><td>25001〜</td><td>
-    <div class="monster-row">
-      <div class="monster-set"><img src="img/chicleteira.png"><span>25%</span></div>
-      <div class="monster-set"><img src="img/dulduldul.png"><span>55%</span></div>
-      <div class="monster-set"><img src="img/chinpanking.png"><span>20%</span></div>
-    </div>
-  </td></tr>
-</table>
 
 
 
