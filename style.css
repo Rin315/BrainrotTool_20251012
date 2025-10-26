@@ -183,12 +183,15 @@ h2{ margin: 0; font-size: 22px; }
 .selected-img{ margin-bottom: var(--gapImgButtons); }
 
 /* ========= ボタン ========= */
-.button-container{
-  display:grid;
+.button-container {
+  display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap:6px;
-  width:100%;
-  justify-items:center;
+  gap: 6px;
+  width: 100%;
+  justify-items: center;
+  margin-top: 6px;     /* ← ボタンが画像に重ならないよう余白を追加 */
+  overflow: visible;   /* ← 非表示防止 */
+  z-index: 5;          /* ← 他要素より上に */
 }
 .button-container button{
   width:var(--btnW);
@@ -464,83 +467,71 @@ button.Other{ background:#ddd; }
 }
 /* ======= 既存すべてそのまま ======= */
 
-/* ========= モンスターごとの確率欄（完全調整版） ========= */
+/* ========= モンスターごとの確率欄（最終調整） ========= */
 #monster-probability {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
   padding: 8px 0;
   width: 100%;
   box-sizing: border-box;
-  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
-/* モンスター枠 */
 .monster-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 90px;       /* ← 枠を広げる */
-  height: auto;      /* ← 高さを可変に */
+  width: 80px;
+  height: auto;
   background: transparent;
   border: none;
-  margin-top: 0;
 }
 
-/* モンスター画像（比率維持・隙間なし） */
 .monster-box img {
-  width: 80px;
-  height: auto;                  /* ← 比率維持で自動高さ */
-  aspect-ratio: auto;            /* ← 縦横比を保持 */
-  border: 2px solid #000;        /* ← 黒い枠線 */
+  width: 70px;
+  height: auto;
+  border: 2px solid #000;
   border-radius: 4px;
   background: #fff;
+  object-fit: cover;
   display: block;
   box-sizing: border-box;
-  object-fit: cover;             /* ← 枠いっぱいに詰める */
   margin: 0;
   padding: 0;
 }
 
-/* 確率テキスト */
 .monster-prob-text {
-  margin-top: 4px;
-  font-size: 14px;
+  margin-top: 3px;
+  font-size: 13px;
   font-weight: 600;
   text-align: center;
   color: #222;
   line-height: 1.2;
 }
 
-/* ===== PC専用：モンスター欄だけ高さ制限を解除 ===== */
-#monster-probability .panel,
-.panel:has(#monster-probability) {
-  height: auto !important;
-  min-height: unset !important;
-}
-
-/* ===== スマホ用調整 ===== */
+/* ===== スマホ用：1列に収まるよう自動縮小 ===== */
 @media (max-width: 600px) {
   #monster-probability {
-    gap: 8px;
-    padding: 4px 0;
-    flex-wrap: wrap; /* 狭いときは折り返し */
+    gap: 4px;
+    justify-content: space-around; /* ← 均等配置で1列に収める */
+    flex-wrap: nowrap;             /* ← 折り返し防止 */
   }
 
   .monster-box {
-    width: 70px;
+    width: 18vw;                   /* ← 画面幅に応じて可変（5体収まる） */
   }
 
   .monster-box img {
-    width: 60px;
+    width: 100%;
     height: auto;
     border-width: 1.5px;
   }
 
   .monster-prob-text {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 
