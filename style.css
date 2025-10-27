@@ -261,7 +261,7 @@ button.Other{ background:#ddd; }
 /* Totalパネル（少し狭い） */
 .total-panel{
   min-width:120px;
-  max-width:150px;
+  max-width:200px;
   text-align:left;
 }
 .total-panel #total{
@@ -272,7 +272,7 @@ button.Other{ background:#ddd; }
   overflow:hidden;
   text-align:left;
 }
-@media (max-width: 600px){
+@media (max-width: 650px){
   .total-panel #total{
     font-size:12px;
     line-height:1.4;
