@@ -340,7 +340,7 @@ function updateTotal() {
     nextLineText = `確率が変わるまであと${diffToNext} K/s`;
   } else {
     // diffToNextが0以下の場合も一応ハンドリング
-    nextLineText = "まもなく次の確率帯です";
+    nextLineText = "確率が変わるまであと 1 K/s";
   }
 
   totalBox.innerHTML = [
