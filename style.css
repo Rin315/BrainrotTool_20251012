@@ -261,7 +261,7 @@ button.Other{ background:#ddd; }
 /* Totalパネル（少し狭い） */
 .total-panel{
   min-width:120px;
-  max-width:200px;
+  max-width:220px;
   text-align:left;
 }
 .total-panel #total{

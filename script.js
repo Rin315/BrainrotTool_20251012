@@ -346,7 +346,7 @@ function updateTotal() {
   totalBox.innerHTML = [
     `Total K/s：${sumValue}`,
     `Total $　：${sumSaleLabel}`,
-    `Wait　　：${waitStr}`,
+    //`Wait　　：${waitStr}`,
     nextLineText
   ].map(t => `<div>${t}</div>`).join('');
 }
