@@ -59,7 +59,7 @@ let selectedColors   = ['Default','Default','Default','Default','Default'];
 let selectedHasBorder= [false, false, false, false, false];
 
 // ========== 基本確率 ==========
-const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
+const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Halloween: 0, Other: 0 };
 
 // ========== モンスターごとの確率ルール（グローバル化） ==========
 const probabilityRules = [
@@ -408,7 +408,7 @@ function updateTypeProbability(){
       if (colorSums[c] > 0) probs[c] += bonus * (colorSums[c] / totalColorSum);
     }
   } else {
-    probs.Default = 84; probs.Gold = 10; probs.Diamond = 5;
+    probs.Default = 84.5; probs.Gold = 10; probs.Diamond = 5; probs.Rainbow = 0.5;
   }
 
   const items = Object.keys(probs)
