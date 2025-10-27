@@ -412,7 +412,7 @@ function updateTypeProbability(){
   }
 
   const items = Object.keys(probs)
-    .map(k => ({ name: k, prob: Math.round(probs[k] || 0) }))
+    .map(k => ({ name: k, prob: (probs[k] || 0).toFixed(1) }))
     .sort((a,b) => b.prob - a.prob);
 
   typeProbEl.innerHTML = items
