@@ -45,7 +45,6 @@ const images = [
   { src: './img/dulduldul.png', value: 12000 ,sale:5000},
   { src: './img/chinpanking.png', value: 25000 ,sale:10000},
 ];
-
 // ========== DOM要素 ==========
 const gallery = document.getElementById('gallery');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
@@ -62,6 +61,99 @@ let selectedHasBorder= [false, false, false, false, false];
 // ========== 基本確率 ==========
 const baseProb = { Default: 9, Gold: 10, Diamond: 5, Rainbow: 0, Halloween: 0, Other: 0 };
 
+// ========== モンスターごとの確率ルール（グローバル化） ==========
+const probabilityRules = [
+  { max: 500, list: [
+    {img:'bambini.png', p:40},
+    {img:'alessio.png', p:25},
+    {img:'karkerkar.png', p:20},
+    {img:'piccione.png', p:15},
+  ]},
+  { max: 750, list: [
+    {img:'alessio.png', p:25},
+    {img:'karkerkar.png', p:25},
+    {img:'piccione.png', p:35},
+    {img:'ketchuru.png', p:10},
+    {img:'pothotspot.png', p:5},
+  ]},
+  { max: 1000, list: [
+    {img:'alessio.png', p:15},
+    {img:'karkerkar.png', p:10},
+    {img:'piccione.png', p:55},
+    {img:'ketchuru.png', p:15},
+    {img:'pothotspot.png', p:5},
+  ]},
+  { max: 1500, list: [
+    {img:'piccione.png', p:50},
+    {img:'ketchuru.png', p:30},
+    {img:'pothotspot.png', p:20},
+  ]},
+  { max: 2000, list: [
+    {img:'piccione.png', p:30},
+    {img:'ketchuru.png', p:30},
+    {img:'pothotspot.png', p:35},
+    {img:'iisacro.png', p:5},
+  ]},
+  { max: 3000, list: [
+    {img:'ketchuru.png', p:30},
+    {img:'pothotspot.png', p:55},
+    {img:'iisacro.png', p:15},
+  ]},
+  { max: 4000, list: [
+    {img:'ketchuru.png', p:10},
+    {img:'pothotspot.png', p:60},
+    {img:'iisacro.png', p:25},
+    {img:'chicleteira.png', p:5},
+  ]},
+  { max: 5000, list: [
+    {img:'pothotspot.png', p:55},
+    {img:'iisacro.png', p:35},
+    {img:'chicleteira.png', p:10},
+  ]},
+  { max: 6500, list: [
+    {img:'pothotspot.png', p:35},
+    {img:'iisacro.png', p:40},
+    {img:'chicleteira.png', p:25},
+  ]},
+  { max: 8000, list: [
+    {img:'pothotspot.png', p:15},
+    {img:'iisacro.png', p:50},
+    {img:'chicleteira.png', p:30},
+    {img:'dulduldul.png', p:5},
+  ]},
+  { max: 10000, list: [
+    {img:'iisacro.png', p:45},
+    {img:'chicleteira.png', p:45},
+    {img:'dulduldul.png', p:10},
+  ]},
+  { max: 12000, list: [
+    {img:'iisacro.png', p:30},
+    {img:'chicleteira.png', p:50},
+    {img:'dulduldul.png', p:20},
+  ]},
+  { max: 16000, list: [
+    {img:'iisacro.png', p:20},
+    {img:'chicleteira.png', p:45},
+    {img:'dulduldul.png', p:30},
+    {img:'chinpanking.png', p:5},
+  ]},
+  { max: 20000, list: [
+    {img:'chicleteira.png', p:45},
+    {img:'dulduldul.png', p:45},
+    {img:'chinpanking.png', p:10},
+  ]},
+  { max: 25000, list: [
+    {img:'chicleteira.png', p:35},
+    {img:'dulduldul.png', p:50},
+    {img:'chinpanking.png', p:15},
+  ]},
+  { max: Infinity, list: [
+    {img:'chicleteira.png', p:25},
+    {img:'dulduldul.png', p:55},
+    {img:'chinpanking.png', p:20},
+  ]},
+];
+
 // ========== ユーティリティ ==========
 function formatSaleLabelM(valueM){
   if (valueM >= 1000) {
@@ -72,6 +164,27 @@ function formatSaleLabelM(valueM){
 }
 function trimNum(n){
   return Number.isInteger(n) ? String(n) : String(+parseFloat(n.toFixed(2)));
+}
+
+// ========== 次のしきい値までの差分 ==========
+function getNextThresholdDiff(sumValue) {
+  // 今いる帯を探す
+  for (let i = 0; i < probabilityRules.length; i++) {
+    const rule = probabilityRules[i];
+    if (sumValue <= rule.max) {
+      // 最終帯(=Infinity)ならもう上はない
+      if (rule.max === Infinity) {
+        return null;
+      }
+      // その帯の上限まであとどれくらいか
+      const diff = rule.max - sumValue;
+      // diffは0以上になるはず。0なら「次の帯に入るまで0K/s」だが、
+      // 実質しきい値ちょうどの時は次の帯に入った扱いになるので0は出してOK
+      return diff;
+    }
+  }
+  // ここには基本こないはず
+  return null;
 }
 
 // ========== ギャラリー生成 ==========
@@ -109,7 +222,6 @@ images.forEach((imgObj) => {
 });
 
 // ========== 選択エリア描画 ==========
-// ========== 選択エリア描画 ==========
 function renderSelected() {
   selectedWrappers.forEach((wrapper, idx) => {
     wrapper.innerHTML = '';
@@ -139,7 +251,7 @@ function renderSelected() {
       applyOutline(box, idx);
       wrapper.appendChild(box);
 
-      // ===== 🔽 ボタンコンテナ生成（抜けていた部分） =====
+      // ボタンコンテナ
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
 
@@ -160,7 +272,6 @@ function renderSelected() {
       });
 
       wrapper.appendChild(btnContainer);
-      // ===== 🔼 ここまでボタン生成 =====
     } else {
       // 未選択時のプレースホルダ
       const ph = document.createElement('div');
@@ -170,7 +281,6 @@ function renderSelected() {
     }
   });
 }
-
 
 // ========== 枠色 ==========
 function applyOutline(boxEl, idx){
@@ -206,7 +316,7 @@ resetBtn.addEventListener('click', () => {
 // ========== 更新 ==========
 function updateAll(){
   updateTotal();
-  updateMonsterProbability(); // ← Secret確率の代わりにこれを呼ぶ
+  updateMonsterProbability();
   updateTypeProbability();
 }
 
@@ -221,108 +331,29 @@ function updateTotal() {
 
   const sumSaleLabel = formatSaleLabelM(sumSaleM).replace('$ ', '');
 
+  // 次のしきい値まであと何K/sか
+  const diffToNext = getNextThresholdDiff(sumValue);
+  let nextLineText;
+  if (diffToNext === null) {
+    nextLineText = "確率は現在が最高帯です";
+  } else if (diffToNext > 0) {
+    nextLineText = `確率が変わるまであと${diffToNext} K/s`;
+  } else {
+    // diffToNextが0以下の場合も一応ハンドリング
+    nextLineText = "まもなく次の確率帯です";
+  }
+
   totalBox.innerHTML = [
     `Total K/s：${sumValue}`,
     `Total $　：${sumSaleLabel}`,
-    `Wait　　：${waitStr}`
+    `Wait　　：${waitStr}`,
+    nextLineText
   ].map(t => `<div>${t}</div>`).join('');
 }
 
-// ========== モンスターごとの確率ルール ==========
+// ========== モンスターごとの確率ルール取得 ==========
 function getMonsterProbabilities(sumValue) {
-  const rules = [
-    { max: 500, list: [
-      {img:'bambini.png', p:40},
-      {img:'alessio.png', p:25},
-      {img:'karkerkar.png', p:20},
-      {img:'piccione.png', p:15},
-    ]},
-    { max: 750, list: [
-      {img:'alessio.png', p:25},
-      {img:'karkerkar.png', p:25},
-      {img:'piccione.png', p:35},
-      {img:'ketchuru.png', p:10},
-      {img:'pothotspot.png', p:5},
-    ]},
-    { max: 1000, list: [
-      {img:'alessio.png', p:15},
-      {img:'karkerkar.png', p:10},
-      {img:'piccione.png', p:55},
-      {img:'ketchuru.png', p:15},
-      {img:'pothotspot.png', p:5},
-    ]},
-    { max: 1500, list: [
-      {img:'piccione.png', p:50},
-      {img:'ketchuru.png', p:30},
-      {img:'pothotspot.png', p:20},
-    ]},
-    { max: 2000, list: [
-      {img:'piccione.png', p:30},
-      {img:'ketchuru.png', p:30},
-      {img:'pothotspot.png', p:35},
-      {img:'iisacro.png', p:5},
-    ]},
-    { max: 3000, list: [
-      {img:'ketchuru.png', p:30},
-      {img:'pothotspot.png', p:55},
-      {img:'iisacro.png', p:15},
-    ]},
-    { max: 4000, list: [
-      {img:'ketchuru.png', p:10},
-      {img:'pothotspot.png', p:60},
-      {img:'iisacro.png', p:25},
-      {img:'chicleteira.png', p:5},
-    ]},
-    { max: 5000, list: [
-      {img:'pothotspot.png', p:55},
-      {img:'iisacro.png', p:35},
-      {img:'chicleteira.png', p:10},
-    ]},
-    { max: 6500, list: [
-      {img:'pothotspot.png', p:35},
-      {img:'iisacro.png', p:40},
-      {img:'chicleteira.png', p:25},
-    ]},
-    { max: 8000, list: [
-      {img:'pothotspot.png', p:15},
-      {img:'iisacro.png', p:50},
-      {img:'chicleteira.png', p:30},
-      {img:'dulduldul.png', p:5},
-    ]},
-    { max: 10000, list: [
-      {img:'iisacro.png', p:45},
-      {img:'chicleteira.png', p:45},
-      {img:'dulduldul.png', p:10},
-    ]},
-    { max: 12000, list: [
-      {img:'iisacro.png', p:30},
-      {img:'chicleteira.png', p:50},
-      {img:'dulduldul.png', p:20},
-    ]},
-    { max: 16000, list: [
-      {img:'iisacro.png', p:20},
-      {img:'chicleteira.png', p:45},
-      {img:'dulduldul.png', p:30},
-      {img:'chinpanking.png', p:5},
-    ]},
-    { max: 20000, list: [
-      {img:'chicleteira.png', p:45},
-      {img:'dulduldul.png', p:45},
-      {img:'chinpanking.png', p:10},
-    ]},
-    { max: 25000, list: [
-      {img:'chicleteira.png', p:35},
-      {img:'dulduldul.png', p:50},
-      {img:'chinpanking.png', p:15},
-    ]},
-    { max: Infinity, list: [
-      {img:'chicleteira.png', p:25},
-      {img:'dulduldul.png', p:55},
-      {img:'chinpanking.png', p:20},
-    ]},
-  ];
-
-  return rules.find(r => sumValue <= r.max).list;
+  return probabilityRules.find(r => sumValue <= r.max).list;
 }
 
 // ========== モンスターごとの確率表示（Total K/sに応じて動的更新） ==========
@@ -331,13 +362,12 @@ function updateMonsterProbability() {
   if (!container) return;
   container.innerHTML = '';
 
-  // 現在の合計K/sを取得
+  // 合計K/s
   const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
 
-  // 🔸 251以下なら何も表示しない
-  if (sumValue <= 250) {
-    return;
-  }
+  // 251以下なら表示しない（要件）
+  if (sumValue <= 251) return;
+  // 0扱いなら何も出さない、もこれに含まれる
 
   const monsters = getMonsterProbabilities(sumValue);
 
@@ -358,9 +388,6 @@ function updateMonsterProbability() {
     container.appendChild(box);
   });
 }
-
-
-
 
 // ========== 種類確率 ==========
 function updateTypeProbability(){
