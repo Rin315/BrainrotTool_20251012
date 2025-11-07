@@ -2,23 +2,26 @@
 <html lang="ja">
 <head>
   <!-- GoogleAds用 -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3610954254026120"
-     crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3610954254026120" crossorigin="anonymous"></script>
+
   <!-- GoogleSearchConsole用 -->
   <meta name="google-site-verification" content="-ZNws2omcqRJFpwGFICeGzZEumuPMz7lcLG1UfigKSQ" />
   <meta name="description" content="Brainrot（ブレインロット）合成マシン確率計算ツールは、モンスターの組み合わせによるレアリティの確率や合計値を自動で計算できる非公式ツールです。">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>BrainrotMachine計算ツール - ツール</title>
+
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="/img/trarafabicon.png" type="image/png" sizes="32x32">
   <link rel="icon" href="/img/trarafabicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/img/trarafabicon.png">
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4LQTYSLN0"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-Z4LQTYSLN0');
   </script>
@@ -30,20 +33,31 @@
   <script>
     fetch("navbar.html")
       .then(res => res.text())
-      .then(html => document.getElementById("navbar").innerHTML = html);
+      .then(html => { document.getElementById("navbar").innerHTML = html; });
   </script>
 
-  <!-- ✅ 広告群（変更なし） -->
+  <!-- ✅ 広告群（ページ最上部・PC/SP） -->
   <div class="ad-pc">
     <div id="im-8c46e961e3824a7696004187218a7684">
       <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-      <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588049,asid:1914828,type:"banner",display:"inline",elementid:"im-8c46e961e3824a7696004187218a7684"})</script>
-     </div>
+      <script>
+        (window.adsbyimobile = window.adsbyimobile || []).push({
+          pid: 84154, mid: 588049, asid: 1914828, type: "banner", display: "inline",
+          elementid: "im-8c46e961e3824a7696004187218a7684"
+        });
+      </script>
+    </div>
   </div>
+
   <div class="ad-sp">
     <div id="im-45b6116fec5a4e5ca3e1e07a0a4df4fc">
       <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-      <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588050,asid:1914832,type:"banner",display:"inline",elementid:"im-45b6116fec5a4e5ca3e1e07a0a4df4fc"})</script>
+      <script>
+        (window.adsbyimobile = window.adsbyimobile || []).push({
+          pid: 84154, mid: 588050, asid: 1914832, type: "banner", display: "inline",
+          elementid: "im-45b6116fec5a4e5ca3e1e07a0a4df4fc"
+        });
+      </script>
     </div>
   </div>
 
@@ -53,19 +67,25 @@
   </div>
   <div id="gallery"></div>
 
-<!-- PC広告2 ここまで -->
-<div class="ad-pc"> 
-  <div id="im-662f0fe16cc643cea070bb082690e08e">
-  <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-  <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588049,asid:1915694,type:"banner",display:"inline",elementid:"im-662f0fe16cc643cea070bb082690e08e"})</script>
+  <!-- PC広告2 -->
+  <div class="ad-pc">
+    <div id="im-662f0fe16cc643cea070bb082690e08e">
+      <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+      <script>
+        (window.adsbyimobile = window.adsbyimobile || []).push({
+          pid: 84154, mid: 588049, asid: 1915694, type: "banner", display: "inline",
+          elementid: "im-662f0fe16cc643cea070bb082690e08e"
+        });
+      </script>
+    </div>
   </div>
-</div>
-<!-- PC広告2 ここまで -->
+  <!-- /PC広告2 -->
 
   <div class="section-header">
     <h2>Select</h2>
     <button id="reset-btn" type="button">RESET</button>
   </div>
+
   <div id="selection-area">
     <div id="selected-container">
       <div class="selected-wrapper" data-index="0"></div>
@@ -76,53 +96,72 @@
     </div>
   </div>
 
-<!-- PC広告3 --> 
-<div class="ad-pc"> 
-  <!-- バナー2 --> 
-  <div id="im-91c93c9e4518400cab5dcb89ea4dbe76"> 
-    <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script> 
-    <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588049,asid:1914770,type:"banner",display:"inline",elementid:"im-91c93c9e4518400cab5dcb89ea4dbe76"})</script> 
-  </div> 
-  <!-- バナー2ここまで --> 
-  <!--レクタングル-- 
-  <div id="im-cff248eae6964aa3b68284ffed8523fd"> 
-    <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script> 
-    <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588049,asid:1914824,type:"banner",display:"inline",elementid:"im-cff248eae6964aa3b68284ffed8523fd"})</script> 
-  </div> !--レクタングルここまで--> 
-</div> 
-<!-- PC広告3 ここまで --> 
-<!-- スマホ用広告--> 
- <div class="ad-sp"> 
-  <!-- メルカリ --> 
-  <script type="text/javascript"> imaf_partnerid = "67854"; imaf_siteid = "56133"; imaf_advid = "97102"; imaf_campaignid = "9072"; imaf_type = "Image"; imaf_width = "200"; imaf_height = "200"; </script> 
-  <script type="text/javascript" src="//aff.i-mobile.co.jp/script/adspot_ifs.js?20130220"></script> 
-  <!-- メルカリ ここまで --> 
-  <!-- オーバレイ バナー小 --> 
-   <div style="position:fixed; bottom:0;left:0;right:0;width:100%;background: rgba(0, 0, 0, 0.7); z-index:99998;text-align:center;transform:translate3d(0, 0, 0);">
-    <div style="margin:auto;z-index:99999;" > 
-      <div id="im-0a2f4b344a4a4ea390cfab1df0e07a41"> 
-        <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script> 
-        <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588050,asid:1914825,type:"banner",display:"inline",elementid:"im-0a2f4b344a4a4ea390cfab1df0e07a41"})</script> 
-      </div> 
-    </div> 
-  </div> 
-  <!-- オーバレイバナー小ここまで--> 
-  </div> 
-  <!-- スマホ用広告ここまで--> 
-   <!-- 縦型 -- <div id="im-005f22d5edc94335836f73a9dd5e3d78"> <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script> 
-    <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588049,asid:1914771,type:"banner",display:"inline",elementid:"im-005f22d5edc94335836f73a9dd5e3d78"})</script> 
-  </div> 
-  !--ワイドスカイスクレバーここまで-->
+  <!-- PC広告3 -->
+  <div class="ad-pc">
+    <!-- バナー2 -->
+    <div id="im-91c93c9e4518400cab5dcb89ea4dbe76">
+      <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+      <script>
+        (window.adsbyimobile = window.adsbyimobile || []).push({
+          pid: 84154, mid: 588049, asid: 1914770, type: "banner", display: "inline",
+          elementid: "im-91c93c9e4518400cab5dcb89ea4dbe76"
+        });
+      </script>
+    </div>
+    <!-- /バナー2 -->
 
+    <!-- レクタングル（必要ならコメント解除して使う）
+    <div id="im-cff248eae6964aa3b68284ffed8523fd">
+      <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+      <script>
+        (window.adsbyimobile = window.adsbyimobile || []).push({
+          pid: 84154, mid: 588049, asid: 1914824, type: "banner", display: "inline",
+          elementid: "im-cff248eae6964aa3b68284ffed8523fd"
+        });
+      </script>
+    </div>
+    -->
+  </div>
+  <!-- /PC広告3 -->
+
+  <!-- スマホ用広告 -->
+  <div class="ad-sp">
+    <!-- メルカリ -->
+    <script>
+      var imaf_partnerid = "67854";
+      var imaf_siteid = "56133";
+      var imaf_advid = "97102";
+      var imaf_campaignid = "9072";
+      var imaf_type = "Image";
+      var imaf_width = "200";
+      var imaf_height = "200";
+    </script>
+    <script async src="https://aff.i-mobile.co.jp/script/adspot_ifs.js?20130220"></script>
+    <!-- /メルカリ -->
+
+    <!-- オーバレイ バナー小 -->
+    <div style="position:fixed; bottom:0; left:0; right:0; width:100%; background:rgba(0,0,0,0.7); z-index:99998; text-align:center; transform:translate3d(0,0,0);">
+      <div style="margin:auto; z-index:99999;">
+        <div id="im-0a2f4b344a4a4ea390cfab1df0e07a41">
+          <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+          <script>
+            (window.adsbyimobile = window.adsbyimobile || []).push({
+              pid: 84154, mid: 588050, asid: 1914825, type: "banner", display: "inline",
+              elementid: "im-0a2f4b344a4a4ea390cfab1df0e07a41"
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+    <!-- /オーバレイ バナー小 -->
+  </div>
+  <!-- /スマホ用広告 -->
 
   <div class="section-header">
     <h2>Result</h2>
   </div>
 
-
-
   <div id="stats">
-
     <!-- 🔹 新モンスター確率パネル -->
     <div class="panel">
       <div class="panel-title">モンスターごとの確率</div>
@@ -143,7 +182,6 @@
         <div id="total-wait" class="wait-note">(Wait 1h0m)</div>
       </div>
     </div>
-
   </div>
 
   <!-- 注意書き -->
@@ -154,24 +192,36 @@
     ・シリーズごとの確率は計算の関係でゲームの確率とは一部異なる場合があります。<br>
     ・最新の情報と異なる可能性があります。<br>
   </div>
- <!-- PC広告4 --> 
-  <div class="ad-pc"> 
-  <div id="im-b7ad4a120a9b4c6192d1b4b212577703">
-    <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
-    <script>(window.adsbyimobile=window.adsbyimobile||[]).push({pid:84154,mid:588049,asid:1915693,type:"banner",display:"inline",elementid:"im-b7ad4a120a9b4c6192d1b4b212577703"})</script>
+
+  <!-- PC広告4 -->
+  <div class="ad-pc">
+    <div id="im-b7ad4a120a9b4c6192d1b4b212577703">
+      <script async src="https://imp-adedge.i-mobile.co.jp/script/v1/spot.js?20220104"></script>
+      <script>
+        (window.adsbyimobile = window.adsbyimobile || []).push({
+          pid: 84154, mid: 588049, asid: 1915693, type: "banner", display: "inline",
+          elementid: "im-b7ad4a120a9b4c6192d1b4b212577703"
+        });
+      </script>
+    </div>
   </div>
-  </div>
-  <!-- PC広告4 ここまで -->
+  <!-- /PC広告4 -->
 
-
-
-  <!--スマホ表示の場合、広告がオーバレイで隠れるので改行--> 
-  <div class="ad-sp"> 
-      <!-- dカード --> 
-      <script type="text/javascript"> imaf_partnerid = "67854"; imaf_siteid = "56133"; imaf_advid = "99206"; imaf_campaignid = "9040"; imaf_type = "Image"; imaf_width = "300"; imaf_height = "250"; </script> 
-      <script type="text/javascript" src="//aff.i-mobile.co.jp/script/adspot_ifs.js?20130220"></script> 
-    <!-- dカード ここまで --> 
-    <br><br><br> 
+  <!-- スマホ：下部の被り回避のための余白 -->
+  <div class="ad-sp">
+    <!-- dカード -->
+    <script>
+      var imaf_partnerid2 = "67854";
+      var imaf_siteid2 = "56133";
+      var imaf_advid2 = "99206";
+      var imaf_campaignid2 = "9040";
+      var imaf_type2 = "Image";
+      var imaf_width2 = "300";
+      var imaf_height2 = "250";
+    </script>
+    <script async src="https://aff.i-mobile.co.jp/script/adspot_ifs.js?20130220"></script>
+    <!-- /dカード -->
+    <br><br><br>
   </div>
 
   <script src="./script.js"></script>
