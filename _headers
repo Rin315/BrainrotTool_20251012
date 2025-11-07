@@ -1,2 +1,2 @@
 /*
-  Content-Security-Policy: script-src 'self' 'unsafe-inline' 'unsafe-eval' https://imp-adedge.i-mobile.co.jp https://pagead2.googlesyndication.com https://www.googletagmanager.com;
+  Content-Security-Policy: script-src 'self' 'unsafe-inline' 'unsafe-eval' https://imp-adedge.i-mobile.co.jp https://aff.i-mobile.co.jp https://dmp.im-apps.net https://spnativeapi-tls.i-mobile.co.jp https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google https://www.googletagmanager.com;
