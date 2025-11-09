@@ -11,7 +11,8 @@ const images = [
   { src: './img/bulbito.png', value: 120 ,sale:30},
   { src: './img/banana.png', value: 120 ,sale:32},
   { src: './img/chillin.png', value: 130 ,sale:33},
-  { src: './img/brri.png', value: 135 ,sale:10},
+  { src: './img/brri.png', value: 135 ,sale:35},
+  { src: './img/ciocco.png', value: 140 ,sale:36},
   { src: './img/brrestrh.png', value: 145 ,sale:38},
   { src: './img/torrtuginni.png', value: 150 ,sale:40},
   { src: './img/losbros.png', value: 155 ,sale:10},
@@ -34,6 +35,7 @@ const images = [
   { src: './img/losjob.png', value: 700 ,sale:150},
   { src: './img/Babel.png', value: 800 ,sale:350},
   { src: './img/orcalero.png', value: 1000 ,sale:200},
+  { src: './img/frog.png', value: 1200 ,sale:275},
   { src: './img/ketchuru.png', value: 1500 ,sale:250},
   { src: './img/pothotspot.png', value: 2000 ,sale:400},
   { src: './img/losmobilis.png', value: 2200 ,sale:425},
@@ -46,6 +48,7 @@ const images = [
   { src: './img/chicleteira.png', value: 8000 ,sale:2000},
   { src: './img/pad.png', value: 10000 ,sale:3000},
   { src: './img/dulduldul.png', value: 12000 ,sale:5000},
+  { src: './img/loshouse.png', value: 17500 ,sale:15000},
   { src: './img/chinpanking.png', value: 25000 ,sale:10000},
 ];
 // ========== DOM要素 ==========
