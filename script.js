@@ -432,7 +432,7 @@ function getButtonColor(type){
     case 'Gold': return '#ffff99';
     case 'Diamond': return 'cyan';
     case 'Rainbow': return 'pink';
-    case 'Neon': return '#1e90ff';
+    case 'Neon': return 'dodgerblue';
     case 'Other': return 'white';
     default: return 'black';
   }
