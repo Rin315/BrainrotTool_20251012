@@ -48,7 +48,7 @@ const images = [
   { src: './img/chicleteira.png', value: 8000 ,sale:2000},
   { src: './img/pad.png', value: 10000 ,sale:3000},
   { src: './img/dulduldul.png', value: 12000 ,sale:5000},
-  { src: './img/loshouse.png', value: 17500 ,sale:15000},
+  { src: './img/loshouse.png', value: 17500 ,sale:1500},
   { src: './img/chinpanking.png', value: 25000 ,sale:10000},
 ];
 // ========== DOM要素 ==========
@@ -65,7 +65,7 @@ let selectedColors   = ['Default','Default','Default','Default','Default'];
 let selectedHasBorder= [false, false, false, false, false];
 
 // ========== 基本確率 ==========
-const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Halloween: 0, Other: 0 };
+const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Neon: 0, Other: 0 };
 
 // ========== モンスターごとの確率ルール（グローバル化） ==========
 const probabilityRules = [
@@ -261,7 +261,7 @@ function renderSelected() {
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
 
-      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Halloween', 'Other'].forEach(type => {
+      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Neon', 'Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
@@ -398,7 +398,7 @@ function updateMonsterProbability() {
 // ========== 種類確率 ==========
 function updateTypeProbability(){
   const probs = { ...baseProb };
-  const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Halloween:0, Other:0 };
+  const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Neon:0, Other:0 };
 
   for (let i = 0; i < selectedImages.length; i++){
     const img = selectedImages[i];
@@ -432,7 +432,7 @@ function getButtonColor(type){
     case 'Gold': return '#ffff99';
     case 'Diamond': return 'cyan';
     case 'Rainbow': return 'pink';
-    case 'Halloween': return 'orange';
+    case 'Neon': return '#1e90ff';
     case 'Other': return 'white';
     default: return 'black';
   }
