@@ -224,7 +224,7 @@ button.Default{ background:#fff; }
 button.Gold{ background:#ffffcc; }
 button.Diamond{ background:#ccf5ff; }
 button.Rainbow{ background:#ffcce5; }
-button.Halloween{ background:#ffd1a6; }
+button.Neon{ background:#1e90ff; }
 button.Other{ background:#ddd; }
 
 /* ========= Result ========= */
@@ -342,7 +342,7 @@ button.Other{ background:#ddd; }
 #probability .Gold{ background:#ffffcc; }
 #probability .Diamond{ background:#ccf5ff; }
 #probability .Rainbow{ background:#ffcce5; }
-#probability .Halloween{ background:#ffd1a6; }
+#probability .Neon{ background:#1e90ff; }
 #probability .Other{ background:#ddd; }
 
 .notice{
