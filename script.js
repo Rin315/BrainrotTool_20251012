@@ -21,7 +21,7 @@ const images = [
   { src: './img/alessio.png', value: 180 ,sale:60},
   { src: './img/karkerkar.png', value: 190 ,sale:70},
   { src: './img/piccionetama.png', value: 200 ,sale:70},
-  { src: './img/poppcon.png', value: 205 ,sale:73},//新
+  { src: './img/popcon.png', value: 205 ,sale:73},//新
   { src: './img/iipiccione.png', value: 210 ,sale:75},
   { src: './img/iimastodontico.png', value: 240 ,sale:90},
   { src: './img/jobjobjob.png', value: 220 ,sale:80},
@@ -29,6 +29,7 @@ const images = [
   { src: './img/lostralaleritas.png', value: 200 ,sale:60},
   { src: './img/lostralaletitos.png', value: 200 ,sale:60},
   { src: './img/trenostruzzo.png', value: 300 ,sale:170},
+  { src: './img/kravilino.png', value: 375 ,sale:90},
   { src: './img/losorcaleritos.png', value: 400 ,sale:160},
   { src: './img/loscouples.png', value: 450 ,sale:150},
   { src: './img/piccione.png', value: 500 ,sale:125},
