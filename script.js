@@ -50,10 +50,10 @@ const images = [
   { src: './img/lagrande.png', value: 5000, sale: 1000 },
   { src: './img/legolem.png', value: 6000, sale: 1300 },//新
   { src: './img/67.png', value: 6700, sale: 6700 },
+  { src: './img/loshouse.png', value: 7000, sale: 1500 },
   { src: './img/chicleteira.png', value: 8000, sale: 2000 },
   { src: './img/pad.png', value: 10000, sale: 3000 },
   { src: './img/dulduldul.png', value: 12000, sale: 5000 },
-  { src: './img/loshouse.png', value: 17500, sale: 1500 },
   { src: './img/chinpanking.png', value: 25000, sale: 10000 },
 ];
 // ========== DOM要素 ==========
