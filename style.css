@@ -499,6 +499,36 @@ h2 {
   margin: 20px 0;
 }
 
+@media (max-width: 600px) {
+  .imgbox {
+    width: 60px;
+    height: 60px;
+  }
+
+  .imgbox img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .value-label {
+    font-size: 9px;
+  }
+
+  .monster-box {
+    min-width: 60px;
+    padding: 4px;
+  }
+
+  .monster-box img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .monster-prob-text {
+    font-size: 10px;
+  }
+}
+
 @media (max-width: 768px) {
   .ad-pc {
     display: none;
