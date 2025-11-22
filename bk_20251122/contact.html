@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ | Brainrot Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <meta name="description" content="Brainrot合成マシン確率計算ツールは、モンスターの組み合わせによる確率や合計値を自動で計算できる非公式ツールです。">
+  <!-- ✅ 共通ナビバー読み込み -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("navbar").innerHTML = html);
+  </script>
+
+  <main style="padding: 20px;">
+    <h2>お問い合わせ</h2>
+    <p>このサイトに関するお問い合わせは、以下のメールアドレスまでお願いします。</p>
+
+    <div style="margin-top: 20px; background-color: #f0f0f0; padding: 16px; border-radius: 8px; width: fit-content;">
+      <strong>📧 メールアドレス：</strong><br>
+      <a href="matches-horsey7w@icloud.com" style="font-size: 18px; color: #0077cc; text-decoration: none;">
+        matches-horsey7w@icloud.com
+      </a>
+    </div>
+
+    <p style="margin-top: 30px; color: gray;">返信には数日かかる場合があります。ご了承ください。</p>
+  </main>
+</body>
+</html>

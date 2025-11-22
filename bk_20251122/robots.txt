@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /img/trarafabicon.png
+
+Sitemap: https://rotbrain-tools.com/sitemap.xml

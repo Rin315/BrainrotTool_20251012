@@ -1,607 +1,541 @@
-/* ========= ベース設定 ========= */
-:root{
-  --imgW: 110px;
-  --imgH: 120px;
-  --labelH: 18px;
-  --slotMinW: 134px;
-  --gapImgButtons: 4px;
-  --btnW: 58px;
-  --btnH: 28px;
-  --btnFS: 11px;
-  --galleryBorderW: 1px;
-  --galleryBorderC: #ccc;
-  --selectedBorderW: 5px;
-  --selectedBorderC: #000;
+/* ========= Variables & Reset ========= */
+:root {
+  /* Colors (Light Theme) */
+  --bg-color: #f4f7f6;
+  --card-bg: #ffffff;
+  --card-border: #e0e0e0;
+  --text-main: #333333;
+  --text-muted: #666666;
+
+  /* Accents (Adjusted for Light Background) */
+  --neon-green: #00c853;
+  /* Darker green for visibility */
+  --neon-pink: #d500f9;
+  /* Darker pink */
+  --neon-cyan: #00b0ff;
+  /* Darker cyan */
+  --neon-yellow: #ffab00;
+  /* Darker yellow/amber */
+
+  /* Dimensions */
+  --imgW: 100px;
+  --imgH: 100px;
+  --gap: 12px;
+
+  /* Effects */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+  --blur: blur(12px);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-body{
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-  margin: 16px;
-  background-color: #e6f5e1;
-}
-
-/* ========= 見出し ========= */
-h2{ margin: 0; font-size: 22px; }
-.section-header{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin:18px 0 8px;
-}
-#reset-btn{
-  background:#d10000;
-  color:#fff;
-  font-weight:900;
-  border:none;
-  padding:6px 12px;
-  height:32px;
-  cursor:pointer;
-  border-radius:4px;
-  letter-spacing:1px;
-  margin:0;
-}
-
-/* ========= ナビバー ========= */
-.navbar{
-  background-color:#2f4f4f;
-  color:#fff;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 24px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.2);
-}
-
-.nav-title{
-  font-size:20px;
-  font-weight:bold;
-  color:#fff;
-  text-decoration:none;
-}
-
-.nav-links{
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px;
-}
-.nav-links a{
-  color:#fff;
-  text-decoration:underline;
-  font-weight:600;
-  transition:color 0.2s ease;
-}
-.nav-links a:hover{
-  color:#ffeb3b;
-}
-
-/* ========= 画像コンテナ ========= */
-.imgbox{
-  position:relative;
-  width:var(--imgW);
-  height:var(--imgH);
-  margin:0 auto;
-  box-sizing:border-box;
-  overflow:hidden; /* value/saleラベル込みで枠内に閉じ込める */
-}
-.imgbox--gallery{
-  border: var(--galleryBorderW) solid var(--galleryBorderC);
-}
-.imgbox--selected{
-  border:none;
-  margin-bottom:10px; /* ← ボタンと被らないよう少し余白を増やす */
-  position:relative;
-  z-index: 1; /* ボタンより低くするので1に留める */
-}
-
-/* ========= 画像 ========= */
-.gallery-img, .selected-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  cursor:pointer;
-  transition:filter 0.1s ease, border 0.2s ease;
-  box-sizing:border-box;
-}
-.gallery-img:active, .selected-img:active{
-  filter:brightness(60%);
-  transition:filter 0.1s ease;
-}
-
-/* ========= Monster（ギャラリー） ========= */
-#gallery{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
-  justify-items:center;
-  gap:6px;
-}
-
-/* ========= ラベル（value / sale） ========= */
-.value-label{
-  position:absolute;
-  top:0; left:0;
-  width:100%;
-  height:var(--labelH);
-  background:rgba(0,0,0,0.8);
-  color:#ffeb3b;
-  font-size:12px;
-  font-weight:bold;
-  text-align:center;
-  line-height:var(--labelH);
-  user-select:none;
-  pointer-events:none;
-  white-space:nowrap;
-  z-index:2;
-}
-.sale-label{
-  position:absolute;
-  bottom:0; left:0;
-  width:100%;
-  height:var(--labelH);
-  background:rgba(0,0,0,0.75);
-  color:#00c853;
-  font-size:12px;
-  font-weight:bold;
-  text-align:center;
-  line-height:var(--labelH);
-  user-select:none;
-  pointer-events:none;
-  white-space:nowrap;
-  z-index:2;
-}
-
-/* ========= Select（選択済み） ========= */
-#selection-area{
-  display:flex;
-  align-items:flex-end;
-  margin-bottom:12px;
-}
-#selected-container{
-  display:flex;
-  gap:8px;
-  justify-content:center;
-  flex-wrap:nowrap;
-}
-
-.selected-wrapper{
-  background:#555;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:6px;
-  min-width:var(--slotMinW);
-  /* 十分な高さを確保して「画像＋ボタン」がはみ出さないように大きめに取る */
-  min-height: calc(
-    var(--imgH)               /* 画像本体の高さ */
-    + var(--gapImgButtons)    /* 画像とボタンの間のすき間 */
-    + (var(--btnH) * 3)       /* ボタン3段ぶんの高さ */
-    + 40px                    /* 余白マージンの安全枠をちょい増やす */
-  );
-  box-sizing:border-box;
-  position:relative;
-  overflow:visible;
-}
-
-/* 空スロットのときも同じサイズを保つための見た目（JS側で:emptyにならない場合もあるが念のため） */
-.selected-wrapper:empty::before{
-  content:"";
-  display:block;
-  width:var(--imgW);
-  height: calc(
-    var(--imgH)
-    + var(--gapImgButtons)
-    + (var(--btnH) * 3)
-    + 40px
-  );
-  background:#555;
-}
-
-/* ========= ボタン ========= */
-.button-container{
-  display:grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap:6px;
-  width:100%;
-  justify-items:center;
-  margin-top:6px;
-  position:relative;
-  z-index:10;          /* ← ボタンを最前面に押し出す（これが大事） */
-}
-.button-container button{
-  width:var(--btnW);
-  height:var(--btnH);
-  border:1px solid #888;
-  cursor:pointer;
-  font-size:var(--btnFS);
-  color:#000 !important;
-  -webkit-text-fill-color:#000 !important;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#fff;
-}
-button.Default{ background:#fff; }
-button.Gold{ background:#ffffcc; }
-button.Diamond{ background:#ccf5ff; }
-button.Rainbow{ background:#ffcce5; }
-button.Neon{ background:#1e90ff; }
-button.Other{ background:#ddd; }
-
-/* ========= Result ========= */
-#stats{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  margin-bottom:16px;
-  justify-content:flex-start;
-  align-items:flex-start;
-}
-
-/* パネル（Resultの各枠） */
-.panel{
-  border:2px solid #999;
-  padding:10px;
-  min-width:260px;
-  background:#fafafa;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:flex-start;
-  /* 高さ固定をやめて中身に合わせて伸びる */
-  min-height:100px;
-  height:auto;
-  box-sizing:border-box;
-  overflow:visible;
-}
-.panel-title{
-  font-weight:700;
-  margin-bottom:6px;
-}
-
-/* Totalパネル（少し狭い） */
-.total-panel{
-  min-width:120px;
-  max-width:220px;
-  text-align:left;
-}
-.total-panel #total{
-  font-size:14px;
-  font-weight:600;
-  line-height:1.3;
-  white-space:nowrap;
-  overflow:hidden;
-  text-align:left;
-}
-@media (max-width: 650px){
-  .total-panel #total{
-    font-size:12px;
-    line-height:1.4;
-  }
-}
-
-.wait-note{
-  margin-top:4px;
-  font-size:14px;
-  color:#444;
-  line-height:1.2;
-}
-
-/* ========= モンスターごとの確率欄 ========= */
-#monster-probability{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  gap:12px;
-  padding:8px 0;
-  width:100%;
-  box-sizing:border-box;
-  flex-wrap:nowrap;
-}
-.monster-box{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  width:90px;
-  height:auto;
-  background:transparent;
-  border:none;
-}
-.monster-box img{
-  width:80px;
-  height:auto;
-  border:2px solid #000;
-  border-radius:4px;
-  object-fit:cover;
-  display:block;
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  background:#fff;
-}
-.monster-prob-text{
-  margin-top:4px;
-  font-size:13px;
-  font-weight:600;
-  text-align:center;
-  color:#222;
-  line-height:1.2;
-}
-
-/* ========= 種類確率バッジ ========= */
-#probability span{
-  display:inline-block;
-  padding:2px 6px;
-  margin:2px 4px 2px 0;
-  border-radius:4px;
-  font-weight:600;
-  color:#000;
-  border:1px solid #aaa;
-}
-#probability .Default{ background:#fff; }
-#probability .Gold{ background:#ffffcc; }
-#probability .Diamond{ background:#ccf5ff; }
-#probability .Rainbow{ background:#ffcce5; }
-#probability .Neon{ background:#1e90ff; }
-#probability .Other{ background:#ddd; }
-
-.notice{
-  margin-top:40px;
-  text-align:left;
-  color:#333;
-  font-size:15px;
-}
-
-/* ========= 広告レイアウト ========= */
-.ad-sp { display:none; }
-.ad-pc { margin:5px 0; }
-.ad-sp { margin:5px 0; }
-
-@media (max-width:768px){
-  .ad-pc{ display:none; }
-  .ad-sp{
-    display:block;
-    text-align:center;
-  }
-}
-
-/* ========= スマホ最適化 ========= */
-@media (max-width:600px){
-  :root{
-    --imgW: 60px;
-    --imgH: 66px;
-    --labelH: 12px;
-    --slotMinW: 128px;
-    --btnW: 52px;
-    --btnH: 22px;
-    --btnFS: 8px;
-    --galleryBorderW: 1px;
-    --galleryBorderC: #ccc;
-    --selectedBorderW: 3px;
-    --selectedBorderC: #000;
-  }
-
-  #gallery{
-    grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
-    justify-items:center;
-    gap:3px;
-  }
-
-  img.gallery-img,
-  img.selected-img{
-    width: var(--imgW) !important;
-    height: var(--imgH) !important;
-    object-fit: cover !important;
-  }
-
-  #selected-container{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:8px;
-    width:100%;
-    max-width:520px;
-    margin:0 auto;
-    justify-items:center;
-  }
-
-  /* スマホ版の各スロットも十分な高さを確保し、ボタンを見えるように */
-  .selected-wrapper{
-    width: calc((var(--btnW) * 2) + 24px);
-    min-height: calc(
-      var(--imgH)
-      + var(--gapImgButtons)
-      + (var(--btnH) * 3)
-      + 40px
-    );
-    background:#555;
-    padding:4px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    overflow:visible;
-    box-sizing:border-box;
-  }
-
-  /* ラベルを小さく */
-  .value-label{
-    width:100%;
-    height:var(--labelH);
-    line-height:var(--labelH);
-    font-size:8px;
-    z-index:2;
-  }
-  .sale-label{
-    bottom:0;
-    width:100%;
-    height:var(--labelH);
-    line-height:var(--labelH);
-    font-size:8px;
-    background:rgba(0,0,0,0.75);
-    color:#00c853;
-    z-index:2;
-  }
-
-  /* ナビ（スマホ縦並び） */
-  .navbar{
-    flex-direction:column;
-    align-items:flex-start;
-    padding:10px 16px;
-  }
-  .nav-title{
-    font-size:18px;
-    margin-bottom:8px;
-    text-align:left;
-  }
-  .nav-links{
-    flex-direction:column;
-    gap:6px;
-    width:100%;
-    align-items:flex-start;
-  }
-  .nav-links a{
-    font-size:14px;
-    padding:4px 0;
-    color:#fff;
-    text-decoration:underline;
-  }
-
-  /* シリーズごとの確率：折り返し許可 */
-  #probability{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:flex-start;
-    gap:4px;
-    font-size:12px;
-    line-height:1.4;
-    word-break:keep-all;
-    white-space:normal;
-    box-sizing:border-box;
-    padding:4px;
-    max-height:none;
-  }
-
-  .panel{
-    min-height:unset;
-    height:auto;
-    padding-bottom:8px;
-  }
-}
-
-/* ====== モンスターごとの確率欄：画像サイズ統一 ====== */
-#monster-probability {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 0;
-  width: 100%;
+* {
   box-sizing: border-box;
-  overflow: hidden;
 }
 
-.monster-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 80px;        /* 全体のボックス幅を固定 */
-  height: 110px;      /* 全体高さを統一 */
-  background: transparent;
-  border: none;
-}
-
-.monster-box img {
-  width: 70px;        /* 統一された幅 */
-  height: 70px;       /* 高さも固定 */
-  border: 2px solid #000;
-  border-radius: 4px;
-  background: #fff;
-  object-fit: contain; /* ← 画像を切らずに収める */
-  display: block;
-  box-sizing: border-box;
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
   margin: 0;
-  padding: 0;
+  padding-bottom: 40px;
+  min-height: 100vh;
 }
 
-.monster-prob-text {
-  margin-top: 4px;
-  font-size: 13px;
-  font-weight: 600;
-  text-align: center;
-  color: #222;
-  line-height: 1.2;
+h2 {
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  margin: 0;
+  text-transform: uppercase;
+  color: var(--text-main);
+  background: none;
+  -webkit-text-fill-color: initial;
 }
 
-/* スマホ用（画面幅が狭い場合） */
-@media (max-width: 600px) {
-  .monster-box {
-    width: 18vw;
-    height: auto;
-  }
-  .monster-box img {
-    width: 14vw;
-    height: 14vw;
-    border-width: 1.5px;
-    object-fit: contain;
-  }
-  .monster-prob-text {
-    font-size: 11px;
-  }
-}
-/* ===== モンスターごとの確率欄：隙間なしで全面表示 ===== */
-.monster-box {
+/* ========= Navbar ========= */
+.navbar {
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur);
+  border-bottom: var(--glass-border);
+  padding: 16px 24px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
-  width: 80px;
-  height: 110px;
-  background: transparent;
-  border: none;
-  box-sizing: border-box;
-  overflow: hidden; /* ← 枠外にはみ出させない */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
 }
 
-.monster-box img {
+.nav-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--neon-cyan);
+}
+
+/* ========= Layout ========= */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#reset-btn {
+  background: transparent;
+  color: var(--neon-pink);
+  border: 1px solid var(--neon-pink);
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#reset-btn:hover {
+  background: var(--neon-pink);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(213, 0, 249, 0.3);
+}
+
+/* ========= Gallery ========= */
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+  gap: var(--gap);
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.imgbox {
+  position: relative;
+  aspect-ratio: 1;
+  background: #222;
+  /* Reverted to dark background */
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow);
+}
+
+.imgbox:hover {
+  transform: translateY(-4px);
+  border-color: var(--neon-green);
+  box-shadow: 0 8px 24px rgba(0, 200, 83, 0.2);
+}
+
+.gallery-img {
   width: 100%;
   height: 100%;
-  border: 2px solid #000;
-  border-radius: 4px;
-  background: #fff;
-  object-fit: cover; /* ← contain→cover に変更して隙間をゼロに */
-  display: block;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  object-fit: contain;
+  padding: 8px;
 }
 
-/* 確率テキスト */
-.monster-prob-text {
-  margin-top: 4px;
-  font-size: 13px;
-  font-weight: 600;
+.value-label,
+.sale-label {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 4px;
+  font-size: 10px;
+  font-weight: 700;
   text-align: center;
-  color: #222;
-  line-height: 1.2;
+  backdrop-filter: blur(4px);
 }
 
-/* スマホ用 */
-@media (max-width: 600px) {
-  .monster-box {
-    width: 18vw;
-    height: 18vw;        /* 正方形を確保し、余白を防ぐ */
+.value-label {
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  /* Very transparent */
+  color: #ffd700;
+  /* Dark Yellow / Gold */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  /* Shadow for readability */
+}
+
+.sale-label {
+  display: none;
+  /* Hidden as requested */
+}
+
+/* ========= Selection Area ========= */
+#selection-area {
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+#selected-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.selected-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 160px;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.selected-wrapper:empty {
+  border: 1px dashed var(--text-muted);
+  opacity: 0.5;
+  box-shadow: none;
+  background: transparent;
+}
+
+.selected-wrapper:empty::after {
+  content: "SELECT";
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.imgbox--selected {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  background: #222;
+  /* Reverted to dark background */
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+}
+
+.selected-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.button-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  width: 100%;
+}
+
+.button-container button {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted) !important;
+  -webkit-text-fill-color: var(--text-muted) !important;
+  padding: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button-container button:hover {
+  border-color: var(--text-main);
+  color: var(--text-main) !important;
+  -webkit-text-fill-color: var(--text-main) !important;
+  background: #f0f0f0;
+}
+
+/* Active Button States */
+.button-container button.Default {
+  border-color: #000;
+  background: #fff;
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.button-container button.Gold {
+  border-color: #ffd700;
+  color: #b8860b !important;
+  -webkit-text-fill-color: #b8860b !important;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.button-container button.Diamond {
+  border-color: #00b0ff;
+  color: #00b0ff !important;
+  -webkit-text-fill-color: #00b0ff !important;
+  background: rgba(0, 176, 255, 0.1);
+}
+
+.button-container button.Rainbow {
+  border-color: #d500f9;
+  color: #d500f9 !important;
+  -webkit-text-fill-color: #d500f9 !important;
+  background: rgba(213, 0, 249, 0.1);
+}
+
+.button-container button.Neon {
+  border-color: #00c853;
+  color: #00c853 !important;
+  -webkit-text-fill-color: #00c853 !important;
+  background: rgba(0, 200, 83, 0.1);
+}
+
+.button-container button.Other {
+  border-color: #888;
+  background: #eee;
+}
+
+/* Selected Outline */
+.selected-wrapper:has(.Default) .imgbox--selected {
+  box-shadow: 0 0 0 2px #000;
+}
+
+/* ========= Result ========= */
+#stats {
+  display: flex;
+  /* Changed from grid to flex for better width control */
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 8px;
+}
+
+/* Total Panel - Flexible width */
+.total-panel {
+  flex: 1;
+  /* Allow growing */
+  min-width: 280px;
+  /* Ensure enough space */
+}
+
+.total-panel #total {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  /* Slightly reduced from 16px to fit better */
+  font-weight: 400;
+  color: var(--text-main);
+  line-height: 1.5;
+  /* Removed white-space: nowrap to allow wrapping if absolutely necessary, though flex should handle it */
+}
+
+.total-number {
+  font-weight: 900;
+  font-size: 18px;
+  /* Make number slightly larger */
+}
+
+.wait-note {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Monster Probability - Expanded width */
+.panel:has(#monster-probability) {
+  flex: 1;
+  /* Take remaining space */
+  min-width: 300px;
+}
+
+#monster-probability {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  /* Wrap items instead of scroll */
+  padding-bottom: 0;
+  width: 100%;
+}
+
+.monster-box {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 8px;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.monster-box:hover {
+  border-color: var(--neon-cyan);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.monster-box img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.monster-prob-text {
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Type Probability */
+.panel:has(#probability) {
+  flex: 1;
+  min-width: 250px;
+}
+
+#probability span {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #f0f0f0;
+  color: var(--text-main);
+  border: 1px solid transparent;
+}
+
+#probability .Default {
+  background: #fff;
+  border: 1px solid #000;
+  color: #000;
+}
+
+#probability .Gold {
+  color: #b8860b;
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+#probability .Diamond {
+  color: #00b0ff;
+  border-color: #00b0ff;
+  background: rgba(0, 176, 255, 0.1);
+}
+
+#probability .Rainbow {
+  color: #d500f9;
+  border-color: #d500f9;
+  background: rgba(213, 0, 249, 0.1);
+}
+
+#probability .Neon {
+  color: #00c853;
+  border-color: #00c853;
+  background: rgba(0, 200, 83, 0.1);
+}
+
+/* Notice */
+.notice {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--text-muted);
+  font-size: 14px;
+  /* Increased font size */
+  line-height: 1.6;
+}
+
+.notice a {
+  color: var(--neon-cyan);
+}
+
+/* Ads */
+.ad-pc,
+.ad-sp {
+  text-align: center;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .ad-pc {
+    display: none;
   }
 
-  .monster-box img {
+  .ad-sp {
+    display: block;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nav-links {
     width: 100%;
-    height: 100%;
-    border-width: 1.5px;
-    object-fit: cover;    /* スマホでも全面表示 */
+    justify-content: space-between;
   }
 
-  .monster-prob-text {
-    font-size: 11px;
+  #selected-container {
+    gap: 8px;
+  }
+
+  .selected-wrapper {
+    width: calc(50% - 8px);
+    min-width: unset;
+  }
+
+  #stats {
+    flex-direction: column;
+  }
+
+  .total-panel,
+  .panel:has(#monster-probability),
+  .panel:has(#probability) {
+    width: 100%;
+    flex: none;
   }
 }
-

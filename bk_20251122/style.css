@@ -1,0 +1,607 @@
+/* ========= ベース設定 ========= */
+:root{
+  --imgW: 110px;
+  --imgH: 120px;
+  --labelH: 18px;
+  --slotMinW: 134px;
+  --gapImgButtons: 4px;
+  --btnW: 58px;
+  --btnH: 28px;
+  --btnFS: 11px;
+  --galleryBorderW: 1px;
+  --galleryBorderC: #ccc;
+  --selectedBorderW: 5px;
+  --selectedBorderC: #000;
+}
+
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  margin: 16px;
+  background-color: #e6f5e1;
+}
+
+/* ========= 見出し ========= */
+h2{ margin: 0; font-size: 22px; }
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:18px 0 8px;
+}
+#reset-btn{
+  background:#d10000;
+  color:#fff;
+  font-weight:900;
+  border:none;
+  padding:6px 12px;
+  height:32px;
+  cursor:pointer;
+  border-radius:4px;
+  letter-spacing:1px;
+  margin:0;
+}
+
+/* ========= ナビバー ========= */
+.navbar{
+  background-color:#2f4f4f;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 24px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+
+.nav-title{
+  font-size:20px;
+  font-weight:bold;
+  color:#fff;
+  text-decoration:none;
+}
+
+.nav-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.nav-links a{
+  color:#fff;
+  text-decoration:underline;
+  font-weight:600;
+  transition:color 0.2s ease;
+}
+.nav-links a:hover{
+  color:#ffeb3b;
+}
+
+/* ========= 画像コンテナ ========= */
+.imgbox{
+  position:relative;
+  width:var(--imgW);
+  height:var(--imgH);
+  margin:0 auto;
+  box-sizing:border-box;
+  overflow:hidden; /* value/saleラベル込みで枠内に閉じ込める */
+}
+.imgbox--gallery{
+  border: var(--galleryBorderW) solid var(--galleryBorderC);
+}
+.imgbox--selected{
+  border:none;
+  margin-bottom:10px; /* ← ボタンと被らないよう少し余白を増やす */
+  position:relative;
+  z-index: 1; /* ボタンより低くするので1に留める */
+}
+
+/* ========= 画像 ========= */
+.gallery-img, .selected-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  cursor:pointer;
+  transition:filter 0.1s ease, border 0.2s ease;
+  box-sizing:border-box;
+}
+.gallery-img:active, .selected-img:active{
+  filter:brightness(60%);
+  transition:filter 0.1s ease;
+}
+
+/* ========= Monster（ギャラリー） ========= */
+#gallery{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+  justify-items:center;
+  gap:6px;
+}
+
+/* ========= ラベル（value / sale） ========= */
+.value-label{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height:var(--labelH);
+  background:rgba(0,0,0,0.8);
+  color:#ffeb3b;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+  line-height:var(--labelH);
+  user-select:none;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:2;
+}
+.sale-label{
+  position:absolute;
+  bottom:0; left:0;
+  width:100%;
+  height:var(--labelH);
+  background:rgba(0,0,0,0.75);
+  color:#00c853;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center;
+  line-height:var(--labelH);
+  user-select:none;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:2;
+}
+
+/* ========= Select（選択済み） ========= */
+#selection-area{
+  display:flex;
+  align-items:flex-end;
+  margin-bottom:12px;
+}
+#selected-container{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:nowrap;
+}
+
+.selected-wrapper{
+  background:#555;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:6px;
+  min-width:var(--slotMinW);
+  /* 十分な高さを確保して「画像＋ボタン」がはみ出さないように大きめに取る */
+  min-height: calc(
+    var(--imgH)               /* 画像本体の高さ */
+    + var(--gapImgButtons)    /* 画像とボタンの間のすき間 */
+    + (var(--btnH) * 3)       /* ボタン3段ぶんの高さ */
+    + 40px                    /* 余白マージンの安全枠をちょい増やす */
+  );
+  box-sizing:border-box;
+  position:relative;
+  overflow:visible;
+}
+
+/* 空スロットのときも同じサイズを保つための見た目（JS側で:emptyにならない場合もあるが念のため） */
+.selected-wrapper:empty::before{
+  content:"";
+  display:block;
+  width:var(--imgW);
+  height: calc(
+    var(--imgH)
+    + var(--gapImgButtons)
+    + (var(--btnH) * 3)
+    + 40px
+  );
+  background:#555;
+}
+
+/* ========= ボタン ========= */
+.button-container{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:6px;
+  width:100%;
+  justify-items:center;
+  margin-top:6px;
+  position:relative;
+  z-index:10;          /* ← ボタンを最前面に押し出す（これが大事） */
+}
+.button-container button{
+  width:var(--btnW);
+  height:var(--btnH);
+  border:1px solid #888;
+  cursor:pointer;
+  font-size:var(--btnFS);
+  color:#000 !important;
+  -webkit-text-fill-color:#000 !important;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#fff;
+}
+button.Default{ background:#fff; }
+button.Gold{ background:#ffffcc; }
+button.Diamond{ background:#ccf5ff; }
+button.Rainbow{ background:#ffcce5; }
+button.Neon{ background:#1e90ff; }
+button.Other{ background:#ddd; }
+
+/* ========= Result ========= */
+#stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:16px;
+  justify-content:flex-start;
+  align-items:flex-start;
+}
+
+/* パネル（Resultの各枠） */
+.panel{
+  border:2px solid #999;
+  padding:10px;
+  min-width:260px;
+  background:#fafafa;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-start;
+  /* 高さ固定をやめて中身に合わせて伸びる */
+  min-height:100px;
+  height:auto;
+  box-sizing:border-box;
+  overflow:visible;
+}
+.panel-title{
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+/* Totalパネル（少し狭い） */
+.total-panel{
+  min-width:120px;
+  max-width:220px;
+  text-align:left;
+}
+.total-panel #total{
+  font-size:14px;
+  font-weight:600;
+  line-height:1.3;
+  white-space:nowrap;
+  overflow:hidden;
+  text-align:left;
+}
+@media (max-width: 650px){
+  .total-panel #total{
+    font-size:12px;
+    line-height:1.4;
+  }
+}
+
+.wait-note{
+  margin-top:4px;
+  font-size:14px;
+  color:#444;
+  line-height:1.2;
+}
+
+/* ========= モンスターごとの確率欄 ========= */
+#monster-probability{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:12px;
+  padding:8px 0;
+  width:100%;
+  box-sizing:border-box;
+  flex-wrap:nowrap;
+}
+.monster-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  width:90px;
+  height:auto;
+  background:transparent;
+  border:none;
+}
+.monster-box img{
+  width:80px;
+  height:auto;
+  border:2px solid #000;
+  border-radius:4px;
+  object-fit:cover;
+  display:block;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  background:#fff;
+}
+.monster-prob-text{
+  margin-top:4px;
+  font-size:13px;
+  font-weight:600;
+  text-align:center;
+  color:#222;
+  line-height:1.2;
+}
+
+/* ========= 種類確率バッジ ========= */
+#probability span{
+  display:inline-block;
+  padding:2px 6px;
+  margin:2px 4px 2px 0;
+  border-radius:4px;
+  font-weight:600;
+  color:#000;
+  border:1px solid #aaa;
+}
+#probability .Default{ background:#fff; }
+#probability .Gold{ background:#ffffcc; }
+#probability .Diamond{ background:#ccf5ff; }
+#probability .Rainbow{ background:#ffcce5; }
+#probability .Neon{ background:#1e90ff; }
+#probability .Other{ background:#ddd; }
+
+.notice{
+  margin-top:40px;
+  text-align:left;
+  color:#333;
+  font-size:15px;
+}
+
+/* ========= 広告レイアウト ========= */
+.ad-sp { display:none; }
+.ad-pc { margin:5px 0; }
+.ad-sp { margin:5px 0; }
+
+@media (max-width:768px){
+  .ad-pc{ display:none; }
+  .ad-sp{
+    display:block;
+    text-align:center;
+  }
+}
+
+/* ========= スマホ最適化 ========= */
+@media (max-width:600px){
+  :root{
+    --imgW: 60px;
+    --imgH: 66px;
+    --labelH: 12px;
+    --slotMinW: 128px;
+    --btnW: 52px;
+    --btnH: 22px;
+    --btnFS: 8px;
+    --galleryBorderW: 1px;
+    --galleryBorderC: #ccc;
+    --selectedBorderW: 3px;
+    --selectedBorderC: #000;
+  }
+
+  #gallery{
+    grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+    justify-items:center;
+    gap:3px;
+  }
+
+  img.gallery-img,
+  img.selected-img{
+    width: var(--imgW) !important;
+    height: var(--imgH) !important;
+    object-fit: cover !important;
+  }
+
+  #selected-container{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:8px;
+    width:100%;
+    max-width:520px;
+    margin:0 auto;
+    justify-items:center;
+  }
+
+  /* スマホ版の各スロットも十分な高さを確保し、ボタンを見えるように */
+  .selected-wrapper{
+    width: calc((var(--btnW) * 2) + 24px);
+    min-height: calc(
+      var(--imgH)
+      + var(--gapImgButtons)
+      + (var(--btnH) * 3)
+      + 40px
+    );
+    background:#555;
+    padding:4px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    overflow:visible;
+    box-sizing:border-box;
+  }
+
+  /* ラベルを小さく */
+  .value-label{
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:8px;
+    z-index:2;
+  }
+  .sale-label{
+    bottom:0;
+    width:100%;
+    height:var(--labelH);
+    line-height:var(--labelH);
+    font-size:8px;
+    background:rgba(0,0,0,0.75);
+    color:#00c853;
+    z-index:2;
+  }
+
+  /* ナビ（スマホ縦並び） */
+  .navbar{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:10px 16px;
+  }
+  .nav-title{
+    font-size:18px;
+    margin-bottom:8px;
+    text-align:left;
+  }
+  .nav-links{
+    flex-direction:column;
+    gap:6px;
+    width:100%;
+    align-items:flex-start;
+  }
+  .nav-links a{
+    font-size:14px;
+    padding:4px 0;
+    color:#fff;
+    text-decoration:underline;
+  }
+
+  /* シリーズごとの確率：折り返し許可 */
+  #probability{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    gap:4px;
+    font-size:12px;
+    line-height:1.4;
+    word-break:keep-all;
+    white-space:normal;
+    box-sizing:border-box;
+    padding:4px;
+    max-height:none;
+  }
+
+  .panel{
+    min-height:unset;
+    height:auto;
+    padding-bottom:8px;
+  }
+}
+
+/* ====== モンスターごとの確率欄：画像サイズ統一 ====== */
+#monster-probability {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.monster-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80px;        /* 全体のボックス幅を固定 */
+  height: 110px;      /* 全体高さを統一 */
+  background: transparent;
+  border: none;
+}
+
+.monster-box img {
+  width: 70px;        /* 統一された幅 */
+  height: 70px;       /* 高さも固定 */
+  border: 2px solid #000;
+  border-radius: 4px;
+  background: #fff;
+  object-fit: contain; /* ← 画像を切らずに収める */
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.monster-prob-text {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: #222;
+  line-height: 1.2;
+}
+
+/* スマホ用（画面幅が狭い場合） */
+@media (max-width: 600px) {
+  .monster-box {
+    width: 18vw;
+    height: auto;
+  }
+  .monster-box img {
+    width: 14vw;
+    height: 14vw;
+    border-width: 1.5px;
+    object-fit: contain;
+  }
+  .monster-prob-text {
+    font-size: 11px;
+  }
+}
+/* ===== モンスターごとの確率欄：隙間なしで全面表示 ===== */
+.monster-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80px;
+  height: 110px;
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden; /* ← 枠外にはみ出させない */
+}
+
+.monster-box img {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #000;
+  border-radius: 4px;
+  background: #fff;
+  object-fit: cover; /* ← contain→cover に変更して隙間をゼロに */
+  display: block;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 確率テキスト */
+.monster-prob-text {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: #222;
+  line-height: 1.2;
+}
+
+/* スマホ用 */
+@media (max-width: 600px) {
+  .monster-box {
+    width: 18vw;
+    height: 18vw;        /* 正方形を確保し、余白を防ぐ */
+  }
+
+  .monster-box img {
+    width: 100%;
+    height: 100%;
+    border-width: 1.5px;
+    object-fit: cover;    /* スマホでも全面表示 */
+  }
+
+  .monster-prob-text {
+    font-size: 11px;
+  }
+}
+

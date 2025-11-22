@@ -1,58 +1,58 @@
 // ========== 画像データ ==========
 const images = [
-  { src: './img/cocofanto.png', value: 10, sale: 5 },
-  { src: './img/tob.png', value: 25, sale: 7.5 },
-  { src: './img/tralalero.png', value: 50, sale: 10 },
-  { src: './img/Odin.png', value: 75, sale: 15 },
-  { src: './img/Espressona.png', value: 90, sale: 20 },
-  { src: './img/lavaca.png', value: 100, sale: 25 },
-  { src: './img/ecco.png', value: 110, sale: 27 },
-  { src: './img/losvaguitas.png', value: 115, sale: 29 },
-  { src: './img/bulbito.png', value: 120, sale: 30 },
-  { src: './img/banana.png', value: 120, sale: 32 },
-  { src: './img/chillin.png', value: 130, sale: 33 },
-  { src: './img/brri.png', value: 135, sale: 35 },
-  { src: './img/ciocco.png', value: 140, sale: 36 },
-  { src: './img/brrestrh.png', value: 145, sale: 38 },
-  { src: './img/torrtuginni.png', value: 150, sale: 40 },
-  { src: './img/losbros.png', value: 155, sale: 10 },
-  { src: './img/bambini.png', value: 160, sale: 10 },
-  { src: './img/los.png', value: 170, sale: 10 },
-  { src: './img/alessio.png', value: 180, sale: 60 },
-  { src: './img/karkerkar.png', value: 190, sale: 70 },
-  { src: './img/piccionetama.png', value: 200, sale: 70 },
-  { src: './img/popcon.png', value: 205, sale: 73 },//新
-  { src: './img/iipiccione.png', value: 210, sale: 75 },
-  { src: './img/iimastodontico.png', value: 240, sale: 90 },
-  { src: './img/jobjobjob.png', value: 220, sale: 80 },
-  { src: './img/malame.png', value: 250, sale: 100 },
-  { src: './img/lostralaleritas.png', value: 200, sale: 60 },
-  { src: './img/lostralaletitos.png', value: 200, sale: 60 },
-  { src: './img/trenostruzzo.png', value: 300, sale: 170 },
-  { src: './img/kravilino.png', value: 375, sale: 90 },
-  { src: './img/losorcaleritos.png', value: 400, sale: 160 },
-  { src: './img/loscouples.png', value: 450, sale: 150 },
-  { src: './img/piccione.png', value: 500, sale: 125 },
-  { src: './img/pakrah.png', value: 600, sale: 300 },
-  { src: './img/losjob.png', value: 700, sale: 150 },
-  { src: './img/Babel.png', value: 800, sale: 350 },
-  { src: './img/orcalero.png', value: 1000, sale: 200 },
-  { src: './img/frog.png', value: 1200, sale: 275 },
-  { src: './img/ketchuru.png', value: 1500, sale: 250 },
-  { src: './img/pothotspot.png', value: 2000, sale: 400 },
-  { src: './img/losmobilis.png', value: 2200, sale: 425 },
-  { src: './img/nomyhotspot.png', value: 2500, sale: 450 },
-  { src: './img/garamarama.png', value: 3000, sale: 500 },
-  { src: './img/iisacro.png', value: 4000, sale: 800 },
-  { src: './img/chari2.png', value: 4500, sale: 900 },
-  { src: './img/lagrande.png', value: 5000, sale: 1000 },
-  { src: './img/legolem.png', value: 6000, sale: 1300 },//新
-  { src: './img/67.png', value: 6700, sale: 6700 },
-  { src: './img/chicleteira.png', value: 8000, sale: 2000 },
-  { src: './img/pad.png', value: 10000, sale: 3000 },
-  { src: './img/dulduldul.png', value: 12000, sale: 5000 },
-  { src: './img/loshouse.png', value: 17500, sale: 1500 },
-  { src: './img/chinpanking.png', value: 25000, sale: 10000 },
+  { src: './img/cocofanto.png', value: 10 ,sale:5},
+  { src: './img/tob.png', value: 25 ,sale:7.5},
+  { src: './img/tralalero.png', value: 50 ,sale:10},
+  { src: './img/Odin.png', value: 75 ,sale:15},
+  { src: './img/Espressona.png', value: 90 ,sale:20},
+  { src: './img/lavaca.png', value: 100 ,sale:25},
+  { src: './img/ecco.png', value: 110 ,sale:27},
+  { src: './img/losvaguitas.png', value: 115 ,sale:29},
+  { src: './img/bulbito.png', value: 120 ,sale:30},
+  { src: './img/banana.png', value: 120 ,sale:32},
+  { src: './img/chillin.png', value: 130 ,sale:33},
+  { src: './img/brri.png', value: 135 ,sale:35},
+  { src: './img/ciocco.png', value: 140 ,sale:36},
+  { src: './img/brrestrh.png', value: 145 ,sale:38},
+  { src: './img/torrtuginni.png', value: 150 ,sale:40},
+  { src: './img/losbros.png', value: 155 ,sale:10},
+  { src: './img/bambini.png', value: 160 ,sale:10},
+  { src: './img/los.png', value: 170 ,sale:10},
+  { src: './img/alessio.png', value: 180 ,sale:60},
+  { src: './img/karkerkar.png', value: 190 ,sale:70},
+  { src: './img/piccionetama.png', value: 200 ,sale:70},
+  { src: './img/popcon.png', value: 205 ,sale:73},//新
+  { src: './img/iipiccione.png', value: 210 ,sale:75},
+  { src: './img/iimastodontico.png', value: 240 ,sale:90},
+  { src: './img/jobjobjob.png', value: 220 ,sale:80},
+  { src: './img/malame.png', value: 250 ,sale:100},
+  { src: './img/lostralaleritas.png', value: 200 ,sale:60},
+  { src: './img/lostralaletitos.png', value: 200 ,sale:60},
+  { src: './img/trenostruzzo.png', value: 300 ,sale:170},
+  { src: './img/kravilino.png', value: 375 ,sale:90},
+  { src: './img/losorcaleritos.png', value: 400 ,sale:160},
+  { src: './img/loscouples.png', value: 450 ,sale:150},
+  { src: './img/piccione.png', value: 500 ,sale:125},
+  { src: './img/pakrah.png', value: 600 ,sale:300},
+  { src: './img/losjob.png', value: 700 ,sale:150},
+  { src: './img/Babel.png', value: 800 ,sale:350},
+  { src: './img/orcalero.png', value: 1000 ,sale:200},
+  { src: './img/frog.png', value: 1200 ,sale:275},
+  { src: './img/ketchuru.png', value: 1500 ,sale:250},
+  { src: './img/pothotspot.png', value: 2000 ,sale:400},
+  { src: './img/losmobilis.png', value: 2200 ,sale:425},
+  { src: './img/nomyhotspot.png', value: 2500 ,sale:450},
+  { src: './img/garamarama.png', value: 3000 ,sale:500},
+  { src: './img/iisacro.png', value: 4000 ,sale:800},
+  { src: './img/chari2.png', value: 4500 ,sale:900},
+  { src: './img/lagrande.png', value: 5000 ,sale:1000},
+  { src: './img/legolem.png', value: 6000 ,sale:1300},//新
+  { src: './img/67.png', value: 6700 ,sale:6700},
+  { src: './img/chicleteira.png', value: 8000 ,sale:2000},
+  { src: './img/pad.png', value: 10000 ,sale:3000},
+  { src: './img/dulduldul.png', value: 12000 ,sale:5000},
+  { src: './img/loshouse.png', value: 17500 ,sale:1500},
+  { src: './img/chinpanking.png', value: 25000 ,sale:10000},
 ];
 // ========== DOM要素 ==========
 const gallery = document.getElementById('gallery');
@@ -63,154 +63,122 @@ const monsterProbEl = document.getElementById('monster-probability'); // ← 新
 const resetBtn = document.getElementById('reset-btn');
 
 // ========== 状態 ==========
-let selectedImages = [null, null, null, null, null];
-let selectedColors = ['Default', 'Default', 'Default', 'Default', 'Default'];
-let selectedHasBorder = [false, false, false, false, false];
+let selectedImages   = [null, null, null, null, null];
+let selectedColors   = ['Default','Default','Default','Default','Default'];
+let selectedHasBorder= [false, false, false, false, false];
 
 // ========== 基本確率 ==========
 const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Neon: 0, Other: 0 };
 
 // ========== モンスターごとの確率ルール（グローバル化） ==========
 const probabilityRules = [
-  {
-    max: 500, list: [
-      { img: 'bambini.png', p: 40 },
-      { img: 'alessio.png', p: 25 },
-      { img: 'karkerkar.png', p: 20 },
-      { img: 'piccione.png', p: 15 },
-    ]
-  },
-  {
-    max: 750, list: [
-      { img: 'alessio.png', p: 25 },
-      { img: 'karkerkar.png', p: 25 },
-      { img: 'piccione.png', p: 35 },
-      { img: 'ketchuru.png', p: 10 },
-      { img: 'pothotspot.png', p: 5 },
-    ]
-  },
-  {
-    max: 1000, list: [
-      { img: 'alessio.png', p: 15 },
-      { img: 'karkerkar.png', p: 10 },
-      { img: 'piccione.png', p: 55 },
-      { img: 'ketchuru.png', p: 15 },
-      { img: 'pothotspot.png', p: 5 },
-    ]
-  },
-  {
-    max: 1500, list: [
-      { img: 'piccione.png', p: 50 },
-      { img: 'ketchuru.png', p: 30 },
-      { img: 'pothotspot.png', p: 20 },
-    ]
-  },
-  {
-    max: 2000, list: [
-      { img: 'piccione.png', p: 30 },
-      { img: 'ketchuru.png', p: 30 },
-      { img: 'pothotspot.png', p: 35 },
-      { img: 'iisacro.png', p: 5 },
-    ]
-  },
-  {
-    max: 3000, list: [
-      { img: 'ketchuru.png', p: 30 },
-      { img: 'pothotspot.png', p: 55 },
-      { img: 'iisacro.png', p: 15 },
-    ]
-  },
-  {
-    max: 4000, list: [
-      { img: 'ketchuru.png', p: 10 },
-      { img: 'pothotspot.png', p: 60 },
-      { img: 'iisacro.png', p: 25 },
-      { img: 'chicleteira.png', p: 5 },
-    ]
-  },
-  {
-    max: 5000, list: [
-      { img: 'pothotspot.png', p: 45 },
-      { img: 'iisacro.png', p: 30 },
-      { img: 'legolem.png', p: 20 },
-      { img: 'chicleteira.png', p: 5 },
-    ]
-  },
-  {
-    max: 6500, list: [
-      { img: 'pothotspot.png', p: 25 },
-      { img: 'iisacro.png', p: 25 },
-      { img: 'legolem.png', p: 30 },
-      { img: 'chicleteira.png', p: 20 },
-    ]
-  },
-  {
-    max: 8000, list: [
-      { img: 'pothotspot.png', p: 5 },
-      { img: 'iisacro.png', p: 30 },
-      { img: 'legolem.png', p: 35 },
-      { img: 'chicleteira.png', p: 25 },
-      { img: 'dulduldul.png', p: 5 },
-    ]
-  },
-  {
-    max: 10000, list: [
-      { img: 'iisacro.png', p: 25 },
-      { img: 'legolem.png', p: 35 },
-      { img: 'chicleteira.png', p: 30 },
-      { img: 'dulduldul.png', p: 10 },
-    ]
-  },
-  {
-    max: 12000, list: [
-      { img: 'iisacro.png', p: 10 },
-      { img: 'legolem.png', p: 25 },
-      { img: 'chicleteira.png', p: 45 },
-      { img: 'dulduldul.png', p: 20 },
-    ]
-  },
-  {
-    max: 16000, list: [
-      { img: 'iisacro.png', p: 10 },
-      { img: 'legolem.png', p: 15 },
-      { img: 'chicleteira.png', p: 40 },
-      { img: 'dulduldul.png', p: 30 },
-      { img: 'chinpanking.png', p: 5 },
-    ]
-  },
-  {
-    max: 20000, list: [
-      { img: 'legolem.png', p: 10 },
-      { img: 'chicleteira.png', p: 35 },
-      { img: 'dulduldul.png', p: 45 },
-      { img: 'chinpanking.png', p: 10 },
-    ]
-  },
-  {
-    max: 25000, list: [
-      { img: 'chicleteira.png', p: 35 },
-      { img: 'dulduldul.png', p: 50 },
-      { img: 'chinpanking.png', p: 15 },
-    ]
-  },
-  {
-    max: Infinity, list: [
-      { img: 'chicleteira.png', p: 25 },
-      { img: 'dulduldul.png', p: 55 },
-      { img: 'chinpanking.png', p: 20 },
-    ]
-  },
+  { max: 500, list: [
+    {img:'bambini.png', p:40},
+    {img:'alessio.png', p:25},
+    {img:'karkerkar.png', p:20},
+    {img:'piccione.png', p:15},
+  ]},
+  { max: 750, list: [
+    {img:'alessio.png', p:25},
+    {img:'karkerkar.png', p:25},
+    {img:'piccione.png', p:35},
+    {img:'ketchuru.png', p:10},
+    {img:'pothotspot.png', p:5},
+  ]},
+  { max: 1000, list: [
+    {img:'alessio.png', p:15},
+    {img:'karkerkar.png', p:10},
+    {img:'piccione.png', p:55},
+    {img:'ketchuru.png', p:15},
+    {img:'pothotspot.png', p:5},
+  ]},
+  { max: 1500, list: [
+    {img:'piccione.png', p:50},
+    {img:'ketchuru.png', p:30},
+    {img:'pothotspot.png', p:20},
+  ]},
+  { max: 2000, list: [
+    {img:'piccione.png', p:30},
+    {img:'ketchuru.png', p:30},
+    {img:'pothotspot.png', p:35},
+    {img:'iisacro.png', p:5},
+  ]},
+  { max: 3000, list: [
+    {img:'ketchuru.png', p:30},
+    {img:'pothotspot.png', p:55},
+    {img:'iisacro.png', p:15},
+  ]},
+  { max: 4000, list: [
+    {img:'ketchuru.png', p:10},
+    {img:'pothotspot.png', p:60},
+    {img:'iisacro.png', p:25},
+    {img:'chicleteira.png', p:5},
+  ]},
+  { max: 5000, list: [
+    {img:'pothotspot.png', p:45},
+    {img:'iisacro.png', p:30},
+    {img:'legolem.png', p:20},
+    {img:'chicleteira.png', p:5},
+  ]},
+  { max: 6500, list: [
+    {img:'pothotspot.png', p:25},
+    {img:'iisacro.png', p:25},
+    {img:'legolem.png', p:30},
+    {img:'chicleteira.png', p:20},
+  ]},
+  { max: 8000, list: [
+    {img:'pothotspot.png', p:5},
+    {img:'iisacro.png', p:30},
+    {img:'legolem.png', p:35},
+    {img:'chicleteira.png', p:25},
+    {img:'dulduldul.png', p:5},
+  ]},
+  { max: 10000, list: [
+    {img:'iisacro.png', p:25},
+    {img:'legolem.png', p:35},
+    {img:'chicleteira.png', p:30},
+    {img:'dulduldul.png', p:10},
+  ]},
+  { max: 12000, list: [
+    {img:'iisacro.png', p:10},
+    {img:'legolem.png', p:25},
+    {img:'chicleteira.png', p:45},
+    {img:'dulduldul.png', p:20},
+  ]},
+  { max: 16000, list: [
+    {img:'iisacro.png', p:10},
+    {img:'legolem.png', p:15},
+    {img:'chicleteira.png', p:40},
+    {img:'dulduldul.png', p:30},
+    {img:'chinpanking.png', p:5},
+  ]},
+  { max: 20000, list: [
+    {img:'legolem.png', p:10},
+    {img:'chicleteira.png', p:35},
+    {img:'dulduldul.png', p:45},
+    {img:'chinpanking.png', p:10},
+  ]},
+  { max: 25000, list: [
+    {img:'chicleteira.png', p:35},
+    {img:'dulduldul.png', p:50},
+    {img:'chinpanking.png', p:15},
+  ]},
+  { max: Infinity, list: [
+    {img:'chicleteira.png', p:25},
+    {img:'dulduldul.png', p:55},
+    {img:'chinpanking.png', p:20},
+  ]},
 ];
 
 // ========== ユーティリティ ==========
-function formatSaleLabelM(valueM) {
+function formatSaleLabelM(valueM){
   if (valueM >= 1000) {
     const b = valueM / 1000;
     return `$ ${trimNum(b)} B`;
   }
   return `$ ${trimNum(valueM)} M`;
 }
-function trimNum(n) {
+function trimNum(n){
   return Number.isInteger(n) ? String(n) : String(+parseFloat(n.toFixed(2)));
 }
 
@@ -256,8 +224,8 @@ images.forEach((imgObj) => {
   img.addEventListener('click', () => {
     const emptyIndex = selectedImages.findIndex(v => v === null);
     if (emptyIndex === -1) return;
-    selectedImages[emptyIndex] = { ...imgObj };
-    selectedColors[emptyIndex] = 'Default';
+    selectedImages[emptyIndex]    = { ...imgObj };
+    selectedColors[emptyIndex]    = 'Default';
     selectedHasBorder[emptyIndex] = true;
     renderSelected();
     updateAll();
@@ -331,7 +299,7 @@ function renderSelected() {
 }
 
 // ========== 枠色 ==========
-function applyOutline(boxEl, idx) {
+function applyOutline(boxEl, idx){
   const color = getButtonColor(selectedColors[idx] || 'Default');
   const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
   if (selectedHasBorder[idx]) {
@@ -341,7 +309,7 @@ function applyOutline(boxEl, idx) {
   }
 }
 
-function removeFromSelected(index) {
+function removeFromSelected(index){
   selectedImages.splice(index, 1);
   selectedImages.push(null);
   selectedColors.splice(index, 1);
@@ -354,15 +322,15 @@ function removeFromSelected(index) {
 
 // ========== RESET ==========
 resetBtn.addEventListener('click', () => {
-  selectedImages = [null, null, null, null, null];
-  selectedColors = ['Default', 'Default', 'Default', 'Default', 'Default'];
+  selectedImages    = [null, null, null, null, null];
+  selectedColors    = ['Default','Default','Default','Default','Default'];
   selectedHasBorder = [false, false, false, false, false];
   renderSelected();
   updateAll();
 });
 
 // ========== 更新 ==========
-function updateAll() {
+function updateAll(){
   updateTotal();
   updateMonsterProbability();
   updateTypeProbability();
@@ -371,7 +339,7 @@ function updateAll() {
 // ========== Total欄 ==========
 function updateTotal() {
   const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
-  const sumSaleM = selectedImages.reduce((acc, img) => acc + Number(img?.sale || 0), 0);
+  const sumSaleM = selectedImages.reduce((acc, img) => acc + Number(img?.sale  || 0), 0);
 
   let waitStr = "1h0m";
   if (sumValue > 5000) waitStr = "2h0m";
@@ -385,15 +353,15 @@ function updateTotal() {
   if (diffToNext === null) {
     nextLineText = "確率は現在が最高帯です";
   } else if (diffToNext > 0) {
-    nextLineText = `確率が変わるまであと<span class="total-number">${diffToNext}</span> K/s`;
+    nextLineText = `確率が変わるまであと${diffToNext} K/s`;
   } else {
     // diffToNextが0以下の場合も一応ハンドリング
-    nextLineText = "確率が変わるまであと <span class=\"total-number\">1</span> K/s";
+    nextLineText = "確率が変わるまであと 1 K/s";
   }
 
   totalBox.innerHTML = [
-    `Total K/s：<span class="total-number">${sumValue}</span>`,
-    //`Total $　：<span class="total-number">${sumSaleLabel}</span>`,
+    `Total K/s：${sumValue}`,
+    `Total $　：${sumSaleLabel}`,
     //`Wait　　：${waitStr}`,
     nextLineText
   ].map(t => `<div>${t}</div>`).join('');
@@ -438,18 +406,18 @@ function updateMonsterProbability() {
 }
 
 // ========== 種類確率 ==========
-function updateTypeProbability() {
+function updateTypeProbability(){
   const probs = { ...baseProb };
-  const colorSums = { Default: 0, Gold: 0, Diamond: 0, Rainbow: 0, Neon: 0, Other: 0 };
+  const colorSums = { Default:0, Gold:0, Diamond:0, Rainbow:0, Neon:0, Other:0 };
 
-  for (let i = 0; i < selectedImages.length; i++) {
+  for (let i = 0; i < selectedImages.length; i++){
     const img = selectedImages[i];
     if (!img) continue;
     const color = selectedColors[i] || 'Default';
     colorSums[color] += img.value;
   }
 
-  const totalColorSum = Object.values(colorSums).reduce((a, b) => a + b, 0);
+  const totalColorSum = Object.values(colorSums).reduce((a,b)=>a+b,0);
   if (totalColorSum > 0) {
     const bonus = 75;
     for (const c in colorSums) {
@@ -461,22 +429,22 @@ function updateTypeProbability() {
 
   const items = Object.keys(probs)
     .map(k => ({ name: k, prob: (probs[k] || 0).toFixed(1) }))
-    .sort((a, b) => b.prob - a.prob);
+    .sort((a,b) => b.prob - a.prob);
 
   typeProbEl.innerHTML = items
     .map(it => `<span class="${it.name}">${it.name}: ${it.prob}%</span>`)
     .join('');
 }
 
-function getButtonColor(type) {
-  switch (type) {
-    case 'Default': return '#333333';
-    case 'Gold': return '#ffd700';
-    case 'Diamond': return '#00b0ff';
-    case 'Rainbow': return '#d500f9';
-    case 'Neon': return '#00c853';
-    case 'Other': return '#888888';
-    default: return '#333333';
+function getButtonColor(type){
+  switch(type){
+    case 'Default': return 'black';
+    case 'Gold': return '#ffff99';
+    case 'Diamond': return 'cyan';
+    case 'Rainbow': return 'pink';
+    case 'Neon': return 'dodgerblue';
+    case 'Other': return 'white';
+    default: return 'black';
   }
 }
 
