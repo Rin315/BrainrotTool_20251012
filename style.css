@@ -500,6 +500,10 @@ h2 {
 }
 
 @media (max-width: 600px) {
+  :root {
+    --imgW: 60px;
+  }
+
   .imgbox {
     width: 60px;
     height: 60px;
