@@ -507,11 +507,16 @@ h2 {
   .imgbox {
     width: 60px;
     height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .imgbox img {
-    width: 40px;
-    height: 40px;
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    /* Reduced padding to maximize image size */
   }
 
   .value-label {
