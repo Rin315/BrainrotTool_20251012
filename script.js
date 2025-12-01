@@ -4,6 +4,7 @@ const images = [
   { src: './img/tob.png', value: 25, sale: 7.5 },
   { src: './img/tralalero.png', value: 50, sale: 10 },
   { src: './img/Odin.png', value: 75, sale: 15 },
+  { src: './img/chache.png', value: 80, sale: 15 },//机
   { src: './img/Espressona.png', value: 90, sale: 20 },
   { src: './img/lavaca.png', value: 100, sale: 25 },
   { src: './img/ecco.png', value: 110, sale: 27 },
@@ -11,6 +12,7 @@ const images = [
   { src: './img/bulbito.png', value: 120, sale: 30 },
   { src: './img/banana.png', value: 120, sale: 32 },
   { src: './img/chillin.png', value: 130, sale: 33 },
+  { src: './img/trippi.png', value: 130, sale: 33 },//ピラニア
   { src: './img/brri.png', value: 135, sale: 35 },
   { src: './img/ciocco.png', value: 140, sale: 36 },
   { src: './img/brrestrh.png', value: 145, sale: 38 },
@@ -21,7 +23,7 @@ const images = [
   { src: './img/alessio.png', value: 180, sale: 60 },
   { src: './img/karkerkar.png', value: 190, sale: 70 },
   { src: './img/piccionetama.png', value: 200, sale: 70 },
-  { src: './img/popcon.png', value: 205, sale: 73 },//新
+  { src: './img/popcon.png', value: 205, sale: 73 },
   { src: './img/iipiccione.png', value: 210, sale: 75 },
   { src: './img/iimastodontico.png', value: 240, sale: 90 },
   { src: './img/jobjobjob.png', value: 220, sale: 80 },
@@ -36,6 +38,7 @@ const images = [
   { src: './img/piccione.png', value: 500, sale: 125 },
   { src: './img/pakrah.png', value: 600, sale: 300 },
   { src: './img/losjob.png', value: 700, sale: 150 },
+  { src: './img/4000.png', value: 700, sale: 150 },//4000
   { src: './img/Babel.png', value: 800, sale: 350 },
   { src: './img/orcalero.png', value: 1000, sale: 200 },
   { src: './img/frog.png', value: 1200, sale: 275 },
@@ -45,10 +48,11 @@ const images = [
   { src: './img/losmobilis.png', value: 2200, sale: 425 },
   { src: './img/nomyhotspot.png', value: 2500, sale: 450 },
   { src: './img/garamarama.png', value: 3000, sale: 500 },
+  { src: './img/pirulitoita.png', value: 3500, sale: 500 },//飴
   { src: './img/iisacro.png', value: 4000, sale: 800 },
   { src: './img/chari2.png', value: 4500, sale: 900 },
   { src: './img/lagrande.png', value: 5000, sale: 1000 },
-  { src: './img/legolem.png', value: 6000, sale: 1300 },//新
+  { src: './img/legolem.png', value: 6000, sale: 1300 },
   { src: './img/67.png', value: 6700, sale: 6700 },
   { src: './img/loshouse.png', value: 7000, sale: 1500 },
   { src: './img/chicleteira.png', value: 8000, sale: 2000 },
