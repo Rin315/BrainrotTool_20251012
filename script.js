@@ -20,6 +20,7 @@ const images = [
   { src: './img/losbros.png', value: 155, sale: 10 },
   { src: './img/bambini.png', value: 160, sale: 10 },
   { src: './img/los.png', value: 170, sale: 10 },
+  { src: './img/agarrini.png', value: 175, sale: 10000 },//スコップ
   { src: './img/alessio.png', value: 180, sale: 60 },
   { src: './img/karkerkar.png', value: 190, sale: 70 },
   { src: './img/piccionetama.png', value: 200, sale: 70 },
@@ -29,6 +30,7 @@ const images = [
   { src: './img/jobjobjob.png', value: 220, sale: 80 },
   { src: './img/malame.png', value: 250, sale: 100 },
   { src: './img/belugelo.png', value: 270, sale: 100 },
+  { src: './img/miss.png', value: 300, sale: 10000 },//ロケット
   { src: './img/lostralaleritas.png', value: 200, sale: 60 },
   { src: './img/lostralaletitos.png', value: 200, sale: 60 },
   { src: './img/trenostruzzo.png', value: 300, sale: 170 },
@@ -59,6 +61,8 @@ const images = [
   { src: './img/pad.png', value: 10000, sale: 3000 },
   { src: './img/dulduldul.png', value: 12000, sale: 5000 },
   { src: './img/chinpanking.png', value: 25000, sale: 10000 },
+
+  
 ];
 // ========== DOM要素 ==========
 const gallery = document.getElementById('gallery');
