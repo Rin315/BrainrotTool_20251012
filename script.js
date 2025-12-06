@@ -41,6 +41,7 @@ const images = [
   { src: './img/kravilino.png', value: 375, sale: 1 },
   { src: './img/losorcaleritos.png', value: 400, sale: 1 },
   { src: './img/loscouples.png', value: 450, sale: 1 },
+  { src: './img/peely.png', value: 500, sale: 1 },
   { src: './img/piccione.png', value: 500, sale: 1 },
   { src: './img/pakrah.png', value: 600, sale: 1 },
   { src: './img/losjob.png', value: 700, sale: 1 },
@@ -270,42 +271,111 @@ function getPrevThresholdDiff(sumValue) {
 }
 
 // ========== ギャラリー生成 ==========
-images.forEach((imgObj) => {
+// ========== ギャラリー生成 ==========
+// グループ化
+const groupedImages = [];
+const processedIndices = new Set();
+
+images.forEach((imgObj, index) => {
+  if (processedIndices.has(index)) return;
+
+  // 同じvalueとsaleを持つものを探す
+  const group = [imgObj];
+  processedIndices.add(index);
+
+  for (let i = index + 1; i < images.length; i++) {
+    if (processedIndices.has(i)) continue;
+    const other = images[i];
+    if (other.value === imgObj.value && other.sale === imgObj.sale) {
+      group.push(other);
+      processedIndices.add(i);
+    }
+  }
+  groupedImages.push(group);
+});
+
+groupedImages.forEach((group) => {
   const box = document.createElement('div');
   box.className = 'imgbox imgbox--gallery';
 
-  const img = document.createElement('img');
-  img.src = imgObj.src;
-  img.className = 'gallery-img';
-  img.style.objectFit = 'cover';
+  // 共通のラベル情報
+  const firstObj = group[0];
+
+  if (group.length > 1) {
+    // 複数ある場合（分割表示）
+    box.classList.add('imgbox--split');
+
+    // ヒットエリアと画像を生成
+    // CSSの ~ セレクタのために、ヒットエリアを先にDOMに追加する必要があるか、
+    // あるいは兄弟関係であれば順序は柔軟だが、ここでは「ヒットエリア -> 画像」の順で追加する
+    // ただし、HitLeft -> ImgLeft -> HitRight -> ImgRight の順でも
+    // HitLeft ~ ImgLeft は成立する。
+
+    group.forEach((imgObj, index) => {
+      const isLeft = index === 0;
+
+      // 1. ヒットエリア作成
+      const hitArea = document.createElement('div');
+      hitArea.className = `split-hit-area ${isLeft ? 'split-hit-left' : 'split-hit-right'}`;
+      hitArea.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectMonster(imgObj);
+      });
+      box.appendChild(hitArea);
+
+      // 2. 画像作成
+      const img = document.createElement('img');
+      img.src = imgObj.src;
+      img.className = `gallery-img split-img ${isLeft ? 'split-img-left' : 'split-img-right'}`;
+      img.style.objectFit = 'cover';
+      // 画像自体のクリックイベントはヒットエリアが上に来るため不要だが、念のため削除または残してもよい
+      // ここではヒットエリアがclickを拾うので画像にはつけない
+
+      box.appendChild(img);
+    });
+
+  } else {
+    // 1つの場合（通常表示）
+    const imgObj = group[0];
+    const img = document.createElement('img');
+    img.src = imgObj.src;
+    img.className = 'gallery-img';
+    img.style.objectFit = 'cover';
+
+    img.addEventListener('click', () => {
+      selectMonster(imgObj);
+    });
+
+    box.appendChild(img);
+  }
 
   const label = document.createElement('div');
   label.className = 'value-label';
-  label.textContent = `${imgObj.value} K/s`;
+  label.textContent = `${firstObj.value} K/s`;
 
   const saleLabel = document.createElement('div');
   saleLabel.className = 'sale-label';
-  saleLabel.textContent = formatSaleLabelM(imgObj.sale);
+  saleLabel.textContent = formatSaleLabelM(firstObj.sale);
 
-  img.addEventListener('click', () => {
-    const emptyIndex = selectedImages.findIndex(v => v === null);
-    if (emptyIndex === -1) return;
-    selectedImages[emptyIndex] = { ...imgObj };
-    selectedColors[emptyIndex] = 'Default';
-    selectedHasBorder[emptyIndex] = true;
-    renderSelected();
-    updateAll();
-  });
-
-  box.appendChild(img);
   box.appendChild(label);
   box.appendChild(saleLabel);
-  if (imgObj.sale === 0) {
+
+  if (firstObj.sale === 0) {
     galleryBrainrot.appendChild(box);
   } else {
     gallerySecret.appendChild(box);
   }
 });
+
+function selectMonster(imgObj) {
+  const emptyIndex = selectedImages.findIndex(v => v === null);
+  if (emptyIndex === -1) return;
+  selectedImages[emptyIndex] = { ...imgObj };
+  selectedColors[emptyIndex] = 'Default';
+  selectedHasBorder[emptyIndex] = true;
+  renderSelected();
+  updateAll();
+}
 
 // ========== 選択エリア描画 ==========
 function renderSelected() {
@@ -318,11 +388,25 @@ function renderSelected() {
       const box = document.createElement('div');
       box.className = 'imgbox imgbox--selected';
 
-      const img = document.createElement('img');
-      img.src = imgObj.src;
-      img.className = 'selected-img';
-      img.addEventListener('click', () => removeFromSelected(idx));
-      box.appendChild(img);
+      // グループ（ペア）を探す
+      const group = images.filter(img => img.value === imgObj.value && img.sale === imgObj.sale);
+
+      if (group.length > 1) {
+        box.classList.add('imgbox--split');
+        group.forEach((gImg, index) => {
+          const img = document.createElement('img');
+          img.src = gImg.src;
+          img.className = `selected-img split-img ${index === 0 ? 'split-img-left' : 'split-img-right'}`;
+          img.addEventListener('click', () => removeFromSelected(idx));
+          box.appendChild(img);
+        });
+      } else {
+        const img = document.createElement('img');
+        img.src = imgObj.src;
+        img.className = 'selected-img';
+        img.addEventListener('click', () => removeFromSelected(idx));
+        box.appendChild(img);
+      }
 
       const label = document.createElement('div');
       label.textContent = `${imgObj.value} K/s`;

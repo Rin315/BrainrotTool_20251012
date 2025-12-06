@@ -165,6 +165,80 @@ h2 {
   padding: 8px;
 }
 
+.imgbox--split {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Ensure relative positioning for absolute children */
+}
+
+.split-hit-area {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  z-index: 10;
+  cursor: pointer;
+  background: transparent;
+  /* Transparent hit area */
+}
+
+.split-hit-left {
+  left: 0;
+}
+
+.split-hit-right {
+  right: 0;
+}
+
+.split-img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  padding: 0;
+  margin: 0;
+  transition: width 0.3s ease;
+  position: absolute;
+  /* Absolute positioning for overlap */
+  top: 0;
+  pointer-events: none;
+  /* Let clicks pass to hit area (though hit area is on top) */
+}
+
+.split-img-left {
+  left: 0;
+  object-position: center;
+}
+
+.split-img-right {
+  right: 0;
+  object-position: center;
+}
+
+/* Hover Effects for Split Images */
+/* Default state: 50/50 */
+
+/* When hovering left hit area, expand left image */
+.split-hit-left:hover~.split-img-left {
+  width: 100%;
+  z-index: 5;
+}
+
+/* When hovering right hit area, expand right image */
+.split-hit-right:hover~.split-img-right {
+  width: 100%;
+  z-index: 5;
+}
+
+/* When hovering the box (but not a specific hit area, e.g. transition), ensure others shrink? 
+   Actually, with absolute positioning, if left expands to 100%, right is covered.
+   We don't strictly need to shrink the other one to 0% if z-index handles visibility.
+   But to be safe and match previous logic:
+*/
+
+
 .value-label,
 .sale-label {
   position: absolute;
@@ -253,6 +327,12 @@ h2 {
   height: 100%;
   object-fit: contain;
   padding: 8px;
+}
+
+.selected-img.split-img {
+  width: 50%;
+  object-fit: cover;
+  padding: 0;
 }
 
 .button-container {
