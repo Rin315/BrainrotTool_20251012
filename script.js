@@ -1,73 +1,81 @@
 // ========== 画像データ ==========
 const images = [
-  { src: './img/cocofanto.png', value: 10, sale: 5 },
-  { src: './img/tob.png', value: 25, sale: 7.5 },
-  { src: './img/tralalero.png', value: 50, sale: 10 },
-  { src: './img/Odin.png', value: 75, sale: 15 },
-  { src: './img/chache.png', value: 80, sale: 15 },//机
-  { src: './img/Espressona.png', value: 90, sale: 20 },
-  { src: './img/lavaca.png', value: 100, sale: 25 },
-  { src: './img/ecco.png', value: 110, sale: 27 },
-  { src: './img/losvaguitas.png', value: 115, sale: 29 },
-  { src: './img/bulbito.png', value: 120, sale: 30 },
-  { src: './img/banana.png', value: 120, sale: 32 },
-  { src: './img/chillin.png', value: 130, sale: 33 },
-  { src: './img/trippi.png', value: 130, sale: 33 },//ピラニア
-  { src: './img/brri.png', value: 135, sale: 35 },
-  { src: './img/ciocco.png', value: 140, sale: 36 },
-  { src: './img/brrestrh.png', value: 145, sale: 38 },
-  { src: './img/torrtuginni.png', value: 150, sale: 40 },
-  { src: './img/losbros.png', value: 155, sale: 10 },
-  { src: './img/bambini.png', value: 160, sale: 10 },
-  { src: './img/los.png', value: 170, sale: 10 },
-  { src: './img/agarrini.png', value: 175, sale: 10000 },//スコップ
-  { src: './img/alessio.png', value: 180, sale: 60 },
-  { src: './img/karkerkar.png', value: 190, sale: 70 },
-  { src: './img/piccionetama.png', value: 200, sale: 70 },
-  { src: './img/popcon.png', value: 205, sale: 73 },
-  { src: './img/iipiccione.png', value: 210, sale: 75 },
-  { src: './img/iimastodontico.png', value: 240, sale: 90 },
-  { src: './img/jobjobjob.png', value: 220, sale: 80 },
-  { src: './img/malame.png', value: 250, sale: 100 },
-  { src: './img/belugelo.png', value: 270, sale: 100 },
-  { src: './img/miss.png', value: 300, sale: 10000 },//ロケット
-  { src: './img/lostralaleritas.png', value: 200, sale: 60 },
-  { src: './img/lostralaletitos.png', value: 200, sale: 60 },
-  { src: './img/trenostruzzo.png', value: 300, sale: 170 },
-  { src: './img/kravilino.png', value: 375, sale: 90 },
-  { src: './img/losorcaleritos.png', value: 400, sale: 160 },
-  { src: './img/loscouples.png', value: 450, sale: 150 },
-  { src: './img/piccione.png', value: 500, sale: 125 },
-  { src: './img/pakrah.png', value: 600, sale: 300 },
-  { src: './img/losjob.png', value: 700, sale: 150 },
-  { src: './img/4000.png', value: 700, sale: 150 },//4000
-  { src: './img/Babel.png', value: 800, sale: 350 },
-  { src: './img/orcalero.png', value: 1000, sale: 200 },
-  { src: './img/frog.png', value: 1200, sale: 275 },
-  { src: './img/ketchuru.png', value: 1500, sale: 250 },
-  { src: './img/pothotspot.png', value: 2000, sale: 400 },
-  { src: './img/21.png', value: 2100, sale: 400 },
-  { src: './img/losmobilis.png', value: 2200, sale: 425 },
-  { src: './img/nomyhotspot.png', value: 2500, sale: 450 },
-  { src: './img/garamarama.png', value: 3000, sale: 500 },
-  { src: './img/pirulitoita.png', value: 3500, sale: 500 },//飴
-  { src: './img/iisacro.png', value: 4000, sale: 800 },
-  { src: './img/chari2.png', value: 4500, sale: 900 },
-  { src: './img/lagrande.png', value: 5000, sale: 1000 },
-  { src: './img/legolem.png', value: 6000, sale: 1300 },
-  { src: './img/67.png', value: 6700, sale: 6700 },
-  { src: './img/loshouse.png', value: 7000, sale: 1500 },
-  { src: './img/chicleteira.png', value: 8000, sale: 2000 },
-  { src: './img/pad.png', value: 10000, sale: 3000 },
-  { src: './img/dulduldul.png', value: 12000, sale: 5000 },
-  { src: './img/chinpanking.png', value: 25000, sale: 10000 },
+  //　Brainrot Got
+  { src: './img/cocofanto.png', value: 10, sale: 0 },
+  { src: './img/tob.png', value: 25, sale: 0 },
+  { src: './img/tralalero.png', value: 50, sale: 0 },
+  { src: './img/Odin.png', value: 75, sale: 0 },
+  { src: './img/chache.png', value: 80, sale: 0 },//机
+  { src: './img/Espressona.png', value: 90, sale: 0 },
+  { src: './img/lavaca.png', value: 100, sale: 0 },
+  { src: './img/ecco.png', value: 110, sale: 0 },
+  { src: './img/losvaguitas.png', value: 115, sale: 0 },
+  { src: './img/bulbito.png', value: 120, sale: 0 },
+  { src: './img/banana.png', value: 120, sale: 0 },
+  { src: './img/chillin.png', value: 130, sale: 0 },
+  { src: './img/trippi.png', value: 130, sale: 0 },//ピラニア
+  { src: './img/brri.png', value: 135, sale: 0 },
+  { src: './img/ciocco.png', value: 140, sale: 0 },
+  { src: './img/brrestrh.png', value: 145, sale: 0 },
+  { src: './img/torrtuginni.png', value: 150, sale: 0 },
+  { src: './img/losbros.png', value: 155, sale: 0 },
+  { src: './img/bambini.png', value: 160, sale: 0 },
+  { src: './img/los.png', value: 170, sale: 0 },
+  { src: './img/agarrini.png', value: 175, sale: 0 },//スコップ
+  { src: './img/alessio.png', value: 180, sale: 0 },
+  { src: './img/karkerkar.png', value: 190, sale: 0 },
+  { src: './img/piccionetama.png', value: 200, sale: 0 },
+  { src: './img/popcon.png', value: 205, sale: 0 },
+  { src: './img/iipiccione.png', value: 210, sale: 0 },
+  { src: './img/iimastodontico.png', value: 240, sale: 0 },
+  { src: './img/jobjobjob.png', value: 220, sale: 0 },
+  //{ src: './img/Lassis.png', value: 230, sale: 0 },//姉妹
+  { src: './img/malame.png', value: 250, sale: 0 },
+  { src: './img/belugelo.png', value: 270, sale: 0 },
+  { src: './img/miss.png', value: 300, sale: 0 },//ロケット
 
-  
+  //　Secret
+  { src: './img/lostralaleritas.png', value: 200, sale: 1 },
+  { src: './img/lostralaletitos.png', value: 200, sale: 1 },
+  { src: './img/trenostruzzo.png', value: 300, sale: 1 },
+  { src: './img/kravilino.png', value: 375, sale: 1 },
+  { src: './img/losorcaleritos.png', value: 400, sale: 1 },
+  { src: './img/loscouples.png', value: 450, sale: 1 },
+  { src: './img/piccione.png', value: 500, sale: 1 },
+  { src: './img/pakrah.png', value: 600, sale: 1 },
+  { src: './img/losjob.png', value: 700, sale: 1 },
+  { src: './img/4000.png', value: 700, sale: 1 },//4000
+  { src: './img/Babel.png', value: 800, sale: 1 },
+  { src: './img/orcalero.png', value: 1000, sale: 1 },
+  { src: './img/frog.png', value: 1200, sale: 1 },
+  { src: './img/ketchuru.png', value: 1500, sale: 1 },
+  { src: './img/pothotspot.png', value: 2000, sale: 1 },
+  { src: './img/21.png', value: 2100, sale: 1 },
+  { src: './img/losmobilis.png', value: 2200, sale: 1 },
+  { src: './img/nomyhotspot.png', value: 2500, sale: 1 },
+  { src: './img/garamarama.png', value: 3000, sale: 1 },
+  { src: './img/pirulitoita.png', value: 3500, sale: 1 },//飴
+  { src: './img/iisacro.png', value: 4000, sale: 1 },
+  { src: './img/chari2.png', value: 4500, sale: 1 },
+  { src: './img/lagrande.png', value: 5000, sale: 1 },
+  { src: './img/legolem.png', value: 6000, sale: 1 },
+  { src: './img/67.png', value: 6700, sale: 1 },
+  { src: './img/loshouse.png', value: 7000, sale: 1 },
+  { src: './img/chicleteira.png', value: 8000, sale: 1 },
+  { src: './img/pad.png', value: 10000, sale: 1 },
+  { src: './img/dulduldul.png', value: 12000, sale: 1 },
+  { src: './img/chinpanking.png', value: 25000, sale: 1 },
+
+
+
+
 ];
 // ========== DOM要素 ==========
-const gallery = document.getElementById('gallery');
+const galleryBrainrot = document.getElementById('gallery-brainrot');
+const gallerySecret = document.getElementById('gallery-secret');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 const totalBox = document.getElementById('total');
+const totalTitle = document.getElementById('total-title');
 const typeProbEl = document.getElementById('probability');
 const monsterProbEl = document.getElementById('monster-probability'); // ← 新パネル
 const resetBtn = document.getElementById('reset-btn');
@@ -245,6 +253,22 @@ function getNextThresholdDiff(sumValue) {
   return null;
 }
 
+// ========== 前のしきい値からの差分 ==========
+function getPrevThresholdDiff(sumValue) {
+  for (let i = 0; i < probabilityRules.length; i++) {
+    const rule = probabilityRules[i];
+    if (sumValue <= rule.max) {
+      if (i === 0) {
+        // 最初の帯なら0からの距離
+        return sumValue;
+      }
+      const prevMax = probabilityRules[i - 1].max;
+      return sumValue - prevMax;
+    }
+  }
+  return null;
+}
+
 // ========== ギャラリー生成 ==========
 images.forEach((imgObj) => {
   const box = document.createElement('div');
@@ -276,7 +300,11 @@ images.forEach((imgObj) => {
   box.appendChild(img);
   box.appendChild(label);
   box.appendChild(saleLabel);
-  gallery.appendChild(box);
+  if (imgObj.sale === 0) {
+    galleryBrainrot.appendChild(box);
+  } else {
+    gallerySecret.appendChild(box);
+  }
 });
 
 // ========== 選択エリア描画 ==========
@@ -390,23 +418,37 @@ function updateTotal() {
   const sumSaleLabel = formatSaleLabelM(sumSaleM).replace('$ ', '');
 
   // 次のしきい値まであと何K/sか
-  const diffToNext = getNextThresholdDiff(sumValue);
+  const diffToNext = getNextThresholdDiff(sumValue) + 1;
   let nextLineText;
   if (diffToNext === null) {
     nextLineText = "確率は現在が最高帯です";
   } else if (diffToNext > 0) {
-    nextLineText = `確率が変わるまであと<span class="total-number">${diffToNext}</span> K/s`;
+    const emoji = diffToNext <= 25 ? " 😱" : "";
+    nextLineText = `次の確率帯まで<span class="total-number">${diffToNext}</span> K/s${emoji}`;
   } else {
     // diffToNextが0以下の場合も一応ハンドリング
-    nextLineText = "確率が変わるまであと <span class=\"total-number\">1</span> K/s";
+    nextLineText = "次の確率帯まで <span class=\"total-number\">1</span> K/s 😱";
   }
 
-  totalBox.innerHTML = [
+  const diffToPrev = getPrevThresholdDiff(sumValue);
+
+  if (totalTitle) {
+    totalTitle.textContent = "Total";
+  }
+
+  const lines = [
     `Total K/s：<span class="total-number">${sumValue}</span>`,
     //`Total $　：<span class="total-number">${sumSaleLabel}</span>`,
     //`Wait　　：${waitStr}`,
     nextLineText
-  ].map(t => `<div>${t}</div>`).join('');
+  ];
+
+  if (diffToPrev !== null) {
+    const emoji = diffToPrev <= 25 ? " 😍" : "";
+    lines.push(`(前の確率帯から +${diffToPrev} K/s${emoji})`);
+  }
+
+  totalBox.innerHTML = lines.map(t => `<div>${t}</div>`).join('');
 }
 
 // ========== モンスターごとの確率ルール取得 ==========
