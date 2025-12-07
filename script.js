@@ -20,6 +20,7 @@ const images = [
   { src: './img/torrtuginni.png', value: 150, sale: 0 },
   { src: './img/losbros.png', value: 155, sale: 0 },
   { src: './img/bambini.png', value: 160, sale: 0 },
+  { src: './img/jiqi.png', value: 165, sale: 0 },//時計
   { src: './img/los.png', value: 170, sale: 0 },
   { src: './img/agarrini.png', value: 175, sale: 0 },//スコップ
   { src: './img/alessio.png', value: 180, sale: 0 },
@@ -43,6 +44,7 @@ const images = [
   { src: './img/loscouples.png', value: 450, sale: 1 },
   { src: './img/peely.png', value: 500, sale: 1 },
   { src: './img/piccione.png', value: 500, sale: 1 },
+  { src: './img/pakrah_w.png', value: 550, sale: 1 },//鉛筆女
   { src: './img/pakrah.png', value: 600, sale: 1 },
   { src: './img/losjob.png', value: 700, sale: 1 },
   { src: './img/4000.png', value: 700, sale: 1 },//4000
@@ -393,11 +395,21 @@ function renderSelected() {
 
       if (group.length > 1) {
         box.classList.add('imgbox--split');
+
         group.forEach((gImg, index) => {
+          const isLeft = index === 0;
+
+          // 1. ヒットエリア作成
+          const hitArea = document.createElement('div');
+          hitArea.className = `split-hit-area ${isLeft ? 'split-hit-left' : 'split-hit-right'}`;
+          hitArea.addEventListener('click', () => removeFromSelected(idx));
+          box.appendChild(hitArea);
+
+          // 2. 画像作成
           const img = document.createElement('img');
           img.src = gImg.src;
-          img.className = `selected-img split-img ${index === 0 ? 'split-img-left' : 'split-img-right'}`;
-          img.addEventListener('click', () => removeFromSelected(idx));
+          img.className = `selected-img split-img ${isLeft ? 'split-img-left' : 'split-img-right'}`;
+          // 画像のクリックイベントはヒットエリアが拾うので不要
           box.appendChild(img);
         });
       } else {
@@ -507,7 +519,7 @@ function updateTotal() {
   if (diffToNext === null) {
     nextLineText = "確率は現在が最高帯です";
   } else if (diffToNext > 0) {
-    const emoji = diffToNext <= 25 ? " 😱" : "";
+    const emoji = diffToNext <= sumValue / 20 ? " 😱" : "";
     nextLineText = `次の確率帯まで<span class="total-number">${diffToNext}</span> K/s${emoji}`;
   } else {
     // diffToNextが0以下の場合も一応ハンドリング
@@ -528,7 +540,7 @@ function updateTotal() {
   ];
 
   if (diffToPrev !== null) {
-    const emoji = diffToPrev <= 25 ? " 😍" : "";
+    const emoji = diffToPrev <= sumValue / 20 ? " 😍" : "";
     lines.push(`(前の確率帯から +${diffToPrev} K/s${emoji})`);
   }
 
