@@ -657,10 +657,45 @@ h2 {
     flex-direction: column;
   }
 
-  .total-panel,
-  .panel:has(#monster-probability),
   .panel:has(#probability) {
     width: 100%;
     flex: none;
+  }
+}
+
+/* ========= Update Section ========= */
+.update-section {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  padding: 0 24px;
+}
+
+.update-info {
+  background: rgba(0, 200, 83, 0.05);
+  border: 1px solid var(--neon-green);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.update-date {
+  font-weight: 700;
+  color: var(--neon-green);
+  white-space: nowrap;
+}
+
+.update-text {
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .update-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
 }
