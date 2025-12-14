@@ -605,6 +605,11 @@ h2 {
     /* Reduced padding to maximize image size */
   }
 
+  .imgbox .split-img {
+    width: 50%;
+    padding: 0;
+  }
+
   .value-label {
     font-size: 9px;
   }
