@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Checklist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./check.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-title">Brainrot Tool</div>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="calculation.html">CALCULATION</a>
+            <a href="Cheack.html" style="color: var(--neon-cyan);">CHECK</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="section-header">
+        <h2 class="category-title">Monster Checklist</h2>
+        <button id="reset-check-btn">RESET ALL</button>
+    </div>
+
+    <!-- Checklist Container -->
+    <div id="checklist-container" class="gallery-grid">
+        <!-- Monsters will be rendered here by check.js -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="check.js"></script>
+</body>
+
+</html>
