@@ -18,7 +18,7 @@ let selectedColors = ['Default', 'Default', 'Default', 'Default', 'Default'];
 let selectedHasBorder = [false, false, false, false, false];
 
 // ========== 基本確率 ==========
-const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Neon: 0, Other: 0 };
+const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Chocolate: 0, Other: 0 };
 
 // ========== モンスターごとの確率ルール（グローバル化） ==========
 const probabilityRules = [
@@ -382,7 +382,7 @@ function renderSelected() {
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
 
-      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Neon', 'Other'].forEach(type => {
+      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Chocolate', 'Other'].forEach(type => {
         const btn = document.createElement('button');
         btn.textContent = type;
         btn.className = type;
@@ -533,7 +533,7 @@ function updateMonsterProbability() {
 // ========== 種類確率 ==========
 function updateTypeProbability() {
   const probs = { ...baseProb };
-  const colorSums = { Default: 0, Gold: 0, Diamond: 0, Rainbow: 0, Neon: 0, Other: 0 };
+  const colorSums = { Default: 0, Gold: 0, Diamond: 0, Rainbow: 0, Chocolate: 0, Other: 0 };
 
   for (let i = 0; i < selectedImages.length; i++) {
     const img = selectedImages[i];
@@ -567,7 +567,7 @@ function getButtonColor(type) {
     case 'Gold': return '#ffd700';
     case 'Diamond': return '#00b0ff';
     case 'Rainbow': return '#d500f9';
-    case 'Neon': return '#00c853';
+    case 'Chocolate': return '#D2691E';
     case 'Other': return '#888888';
     default: return '#333333';
   }

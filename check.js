@@ -2,7 +2,7 @@
 const variants = [
     "Default", "Gold", "Diamond", "Rainbow", "Chocolate",
     "Galaxy", "Zombie", "Dreamy", "ICE&FIRE", "Carnival",
-    "Aqua", "Neon", "Halloween", "Darkness"
+    "Aqua", "Chocolate", "Halloween", "Darkness"
 ];
 
 const checklistContainer = document.getElementById('checklist-container');

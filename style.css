@@ -14,8 +14,11 @@
   /* Darker pink */
   --neon-cyan: #00b0ff;
   /* Darker cyan */
+  /* Darker cyan */
   --neon-yellow: #ffab00;
   /* Darker yellow/amber */
+  --chocolate: #D2691E;
+  /* Chocolate */
 
   /* Dimensions */
   --imgW: 100px;
@@ -392,11 +395,11 @@ h2 {
   background: rgba(213, 0, 249, 0.1);
 }
 
-.button-container button.Neon {
-  border-color: #00c853;
-  color: #00c853 !important;
-  -webkit-text-fill-color: #00c853 !important;
-  background: rgba(0, 200, 83, 0.1);
+.button-container button.Chocolate {
+  border-color: #D2691E;
+  color: #D2691E !important;
+  -webkit-text-fill-color: #D2691E !important;
+  background: rgba(210, 105, 30, 0.1);
 }
 
 .button-container button.Other {
@@ -557,10 +560,10 @@ h2 {
   background: rgba(213, 0, 249, 0.1);
 }
 
-#probability .Neon {
-  color: #00c853;
-  border-color: #00c853;
-  background: rgba(0, 200, 83, 0.1);
+#probability .Chocolate {
+  color: #D2691E;
+  border-color: #D2691E;
+  background: rgba(210, 105, 30, 0.1);
 }
 
 /* Notice */
