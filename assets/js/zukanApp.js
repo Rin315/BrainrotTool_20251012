@@ -154,7 +154,7 @@ function createMonsterCard(monster, index) {
 
     // Click Handler
     card.onclick = () => {
-        if (!state.isAdmin) return;
+        // if (!state.isAdmin) return; // Temporarily disabled for testing
         toggleCollection(key, isObtained);
     };
 
@@ -205,11 +205,20 @@ function setupPagination() {
 }
 
 function toggleCollection(key, isCurrentlyObtained) {
+    // Optimistic Update
+    if (isCurrentlyObtained) {
+        delete state.collection[key];
+    } else {
+        state.collection[key] = Date.now();
+    }
+    renderGrid();
+    updateStats();
+
     const itemRef = ref(db, `collection_status/${key}`);
     if (isCurrentlyObtained) {
-        remove(itemRef);
+        remove(itemRef).catch(err => console.error("Firebase remove failed:", err));
     } else {
-        set(itemRef, Date.now()); // Save timestamp
+        set(itemRef, state.collection[key]).catch(err => console.error("Firebase set failed:", err)); // Save timestamp
     }
 }
 
