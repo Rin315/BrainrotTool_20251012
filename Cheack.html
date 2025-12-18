@@ -50,9 +50,68 @@
             filter: brightness(0);
         }
 
-        .monster-card.recent {
-            border: 3px solid #ffd700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        /* Variant Borders */
+        .monster-card.Default {
+            border-color: #333;
+        }
+
+        .monster-card.Gold {
+            border-color: #ffd700;
+        }
+
+        .monster-card.Diamond {
+            border-color: #00b0ff;
+        }
+
+        .monster-card.Rainbow {
+            border-color: #d500f9;
+        }
+
+        .monster-card.Chocolate {
+            border-color: #D2691E;
+        }
+
+        .monster-card.Galaxy {
+            border-color: #663399;
+        }
+
+        .monster-card.Zombie {
+            border-color: #2E8B57;
+        }
+
+        .monster-card.Dreamy {
+            border-color: #FF69B4;
+        }
+
+        .monster-card.ICE\&FIRE {
+            border-color: #FF4500;
+        }
+
+        .monster-card.Carnival {
+            border-color: #FF1493;
+        }
+
+        .monster-card.Aqua {
+            border-color: #00FFFF;
+        }
+
+        .monster-card.Halloween {
+            border-color: #FF8C00;
+        }
+
+        .monster-card.Darkness {
+            border-color: #4B0082;
+        }
+
+        /* Active state for border (make it thicker or glow?) 
+           User said "change border color". 
+           Let's make the border visible by default (1px) and maybe thicker on hover/active?
+           The base class has border: 1px solid #e0e0e0;
+           These classes will override the color.
+           Let's increase width slightly to make it more visible as "highlight".
+        */
+        .monster-card {
+            border-width: 2px;
         }
 
         .tab-active {

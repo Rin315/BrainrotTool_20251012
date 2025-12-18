@@ -25,7 +25,7 @@ const variants = [
     "Aqua", "Halloween", "Darkness"
 ];
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 16;
 let state = {
     currentTab: "Default",
     currentPage: 1,
@@ -139,14 +139,8 @@ function createMonsterCard(monster, index) {
     const card = document.createElement('div');
     card.className = `monster-card ${isObtained ? 'obtained' : 'unobtained'}`;
 
-    // Recent update highlight (within 30 mins)
-    if (isObtained) {
-        const now = Date.now();
-        const diff = now - timestamp;
-        if (diff < 30 * 60 * 1000) {
-            card.classList.add('recent');
-        }
-    }
+    // Apply variant class for border color
+    card.classList.add(state.currentTab);
 
     const img = document.createElement('img');
     // Use src from data.js
