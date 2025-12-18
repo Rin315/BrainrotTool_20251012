@@ -60,6 +60,12 @@ function init() {
         console.warn("No monsters found in window.images");
     }
 
+    // Load from LocalStorage
+    const savedCollection = localStorage.getItem('zukan_collection');
+    if (savedCollection) {
+        state.collection = JSON.parse(savedCollection);
+    }
+
     renderTabs();
     setupPagination();
 
@@ -211,6 +217,10 @@ function toggleCollection(key, isCurrentlyObtained) {
     } else {
         state.collection[key] = Date.now();
     }
+
+    // Save to LocalStorage
+    localStorage.setItem('zukan_collection', JSON.stringify(state.collection));
+
     renderGrid();
     updateStats();
 
