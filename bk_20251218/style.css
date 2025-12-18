@@ -1,0 +1,709 @@
+/* ========= Variables & Reset ========= */
+:root {
+  /* Colors (Light Theme) */
+  --bg-color: #f4f7f6;
+  --card-bg: #ffffff;
+  --card-border: #e0e0e0;
+  --text-main: #333333;
+  --text-muted: #666666;
+
+  /* Accents (Adjusted for Light Background) */
+  --neon-green: #00c853;
+  /* Darker green for visibility */
+  --neon-pink: #d500f9;
+  /* Darker pink */
+  --neon-cyan: #00b0ff;
+  /* Darker cyan */
+  /* Darker cyan */
+  --neon-yellow: #ffab00;
+  /* Darker yellow/amber */
+  --chocolate: #D2691E;
+  /* Chocolate */
+
+  /* Dimensions */
+  --imgW: 100px;
+  --imgH: 100px;
+  --gap: 12px;
+
+  /* Effects */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+  --blur: blur(12px);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  margin: 0;
+  padding-bottom: 40px;
+  min-height: 100vh;
+}
+
+h2 {
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  margin: 0;
+  text-transform: uppercase;
+  color: var(--text-main);
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.category-title {
+  text-transform: none;
+  color: var(--neon-cyan);
+  /* Example differentiation */
+}
+
+/* ========= Navbar ========= */
+.navbar {
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur);
+  border-bottom: var(--glass-border);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+}
+
+.nav-title {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--neon-cyan);
+}
+
+/* ========= Layout ========= */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#reset-btn {
+  background: transparent;
+  color: var(--neon-pink);
+  border: 1px solid var(--neon-pink);
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#reset-btn:hover {
+  background: var(--neon-pink);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(213, 0, 249, 0.3);
+}
+
+/* ========= Gallery ========= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--imgW), 1fr));
+  gap: var(--gap);
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.imgbox {
+  position: relative;
+  aspect-ratio: 1;
+  background: #222;
+  /* Reverted to dark background */
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow);
+}
+
+.imgbox:hover {
+  transform: translateY(-4px);
+  border-color: var(--neon-green);
+  box-shadow: 0 8px 24px rgba(0, 200, 83, 0.2);
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.imgbox--split {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Ensure relative positioning for absolute children */
+}
+
+.split-hit-area {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  z-index: 10;
+  cursor: pointer;
+  background: transparent;
+  /* Transparent hit area */
+}
+
+.split-hit-left {
+  left: 0;
+}
+
+.split-hit-right {
+  right: 0;
+}
+
+.split-img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  padding: 0;
+  margin: 0;
+  transition: width 0.3s ease;
+  position: absolute;
+  /* Absolute positioning for overlap */
+  top: 0;
+  pointer-events: none;
+  /* Let clicks pass to hit area (though hit area is on top) */
+}
+
+.split-img-left {
+  left: 0;
+  object-position: center;
+}
+
+.split-img-right {
+  right: 0;
+  object-position: center;
+}
+
+/* Hover Effects for Split Images */
+/* Default state: 50/50 */
+
+/* When hovering left hit area, expand left image */
+.split-hit-left:hover~.split-img-left {
+  width: 100%;
+  z-index: 5;
+}
+
+/* When hovering right hit area, expand right image */
+.split-hit-right:hover~.split-img-right {
+  width: 100%;
+  z-index: 5;
+}
+
+/* When hovering the box (but not a specific hit area, e.g. transition), ensure others shrink? 
+   Actually, with absolute positioning, if left expands to 100%, right is covered.
+   We don't strictly need to shrink the other one to 0% if z-index handles visibility.
+   But to be safe and match previous logic:
+*/
+
+
+.value-label,
+.sale-label {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+.value-label {
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  /* Very transparent */
+  color: #ffd700;
+  /* Dark Yellow / Gold */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  /* Shadow for readability */
+}
+
+.sale-label {
+  display: none;
+  /* Hidden as requested */
+}
+
+/* ========= Selection Area ========= */
+#selection-area {
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+#selected-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.selected-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 160px;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.selected-wrapper:empty {
+  border: 1px dashed var(--text-muted);
+  opacity: 0.5;
+  box-shadow: none;
+  background: transparent;
+}
+
+.selected-wrapper:empty::after {
+  content: "SELECT";
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.imgbox--selected {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  background: #222;
+  /* Reverted to dark background */
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+}
+
+.selected-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.selected-img.split-img {
+  width: 50%;
+  object-fit: cover;
+  padding: 0;
+}
+
+.button-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  width: 100%;
+}
+
+.button-container button {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted) !important;
+  -webkit-text-fill-color: var(--text-muted) !important;
+  padding: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button-container button:hover {
+  border-color: var(--text-main);
+  color: var(--text-main) !important;
+  -webkit-text-fill-color: var(--text-main) !important;
+  background: #f0f0f0;
+}
+
+/* Active Button States */
+.button-container button.Default {
+  border-color: #000;
+  background: #fff;
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.button-container button.Gold {
+  border-color: #ffd700;
+  color: #b8860b !important;
+  -webkit-text-fill-color: #b8860b !important;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.button-container button.Diamond {
+  border-color: #00b0ff;
+  color: #00b0ff !important;
+  -webkit-text-fill-color: #00b0ff !important;
+  background: rgba(0, 176, 255, 0.1);
+}
+
+.button-container button.Rainbow {
+  border-color: #d500f9;
+  color: #d500f9 !important;
+  -webkit-text-fill-color: #d500f9 !important;
+  background: rgba(213, 0, 249, 0.1);
+}
+
+.button-container button.Chocolate {
+  border-color: #D2691E;
+  color: #D2691E !important;
+  -webkit-text-fill-color: #D2691E !important;
+  background: rgba(210, 105, 30, 0.1);
+}
+
+.button-container button.Other {
+  border-color: #888;
+  background: #eee;
+}
+
+/* Selected Outline */
+.selected-wrapper:has(.Default) .imgbox--selected {
+  box-shadow: 0 0 0 2px #000;
+}
+
+/* ========= Result ========= */
+#stats {
+  display: flex;
+  /* Changed from grid to flex for better width control */
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.panel {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 8px;
+}
+
+/* Total Panel - Flexible width */
+.total-panel {
+  flex: 1;
+  /* Allow growing */
+  min-width: 280px;
+  /* Ensure enough space */
+}
+
+.total-panel #total {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  /* Slightly reduced from 16px to fit better */
+  font-weight: 400;
+  color: var(--text-main);
+  line-height: 1.5;
+  /* Removed white-space: nowrap to allow wrapping if absolutely necessary, though flex should handle it */
+}
+
+.total-number {
+  font-weight: 900;
+  font-size: 18px;
+  /* Make number slightly larger */
+}
+
+.wait-note {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Monster Probability - Expanded width */
+.panel:has(#monster-probability) {
+  flex: 1;
+  /* Take remaining space */
+  min-width: 300px;
+}
+
+#monster-probability {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  /* Wrap items instead of scroll */
+  padding-bottom: 0;
+  width: 100%;
+}
+
+.monster-box {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 8px;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.monster-box:hover {
+  border-color: var(--neon-cyan);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.monster-box img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.monster-prob-text {
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Type Probability */
+.panel:has(#probability) {
+  flex: 1;
+  min-width: 250px;
+}
+
+#probability span {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #f0f0f0;
+  color: var(--text-main);
+  border: 1px solid transparent;
+}
+
+#probability .Default {
+  background: #fff;
+  border: 1px solid #000;
+  color: #000;
+}
+
+#probability .Gold {
+  color: #b8860b;
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.1);
+}
+
+#probability .Diamond {
+  color: #00b0ff;
+  border-color: #00b0ff;
+  background: rgba(0, 176, 255, 0.1);
+}
+
+#probability .Rainbow {
+  color: #d500f9;
+  border-color: #d500f9;
+  background: rgba(213, 0, 249, 0.1);
+}
+
+#probability .Chocolate {
+  color: #D2691E;
+  border-color: #D2691E;
+  background: rgba(210, 105, 30, 0.1);
+}
+
+/* Notice */
+.notice {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--text-muted);
+  font-size: 14px;
+  /* Increased font size */
+  line-height: 1.6;
+}
+
+.notice a {
+  color: var(--neon-cyan);
+}
+
+/* Ads */
+.ad-pc,
+.ad-sp {
+  text-align: center;
+  margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --imgW: 60px;
+  }
+
+  .imgbox {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .imgbox img {
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    /* Reduced padding to maximize image size */
+  }
+
+  .imgbox .split-img {
+    width: 50%;
+    padding: 0;
+  }
+
+  .value-label {
+    font-size: 9px;
+  }
+
+  .monster-box {
+    min-width: 60px;
+    padding: 4px;
+  }
+
+  .monster-box img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .monster-prob-text {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-pc {
+    display: none;
+  }
+
+  .ad-sp {
+    display: block;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  #selected-container {
+    gap: 8px;
+  }
+
+  .selected-wrapper {
+    width: calc(50% - 8px);
+    min-width: unset;
+  }
+
+  #stats {
+    flex-direction: column;
+  }
+
+  .panel:has(#probability) {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* ========= Update Section ========= */
+.update-section {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  padding: 0 24px;
+}
+
+.update-info {
+  background: rgba(0, 200, 83, 0.05);
+  border: 1px solid var(--neon-green);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.update-date {
+  font-weight: 700;
+  color: var(--neon-green);
+  white-space: nowrap;
+}
+
+.update-text {
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .update-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

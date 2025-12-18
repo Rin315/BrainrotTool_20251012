@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プライバシーポリシー | Brainrot Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    main {
+      padding: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      color: var(--text-main);
+    }
+
+    p {
+      color: var(--text-main);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ✅ 共通ナビバー読み込み -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(html => document.getElementById("navbar").innerHTML = html);
+  </script>
+
+  <main>
+    <h2>プライバシーポリシー</h2>
+    <p>このサイトでは、広告配信やアクセス解析のためにCookieを使用しています。個人情報は適切に管理し、第三者への提供は行いません。</p>
+    <p>Google AdSenseなどの外部サービスがCookieを使用することがあります。詳細はGoogleのポリシーをご確認ください。</p>
+  </main>
+</body>
+
+</html>
