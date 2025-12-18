@@ -107,21 +107,56 @@ function renderTabs() {
 function renderGrid() {
     gridContainer.innerHTML = '';
 
-    const startIndex = (state.currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
+    // Apply flex layout to main container to hold two blocks side-by-side
+    gridContainer.className = 'flex flex-col md:flex-row gap-8 justify-center items-start';
 
-    for (let i = startIndex; i < endIndex; i++) {
-        if (i < monsters.length) {
-            const monster = monsters[i];
-            const card = createMonsterCard(monster, i);
-            gridContainer.appendChild(card);
+    const startIndex = (state.currentPage - 1) * ITEMS_PER_PAGE;
+    // We expect ITEMS_PER_PAGE to be 16 for this layout to make sense per page
+
+    // Block 1: Indices 0-7 (relative to page start)
+    const block1 = document.createElement('div');
+    block1.className = 'grid grid-cols-4 gap-4';
+
+    // Block 2: Indices 8-15 (relative to page start)
+    const block2 = document.createElement('div');
+    block2.className = 'grid grid-cols-4 gap-4';
+
+    for (let i = 0; i < ITEMS_PER_PAGE; i++) {
+        const globalIndex = startIndex + i;
+
+        let card;
+        if (globalIndex < monsters.length) {
+            const monster = monsters[globalIndex];
+            card = createMonsterCard(monster, globalIndex);
         } else {
-            // Empty slot for layout stability
-            const empty = document.createElement('div');
-            empty.className = 'monster-card opacity-0 pointer-events-none';
-            gridContainer.appendChild(empty);
+            // Empty slot
+            card = document.createElement('div');
+            card.className = 'monster-card opacity-0 pointer-events-none';
+        }
+
+        // Add to appropriate block
+        // 0-3: Top row of Block 1
+        // 4-7: Bottom row of Block 1
+        // 8-11: Top row of Block 2
+        // 12-15: Bottom row of Block 2
+
+        // The user requested:
+        // Left Top: 1,2,3,4 (Indices 0,1,2,3)
+        // Left Bottom: 5,6,7,8 (Indices 4,5,6,7)
+        // Right Top: 9,10,11,12 (Indices 8,9,10,11)
+        // Right Bottom: 13,14,15,16 (Indices 12,13,14,15)
+
+        // This maps naturally to 0-7 in Block 1 and 8-15 in Block 2 if we use grid-cols-4.
+
+        if (i < 8) {
+            block1.appendChild(card);
+        } else {
+            block2.appendChild(card);
         }
     }
+
+    gridContainer.appendChild(block1);
+    gridContainer.appendChild(block2);
 
     updatePaginationUI();
 }
