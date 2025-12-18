@@ -44,7 +44,9 @@ const nextBtn = document.getElementById('next-page');
 const pageIndicator = document.getElementById('page-indicator');
 const collectionCountEl = document.getElementById('collection-count');
 const totalCountEl = document.getElementById('total-count');
-const resetBtn = document.getElementById('reset-check-btn'); // Add reset button ref
+const resetBtn = document.getElementById('reset-check-btn');
+const exportBtn = document.getElementById('export-btn');
+const importBtn = document.getElementById('import-btn');
 
 // ========== Initialization ==========
 function init() {
@@ -69,7 +71,8 @@ function init() {
 
     renderTabs();
     setupPagination();
-    setupReset(); // Setup reset listener
+    setupReset();
+    setupExportImport();
 
     // Listen to Firebase
     const collectionRef = ref(db, 'collection_status');
@@ -236,6 +239,40 @@ function setupReset() {
             // set(ref(db, 'collection_status'), null); // Optional: clear server data too
         }
     };
+}
+
+function setupExportImport() {
+    if (exportBtn) {
+        exportBtn.onclick = () => {
+            const dataStr = JSON.stringify(state.collection);
+            const encoded = btoa(encodeURIComponent(dataStr)); // Simple Base64 encode
+            navigator.clipboard.writeText(encoded).then(() => {
+                alert('Save code copied to clipboard!');
+            }).catch(() => {
+                prompt('Copy this code:', encoded);
+            });
+        };
+    }
+
+    if (importBtn) {
+        importBtn.onclick = () => {
+            const code = prompt('Paste your save code here:');
+            if (code) {
+                try {
+                    const decoded = decodeURIComponent(atob(code));
+                    const data = JSON.parse(decoded);
+                    state.collection = data;
+                    localStorage.setItem('zukan_collection', JSON.stringify(state.collection));
+                    renderGrid();
+                    updateStats();
+                    alert('Data imported successfully!');
+                } catch (e) {
+                    alert('Invalid code!');
+                    console.error(e);
+                }
+            }
+        };
+    }
 }
 
 function toggleCollection(key, isCurrentlyObtained) {
