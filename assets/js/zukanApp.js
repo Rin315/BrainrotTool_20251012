@@ -44,6 +44,7 @@ const nextBtn = document.getElementById('next-page');
 const pageIndicator = document.getElementById('page-indicator');
 const collectionCountEl = document.getElementById('collection-count');
 const totalCountEl = document.getElementById('total-count');
+const resetBtn = document.getElementById('reset-check-btn'); // Add reset button ref
 
 // ========== Initialization ==========
 function init() {
@@ -68,6 +69,7 @@ function init() {
 
     renderTabs();
     setupPagination();
+    setupReset(); // Setup reset listener
 
     // Listen to Firebase
     const collectionRef = ref(db, 'collection_status');
@@ -87,7 +89,7 @@ function renderTabs() {
     tabsContainer.innerHTML = '';
     variants.forEach(variant => {
         const btn = document.createElement('button');
-        btn.className = `px-4 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition-colors ${state.currentTab === variant
+        btn.className = `tab-btn ${variant} px-4 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition-colors ${state.currentTab === variant
             ? 'tab-active shadow-md'
             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`;
@@ -141,6 +143,23 @@ function createMonsterCard(monster, index) {
 
     // Apply variant class for border color
     card.classList.add(state.currentTab);
+
+    // Check for Complete (all variants collected for this monster)
+    let isComplete = true;
+    for (const v of variants) {
+        const k = `${index}_${v}`;
+        if (!state.collection[k]) {
+            isComplete = false;
+            break;
+        }
+    }
+
+    if (isComplete) {
+        const overlay = document.createElement('div');
+        overlay.className = 'complete-overlay';
+        overlay.textContent = 'Complete!';
+        card.appendChild(overlay);
+    }
 
     const img = document.createElement('img');
     // Use src from data.js
@@ -200,6 +219,20 @@ function setupPagination() {
         if (state.currentPage < totalPages) {
             state.currentPage++;
             renderGrid();
+        }
+    };
+}
+
+function setupReset() {
+    if (!resetBtn) return;
+    resetBtn.onclick = () => {
+        if (confirm('Are you sure you want to reset ALL progress? This cannot be undone.')) {
+            state.collection = {};
+            localStorage.removeItem('zukan_collection');
+            renderGrid();
+            updateStats();
+            // Also clear Firebase if needed? 
+            // set(ref(db, 'collection_status'), null); // Optional: clear server data too
         }
     };
 }
