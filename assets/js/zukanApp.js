@@ -5,13 +5,14 @@ import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/
 // ========== Configuration ==========
 // TODO: Replace with your actual Firebase config
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+
+    apiKey: "AIzaSyCwV5lIhHQoHgJq_wd8IfUphSRDy7TqVuE",
+    authDomain: "brainrotzukan.firebaseapp.com",
+    databaseURL: "https://brainrotzukan-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "brainrotzukan",
+    storageBucket: "brainrotzukan.firebasestorage.app",
+    messagingSenderId: "203251550904",
+    appId: "1:203251550904:web:cbc56e7dc367587ea4024d"
 };
 
 // Initialize Firebase
@@ -63,18 +64,14 @@ function init() {
         console.warn("No monsters found in window.images");
     }
 
-    // Load from LocalStorage
-    const savedCollection = localStorage.getItem('zukan_collection');
-    if (savedCollection) {
-        state.collection = JSON.parse(savedCollection);
-    }
+    // NOTE: Removed localStorage loading to enforce Firebase as Source of Truth
 
     renderTabs();
     setupPagination();
     setupReset();
     setupExportImport();
 
-    // Listen to Firebase
+    // Listen to Firebase (Source of Truth)
     const collectionRef = ref(db, 'collection_status');
     onValue(collectionRef, (snapshot) => {
         const data = snapshot.val() || {};
@@ -112,13 +109,6 @@ function renderGrid() {
 
     const startIndex = (state.currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-
-    // Slice monsters for current page
-    // Note: We use the master list order.
-    // If a page has fewer items (e.g. last page), we still render empty slots if needed to maintain layout?
-    // Requirement says: "例外で存在しない、またはコンプリートして非表示になった枠は、詰めずに「空欄（透明）」"
-    // But here we are just paging through the master list. 
-    // If index is out of bounds, we render empty slot.
 
     for (let i = startIndex; i < endIndex; i++) {
         if (i < monsters.length) {
@@ -177,7 +167,8 @@ function createMonsterCard(monster, index) {
 
     // Click Handler
     card.onclick = () => {
-        // if (!state.isAdmin) return; // Temporarily disabled for testing
+        // Enforce Admin-only writes
+        if (!state.isAdmin) return;
         toggleCollection(key, isObtained);
     };
 
@@ -192,12 +183,7 @@ function updatePaginationUI() {
 }
 
 function updateStats() {
-    // Count total obtained for current tab? Or global?
-    // Usually Zukan counts total obtained.
-    // Let's count total obtained across ALL variants for now, or just current tab.
-    // Given the UI is "Collection / Total", maybe per tab is better for context.
-
-    // Let's do current tab stats
+    // Current tab stats
     const totalInTab = monsters.length;
     let obtainedInTab = 0;
 
@@ -230,22 +216,36 @@ function setupPagination() {
 function setupReset() {
     if (!resetBtn) return;
     resetBtn.onclick = () => {
+        // Only Admin can reset global data? 
+        // Or should this be local only? 
+        // Requirement says "Source of Truth = Firebase".
+        // If we reset, we should probably reset Firebase if we are admin.
+        // But for safety, maybe just local reset isn't enough if sync is on.
+        // Let's assume Reset is an Admin action for now, or warn user.
+        if (!state.isAdmin) {
+            alert("Reset is only allowed in Admin mode.");
+            return;
+        }
+
         if (confirm('Are you sure you want to reset ALL progress? This cannot be undone.')) {
-            state.collection = {};
-            localStorage.removeItem('zukan_collection');
-            renderGrid();
-            updateStats();
-            // Also clear Firebase if needed? 
-            // set(ref(db, 'collection_status'), null); // Optional: clear server data too
+            // Clear Firebase
+            set(ref(db, 'collection_status'), null)
+                .then(() => {
+                    alert("All data reset.");
+                })
+                .catch(err => console.error("Reset failed:", err));
         }
     };
 }
 
 function setupExportImport() {
+    // Export/Import is less relevant with Realtime Sync, but good for backup.
+    // We can keep it working with local state (which reflects Firebase).
+
     if (exportBtn) {
         exportBtn.onclick = () => {
             const dataStr = JSON.stringify(state.collection);
-            const encoded = btoa(encodeURIComponent(dataStr)); // Simple Base64 encode
+            const encoded = btoa(encodeURIComponent(dataStr));
             navigator.clipboard.writeText(encoded).then(() => {
                 alert('Save code copied to clipboard!');
             }).catch(() => {
@@ -256,16 +256,21 @@ function setupExportImport() {
 
     if (importBtn) {
         importBtn.onclick = () => {
+            if (!state.isAdmin) {
+                alert("Import is only allowed in Admin mode.");
+                return;
+            }
             const code = prompt('Paste your save code here:');
             if (code) {
                 try {
                     const decoded = decodeURIComponent(atob(code));
                     const data = JSON.parse(decoded);
-                    state.collection = data;
-                    localStorage.setItem('zukan_collection', JSON.stringify(state.collection));
-                    renderGrid();
-                    updateStats();
-                    alert('Data imported successfully!');
+
+                    // Update Firebase
+                    set(ref(db, 'collection_status'), data)
+                        .then(() => alert('Data imported successfully to Firebase!'))
+                        .catch(err => console.error("Import failed:", err));
+
                 } catch (e) {
                     alert('Invalid code!');
                     console.error(e);
@@ -276,24 +281,15 @@ function setupExportImport() {
 }
 
 function toggleCollection(key, isCurrentlyObtained) {
-    // Optimistic Update
-    if (isCurrentlyObtained) {
-        delete state.collection[key];
-    } else {
-        state.collection[key] = Date.now();
-    }
-
-    // Save to LocalStorage
-    localStorage.setItem('zukan_collection', JSON.stringify(state.collection));
-
-    renderGrid();
-    updateStats();
+    // NO Optimistic Update - Rely on Firebase Listener
+    // This ensures strict Source of Truth compliance.
+    // Admin clicks -> Firebase Write -> Listener -> UI Update
 
     const itemRef = ref(db, `collection_status/${key}`);
     if (isCurrentlyObtained) {
         remove(itemRef).catch(err => console.error("Firebase remove failed:", err));
     } else {
-        set(itemRef, state.collection[key]).catch(err => console.error("Firebase set failed:", err)); // Save timestamp
+        set(itemRef, Date.now()).catch(err => console.error("Firebase set failed:", err));
     }
 }
 
