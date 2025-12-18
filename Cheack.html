@@ -119,17 +119,23 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-15deg);
-            background: rgba(255, 215, 0, 0.9);
             color: #d32f2f;
             font-weight: 900;
-            font-size: 14px;
-            padding: 4px 8px;
-            border: 2px solid #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
             pointer-events: none;
             white-space: nowrap;
             z-index: 10;
+        }
+
+        /* Complete State (Overrides obtained) */
+        .monster-card.complete img {
+            filter: opacity(0.3) !important;
+        }
+
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 10;
         }
 
         /* Tab Colors */
@@ -230,8 +236,14 @@
             <div
                 class="flex justify-between items-center mb-6 bg-white/80 backdrop-blur-md p-4 rounded-xl border border-gray-200 shadow-sm">
                 <h1 class="text-2xl font-black uppercase tracking-tighter text-gray-800">Monster Zukan</h1>
-                <div class="text-sm font-bold text-gray-500">
-                    <span id="collection-count">0</span> / <span id="total-count">0</span>
+                <div class="flex items-center gap-4">
+                    <button id="reset-check-btn"
+                        class="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 transition-colors">
+                        RESET ALL
+                    </button>
+                    <div class="text-sm font-bold text-gray-500">
+                        <span id="collection-count">0</span> / <span id="total-count">0</span>
+                    </div>
                 </div>
             </div>
 

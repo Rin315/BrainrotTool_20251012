@@ -155,6 +155,7 @@ function createMonsterCard(monster, index) {
     }
 
     if (isComplete) {
+        card.classList.add('complete'); // Add class for CSS override
         const overlay = document.createElement('div');
         overlay.className = 'complete-overlay';
         overlay.textContent = 'Complete!';
