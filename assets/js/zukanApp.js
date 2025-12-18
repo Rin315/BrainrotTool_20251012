@@ -76,6 +76,7 @@ function init() {
     onValue(collectionRef, (snapshot) => {
         const data = snapshot.val() || {};
         state.collection = data;
+        renderTabs(); // Update tabs for progress count
         renderGrid();
         updateStats();
     });
@@ -88,12 +89,35 @@ function init() {
 function renderTabs() {
     tabsContainer.innerHTML = '';
     variants.forEach(variant => {
+        // Calculate progress for this variant
+        let obtainedCount = 0;
+        const totalCount = monsters.length;
+
+        for (let i = 0; i < monsters.length; i++) {
+            const key = `${i}_${variant}`;
+            if (state.collection[key]) {
+                obtainedCount++;
+            }
+        }
+
         const btn = document.createElement('button');
-        btn.className = `tab-btn ${variant} px-4 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition-colors ${state.currentTab === variant
+        // Add flex to button to align text
+        btn.className = `tab-btn ${variant} px-4 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition-colors flex justify-between items-center gap-4 ${state.currentTab === variant
             ? 'tab-active shadow-md'
             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`;
-        btn.textContent = variant;
+
+        // Use spans for layout
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = variant;
+
+        const countSpan = document.createElement('span');
+        countSpan.textContent = `${obtainedCount}/${totalCount}`;
+        countSpan.className = 'text-xs opacity-80';
+
+        btn.appendChild(nameSpan);
+        btn.appendChild(countSpan);
+
         btn.onclick = () => {
             state.currentTab = variant;
             // Page remains same as per requirement
@@ -108,18 +132,21 @@ function renderGrid() {
     gridContainer.innerHTML = '';
 
     // Apply flex layout to main container to hold two blocks side-by-side
-    gridContainer.className = 'flex flex-col md:flex-row gap-8 justify-center items-start';
+    // Added w-full and max-w-none to ensure it takes space, but the key is the children sizing
+    gridContainer.className = 'flex flex-col md:flex-row gap-8 justify-center items-start w-full';
 
     const startIndex = (state.currentPage - 1) * ITEMS_PER_PAGE;
     // We expect ITEMS_PER_PAGE to be 16 for this layout to make sense per page
 
     // Block 1: Indices 0-7 (relative to page start)
     const block1 = document.createElement('div');
-    block1.className = 'grid grid-cols-4 gap-4';
+    // Added flex-1 and w-full to ensure equal width
+    block1.className = 'grid grid-cols-4 gap-4 flex-1 w-full';
 
     // Block 2: Indices 8-15 (relative to page start)
     const block2 = document.createElement('div');
-    block2.className = 'grid grid-cols-4 gap-4';
+    // Added flex-1 and w-full to ensure equal width
+    block2.className = 'grid grid-cols-4 gap-4 flex-1 w-full';
 
     for (let i = 0; i < ITEMS_PER_PAGE; i++) {
         const globalIndex = startIndex + i;
@@ -139,14 +166,6 @@ function renderGrid() {
         // 4-7: Bottom row of Block 1
         // 8-11: Top row of Block 2
         // 12-15: Bottom row of Block 2
-
-        // The user requested:
-        // Left Top: 1,2,3,4 (Indices 0,1,2,3)
-        // Left Bottom: 5,6,7,8 (Indices 4,5,6,7)
-        // Right Top: 9,10,11,12 (Indices 8,9,10,11)
-        // Right Bottom: 13,14,15,16 (Indices 12,13,14,15)
-
-        // This maps naturally to 0-7 in Block 1 and 8-15 in Block 2 if we use grid-cols-4.
 
         if (i < 8) {
             block1.appendChild(card);
@@ -251,12 +270,6 @@ function setupPagination() {
 function setupReset() {
     if (!resetBtn) return;
     resetBtn.onclick = () => {
-        // Only Admin can reset global data? 
-        // Or should this be local only? 
-        // Requirement says "Source of Truth = Firebase".
-        // If we reset, we should probably reset Firebase if we are admin.
-        // But for safety, maybe just local reset isn't enough if sync is on.
-        // Let's assume Reset is an Admin action for now, or warn user.
         if (!state.isAdmin) {
             alert("Reset is only allowed in Admin mode.");
             return;
@@ -274,9 +287,6 @@ function setupReset() {
 }
 
 function setupExportImport() {
-    // Export/Import is less relevant with Realtime Sync, but good for backup.
-    // We can keep it working with local state (which reflects Firebase).
-
     if (exportBtn) {
         exportBtn.onclick = () => {
             const dataStr = JSON.stringify(state.collection);
@@ -317,9 +327,6 @@ function setupExportImport() {
 
 function toggleCollection(key, isCurrentlyObtained) {
     // NO Optimistic Update - Rely on Firebase Listener
-    // This ensures strict Source of Truth compliance.
-    // Admin clicks -> Firebase Write -> Listener -> UI Update
-
     const itemRef = ref(db, `collection_status/${key}`);
     if (isCurrentlyObtained) {
         remove(itemRef).catch(err => console.error("Firebase remove failed:", err));
