@@ -413,7 +413,14 @@ function renderSelected() {
       box.appendChild(label);
 
       const saleLabel = document.createElement('div');
-      saleLabel.textContent = formatSaleLabelM(imgObj.sale);
+      // saleLabel.textContent = formatSaleLabelM(imgObj.sale); // 旧コード
+      if (imgObj.rarity === 'BrainrotGot') {
+        saleLabel.textContent = formatSaleLabelM(0);
+      } else if (imgObj.rarity === 'Secret') {
+        saleLabel.textContent = formatSaleLabelM(1);
+      } else {
+        saleLabel.textContent = '';
+      }
       saleLabel.className = 'sale-label';
       box.appendChild(saleLabel);
 
