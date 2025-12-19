@@ -48,6 +48,7 @@ const images = [
     { src: './img/gorillo.png', value: 0, rarity: 'Common' },
     { src: './img/sigma.png', value: 0, rarity: 'Common' },
     { src: './img/matteo.png', value: 0, rarity: 'Common' },
+    /*
     { src: './img/losspi.png', value: 0, rarity: 'Common' },
     { src: './img/rhino.png', value: 0, rarity: 'Common' },
     { src: './img/ganganze.png', value: 0, rarity: 'Common' },
@@ -62,6 +63,7 @@ const images = [
     { src: './img/patapimus.png', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', value: 0, rarity: 'Common' },
     { src: './img/losmateo.png', value: 0, rarity: 'Common' }, ,//ロスマテオ　画像なし
+    */
 
 
     //　Brainrot Got
