@@ -354,269 +354,269 @@ groupedImages.forEach((group) => {
 
   box.appendChild(label);
   // box.appendChild(saleLabel); // 上でappendした
+});
 
-
-  function selectMonster(imgObj) {
-    const emptyIndex = selectedImages.findIndex(v => v === null);
-    if (emptyIndex === -1) return;
-    selectedImages[emptyIndex] = { ...imgObj };
-    selectedColors[emptyIndex] = 'Default';
-    selectedHasBorder[emptyIndex] = true;
-    renderSelected();
-    updateAll();
-  }
-
-  // ========== 選択エリア描画 ==========
-  function renderSelected() {
-    selectedWrappers.forEach((wrapper, idx) => {
-      wrapper.innerHTML = '';
-      const imgObj = selectedImages[idx];
-
-      if (imgObj) {
-        // 画像ボックス生成
-        const box = document.createElement('div');
-        box.className = 'imgbox imgbox--selected';
-
-        // グループ（ペア）を探す
-        const group = images.filter(img => img.value === imgObj.value && img.rarity === imgObj.rarity);
-
-        if (group.length > 1) {
-          box.classList.add('imgbox--split');
-
-          group.forEach((gImg, index) => {
-            const isLeft = index === 0;
-
-            // 1. ヒットエリア作成
-            const hitArea = document.createElement('div');
-            hitArea.className = `split-hit-area ${isLeft ? 'split-hit-left' : 'split-hit-right'}`;
-            hitArea.addEventListener('click', () => removeFromSelected(idx));
-            box.appendChild(hitArea);
-
-            // 2. 画像作成
-            const img = document.createElement('img');
-            img.src = gImg.src;
-            img.className = `selected-img split-img ${isLeft ? 'split-img-left' : 'split-img-right'}`;
-            // 画像のクリックイベントはヒットエリアが拾うので不要
-            box.appendChild(img);
-          });
-        } else {
-          const img = document.createElement('img');
-          img.src = imgObj.src;
-          img.className = 'selected-img';
-          img.addEventListener('click', () => removeFromSelected(idx));
-          box.appendChild(img);
-        }
-
-        const label = document.createElement('div');
-        label.textContent = `${imgObj.value} K/s`;
-        label.className = 'value-label';
-        box.appendChild(label);
-
-        const saleLabel = document.createElement('div');
-        saleLabel.textContent = formatSaleLabelM(imgObj.sale);
-        saleLabel.className = 'sale-label';
-        box.appendChild(saleLabel);
-
-        applyOutline(box, idx);
-        wrapper.appendChild(box);
-
-        // ボタンコンテナ
-        const btnContainer = document.createElement('div');
-        btnContainer.className = 'button-container';
-
-        ['Default', 'Gold', 'Diamond', 'Rainbow', 'Chocolate', 'Other'].forEach(type => {
-          const btn = document.createElement('button');
-          btn.textContent = type;
-          btn.className = type;
-
-          btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            selectedColors[idx] = type;
-            selectedHasBorder[idx] = true;
-            applyOutline(box, idx); // 枠色を即時反映
-            updateAll();            // 計算更新
-          });
-
-          btnContainer.appendChild(btn);
-        });
-
-        wrapper.appendChild(btnContainer);
-      } else {
-        // 未選択時のプレースホルダ
-        const ph = document.createElement('div');
-        ph.className = 'imgbox imgbox--selected';
-        ph.style.backgroundColor = '#555';
-        wrapper.appendChild(ph);
-      }
-    });
-  }
-
-  // ========== 枠色 ==========
-  function applyOutline(boxEl, idx) {
-    const color = getButtonColor(selectedColors[idx] || 'Default');
-    const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
-    if (selectedHasBorder[idx]) {
-      boxEl.style.outline = `${bw}px solid ${color}`;
-    } else {
-      boxEl.style.outline = 'none';
-    }
-  }
-
-  function removeFromSelected(index) {
-    selectedImages.splice(index, 1);
-    selectedImages.push(null);
-    selectedColors.splice(index, 1);
-    selectedColors.push('Default');
-    selectedHasBorder.splice(index, 1);
-    selectedHasBorder.push(false);
-    renderSelected();
-    updateAll();
-  }
-
-  // ========== RESET ==========
-  resetBtn.addEventListener('click', () => {
-    selectedImages = [null, null, null, null, null];
-    selectedColors = ['Default', 'Default', 'Default', 'Default', 'Default'];
-    selectedHasBorder = [false, false, false, false, false];
-    renderSelected();
-    updateAll();
-  });
-
-  // ========== 更新 ==========
-  function updateAll() {
-    updateTotal();
-    updateMonsterProbability();
-    updateTypeProbability();
-  }
-
-  // ========== Total欄 ==========
-  function updateTotal() {
-    const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
-    const sumSaleM = selectedImages.reduce((acc, img) => acc + Number(img?.sale || 0), 0);
-
-    let waitStr = "1h0m";
-    if (sumValue > 5000) waitStr = "2h0m";
-    else if (sumValue > 750) waitStr = "1h30m";
-
-    const sumSaleLabel = formatSaleLabelM(sumSaleM).replace('$ ', '');
-
-    // 次のしきい値まであと何K/sか
-    const rawDiff = getNextThresholdDiff(sumValue);
-    let nextLineText;
-
-    if (rawDiff === null) {
-      nextLineText = "確率は現在が最高帯です";
-    } else {
-      const diffToNext = rawDiff + 1;
-      if (diffToNext > 0) {
-        const emoji = diffToNext <= sumValue / 20 ? " 😱" : "";
-        nextLineText = `次の確率帯まで<span class="total-number">${diffToNext}</span> K/s${emoji}`;
-      } else {
-        nextLineText = "次の確率帯まで <span class=\"total-number\">1</span> K/s 😱";
-      }
-    }
-
-    const diffToPrev = getPrevThresholdDiff(sumValue);
-
-    if (totalTitle) {
-      totalTitle.textContent = "Total";
-    }
-
-    const lines = [
-      `Total K/s：<span class="total-number">${sumValue}</span>`,
-      //`Total $　：<span class="total-number">${sumSaleLabel}</span>`,
-      //`Wait　　：${waitStr}`,
-      nextLineText
-    ];
-
-    if (diffToPrev !== null) {
-      const emoji = diffToPrev <= sumValue / 20 ? " 😍" : "";
-      lines.push(`(前の確率帯から +${diffToPrev} K/s${emoji})`);
-    }
-
-    totalBox.innerHTML = lines.map(t => `<div>${t}</div>`).join('');
-  }
-
-  // ========== モンスターごとの確率ルール取得 ==========
-  function getMonsterProbabilities(sumValue) {
-    return probabilityRules.find(r => sumValue <= r.max).list;
-  }
-
-  // ========== モンスターごとの確率表示（Total K/sに応じて動的更新） ==========
-  function updateMonsterProbability() {
-    const container = document.getElementById('monster-probability');
-    if (!container) return;
-    container.innerHTML = '';
-
-    // 合計K/s
-    const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
-
-    // 251以下なら表示しない（要件）
-    if (sumValue <= 251) return;
-    // 0扱いなら何も出さない、もこれに含まれる
-
-    const monsters = getMonsterProbabilities(sumValue);
-
-    monsters.forEach(({ img, p }) => {
-      const box = document.createElement('div');
-      box.className = 'monster-box';
-
-      const image = document.createElement('img');
-      image.src = `./img/${img}`;
-      image.alt = img;
-
-      const probText = document.createElement('div');
-      probText.className = 'monster-prob-text';
-      probText.textContent = `${p}%`;
-
-      box.appendChild(image);
-      box.appendChild(probText);
-      container.appendChild(box);
-    });
-  }
-
-  // ========== 種類確率 ==========
-  function updateTypeProbability() {
-    const probs = { ...baseProb };
-    const colorSums = { Default: 0, Gold: 0, Diamond: 0, Rainbow: 0, Chocolate: 0, Other: 0 };
-
-    for (let i = 0; i < selectedImages.length; i++) {
-      const img = selectedImages[i];
-      if (!img) continue;
-      const color = selectedColors[i] || 'Default';
-      colorSums[color] += img.value;
-    }
-
-    const totalColorSum = Object.values(colorSums).reduce((a, b) => a + b, 0);
-    if (totalColorSum > 0) {
-      const bonus = 75;
-      for (const c in colorSums) {
-        if (colorSums[c] > 0) probs[c] += bonus * (colorSums[c] / totalColorSum);
-      }
-    } else {
-      probs.Default = 84.5; probs.Gold = 10; probs.Diamond = 5; probs.Rainbow = 0.5;
-    }
-
-    const items = Object.keys(probs)
-      .map(k => ({ name: k, prob: (probs[k] || 0).toFixed(1) }))
-      .sort((a, b) => b.prob - a.prob);
-
-    typeProbEl.innerHTML = items
-      .map(it => `<span class="${it.name}">${it.name}: ${it.prob}%</span>`)
-      .join('');
-  }
-
-  function getButtonColor(type) {
-    switch (type) {
-      case 'Default': return '#333333';
-      case 'Gold': return '#ffd700';
-      case 'Diamond': return '#00b0ff';
-      case 'Rainbow': return '#d500f9';
-      case 'Chocolate': return '#D2691E';
-      case 'Other': return '#888888';
-      default: return '#333333';
-    }
-  }
-
+function selectMonster(imgObj) {
+  const emptyIndex = selectedImages.findIndex(v => v === null);
+  if (emptyIndex === -1) return;
+  selectedImages[emptyIndex] = { ...imgObj };
+  selectedColors[emptyIndex] = 'Default';
+  selectedHasBorder[emptyIndex] = true;
   renderSelected();
   updateAll();
+}
+
+// ========== 選択エリア描画 ==========
+function renderSelected() {
+  selectedWrappers.forEach((wrapper, idx) => {
+    wrapper.innerHTML = '';
+    const imgObj = selectedImages[idx];
+
+    if (imgObj) {
+      // 画像ボックス生成
+      const box = document.createElement('div');
+      box.className = 'imgbox imgbox--selected';
+
+      // グループ（ペア）を探す
+      const group = images.filter(img => img.value === imgObj.value && img.rarity === imgObj.rarity);
+
+      if (group.length > 1) {
+        box.classList.add('imgbox--split');
+
+        group.forEach((gImg, index) => {
+          const isLeft = index === 0;
+
+          // 1. ヒットエリア作成
+          const hitArea = document.createElement('div');
+          hitArea.className = `split-hit-area ${isLeft ? 'split-hit-left' : 'split-hit-right'}`;
+          hitArea.addEventListener('click', () => removeFromSelected(idx));
+          box.appendChild(hitArea);
+
+          // 2. 画像作成
+          const img = document.createElement('img');
+          img.src = gImg.src;
+          img.className = `selected-img split-img ${isLeft ? 'split-img-left' : 'split-img-right'}`;
+          // 画像のクリックイベントはヒットエリアが拾うので不要
+          box.appendChild(img);
+        });
+      } else {
+        const img = document.createElement('img');
+        img.src = imgObj.src;
+        img.className = 'selected-img';
+        img.addEventListener('click', () => removeFromSelected(idx));
+        box.appendChild(img);
+      }
+
+      const label = document.createElement('div');
+      label.textContent = `${imgObj.value} K/s`;
+      label.className = 'value-label';
+      box.appendChild(label);
+
+      const saleLabel = document.createElement('div');
+      saleLabel.textContent = formatSaleLabelM(imgObj.sale);
+      saleLabel.className = 'sale-label';
+      box.appendChild(saleLabel);
+
+      applyOutline(box, idx);
+      wrapper.appendChild(box);
+
+      // ボタンコンテナ
+      const btnContainer = document.createElement('div');
+      btnContainer.className = 'button-container';
+
+      ['Default', 'Gold', 'Diamond', 'Rainbow', 'Chocolate', 'Other'].forEach(type => {
+        const btn = document.createElement('button');
+        btn.textContent = type;
+        btn.className = type;
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectedColors[idx] = type;
+          selectedHasBorder[idx] = true;
+          applyOutline(box, idx); // 枠色を即時反映
+          updateAll();            // 計算更新
+        });
+
+        btnContainer.appendChild(btn);
+      });
+
+      wrapper.appendChild(btnContainer);
+    } else {
+      // 未選択時のプレースホルダ
+      const ph = document.createElement('div');
+      ph.className = 'imgbox imgbox--selected';
+      ph.style.backgroundColor = '#555';
+      wrapper.appendChild(ph);
+    }
+  });
+}
+
+// ========== 枠色 ==========
+function applyOutline(boxEl, idx) {
+  const color = getButtonColor(selectedColors[idx] || 'Default');
+  const bw = window.matchMedia('(max-width: 600px)').matches ? 3 : 5;
+  if (selectedHasBorder[idx]) {
+    boxEl.style.outline = `${bw}px solid ${color}`;
+  } else {
+    boxEl.style.outline = 'none';
+  }
+}
+
+function removeFromSelected(index) {
+  selectedImages.splice(index, 1);
+  selectedImages.push(null);
+  selectedColors.splice(index, 1);
+  selectedColors.push('Default');
+  selectedHasBorder.splice(index, 1);
+  selectedHasBorder.push(false);
+  renderSelected();
+  updateAll();
+}
+
+// ========== RESET ==========
+resetBtn.addEventListener('click', () => {
+  selectedImages = [null, null, null, null, null];
+  selectedColors = ['Default', 'Default', 'Default', 'Default', 'Default'];
+  selectedHasBorder = [false, false, false, false, false];
+  renderSelected();
+  updateAll();
+});
+
+// ========== 更新 ==========
+function updateAll() {
+  updateTotal();
+  updateMonsterProbability();
+  updateTypeProbability();
+}
+
+// ========== Total欄 ==========
+function updateTotal() {
+  const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
+  const sumSaleM = selectedImages.reduce((acc, img) => acc + Number(img?.sale || 0), 0);
+
+  let waitStr = "1h0m";
+  if (sumValue > 5000) waitStr = "2h0m";
+  else if (sumValue > 750) waitStr = "1h30m";
+
+  const sumSaleLabel = formatSaleLabelM(sumSaleM).replace('$ ', '');
+
+  // 次のしきい値まであと何K/sか
+  const rawDiff = getNextThresholdDiff(sumValue);
+  let nextLineText;
+
+  if (rawDiff === null) {
+    nextLineText = "確率は現在が最高帯です";
+  } else {
+    const diffToNext = rawDiff + 1;
+    if (diffToNext > 0) {
+      const emoji = diffToNext <= sumValue / 20 ? " 😱" : "";
+      nextLineText = `次の確率帯まで<span class="total-number">${diffToNext}</span> K/s${emoji}`;
+    } else {
+      nextLineText = "次の確率帯まで <span class=\"total-number\">1</span> K/s 😱";
+    }
+  }
+
+  const diffToPrev = getPrevThresholdDiff(sumValue);
+
+  if (totalTitle) {
+    totalTitle.textContent = "Total";
+  }
+
+  const lines = [
+    `Total K/s：<span class="total-number">${sumValue}</span>`,
+    //`Total $　：<span class="total-number">${sumSaleLabel}</span>`,
+    //`Wait　　：${waitStr}`,
+    nextLineText
+  ];
+
+  if (diffToPrev !== null) {
+    const emoji = diffToPrev <= sumValue / 20 ? " 😍" : "";
+    lines.push(`(前の確率帯から +${diffToPrev} K/s${emoji})`);
+  }
+
+  totalBox.innerHTML = lines.map(t => `<div>${t}</div>`).join('');
+}
+
+// ========== モンスターごとの確率ルール取得 ==========
+function getMonsterProbabilities(sumValue) {
+  return probabilityRules.find(r => sumValue <= r.max).list;
+}
+
+// ========== モンスターごとの確率表示（Total K/sに応じて動的更新） ==========
+function updateMonsterProbability() {
+  const container = document.getElementById('monster-probability');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // 合計K/s
+  const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
+
+  // 251以下なら表示しない（要件）
+  if (sumValue <= 251) return;
+  // 0扱いなら何も出さない、もこれに含まれる
+
+  const monsters = getMonsterProbabilities(sumValue);
+
+  monsters.forEach(({ img, p }) => {
+    const box = document.createElement('div');
+    box.className = 'monster-box';
+
+    const image = document.createElement('img');
+    image.src = `./img/${img}`;
+    image.alt = img;
+
+    const probText = document.createElement('div');
+    probText.className = 'monster-prob-text';
+    probText.textContent = `${p}%`;
+
+    box.appendChild(image);
+    box.appendChild(probText);
+    container.appendChild(box);
+  });
+}
+
+// ========== 種類確率 ==========
+function updateTypeProbability() {
+  const probs = { ...baseProb };
+  const colorSums = { Default: 0, Gold: 0, Diamond: 0, Rainbow: 0, Chocolate: 0, Other: 0 };
+
+  for (let i = 0; i < selectedImages.length; i++) {
+    const img = selectedImages[i];
+    if (!img) continue;
+    const color = selectedColors[i] || 'Default';
+    colorSums[color] += img.value;
+  }
+
+  const totalColorSum = Object.values(colorSums).reduce((a, b) => a + b, 0);
+  if (totalColorSum > 0) {
+    const bonus = 75;
+    for (const c in colorSums) {
+      if (colorSums[c] > 0) probs[c] += bonus * (colorSums[c] / totalColorSum);
+    }
+  } else {
+    probs.Default = 84.5; probs.Gold = 10; probs.Diamond = 5; probs.Rainbow = 0.5;
+  }
+
+  const items = Object.keys(probs)
+    .map(k => ({ name: k, prob: (probs[k] || 0).toFixed(1) }))
+    .sort((a, b) => b.prob - a.prob);
+
+  typeProbEl.innerHTML = items
+    .map(it => `<span class="${it.name}">${it.name}: ${it.prob}%</span>`)
+    .join('');
+}
+
+function getButtonColor(type) {
+  switch (type) {
+    case 'Default': return '#333333';
+    case 'Gold': return '#ffd700';
+    case 'Diamond': return '#00b0ff';
+    case 'Rainbow': return '#d500f9';
+    case 'Chocolate': return '#D2691E';
+    case 'Other': return '#888888';
+    default: return '#333333';
+  }
+}
+
+renderSelected();
+updateAll();
