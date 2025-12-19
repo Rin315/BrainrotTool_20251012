@@ -139,10 +139,7 @@
             filter: opacity(0.3) !important;
         }
 
-        pointer-events: none;
-        white-space: nowrap;
-        z-index: 10;
-        }
+
 
         /* Tab Colors */
         .tab-btn.Default {
@@ -201,18 +198,27 @@
         /* ICE&FIRE Styling */
         .tab-btn.ICE\&FIRE {
             background-color: #f3f4f6 !important;
-            /* Match other tabs default bg */
             color: #4b5563 !important;
-            /* Match other tabs default text color */
-            border-left: 4px solid;
-            border-image: linear-gradient(to bottom, #ff8c00, #0000FF) 1;
+            border: none !important;
+            position: relative;
+            overflow: hidden;
+            padding-left: 16px;
+            /* Adjust padding */
+        }
+
+        .tab-btn.ICE\&FIRE::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #ff8c00, #0000FF);
         }
 
         .tab-btn.ICE\&FIRE.tab-active {
             background-color: var(--neon-cyan, #00b0ff) !important;
             color: white !important;
-            border-left: 4px solid;
-            border-image: linear-gradient(to bottom, #FF0000, #0000FF) 1;
         }
 
         /* Monster Card Border for ICE&FIRE */
@@ -271,18 +277,16 @@
         <!-- Main Content -->
         <main class="flex-1">
             <!-- Header -->
-            <div
-                class="flex justify-between items-center mb-6 bg-white/80 backdrop-blur-md p-4 rounded-xl border border-gray-200 shadow-sm">
-                <h1 class="text-2xl font-black uppercase tracking-tighter text-gray-800"
-                    style="font-family: 'Mochiy Pop One', sans-serif;">新兵えす専用　Monster Zukan</h1>
-                <div class="flex items-center gap-4">
-
-                    <button id="reset-check-btn"
-                        class="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 transition-colors">
-                        RESET ALL
-                    </button>
-                    <!-- Progress count removed as requested -->
-                </div>
+            <h1 class="text-2xl font-black uppercase tracking-tighter text-gray-800">
+                <span style="font-family: 'Inter', sans-serif;">新兵えす専用</span>
+                <span style="font-family: 'Mochiy Pop One', sans-serif;">Monster Zukan</span>
+            </h1>
+            <div class="flex items-center gap-4">
+                <button id="reset-check-btn"
+                    class="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 transition-colors">
+                    RESET ALL
+                </button>
+                <!-- Progress count removed as requested -->
             </div>
 
             <!-- Grid -->
