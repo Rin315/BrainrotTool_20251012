@@ -134,6 +134,12 @@
             z-index: 10;
         }
 
+        @media (max-width: 768px) {
+            .complete-overlay {
+                font-size: 12px;
+            }
+        }
+
         /* Complete State (Overrides obtained) */
         .monster-card.complete img {
             filter: none !important;
@@ -201,7 +207,7 @@
         /* ICE&FIRE Styling */
         /* ICE&FIRE Styling */
         .tab-btn.ICE\&FIRE {
-            background-color: #000000 !important;
+            background-color: #f3f4f6 !important;
             color: #4b5563 !important;
             border: none !important;
             position: relative;
@@ -228,7 +234,7 @@
         /* Monster Card Border for ICE&FIRE */
         .monster-card.ICE\&FIRE {
             border: 4px solid transparent;
-            background-image: linear-gradient(white, white), linear-gradient(to bottom, #FF0000, #0000FF);
+            background-image: linear-gradient(black, black), linear-gradient(to bottom, #FF0000, #0000FF);
             background-origin: border-box;
             background-clip: content-box, border-box;
         }
