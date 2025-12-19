@@ -48,7 +48,7 @@ const images = [
     { src: './img/gorillo.png', value: 0, rarity: 'Common' },
     { src: './img/sigma.png', value: 0, rarity: 'Common' },
     { src: './img/matteo.png', value: 0, rarity: 'Common' },
-    /*
+
     { src: './img/losspi.png', value: 0, rarity: 'Common' },
     { src: './img/rhino.png', value: 0, rarity: 'Common' },
     { src: './img/ganganze.png', value: 0, rarity: 'Common' },
@@ -58,13 +58,13 @@ const images = [
     { src: './img/tang.png', value: 0, rarity: 'Common' },
     { src: './img/antonio.png', value: 0, rarity: 'Common' },
     { src: './img/girafa.png', value: 0, rarity: 'Common' },
-    */
+
     { src: './img/perochello.png', value: 0, rarity: 'Common' },
     { src: './img/tung3.png', value: 0, rarity: 'Common' },
     { src: './img/patapimus.png', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', value: 0, rarity: 'Common' },
 
-    { src: './img/losmateo.png', value: 0, rarity: 'Common' }, ,//ロスマテオ　画像なし
+    { src: './img/losmateo.png', value: 0, rarity: 'Common' }, //ロスマテオ　画像なし
 
 
 
@@ -145,7 +145,7 @@ const images = [
     { src: './img/itigozou.png', value: 12000, rarity: 'Secret-' },
     { src: './img/klombo.png', value: 12000, rarity: 'Secret-' },
     { src: './img/shtekerito.png', value: 12000, rarity: 'Secret-' },
-    { src: './img/itigozou.png', value: 12000, rarity: 'Secret-' },
+    // { src: './img/itigozou.png', value: 12000, rarity: 'Secret-' }, // Duplicate removed
     { src: './img/spageti.png', value: 12000, rarity: 'Secret-' },
     { src: './img/cabritos.png', value: 12000, rarity: 'Secret-' },
     { src: './img/doragon.png', value: 12000, rarity: 'Secret-' },
