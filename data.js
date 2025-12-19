@@ -62,8 +62,9 @@ const images = [
     { src: './img/tung3.png', value: 0, rarity: 'Common' },
     { src: './img/patapimus.png', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', value: 0, rarity: 'Common' },
+     */
     { src: './img/losmateo.png', value: 0, rarity: 'Common' }, ,//ロスマテオ　画像なし
-    */
+
 
 
     //　Brainrot Got
