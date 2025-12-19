@@ -51,17 +51,17 @@ const images = [
     { src: './img/losspi.png', value: 0, rarity: 'Common' },
     { src: './img/rhino.png', value: 0, rarity: 'Common' },
     { src: './img/ganganze.png', value: 0, rarity: 'Common' },
-    { src: './img/tang.png', value: 0, rarity: 'Common' },
+    { src: './img/te3.png', value: 0, rarity: 'Common' },
     { src: './img/strawberre.png', value: 0, rarity: 'Common' },
     { src: './img/elefantino.png', value: 0, rarity: 'Common' },
-    { src: './img/to3.png', value: 0, rarity: 'Common' },
+    { src: './img/tang.png', value: 0, rarity: 'Common' },
     { src: './img/antonio.png', value: 0, rarity: 'Common' },
     { src: './img/girafa.png', value: 0, rarity: 'Common' },
     { src: './img/perochello.png', value: 0, rarity: 'Common' },
     { src: './img/tung3.png', value: 0, rarity: 'Common' },
     { src: './img/patapimus.png', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', value: 0, rarity: 'Common' },
-    { src: './img/losmateo.png', value: 0, rarity: 'Common' },
+    { src: './img/losmateo.png', value: 0, rarity: 'Common' }, ,//ロスマテオ　画像なし
 
 
     //　Brainrot Got
@@ -92,22 +92,22 @@ const images = [
     { src: './img/piccionetama.png', value: 200, rarity: 'BrainrotGot' },
     { src: './img/popcon.png', value: 205, rarity: 'BrainrotGot' },
     { src: './img/iipiccione.png', value: 210, rarity: 'BrainrotGot' },
-    { src: './img/iimastodontico.png', value: 240, rarity: 'BrainrotGot' },
     { src: './img/jobjobjob.png', value: 220, rarity: 'BrainrotGot' },
     { src: './img/lassis.png', value: 230, rarity: 'BrainrotGot' },//姉妹
+    { src: './img/iimastodontico.png', value: 240, rarity: 'BrainrotGot' },
     { src: './img/malame.png', value: 250, rarity: 'BrainrotGot' },
     { src: './img/belugelo.png', value: 270, rarity: 'BrainrotGot' },
     { src: './img/miss.png', value: 300, rarity: 'BrainrotGot' },//ロケット
 
     //　Secret
-    { src: './img/lostralaleritas.png', value: 200, rarity: 'Secret' },
     { src: './img/lostralaletitos.png', value: 200, rarity: 'Secret' },
+    { src: './img/lostralaleritas.png', value: 200, rarity: 'Secret' },
     { src: './img/trenostruzzo.png', value: 300, rarity: 'Secret' },
     { src: './img/kravilino.png', value: 375, rarity: 'Secret' },
     { src: './img/losorcaleritos.png', value: 400, rarity: 'Secret' },
     { src: './img/loscouples.png', value: 450, rarity: 'Secret' },
-    { src: './img/peely.png', value: 500, rarity: 'Secret' },
     { src: './img/piccione.png', value: 500, rarity: 'Secret' },
+    { src: './img/peely.png', value: 500, rarity: 'Secret' },
     { src: './img/pakrah_w.png', value: 550, rarity: 'Secret' },//鉛筆女
     { src: './img/pakrah.png', value: 600, rarity: 'Secret' },
     { src: './img/losjob.png', value: 700, rarity: 'Secret' },
@@ -117,6 +117,7 @@ const images = [
     { src: './img/orcalero.png', value: 1000, rarity: 'Secret' },
     { src: './img/frog.png', value: 1200, rarity: 'Secret' },
     { src: './img/ketchuru.png', value: 1500, rarity: 'Secret' },
+    { src: './img/pothotspotona.png', value: 1500, rarity: 'Secret' },//女骨
     { src: './img/pothotspot.png', value: 2000, rarity: 'Secret' },
     { src: './img/21.png', value: 2100, rarity: 'Secret' },
     { src: './img/losmobilis.png', value: 2200, rarity: 'Secret' },
@@ -132,5 +133,28 @@ const images = [
     { src: './img/chicleteira.png', value: 8000, rarity: 'Secret' },
     { src: './img/pad.png', value: 10000, rarity: 'Secret' },
     { src: './img/dulduldul.png', value: 12000, rarity: 'Secret' },
+    { src: './img/losmgarama.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/kaerutoire.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/ie.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/pitiata.png', value: 12000, rarity: 'Secret-' },
     { src: './img/chinpanking.png', value: 25000, rarity: 'Secret' },
+    { src: './img/itigozou.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/klombo.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/shtekerito.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/itigozou.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/spageti.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/cabritos.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/doragon.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/lacrazy.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/kumo.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/track.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/toire.png', value: 12000, rarity: 'Secret-' },
+
+
+
+
+
+
+
+
 ];
