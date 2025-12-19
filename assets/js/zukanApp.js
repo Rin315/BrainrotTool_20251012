@@ -85,6 +85,11 @@ function init() {
 // ========== Rendering ==========
 function renderTabs() {
     tabsContainer.innerHTML = '';
+
+    // Calculate Total Progress
+    let totalObtainedGlobal = 0;
+    const totalPossibleGlobal = monsters.length * variants.length;
+
     variants.forEach(variant => {
         // Calculate progress for this variant
         let obtainedCount = 0;
@@ -94,6 +99,7 @@ function renderTabs() {
             const key = `${i}_${variant}`;
             if (state.collection[key]) {
                 obtainedCount++;
+                totalObtainedGlobal++;
             }
         }
 
@@ -123,6 +129,12 @@ function renderTabs() {
         };
         tabsContainer.appendChild(btn);
     });
+
+    // Update Total Progress Display
+    const totalProgressEl = document.getElementById('total-progress');
+    if (totalProgressEl) {
+        totalProgressEl.textContent = `${totalObtainedGlobal}/${totalPossibleGlobal}`;
+    }
 }
 
 function renderGrid() {
