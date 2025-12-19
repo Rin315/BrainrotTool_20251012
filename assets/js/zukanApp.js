@@ -237,17 +237,8 @@ function updatePaginationUI() {
 }
 
 function updateStats() {
-    // Current tab stats
-    const totalInTab = monsters.length;
-    let obtainedInTab = 0;
-
-    for (let i = 0; i < monsters.length; i++) {
-        const key = `${i}_${state.currentTab}`;
-        if (state.collection[key]) obtainedInTab++;
-    }
-
-    collectionCountEl.textContent = obtainedInTab;
-    totalCountEl.textContent = totalInTab;
+    // Stats display removed from UI as per request
+    // Keeping function to avoid breaking calls, but it does nothing now.
 }
 
 // ========== Logic ==========
