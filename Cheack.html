@@ -198,11 +198,21 @@
         }
 
         /* ICE&FIRE Styling */
+        /* ICE&FIRE Styling */
         .tab-btn.ICE\&FIRE {
-            background: linear-gradient(to bottom, #FF0000, #0000FF) !important;
+            background-color: #f3f4f6 !important;
+            /* Match other tabs default bg */
+            color: #4b5563 !important;
+            /* Match other tabs default text color */
+            border-left: 4px solid;
+            border-image: linear-gradient(to bottom, #FF0000, #0000FF) 1;
+        }
+
+        .tab-btn.ICE\&FIRE.tab-active {
+            background-color: var(--neon-cyan, #00b0ff) !important;
             color: white !important;
-            border-left: none !important;
-            /* Override default border */
+            border-left: 4px solid;
+            border-image: linear-gradient(to bottom, #FF0000, #0000FF) 1;
         }
 
         /* Monster Card Border for ICE&FIRE */

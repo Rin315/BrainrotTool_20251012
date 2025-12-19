@@ -46,8 +46,6 @@ const pageIndicator = document.getElementById('page-indicator');
 const collectionCountEl = document.getElementById('collection-count');
 const totalCountEl = document.getElementById('total-count');
 const resetBtn = document.getElementById('reset-check-btn');
-const exportBtn = document.getElementById('export-btn');
-const importBtn = document.getElementById('import-btn');
 
 // ========== Initialization ==========
 function init() {
@@ -69,7 +67,6 @@ function init() {
     renderTabs();
     setupPagination();
     setupReset();
-    setupExportImport();
 
     // Listen to Firebase (Source of Truth)
     const collectionRef = ref(db, 'collection_status');
