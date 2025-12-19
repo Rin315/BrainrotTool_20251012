@@ -58,11 +58,12 @@ const images = [
     { src: './img/tang.png', value: 0, rarity: 'Common' },
     { src: './img/antonio.png', value: 0, rarity: 'Common' },
     { src: './img/girafa.png', value: 0, rarity: 'Common' },
+    */
     { src: './img/perochello.png', value: 0, rarity: 'Common' },
     { src: './img/tung3.png', value: 0, rarity: 'Common' },
     { src: './img/patapimus.png', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', value: 0, rarity: 'Common' },
-     */
+
     { src: './img/losmateo.png', value: 0, rarity: 'Common' }, ,//ロスマテオ　画像なし
 
 
@@ -136,7 +137,7 @@ const images = [
     { src: './img/chicleteira.png', value: 8000, rarity: 'Secret' },
     { src: './img/pad.png', value: 10000, rarity: 'Secret' },
     { src: './img/dulduldul.png', value: 12000, rarity: 'Secret' },
-    { src: './img/losmgarama.png', value: 12000, rarity: 'Secret-' },
+    { src: './img/losgarama.png', value: 12000, rarity: 'Secret-' },
     { src: './img/kaerutoire.png', value: 12000, rarity: 'Secret-' },
     { src: './img/ie.png', value: 12000, rarity: 'Secret-' },
     { src: './img/pitiata.png', value: 12000, rarity: 'Secret-' },
