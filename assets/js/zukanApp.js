@@ -34,7 +34,7 @@ let state = {
     currentPage: 1,
     collection: {}, // { "monsterId_variant": timestamp }
     isAdmin: false,
-    filterUnobtained: false
+    filterUnobtained: true
 };
 
 // Access global images from data.js
@@ -127,7 +127,7 @@ function renderTabs() {
 
         const countSpan = document.createElement('span');
         countSpan.textContent = `${obtainedCount}/${totalCount}`;
-        countSpan.className = 'text-xs opacity-80';
+        countSpan.className = 'text-xs opacity-80 hidden md:inline';
 
         btn.appendChild(nameSpan);
         btn.appendChild(countSpan);
