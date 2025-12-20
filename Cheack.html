@@ -311,10 +311,20 @@
                     <span style="font-family: 'Mochiy Pop One', sans-serif;">Monster Zukan</span>
                     <span style="font-family: 'Inter', sans-serif;"> (新兵えす専用)</span>
                 </h1>
-                <button id="reset-check-btn"
-                    class="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 transition-colors">
-                    RESET ALL
-                </button>
+                <div class="flex items-center gap-2">
+                    <button id="filter-toggle-btn"
+                        class="px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded hover:bg-blue-600 transition-colors">
+                        UNOBTAINED ONLY
+                    </button>
+                    <button id="mark-all-btn"
+                        class="px-3 py-1 bg-green-500 text-white text-xs font-bold rounded hover:bg-green-600 transition-colors hidden">
+                        MARK ALL
+                    </button>
+                    <button id="reset-check-btn"
+                        class="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 transition-colors">
+                        RESET ALL
+                    </button>
+                </div>
             </div>
 
             <!-- Main Content (Grid + Pagination) -->

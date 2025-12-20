@@ -33,7 +33,8 @@ let state = {
     currentTab: "Default",
     currentPage: 1,
     collection: {}, // { "monsterId_variant": timestamp }
-    isAdmin: false
+    isAdmin: false,
+    filterUnobtained: false
 };
 
 // Access global images from data.js
@@ -48,6 +49,8 @@ const pageIndicator = document.getElementById('page-indicator');
 const collectionCountEl = document.getElementById('collection-count');
 const totalCountEl = document.getElementById('total-count');
 const resetBtn = document.getElementById('reset-check-btn');
+const filterToggleBtn = document.getElementById('filter-toggle-btn');
+const markAllBtn = document.getElementById('mark-all-btn');
 
 // ========== Initialization ==========
 function init() {
@@ -69,6 +72,12 @@ function init() {
     renderTabs();
     setupPagination();
     setupReset();
+    setupFiltering();
+    setupMarkAll();
+
+    if (state.isAdmin && markAllBtn) {
+        markAllBtn.classList.remove('hidden');
+    }
 
     // Listen to Firebase (Source of Truth)
     const collectionRef = ref(db, 'collection_status');
@@ -143,6 +152,16 @@ function renderGrid() {
     gridContainer.innerHTML = '';
     const itemsPerPage = getItemsPerPage();
 
+    // Map monsters to include their original index for correct key generation
+    let displayMonsters = monsters.map((m, i) => ({ ...m, originalIndex: i }));
+
+    if (state.filterUnobtained) {
+        displayMonsters = displayMonsters.filter(m => {
+            const key = `${m.originalIndex}_${state.currentTab}`;
+            return !state.collection[key];
+        });
+    }
+
     // Use grid for blocks: 1 col on mobile, 2 cols on PC (to make 2x2 for 32 items)
     gridContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-8 w-full';
 
@@ -157,12 +176,12 @@ function renderGrid() {
     }
 
     for (let i = 0; i < itemsPerPage; i++) {
-        const globalIndex = startIndex + i;
+        const relativeIndex = startIndex + i;
 
         let card;
-        if (globalIndex < monsters.length) {
-            const monster = monsters[globalIndex];
-            card = createMonsterCard(monster, globalIndex);
+        if (relativeIndex < displayMonsters.length) {
+            const monster = displayMonsters[relativeIndex];
+            card = createMonsterCard(monster, monster.originalIndex);
         } else {
             // Empty slot
             card = document.createElement('div');
@@ -175,7 +194,7 @@ function renderGrid() {
 
     blocks.forEach(block => gridContainer.appendChild(block));
 
-    updatePaginationUI();
+    updatePaginationUI(displayMonsters.length);
 }
 
 function createMonsterCard(monster, index) {
@@ -212,8 +231,7 @@ function createMonsterCard(monster, index) {
     img.src = monster.src;
     // Fallback for broken images
     img.onerror = () => {
-        const filename = monster.src.replace('./img/', '').replace('.png', '');
-        img.src = `https://placehold.co/100x100?text=${encodeURIComponent(filename)}`;
+        img.src = `https://placehold.co/100x100?text=${encodeURIComponent(monster.name)}`;
     };
 
     card.appendChild(img);
@@ -228,9 +246,15 @@ function createMonsterCard(monster, index) {
     return card;
 }
 
-function updatePaginationUI() {
+function updatePaginationUI(totalItems = monsters.length) {
     const itemsPerPage = getItemsPerPage();
-    const totalPages = Math.ceil(monsters.length / itemsPerPage);
+    const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+
+    // Ensure current page is within bounds after filtering
+    if (state.currentPage > totalPages) {
+        state.currentPage = totalPages;
+    }
+
     pageIndicator.textContent = `Page ${state.currentPage} / ${totalPages}`;
     prevBtn.disabled = state.currentPage === 1;
     nextBtn.disabled = state.currentPage === totalPages;
@@ -251,7 +275,11 @@ function setupPagination() {
     };
     nextBtn.onclick = () => {
         const itemsPerPage = getItemsPerPage();
-        const totalPages = Math.ceil(monsters.length / itemsPerPage);
+        let totalItems = monsters.length;
+        if (state.filterUnobtained) {
+            totalItems = monsters.filter((_, i) => !state.collection[`${i}_${state.currentTab}`]).length;
+        }
+        const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
         if (state.currentPage < totalPages) {
             state.currentPage++;
             renderGrid();
@@ -281,6 +309,39 @@ function setupReset() {
                     alert("All data reset.");
                 })
                 .catch(err => console.error("Reset failed:", err));
+        }
+    };
+}
+
+function setupFiltering() {
+    if (!filterToggleBtn) return;
+    filterToggleBtn.onclick = () => {
+        state.filterUnobtained = !state.filterUnobtained;
+        state.currentPage = 1; // Reset to page 1 when filtering
+        filterToggleBtn.textContent = state.filterUnobtained ? 'SHOW ALL' : 'UNOBTAINED ONLY';
+        filterToggleBtn.className = `px-3 py-1 ${state.filterUnobtained ? 'bg-gray-500' : 'bg-blue-500'} text-white text-xs font-bold rounded transition-colors`;
+        renderGrid();
+    };
+}
+
+function setupMarkAll() {
+    if (!markAllBtn) return;
+    markAllBtn.onclick = () => {
+        if (!state.isAdmin) return;
+
+        if (confirm(`Mark ALL monsters in ALL variants as obtained?`)) {
+            const updates = {};
+            const now = Date.now();
+            monsters.forEach((_, i) => {
+                variants.forEach(variant => {
+                    const key = `${i}_${variant}`;
+                    updates[key] = now;
+                });
+            });
+
+            set(ref(db, 'collection_status'), updates)
+                .then(() => alert(`All monsters in all variants marked as obtained.`))
+                .catch(err => console.error("Mark all failed:", err));
         }
     };
 }
