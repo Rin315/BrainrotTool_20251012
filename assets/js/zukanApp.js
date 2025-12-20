@@ -116,7 +116,7 @@ function renderTabs() {
 
         const btn = document.createElement('button');
         // Add flex to button to align text
-        btn.className = `tab-btn ${variant} px-4 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition-colors flex justify-between items-center gap-4 ${state.currentTab === variant
+        btn.className = `tab-btn ${variant} px-3 md:px-4 py-2 rounded-lg font-bold text-xs md:text-sm whitespace-nowrap transition-colors flex justify-between items-center gap-2 md:gap-4 ${state.currentTab === variant
             ? 'tab-active shadow-md'
             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`;
