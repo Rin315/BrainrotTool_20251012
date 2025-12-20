@@ -26,7 +26,9 @@ const variants = [
     "Aqua", "Halloween", "Darkness", "Neon"
 ];
 
-const ITEMS_PER_PAGE = 16;
+function getItemsPerPage() {
+    return window.innerWidth >= 768 ? 32 : 16;
+}
 let state = {
     currentTab: "Default",
     currentPage: 1,
@@ -139,25 +141,22 @@ function renderTabs() {
 
 function renderGrid() {
     gridContainer.innerHTML = '';
+    const itemsPerPage = getItemsPerPage();
 
-    // Apply flex layout to main container to hold two blocks side-by-side
-    // Added w-full and max-w-none to ensure it takes space, but the key is the children sizing
-    gridContainer.className = 'flex flex-col md:flex-row gap-8 justify-center items-start w-full';
+    // Use grid for blocks: 1 col on mobile, 2 cols on PC (to make 2x2 for 32 items)
+    gridContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-8 w-full';
 
-    const startIndex = (state.currentPage - 1) * ITEMS_PER_PAGE;
-    // We expect ITEMS_PER_PAGE to be 16 for this layout to make sense per page
+    const startIndex = (state.currentPage - 1) * itemsPerPage;
 
-    // Block 1: Indices 0-7 (relative to page start)
-    const block1 = document.createElement('div');
-    // Added flex-1 and w-full to ensure equal width
-    block1.className = 'grid grid-cols-4 gap-4 flex-1 w-full';
+    const numBlocks = itemsPerPage / 8;
+    const blocks = [];
+    for (let b = 0; b < numBlocks; b++) {
+        const block = document.createElement('div');
+        block.className = 'grid grid-cols-4 gap-4 w-full';
+        blocks.push(block);
+    }
 
-    // Block 2: Indices 8-15 (relative to page start)
-    const block2 = document.createElement('div');
-    // Added flex-1 and w-full to ensure equal width
-    block2.className = 'grid grid-cols-4 gap-4 flex-1 w-full';
-
-    for (let i = 0; i < ITEMS_PER_PAGE; i++) {
+    for (let i = 0; i < itemsPerPage; i++) {
         const globalIndex = startIndex + i;
 
         let card;
@@ -170,21 +169,11 @@ function renderGrid() {
             card.className = 'monster-card opacity-0 pointer-events-none';
         }
 
-        // Add to appropriate block
-        // 0-3: Top row of Block 1
-        // 4-7: Bottom row of Block 1
-        // 8-11: Top row of Block 2
-        // 12-15: Bottom row of Block 2
-
-        if (i < 8) {
-            block1.appendChild(card);
-        } else {
-            block2.appendChild(card);
-        }
+        const blockIndex = Math.floor(i / 8);
+        blocks[blockIndex].appendChild(card);
     }
 
-    gridContainer.appendChild(block1);
-    gridContainer.appendChild(block2);
+    blocks.forEach(block => gridContainer.appendChild(block));
 
     updatePaginationUI();
 }
@@ -239,7 +228,8 @@ function createMonsterCard(monster, index) {
 }
 
 function updatePaginationUI() {
-    const totalPages = Math.ceil(monsters.length / ITEMS_PER_PAGE);
+    const itemsPerPage = getItemsPerPage();
+    const totalPages = Math.ceil(monsters.length / itemsPerPage);
     pageIndicator.textContent = `Page ${state.currentPage} / ${totalPages}`;
     prevBtn.disabled = state.currentPage === 1;
     nextBtn.disabled = state.currentPage === totalPages;
@@ -259,12 +249,20 @@ function setupPagination() {
         }
     };
     nextBtn.onclick = () => {
-        const totalPages = Math.ceil(monsters.length / ITEMS_PER_PAGE);
+        const itemsPerPage = getItemsPerPage();
+        const totalPages = Math.ceil(monsters.length / itemsPerPage);
         if (state.currentPage < totalPages) {
             state.currentPage++;
             renderGrid();
         }
     };
+
+    // Handle window resize to update items per page
+    window.addEventListener('resize', () => {
+        // Reset to page 1 if items per page changes to avoid confusion
+        // but let's just re-render for now to see if it works
+        renderGrid();
+    });
 }
 
 function setupReset() {
