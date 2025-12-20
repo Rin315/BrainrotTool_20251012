@@ -48,11 +48,13 @@
             transition: filter 0.3s;
         }
 
-        .monster-card.unobtained img {
+        .monster-card.unobtained img,
+        .monster-card.unobtained .fallback-text {
             filter: opacity(0.3);
         }
 
-        .monster-card.obtained img {
+        .monster-card.obtained img,
+        .monster-card.obtained .fallback-text {
             filter: none;
         }
 
