@@ -212,7 +212,8 @@ function createMonsterCard(monster, index) {
     img.src = monster.src;
     // Fallback for broken images
     img.onerror = () => {
-        img.src = 'https://placehold.co/100x100?text=No+Image';
+        const filename = monster.src.replace('./img/', '').replace('.png', '');
+        img.src = `https://placehold.co/100x100?text=${encodeURIComponent(filename)}`;
     };
 
     card.appendChild(img);
