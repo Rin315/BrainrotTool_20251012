@@ -61,7 +61,7 @@ const images = [
     { src: './img/tung3.png', name: 'tung3', value: 0, rarity: 'Common' },
     { src: './img/patapimus.png', name: 'patapimus', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', name: 'tirilikalika', value: 0, rarity: 'Common' },
-    { src: './img/losmateo.png', name: 'ロスマテオ', value: 0, rarity: 'Common' }, //ロスマテオ　画像なし
+    { src: './img/losmateo.png', name: 'LosMateo', value: 0, rarity: 'Common' }, //ロスマテオ　画像なし
 
 
 
@@ -149,7 +149,7 @@ const images = [
     { src: './img/lacrazy.png', name: 'lacrazy', value: 12000, rarity: 'Secret-' },
     { src: './img/kumo.png', name: 'kumo', value: 12000, rarity: 'Secret-' },
     { src: './img/track.png', name: 'track', value: 12000, rarity: 'Secret-' },
-    { src: './img/toire.png', name: 'toire', value: 12000, rarity: 'Secret-' },
+    { src: './img/toire.png', name: 'Skibidi Toilet', value: 12000, rarity: 'Secret-' },
 
 
 
