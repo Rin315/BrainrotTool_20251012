@@ -233,7 +233,6 @@ function createMonsterCard(monster, index) {
     img.onerror = () => {
         const div = document.createElement('div');
         div.className = 'fallback-text w-full h-full flex items-center justify-center text-center p-2 font-bold text-white break-words';
-        div.style.fontSize = '20px'; // Much larger
         div.textContent = monster.name;
         img.replaceWith(div);
     };
