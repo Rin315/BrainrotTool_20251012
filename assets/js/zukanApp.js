@@ -231,7 +231,11 @@ function createMonsterCard(monster, index) {
     img.src = monster.src;
     // Fallback for broken images
     img.onerror = () => {
-        img.src = `https://placehold.co/200x200?text=${encodeURIComponent(monster.name)}&font_size=24`;
+        const div = document.createElement('div');
+        div.className = 'w-full h-full flex items-center justify-center text-center p-2 font-bold text-white break-words';
+        div.style.fontSize = '20px'; // Much larger
+        div.textContent = monster.name;
+        img.replaceWith(div);
     };
 
     card.appendChild(img);
