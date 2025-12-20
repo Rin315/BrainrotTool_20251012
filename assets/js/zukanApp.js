@@ -318,7 +318,7 @@ function setupFiltering() {
     filterToggleBtn.onclick = () => {
         state.filterUnobtained = !state.filterUnobtained;
         state.currentPage = 1; // Reset to page 1 when filtering
-        filterToggleBtn.textContent = state.filterUnobtained ? 'SHOW ALL' : 'UNOBTAINED ONLY';
+        filterToggleBtn.textContent = state.filterUnobtained ? 'すべて表示' : '未所持のみ表示';
         filterToggleBtn.className = `px-3 py-1 ${state.filterUnobtained ? 'bg-gray-500' : 'bg-blue-500'} text-white text-xs font-bold rounded transition-colors`;
         renderGrid();
     };
