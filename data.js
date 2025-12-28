@@ -56,7 +56,7 @@ const images = [
     { src: './img/te3.png', name: 'te3', value: 0, rarity: 'Common' },
     { src: './img/strawberre.png', name: 'strawberre', value: 0, rarity: 'Common' },
     { src: './img/elefantino.png', name: 'elefantino', value: 0, rarity: 'Common' },
-    { src: './img/to4.png', name: 'to4', value: 0, rarity: 'Common' },
+    { src: './img/to3.png', name: 'to3', value: 0, rarity: 'Common' },
     { src: './img/antonio.png', name: 'antonio', value: 0, rarity: 'Common' },//アントニオ
     { src: './img/girafa.png', name: 'girafa', value: 0, rarity: 'Common' },
     { src: './img/mypepper.png', name: 'mypepper', value: 0, rarity: 'Common' },
@@ -154,6 +154,7 @@ const images = [
     { src: './img/ie.png', name: 'ie', value: 12000, rarity: 'Secret-' },
     { src: './img/pitiata.png', name: 'pitiata', value: 12000, rarity: 'Secret-' },
     { src: './img/chinpanking.png', name: 'chinpanking', value: 25000, rarity: 'Secret' },
+    { src: './img/25.png', name: '25', value: 25000, rarity: 'Secre-' },
     { src: './img/itigozou.png', name: 'itigozou', value: 12000, rarity: 'Secret-' },
     { src: './img/klombo.png', name: 'klombo', value: 12000, rarity: 'Secret-' },
     { src: './img/shtekerito.png', name: 'shtekerito', value: 12000, rarity: 'Secret-' },
