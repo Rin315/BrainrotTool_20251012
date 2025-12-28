@@ -56,12 +56,12 @@ const images = [
     { src: './img/te3.png', name: 'te3', value: 0, rarity: 'Common' },
     { src: './img/strawberre.png', name: 'strawberre', value: 0, rarity: 'Common' },
     { src: './img/elefantino.png', name: 'elefantino', value: 0, rarity: 'Common' },
-    { src: './img/tang.png', name: 'tang', value: 0, rarity: 'Common' },
+    { src: './img/to4.png', name: 'to4', value: 0, rarity: 'Common' },
     { src: './img/antonio.png', name: 'antonio', value: 0, rarity: 'Common' },//アントニオ
     { src: './img/girafa.png', name: 'girafa', value: 0, rarity: 'Common' },
     { src: './img/mypepper.png', name: 'mypepper', value: 0, rarity: 'Common' },
     { src: './img/perochello.png', name: 'perochello', value: 0, rarity: 'Common' },
-    { src: './img/tung.png', name: 'tung3', value: 0, rarity: 'Common' },
+    { src: './img/tang.png', name: 'tang', value: 0, rarity: 'Common' },
     { src: './img/patapimus.png', name: 'patapimus', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', name: 'tirilikalika', value: 0, rarity: 'Common' },//室外機
     { src: './img/santonio.png', name: 'santonio', value: 0, rarity: 'Common' },

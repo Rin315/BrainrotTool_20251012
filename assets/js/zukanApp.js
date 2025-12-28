@@ -40,6 +40,11 @@ let state = {
 // Access global images from data.js
 let monsters = [];
 
+function getMonsterId(monster) {
+    // Use name as base, but sanitize for Firebase keys (no ., $, #, [, ], /)
+    return monster.name.replace(/[.\$#\[\]\/]/g, '_');
+}
+
 // ========== DOM Elements ==========
 const tabsContainer = document.getElementById('variant-tabs');
 const gridContainer = document.getElementById('monster-grid');
@@ -106,13 +111,13 @@ function renderTabs() {
         let obtainedCount = 0;
         const totalCount = monsters.length;
 
-        for (let i = 0; i < monsters.length; i++) {
-            const key = `${i}_${variant}`;
+        monsters.forEach(monster => {
+            const key = `${getMonsterId(monster)}_${variant}`;
             if (state.collection[key]) {
                 obtainedCount++;
                 totalObtainedGlobal++;
             }
-        }
+        });
 
         const btn = document.createElement('button');
         // Add flex to button to align text
@@ -153,11 +158,11 @@ function renderGrid() {
     const itemsPerPage = getItemsPerPage();
 
     // Map monsters to include their original index for correct key generation
-    let displayMonsters = monsters.map((m, i) => ({ ...m, originalIndex: i }));
+    let displayMonsters = [...monsters];
 
     if (state.filterUnobtained) {
         displayMonsters = displayMonsters.filter(m => {
-            const key = `${m.originalIndex}_${state.currentTab}`;
+            const key = `${getMonsterId(m)}_${state.currentTab}`;
             return !state.collection[key];
         });
     }
@@ -181,7 +186,7 @@ function renderGrid() {
         let card;
         if (relativeIndex < displayMonsters.length) {
             const monster = displayMonsters[relativeIndex];
-            card = createMonsterCard(monster, monster.originalIndex);
+            card = createMonsterCard(monster);
         } else {
             // Empty slot
             card = document.createElement('div');
@@ -197,8 +202,8 @@ function renderGrid() {
     updatePaginationUI(displayMonsters.length);
 }
 
-function createMonsterCard(monster, index) {
-    const key = `${index}_${state.currentTab}`; // Unique ID: index + variant
+function createMonsterCard(monster) {
+    const key = `${getMonsterId(monster)}_${state.currentTab}`; // Stable ID: name + variant
     const timestamp = state.collection[key];
     const isObtained = !!timestamp;
 
@@ -211,7 +216,7 @@ function createMonsterCard(monster, index) {
     // Check for Complete (all variants collected for this monster)
     let isComplete = true;
     for (const v of variants) {
-        const k = `${index}_${v}`;
+        const k = `${getMonsterId(monster)}_${v}`;
         if (!state.collection[k]) {
             isComplete = false;
             break;
@@ -280,7 +285,7 @@ function setupPagination() {
         const itemsPerPage = getItemsPerPage();
         let totalItems = monsters.length;
         if (state.filterUnobtained) {
-            totalItems = monsters.filter((_, i) => !state.collection[`${i}_${state.currentTab}`]).length;
+            totalItems = monsters.filter(m => !state.collection[`${getMonsterId(m)}_${state.currentTab}`]).length;
         }
         const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
         if (state.currentPage < totalPages) {
@@ -335,9 +340,9 @@ function setupMarkAll() {
         if (confirm(`Mark ALL monsters in ALL variants as obtained?`)) {
             const updates = {};
             const now = Date.now();
-            monsters.forEach((_, i) => {
+            monsters.forEach(monster => {
                 variants.forEach(variant => {
-                    const key = `${i}_${variant}`;
+                    const key = `${getMonsterId(monster)}_${variant}`;
                     updates[key] = now;
                 });
             });
