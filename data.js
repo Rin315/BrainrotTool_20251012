@@ -153,13 +153,15 @@ const images = [
     { src: './img/kaerutoire.png', name: 'kaerutoire', value: 12000, rarity: 'Secret-' },
     { src: './img/ie.png', name: 'ie', value: 12000, rarity: 'Secret-' },
     { src: './img/pitiata.png', name: 'pitiata', value: 12000, rarity: 'Secret-' },
-    { src: './img/chinpanking.png', name: 'chinpanking', value: 25000, rarity: 'Secret' },
+    { src: './img/yule.png', name: 'yule', value: 12000, rarity: 'Secret-' },
+    { src: './img/chinpanking.png', name: 'chinpanking', value: 25000, rarity: 'Secret' },//チンパンジー
     { src: './img/25.png', name: '25', value: 25000, rarity: 'Secre-' },
     { src: './img/itigozou.png', name: 'itigozou', value: 12000, rarity: 'Secret-' },
     { src: './img/klombo.png', name: 'klombo', value: 12000, rarity: 'Secret-' },
     { src: './img/shtekerito.png', name: 'shtekerito', value: 12000, rarity: 'Secret-' },
     { src: './img/spageti.png', name: 'spageti', value: 12000, rarity: 'Secret-' },
-    { src: './img/cabritos.png', name: 'cabritos', value: 12000, rarity: 'Secret-' },
+    { src: './img/santani.png', name: 'santani', value: 12000, rarity: 'Secret-' },//サンタニ
+    { src: './img/cabritos.png', name: 'cabritos', value: 12000, rarity: 'Secret-' },//ヤギ2人
     { src: './img/doragon.png', name: 'doragon', value: 12000, rarity: 'Secret-' },
     { src: './img/lacrazy.png', name: 'lacrazy', value: 12000, rarity: 'Secret-' },
     { src: './img/kumo.png', name: 'kumo', value: 12000, rarity: 'Secret-' },
