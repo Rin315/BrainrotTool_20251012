@@ -155,7 +155,7 @@ const images = [
     { src: './img/pitiata.png', name: 'pitiata', value: 12000, rarity: 'Secret-' },
     { src: './img/yule.png', name: 'yule', value: 12000, rarity: 'Secret-' },
     { src: './img/chinpanking.png', name: 'chinpanking', value: 25000, rarity: 'Secret' },//チンパンジー
-    { src: './img/25.png', name: '25', value: 25000, rarity: 'Secre-' },
+    { src: './img/25.png', name: '25', value: 25000, rarity: 'Secret-' },
     { src: './img/itigozou.png', name: 'itigozou', value: 12000, rarity: 'Secret-' },
     { src: './img/klombo.png', name: 'klombo', value: 12000, rarity: 'Secret-' },
     { src: './img/shtekerito.png', name: 'shtekerito', value: 12000, rarity: 'Secret-' },
