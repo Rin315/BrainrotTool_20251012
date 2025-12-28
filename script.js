@@ -340,7 +340,7 @@ groupedImages.forEach((group) => {
     saleLabel.className = 'sale-label';
     saleLabel.textContent = formatSaleLabelM(0);
     box.appendChild(saleLabel);
-  } else if (firstObj.rarity === 'Secret') {
+  } else if (firstObj.rarity === 'Secret' || firstObj.rarity === 'Secret-') {
     gallerySecret.appendChild(box);
     // saleLabelの扱い: 以前は1だった
     const saleLabel = document.createElement('div');
@@ -416,7 +416,7 @@ function renderSelected() {
       // saleLabel.textContent = formatSaleLabelM(imgObj.sale); // 旧コード
       if (imgObj.rarity === 'BrainrotGot') {
         saleLabel.textContent = formatSaleLabelM(0);
-      } else if (imgObj.rarity === 'Secret') {
+      } else if (imgObj.rarity === 'Secret' || imgObj.rarity === 'Secret-') {
         saleLabel.textContent = formatSaleLabelM(1);
       } else {
         saleLabel.textContent = '';

@@ -61,7 +61,7 @@ const images = [
     { src: './img/girafa.png', name: 'girafa', value: 0, rarity: 'Common' },
     { src: './img/mypepper.png', name: 'mypepper', value: 0, rarity: 'Common' },
     { src: './img/perochello.png', name: 'perochello', value: 0, rarity: 'Common' },
-    { src: './img/tung3.png', name: 'tung3', value: 0, rarity: 'Common' },
+    { src: './img/tung.png', name: 'tung3', value: 0, rarity: 'Common' },
     { src: './img/patapimus.png', name: 'patapimus', value: 0, rarity: 'Common' },
     { src: './img/tirilikalika.png', name: 'tirilikalika', value: 0, rarity: 'Common' },//室外機
     { src: './img/santonio.png', name: 'santonio', value: 0, rarity: 'Common' },
@@ -157,7 +157,6 @@ const images = [
     { src: './img/itigozou.png', name: 'itigozou', value: 12000, rarity: 'Secret-' },
     { src: './img/klombo.png', name: 'klombo', value: 12000, rarity: 'Secret-' },
     { src: './img/shtekerito.png', name: 'shtekerito', value: 12000, rarity: 'Secret-' },
-    { src: './img/itigozou.png', name: 'itigozou', value: 12000, rarity: 'Secret-' },
     { src: './img/spageti.png', name: 'spageti', value: 12000, rarity: 'Secret-' },
     { src: './img/cabritos.png', name: 'cabritos', value: 12000, rarity: 'Secret-' },
     { src: './img/doragon.png', name: 'doragon', value: 12000, rarity: 'Secret-' },
