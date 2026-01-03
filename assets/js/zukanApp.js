@@ -375,7 +375,7 @@ function setupExportText() {
             monsters.forEach(monster => {
                 const key = `${getMonsterId(monster)}_${variant}`;
                 if (state.collection[key]) {
-                    variantMonsters.push(monster.name);
+                    variantMonsters.push(`  ${monster.name}`);
                 }
             });
             if (variantMonsters.length > 0) {
