@@ -369,26 +369,27 @@ function setupMarkAll() {
 function setupExportText() {
     if (!exportTextBtn) return;
     exportTextBtn.onclick = () => {
-        let output = '';
+        let output = [];
         variants.forEach(variant => {
-            let variantText = '';
+            let variantMonsters = [];
             monsters.forEach(monster => {
                 const key = `${getMonsterId(monster)}_${variant}`;
                 if (state.collection[key]) {
-                    variantText += `・${monster.name}\n`;
+                    variantMonsters.push(monster.name);
                 }
             });
-            if (variantText) {
-                output += `◆${variant.toLowerCase()}\n${variantText}`;
+            if (variantMonsters.length > 0) {
+                const variantCapitalized = variant.charAt(0).toUpperCase() + variant.slice(1).toLowerCase();
+                output.push(`◆${variantCapitalized}\n${variantMonsters.join('\n')}`);
             }
         });
 
-        if (!output) {
+        if (output.length === 0) {
             alert("未所持のモンスターはありません。");
             return;
         }
 
-        exportTextArea.textContent = output.trim();
+        exportTextArea.textContent = output.join('\n\n');
         exportModal.classList.remove('hidden');
     };
 

@@ -155,6 +155,12 @@
             font-size: 20px;
         }
 
+        #undo-btn img {
+            height: 24px;
+            width: auto;
+            object-fit: contain;
+        }
+
         /* Complete State (Overrides obtained) */
         .monster-card.complete img {
             filter: none !important;
@@ -329,13 +335,13 @@
                         class="md:hidden">モンスター図鑑<br>（新兵えす専用）</span>
                 </h1>
                 <div class="flex items-center gap-2">
+                    <button id="undo-btn"
+                        class="px-2 py-1 bg-orange-500 text-white text-xs font-bold rounded hover:bg-orange-600 transition-colors hidden flex items-center justify-center min-w-[60px]">
+                        <img src="./img/back.png" alt="戻る">
+                    </button>
                     <button id="export-text-btn"
                         class="px-3 py-1 bg-purple-500 text-white text-xs font-bold rounded hover:bg-purple-600 transition-colors hidden">
                         テキスト出力
-                    </button>
-                    <button id="undo-btn"
-                        class="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded hover:bg-orange-600 transition-colors hidden">
-                        戻る
                     </button>
                     <button id="filter-toggle-btn"
                         class="px-3 py-1 bg-gray-500 text-white text-xs font-bold rounded hover:bg-blue-600 transition-colors">
