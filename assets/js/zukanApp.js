@@ -77,6 +77,10 @@ function init() {
     if (urlParams.get('admin')) {
         state.isAdmin = true;
         console.log("Admin Mode Enabled");
+        const pcLabel = document.getElementById('admin-label-pc');
+        const spLabel = document.getElementById('admin-label-sp');
+        if (pcLabel) pcLabel.textContent = ' 【管理者ページ】';
+        if (spLabel) spLabel.textContent = '【管理者★】'; // A bit shorter for mobile
     }
 
     // Load monsters from global window object
