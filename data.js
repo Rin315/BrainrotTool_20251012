@@ -163,5 +163,5 @@ const images = [
     { id: 'lacrazy', src: './img/lacrazy.png', name: 'ラクレイジー', value: 12000, rarity: 'Secret-' },
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 12000, rarity: 'Secret-' },
     { id: 'track', src: './img/track.png', name: 'トラック', value: 12000, rarity: 'Secret-' },
-    { id: 'toire', src: './img/Skibidi Toilet', name: 'スケビティートイレ', value: 12000, rarity: 'Secret-' },
+    { id: 'toire', src: './img/SkibidiToilet.png', name: 'スケビティートイレ', value: 12000, rarity: 'Secret-' },
 ];
