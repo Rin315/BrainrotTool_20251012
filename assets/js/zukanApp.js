@@ -42,8 +42,9 @@ let state = {
 let monsters = [];
 
 function getMonsterId(monster) {
-    // Use name as base, but sanitize for Firebase keys (no ., $, #, [, ], /)
-    return monster.name.replace(/[.\$#\[\]\/]/g, '_');
+    // Use id if available, otherwise name. Sanitize for Firebase keys.
+    const baseId = monster.id || monster.name;
+    return baseId.replace(/[.\$#\[\]\/]/g, '_');
 }
 
 // ========== DOM Elements ==========
@@ -95,7 +96,10 @@ function init() {
     if (state.isAdmin) {
         if (markAllBtn) markAllBtn.classList.remove('hidden');
         if (exportTextBtn) exportTextBtn.classList.remove('hidden');
-        if (undoBtn) updateUndoButtonVisibility();
+        if (undoBtn) {
+            undoBtn.classList.remove('hidden');
+            updateUndoButtonVisibility();
+        }
     }
 
     setupExportText();
@@ -423,9 +427,9 @@ function setupUndo() {
 function updateUndoButtonVisibility() {
     if (!undoBtn) return;
     if (state.undoStack.length > 0) {
-        undoBtn.classList.remove('hidden');
+        undoBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
     } else {
-        undoBtn.classList.add('hidden');
+        undoBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
     }
 }
 
