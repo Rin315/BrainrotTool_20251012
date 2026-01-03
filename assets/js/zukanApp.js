@@ -34,7 +34,8 @@ let state = {
     currentPage: 1,
     collection: {}, // { "monsterId_variant": timestamp }
     isAdmin: false,
-    filterUnobtained: true
+    filterUnobtained: true,
+    undoStack: []
 };
 
 // Access global images from data.js
@@ -56,6 +57,17 @@ const totalCountEl = document.getElementById('total-count');
 const resetBtn = document.getElementById('reset-check-btn');
 const filterToggleBtn = document.getElementById('filter-toggle-btn');
 const markAllBtn = document.getElementById('mark-all-btn');
+const exportTextBtn = document.getElementById('export-text-btn');
+const undoBtn = document.getElementById('undo-btn');
+
+// Export Modal Elements
+const exportModal = document.getElementById('export-modal');
+const exportTextArea = document.getElementById('export-text-area');
+const copyTextBtn = document.getElementById('copy-text-btn');
+const closeModalBtns = [
+    document.getElementById('close-modal'),
+    document.getElementById('close-modal-btn')
+];
 
 // ========== Initialization ==========
 function init() {
@@ -80,9 +92,14 @@ function init() {
     setupFiltering();
     setupMarkAll();
 
-    if (state.isAdmin && markAllBtn) {
-        markAllBtn.classList.remove('hidden');
+    if (state.isAdmin) {
+        if (markAllBtn) markAllBtn.classList.remove('hidden');
+        if (exportTextBtn) exportTextBtn.classList.remove('hidden');
+        if (undoBtn) updateUndoButtonVisibility();
     }
+
+    setupExportText();
+    setupUndo();
 
     // Listen to Firebase (Source of Truth)
     const collectionRef = ref(db, 'unobtained_status');
@@ -345,46 +362,101 @@ function setupMarkAll() {
     };
 }
 
-function setupExportImport() {
-    if (exportBtn) {
-        exportBtn.onclick = () => {
-            const dataStr = JSON.stringify(state.collection);
-            const encoded = btoa(encodeURIComponent(dataStr));
-            navigator.clipboard.writeText(encoded).then(() => {
-                alert('Save code copied to clipboard!');
-            }).catch(() => {
-                prompt('Copy this code:', encoded);
+function setupExportText() {
+    if (!exportTextBtn) return;
+    exportTextBtn.onclick = () => {
+        let output = '';
+        variants.forEach(variant => {
+            let variantText = '';
+            monsters.forEach(monster => {
+                const key = `${getMonsterId(monster)}_${variant}`;
+                if (state.collection[key]) {
+                    variantText += `・${monster.name}\n`;
+                }
+            });
+            if (variantText) {
+                output += `◆${variant.toLowerCase()}\n${variantText}`;
+            }
+        });
+
+        if (!output) {
+            alert("未所持のモンスターはありません。");
+            return;
+        }
+
+        exportTextArea.textContent = output.trim();
+        exportModal.classList.remove('hidden');
+    };
+
+    closeModalBtns.forEach(btn => {
+        if (btn) btn.onclick = () => exportModal.classList.add('hidden');
+    });
+
+    if (copyTextBtn) {
+        copyTextBtn.onclick = () => {
+            navigator.clipboard.writeText(exportTextArea.textContent).then(() => {
+                const originalText = copyTextBtn.textContent;
+                copyTextBtn.textContent = 'コピー完了！';
+                copyTextBtn.classList.replace('bg-blue-600', 'bg-green-600');
+                setTimeout(() => {
+                    copyTextBtn.textContent = originalText;
+                    copyTextBtn.classList.replace('bg-green-600', 'bg-blue-600');
+                }, 2000);
             });
         };
     }
 
-    if (importBtn) {
-        importBtn.onclick = () => {
-            if (!state.isAdmin) {
-                alert("Import is only allowed in Admin mode.");
-                return;
-            }
-            const code = prompt('Paste your save code here:');
-            if (code) {
-                try {
-                    const decoded = decodeURIComponent(atob(code));
-                    const data = JSON.parse(decoded);
+    // Close modal on outside click
+    exportModal.onclick = (e) => {
+        if (e.target === exportModal) exportModal.classList.add('hidden');
+    };
+}
 
-                    // Update Firebase
-                    set(ref(db, 'collection_status'), data)
-                        .then(() => alert('Data imported successfully to Firebase!'))
-                        .catch(err => console.error("Import failed:", err));
+function setupUndo() {
+    if (!undoBtn) return;
+    undoBtn.onclick = () => {
+        if (!state.isAdmin) return;
+        undoLastAction();
+    };
+}
 
-                } catch (e) {
-                    alert('Invalid code!');
-                    console.error(e);
-                }
-            }
-        };
+function updateUndoButtonVisibility() {
+    if (!undoBtn) return;
+    if (state.undoStack.length > 0) {
+        undoBtn.classList.remove('hidden');
+    } else {
+        undoBtn.classList.add('hidden');
     }
 }
 
+function undoLastAction() {
+    const lastAction = state.undoStack.pop();
+    if (!lastAction) return;
+
+    const { key, wasObtained } = lastAction;
+    const itemRef = ref(db, `unobtained_status/${key}`);
+
+    if (wasObtained) {
+        // Last action was "mark as unobtained", so undo is "mark as obtained"
+        remove(itemRef).catch(err => console.error("Undo remove failed:", err));
+    } else {
+        // Last action was "mark as obtained", so undo is "mark as unobtained"
+        set(itemRef, lastAction.timestamp || Date.now()).catch(err => console.error("Undo set failed:", err));
+    }
+
+    updateUndoButtonVisibility();
+}
+
 function toggleCollection(key, isCurrentlyObtained) {
+    // Save to undo stack BEFORE updating
+    state.undoStack.push({
+        key: key,
+        wasObtained: isCurrentlyObtained,
+        timestamp: Date.now()
+    });
+    if (state.undoStack.length > 50) state.undoStack.shift();
+    updateUndoButtonVisibility();
+
     // NO Optimistic Update - Rely on Firebase Listener
     const itemRef = ref(db, `unobtained_status/${key}`);
     if (isCurrentlyObtained) {

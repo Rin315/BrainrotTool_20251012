@@ -329,6 +329,14 @@
                         class="md:hidden">モンスター図鑑<br>（新兵えす専用）</span>
                 </h1>
                 <div class="flex items-center gap-2">
+                    <button id="export-text-btn"
+                        class="px-3 py-1 bg-purple-500 text-white text-xs font-bold rounded hover:bg-purple-600 transition-colors hidden">
+                        テキスト出力
+                    </button>
+                    <button id="undo-btn"
+                        class="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded hover:bg-orange-600 transition-colors hidden">
+                        戻る
+                    </button>
                     <button id="filter-toggle-btn"
                         class="px-3 py-1 bg-gray-500 text-white text-xs font-bold rounded hover:bg-blue-600 transition-colors">
                         すべて表示
@@ -344,6 +352,36 @@
                         RESET ALL
                     </button>
                     --->
+                </div>
+            </div>
+
+            <!-- Modal for Text Output -->
+            <div id="export-modal"
+                class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000] hidden flex items-center justify-center p-4">
+                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[80vh]">
+                    <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                        <h3 class="font-bold text-gray-700">未所持モンスター一覧</h3>
+                        <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6 overflow-y-auto">
+                        <pre id="export-text-area"
+                            class="bg-gray-50 p-4 rounded-lg border border-gray-200 text-sm font-mono whitespace-pre-wrap break-all select-all"></pre>
+                    </div>
+                    <div class="p-4 border-t border-gray-100 flex gap-3">
+                        <button id="copy-text-btn"
+                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl transition-all shadow-lg active:scale-95">
+                            コピーする
+                        </button>
+                        <button id="close-modal-btn"
+                            class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition-all">
+                            閉じる
+                        </button>
+                    </div>
                 </div>
             </div>
 
