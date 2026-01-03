@@ -375,7 +375,7 @@ function setupExportText() {
             monsters.forEach(monster => {
                 const key = `${getMonsterId(monster)}_${variant}`;
                 if (state.collection[key]) {
-                    variantMonsters.push(`  ${monster.name}`);
+                    variantMonsters.push(` ${monster.name}`);
                 }
             });
             if (variantMonsters.length > 0) {
@@ -428,9 +428,9 @@ function setupUndo() {
 function updateUndoButtonVisibility() {
     if (!undoBtn) return;
     if (state.undoStack.length > 0) {
-        undoBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        undoBtn.classList.remove('opacity-30', 'grayscale', 'cursor-not-allowed', 'pointer-events-none');
     } else {
-        undoBtn.classList.add('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
+        undoBtn.classList.add('opacity-30', 'grayscale', 'cursor-not-allowed', 'pointer-events-none');
     }
 }
 
