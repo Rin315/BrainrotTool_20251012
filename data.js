@@ -26,6 +26,7 @@ const images = [
     { id: 'tukanno', src: './img/tukanno.png', name: 'ツカンノバナナ(鳥)', value: 0, rarity: 'Common' },
     { id: 'bluberrinni', src: './img/bluberrinni.png', name: 'ブルーベリー', value: 0, rarity: 'Common' },
     { id: 'spijuniro', src: './img/spijuniro.png', name: 'ペンギン', value: 0, rarity: 'Common' },
+    { id: 'blueberry', src: './img/blueberry.png', name: 'ブルーベリー豚', value: 0, rarity: 'Common' },
     { id: 'gingobalo', src: './img/gingobalo.png', name: 'リンゴ豚', value: 0, rarity: 'Common' },
     { id: 'burbalona', src: './img/burbalona.png', name: 'バーバローナ', value: 0, rarity: 'Common' },
     { id: 'chimpanzini', src: './img/chimpanzini.png', name: 'チンパンジーバナナ', value: 0, rarity: 'Common' },
@@ -61,6 +62,7 @@ const images = [
     { id: 'mypepper', src: './img/mypepper.png', name: 'マイペッパーミント(クリスマス合成限定)', value: 0, rarity: 'Common' },
     { id: 'perochello', src: './img/perochello.png', name: 'レモン鳥(グランデラッキーロット)', value: 0, rarity: 'Common' },
     { id: 'tang', src: './img/tang.png', name: 'タンタンタンカラタン', value: 0, rarity: 'Common' },
+    { id: 'mythicgorira', src: './img/nazomythic.png', name: 'ミシックゴリラ', value: 0, rarity: 'Common' },//謎mythic
     { id: 'patapimus', src: './img/patapimus.png', name: '戦士', value: 0, rarity: 'Common' },
     { id: 'tirilikalika', src: './img/tirilikalika.png', name: '室外機ニワトリ', value: 0, rarity: 'Common' },//室外機
     { id: 'santonio', src: './img/santonio.png', name: 'サントニオー(クリスマス合成限定)', value: 0, rarity: 'Common' },
@@ -75,6 +77,7 @@ const images = [
     { id: 'chache', src: './img/chache.png', name: '机', value: 80, rarity: 'BrainrotGot' },//机
     { id: 'Espressona', src: './img/Espressona.png', name: 'エスプレッソ', value: 90, rarity: 'BrainrotGot' },
     { id: 'lavaca', src: './img/lavaca.png', name: 'ラバッカ', value: 100, rarity: 'BrainrotGot' },
+    { id: 'centralu', src: './img/centralu.png', name: 'セントラル', value: 105, rarity: 'BrainrotGot' },
     { id: 'ecco', src: './img/ecco.png', name: 'ウマオルガン', value: 110, rarity: 'BrainrotGot' },
     { id: 'losvaguitas', src: './img/losvaguitas.png', name: 'ロスラバッカ(合成限定)', value: 115, rarity: 'BrainrotGot' },
     { id: 'bulbito', src: './img/bulbito.png', name: 'ボルビトバンビートトラックリート', value: 120, rarity: 'BrainrotGot' },
@@ -126,6 +129,7 @@ const images = [
     { id: 'ketchuru', src: './img/ketchuru.png', name: 'ケチュマチュ', value: 1500, rarity: 'Secret' },
     { id: 'pothotspotona', src: './img/pothotspotona.png', name: '骨女', value: 1700, rarity: 'Secret' },//女骨
     { id: 'pothotspot', src: './img/pothotspot.png', name: '骨', value: 2000, rarity: 'Secret' },
+    { id: 'turtleman', src: './img/turtleman.png', name: 'タートルマン', value: 2100, rarity: 'Secret-' },
     { id: '21', src: './img/21.png', name: '21', value: 2100, rarity: 'Secret' },
     { id: 'losmobilis', src: './img/losmobilis.png', name: 'ロスモバイル', value: 2200, rarity: 'Secret' },
     { id: 'nomyhotspot', src: './img/nomyhotspot.png', name: 'ノーマイ', value: 2500, rarity: 'Secret' },
@@ -163,5 +167,6 @@ const images = [
     { id: 'lacrazy', src: './img/lacrazy.png', name: 'ラクレイジー', value: 12000, rarity: 'Secret-' },
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 12000, rarity: 'Secret-' },
     { id: 'track', src: './img/track.png', name: 'トラック', value: 12000, rarity: 'Secret-' },
+    { id: 'taihou', src: './img/taihou.png', name: '大砲', value: 12000, rarity: 'Secret-' },
     { id: 'toire', src: './img/SkibidiToilet.png', name: 'スケビティートイレ', value: 12000, rarity: 'Secret-' },
 ];
