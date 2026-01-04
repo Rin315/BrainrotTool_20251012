@@ -62,7 +62,7 @@ const images = [
     { id: 'mypepper', src: './img/mypepper.png', name: 'マイペッパーミント(クリスマス合成限定)', value: 0, rarity: 'Common' },
     { id: 'perochello', src: './img/perochello.png', name: 'レモン鳥(グランデラッキーロット)', value: 0, rarity: 'Common' },
     { id: 'tang', src: './img/tang.png', name: 'タンタンタンカラタン', value: 0, rarity: 'Common' },
-    { id: 'mythicgorira', src: './img/nazomythic.png', name: 'ミシックゴリラ', value: 0, rarity: 'Common' },//謎mythic
+    { id: 'mythicgorira', src: './img/avocadogorira.png', name: 'アボカドゴリラ', value: 0, rarity: 'Common' },//謎mythic
     { id: 'patapimus', src: './img/patapimus.png', name: '戦士', value: 0, rarity: 'Common' },
     { id: 'tirilikalika', src: './img/tirilikalika.png', name: '室外機ニワトリ', value: 0, rarity: 'Common' },//室外機
     { id: 'santonio', src: './img/santonio.png', name: 'サントニオー(クリスマス合成限定)', value: 0, rarity: 'Common' },
