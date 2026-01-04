@@ -188,7 +188,7 @@ function renderGrid() {
     if (state.filterUnobtained) {
         displayMonsters = displayMonsters.filter(m => {
             const key = `${getMonsterId(m)}_${state.currentTab}`;
-            return state.collection[key]; // Show if it IS in the unobtained list
+            return !!state.collection[key]; // Explicitly check for existence
         });
     }
 
@@ -310,7 +310,7 @@ function setupPagination() {
         const itemsPerPage = getItemsPerPage();
         let totalItems = monsters.length;
         if (state.filterUnobtained) {
-            totalItems = monsters.filter(m => !state.collection[`${getMonsterId(m)}_${state.currentTab}`]).length;
+            totalItems = monsters.filter(m => state.collection[`${getMonsterId(m)}_${state.currentTab}`]).length;
         }
         const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
         if (state.currentPage < totalPages) {
@@ -348,6 +348,11 @@ function setupReset() {
 
 function setupFiltering() {
     if (!filterToggleBtn) return;
+
+    // Initial UI state based on default filterUnobtained: true
+    filterToggleBtn.textContent = 'すべて表示';
+    filterToggleBtn.className = `px-3 py-1 bg-gray-500 text-white text-xs font-bold rounded transition-colors`;
+
     filterToggleBtn.onclick = () => {
         state.filterUnobtained = !state.filterUnobtained;
         state.currentPage = 1; // Reset to page 1 when filtering
