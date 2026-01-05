@@ -77,7 +77,7 @@ const images = [
     { id: 'chache', src: './img/chache.png', name: '机', value: 80, rarity: 'BrainrotGot' },//机
     { id: 'Espressona', src: './img/Espressona.png', name: 'エスプレッソ', value: 90, rarity: 'BrainrotGot' },
     { id: 'lavaca', src: './img/lavaca.png', name: 'ラバッカ', value: 100, rarity: 'BrainrotGot' },
-    { id: 'centralu', src: './img/centralu.png', name: 'セントラル', value: 105, rarity: 'BrainrotGot' },
+    { id: 'centralu', src: './img/centralu.png', name: '発電所', value: 105, rarity: 'BrainrotGot' },
     { id: 'ecco', src: './img/ecco.png', name: 'ウマオルガン', value: 110, rarity: 'BrainrotGot' },
     { id: 'losvaguitas', src: './img/losvaguitas.png', name: 'ロスラバッカ(合成限定)', value: 115, rarity: 'BrainrotGot' },
     { id: 'bulbito', src: './img/bulbito.png', name: 'ボルビトバンビートトラックリート', value: 120, rarity: 'BrainrotGot' },
@@ -143,7 +143,7 @@ const images = [
     { id: 'legolem', src: './img/legolem.png', name: '合成のロボ', value: 6000, rarity: 'Secret' },
     { id: '67', src: './img/67.png', name: '67', value: 6700, rarity: 'Secret' },
     { id: 'loshouse', src: './img/loshouse.png', name: 'ロス家', value: 7000, rarity: 'Secret' },
-    { id: 'Coccoblade', src: './img/Coccoblade.png', name: 'ココバルーデ', value: 7500, rarity: 'Secret-' },//数字仮
+    { id: 'Coccoblade', src: './img/Coccoblade.png', name: 'ココブレード', value: 7500, rarity: 'Secret-' },//数字仮
     { id: 'chicleteira', src: './img/chicleteira.png', name: 'チャリ', value: 8000, rarity: 'Secret' },
     { id: 'lachristmas', src: './img/lachristmas.png', name: 'クリスマスラグランデ(クリスマス合成限定)', value: 9000, rarity: 'Secret' },//クリスマスラグランデ
     { id: 'pad', src: './img/pad.png', name: 'ケパット', value: 10000, rarity: 'Secret' },
