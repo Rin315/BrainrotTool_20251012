@@ -163,7 +163,7 @@ const images = [
     { id: 'pitiata', src: './img/pitiata.png', name: '竜', value: 12000, rarity: 'Secret-' },
     { id: 'yule', src: './img/yule.png', name: 'ツリートナカイ(クリスマス合成限定)', value: 12000, rarity: 'Secret-' },
     { id: 'chinpanking', src: './img/chinpanking.png', name: 'チンパンジニーキング', value: 25000, rarity: 'Secret' },//チンパンジー
-    { id: 'tictac', src: './img/tictac.png', name: '時計(合成限定)', value: 25000, rarity: 'Secret-' },
+    { id: 'tictac', src: './img/tictac.png', name: '一輪車時計(合成限定)', value: 25000, rarity: 'Secret-' },
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'itigozou', src: './img/itigozou.png', name: 'ストロベリーエレファント', value: 12000, rarity: 'Secret-' },
     { id: 'klombo', src: './img/klombo.png', name: 'クロムボ', value: 12000, rarity: 'Secret-' },
