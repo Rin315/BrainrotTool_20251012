@@ -67,6 +67,7 @@ const images = [
     { id: 'tirilikalika', src: './img/tirilikalika.png', name: '室外機ニワトリ', value: 0, rarity: 'Common' },//室外機
     { id: 'santonio', src: './img/santonio.png', name: 'サントニオー(クリスマス合成限定)', value: 0, rarity: 'Common' },
     { id: 'losmateo', src: './img/losmateo.png', name: 'ロスマテオ', value: 0, rarity: 'Common' }, //ロスマテオ
+    { id: 'box', src: './img/hako.png', name: '箱(合成限定)', value: 0, rarity: 'Common' }, //箱
     { id: 'fishinis', src: './img/fishinis.png', name: 'フィーシーニ2人(クリスマス合成限定)', value: 0, rarity: 'Common' },
 
     //　Brainrot Got
@@ -104,6 +105,7 @@ const images = [
     { id: 'lassis', src: './img/lassis.png', name: 'ラスシス', value: 230, rarity: 'BrainrotGot' },//姉妹
     { id: 'iimastodontico', src: './img/iimastodontico.png', name: 'テレビサッカー', value: 240, rarity: 'BrainrotGot' },//テレビサッカー
     { id: 'loschristmas', src: './img/loschristmas.png', name: 'ロスクリスマス(クリスマス合成限定)', value: 245, rarity: 'BrainrotGot' },
+    { id: 'tougyu', src: './img/tougyu.png', name: '闘牛(合成限定)', value: 245, rarity: 'BrainrotGot' },
     { id: 'malame', src: './img/malame.png', name: 'マラメアラメ', value: 250, rarity: 'BrainrotGot' },
     { id: 'belugelo', src: './img/belugelo.png', name: 'ベルーガ', value: 270, rarity: 'BrainrotGot' },
     { id: 'bellaca', src: './img/bellaca.png', name: 'クリスマス犬(クリスマス合成限定)', value: 275, rarity: 'BrainrotGot' },
@@ -115,11 +117,13 @@ const images = [
     { id: 'trenostruzzo', src: './img/trenostruzzo.png', name: '汽車鳥', value: 300, rarity: 'Secret' },
     { id: 'kravilino', src: './img/kravilino.png', name: 'トンカチ', value: 375, rarity: 'Secret' },
     { id: 'losorcaleritos', src: './img/losorcaleritos.png', name: 'ロスオルカ', value: 400, rarity: 'Secret' },
+    { id: 'lasskop', src: './img/lasskop.png', name: 'スコップ3つ(合成限定)', value: 400, rarity: 'Secret-' },
     { id: 'loscouples', src: './img/loscouples.png', name: 'ロスカップル', value: 450, rarity: 'Secret' },
     { id: 'piccione', src: './img/piccione.png', name: 'ハト', value: 500, rarity: 'Secret' },
     { id: 'peely', src: './img/peely.png', name: 'ピーリー', value: 500, rarity: 'Secret' },
     { id: 'pakrah_w', src: './img/pakrah_w.png', name: 'えんぴつ女', value: 550, rarity: 'Secret' },//鉛筆女
     { id: 'pakrah', src: './img/pakrah.png', name: 'えんぴつ', value: 600, rarity: 'Secret' },
+    { id: 'pickolini', src: './img/pickolini.png', name: 'ゴーヤ探検隊(合成限定)', value: 600, rarity: 'Secret-' },
     { id: 'losjob', src: './img/losjob.png', name: 'ロスジョブ', value: 700, rarity: 'Secret' },
     { id: '4000', src: './img/4000.png', name: '新幹線鳥', value: 700, rarity: 'Secret' },//4000
     { id: 'Babel', src: './img/Babel.png', name: 'アンパリーバベル', value: 800, rarity: 'Secret' },
@@ -140,13 +144,16 @@ const images = [
     { id: 'chari2', src: './img/chari2.png', name: 'チャリ女', value: 4500, rarity: 'Secret' },
     { id: 'lagrande', src: './img/lagrande.png', name: 'ラグランデ', value: 5000, rarity: 'Secret' },//ラグランデ
     { id: 'lossanta', src: './img/lossanta.png', name: 'ロスサンタ', value: 5500, rarity: 'Secret' },
+    { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret-' },
     { id: 'legolem', src: './img/legolem.png', name: '合成のロボ', value: 6000, rarity: 'Secret' },
     { id: '67', src: './img/67.png', name: '67', value: 6700, rarity: 'Secret' },
     { id: 'loshouse', src: './img/loshouse.png', name: 'ロス家', value: 7000, rarity: 'Secret' },
     { id: 'Coccoblade', src: './img/Coccoblade.png', name: 'ココブレード', value: 7500, rarity: 'Secret-' },//数字仮
+    { id: 'cacasito', src: './img/cacasito.png', name: '人工衛星ハムスター(合成限定)', value: 7500, rarity: 'Secret-' },
     { id: 'chicleteira', src: './img/chicleteira.png', name: 'チャリ', value: 8000, rarity: 'Secret' },
     { id: 'lachristmas', src: './img/lachristmas.png', name: 'クリスマスラグランデ(クリスマス合成限定)', value: 9000, rarity: 'Secret' },//クリスマスラグランデ
     { id: 'pad', src: './img/pad.png', name: 'ケパット', value: 10000, rarity: 'Secret' },
+    { id: 'nomychari', src: './img/nomychari.png', name: 'ノーマイチャリ(合成限定)', value: 10000, rarity: 'Secret-' },
     { id: 'dulduldul', src: './img/dulduldul.png', name: 'サル', value: 12000, rarity: 'Secret' },
     { id: 'WorL', src: './img/WorL.png', name: 'WorL', value: 13000, rarity: 'Secret' },
     { id: 'cookipad', src: './img/cookipad.png', name: 'クッキーパット', value: 14000, rarity: 'Secret-' },
@@ -156,10 +163,12 @@ const images = [
     { id: 'pitiata', src: './img/pitiata.png', name: '竜', value: 12000, rarity: 'Secret-' },
     { id: 'yule', src: './img/yule.png', name: 'ツリートナカイ(クリスマス合成限定)', value: 12000, rarity: 'Secret-' },
     { id: 'chinpanking', src: './img/chinpanking.png', name: 'チンパンジニーキング', value: 25000, rarity: 'Secret' },//チンパンジー
+    { id: 'tictac', src: './img/tictac.png', name: '時計(合成限定)', value: 25000, rarity: 'Secret-' },
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'itigozou', src: './img/itigozou.png', name: 'ストロベリーエレファント', value: 12000, rarity: 'Secret-' },
     { id: 'klombo', src: './img/klombo.png', name: 'クロムボ', value: 12000, rarity: 'Secret-' },
     { id: 'shtekerito', src: './img/shtekerito.png', name: '電球', value: 12000, rarity: 'Secret-' },
+    { id: 'gorgon', src: './img/gorgon.png', name: 'ゴルゴンジーラ(合成限定)', value: 12000, rarity: 'Secret-' },
     { id: 'spageti', src: './img/spageti.png', name: 'スパゲティトイレ', value: 12000, rarity: 'Secret-' },
     { id: 'santani', src: './img/santani.png', name: 'サンタツリー(クリスマス合成限定)', value: 12000, rarity: 'Secret-' },//サンタニ
     { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人', value: 12000, rarity: 'Secret-' },//ヤギ2人
