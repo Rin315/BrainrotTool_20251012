@@ -105,7 +105,7 @@ const images = [
     { id: 'lassis', src: './img/lassis.png', name: 'ラスシス', value: 230, rarity: 'BrainrotGot' },//姉妹
     { id: 'iimastodontico', src: './img/iimastodontico.png', name: 'テレビサッカー', value: 240, rarity: 'BrainrotGot' },//テレビサッカー
     { id: 'loschristmas', src: './img/loschristmas.png', name: 'ロスクリスマス(クリスマス合成限定)', value: 245, rarity: 'BrainrotGot' },
-    { id: 'tougyu', src: './img/tougyu.png', name: '闘牛(合成限定)', value: 245, rarity: 'BrainrotGot' },
+    { id: 'tougyu', src: './img/tougyu.png', name: '闘牛(合成限定)', value: 250, rarity: 'BrainrotGot' },
     { id: 'malame', src: './img/malame.png', name: 'マラメアラメ', value: 250, rarity: 'BrainrotGot' },
     { id: 'belugelo', src: './img/belugelo.png', name: 'ベルーガ', value: 270, rarity: 'BrainrotGot' },
     { id: 'bellaca', src: './img/bellaca.png', name: 'クリスマス犬(クリスマス合成限定)', value: 275, rarity: 'BrainrotGot' },
