@@ -123,7 +123,7 @@ const images = [
     { id: 'peely', src: './img/peely.png', name: 'ピーリー', value: 500, rarity: 'Secret' },
     { id: 'pakrah_w', src: './img/pakrah_w.png', name: 'えんぴつ女', value: 550, rarity: 'Secret' },//鉛筆女
     { id: 'pakrah', src: './img/pakrah.png', name: 'えんぴつ', value: 600, rarity: 'Secret' },
-    { id: 'pickolini', src: './img/pickolini.png', name: 'ゴーヤ探検隊(合成限定)', value: 600, rarity: 'Secret-' },
+    { id: 'pickolini', src: './img/pickolini.png', name: 'ゴーヤ(合成限定)', value: 600, rarity: 'Secret-' },
     { id: 'losjob', src: './img/losjob.png', name: 'ロスジョブ', value: 700, rarity: 'Secret' },
     { id: '4000', src: './img/4000.png', name: '新幹線鳥', value: 700, rarity: 'Secret' },//4000
     { id: 'Babel', src: './img/Babel.png', name: 'アンパリーバベル', value: 800, rarity: 'Secret' },
@@ -163,7 +163,7 @@ const images = [
     { id: 'pitiata', src: './img/pitiata.png', name: '竜', value: 12000, rarity: 'Secret-' },
     { id: 'yule', src: './img/yule.png', name: 'ツリートナカイ(クリスマス合成限定)', value: 12000, rarity: 'Secret-' },
     { id: 'chinpanking', src: './img/chinpanking.png', name: 'チンパンジニーキング', value: 25000, rarity: 'Secret' },//チンパンジー
-    { id: 'tictac', src: './img/tictac.png', name: '一輪車時計(合成限定)', value: 25000, rarity: 'Secret-' },
+    { id: 'tictac', src: './img/tictac.png', name: 'チクタク(合成限定)', value: 25000, rarity: 'Secret-' },
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'itigozou', src: './img/itigozou.png', name: 'ストロベリーエレファント', value: 12000, rarity: 'Secret-' },
     { id: 'klombo', src: './img/klombo.png', name: 'クロムボ', value: 12000, rarity: 'Secret-' },
