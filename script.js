@@ -114,7 +114,7 @@ groupedImages.forEach((group) => {
     saleLabel.className = 'sale-label';
     saleLabel.textContent = formatSaleLabelM(0);
     box.appendChild(saleLabel);
-  } else if (firstObj.rarity.startsWith('Secret')) {
+  } else if (firstObj.rarity === 'Secret') {
     gallerySecret.appendChild(box);
     const saleLabel = document.createElement('div');
     saleLabel.className = 'sale-label';

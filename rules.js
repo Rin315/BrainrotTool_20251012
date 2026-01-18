@@ -3,7 +3,7 @@ const monsterProbabilityRules = [
         range: "〜500",
         threshold: 500,
         monsters: [
-            { id: "lavaca", percent: 15 },
+            { id: "losvaguitas", percent: 15 },
             { id: "alessio", percent: 40 },
             { id: "tougyu", percent: 30 },
             { id: "lasskop", percent: 15 }
