@@ -146,7 +146,7 @@ const images = [
     { id: 'chari2', src: './img/chari2.png', name: 'チャリ女', value: 4500, rarity: 'Secret' },
     { id: 'lagrande', src: './img/lagrande.png', name: 'ラグランデ', value: 5000, rarity: 'Secret' },//ラグランデ
     { id: 'lossanta', src: './img/lossanta.png', name: 'ロスサンタ', value: 5500, rarity: 'Secret' },
-    { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret-' },
+    { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret' },
     { id: 'legolem', src: './img/legolem.png', name: '合成のロボ', value: 6000, rarity: 'Secret' },
     { id: 'cornball', src: './img/cornball.png', name: 'コーンボール', value: 6500, rarity: 'Secret' },
     { id: '67', src: './img/67.png', name: '67', value: 6700, rarity: 'Secret' },
