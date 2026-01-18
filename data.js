@@ -175,7 +175,7 @@ const images = [
     { id: 'gorgon', src: './img/gorgon.png', name: 'ゴジラ(合成限定)', value: 57000, rarity: 'Secret' },
     { id: 'spageti', src: './img/spageti.png', name: 'スパゲティトイレ', value: 12000, rarity: 'Secret-' },
     { id: 'santani', src: './img/santani.png', name: 'サンタツリー(クリスマス合成限定)', value: 12000, rarity: 'Secret-' },//サンタニ
-    { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人', value: 12000, rarity: 'Secret-' },//ヤギ2人
+    { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人(合成限定)', value: 12000, rarity: 'Secret-' },//ヤギ2人
     { id: 'doragon', src: './img/doragon.png', name: 'ドラゴン', value: 12000, rarity: 'Secret-' },
     { id: 'lacrazy', src: './img/lacrazy.png', name: 'ラクレイジー', value: 12000, rarity: 'Secret-' },
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 12000, rarity: 'Secret-' },
