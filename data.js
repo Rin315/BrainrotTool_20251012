@@ -119,7 +119,7 @@ const images = [
     { id: 'trenostruzzo', src: './img/trenostruzzo.png', name: '汽車鳥', value: 300, rarity: 'Secret' },
     { id: 'kravilino', src: './img/kravilino.png', name: 'トンカチ', value: 375, rarity: 'Secret' },
     { id: 'losorcaleritos', src: './img/losorcaleritos.png', name: 'ロスオルカ', value: 400, rarity: 'Secret' },
-    { id: 'lasskop', src: './img/lasskop.png', name: 'スコップ3つ(合成限定)', value: 400, rarity: 'Secret-' },
+    { id: 'lasskop', src: './img/lasskop.png', name: 'スコップ3つ(合成限定)', value: 470, rarity: 'Secret' },
     { id: 'loscouples', src: './img/loscouples.png', name: 'ロスカップル', value: 450, rarity: 'Secret' },
     { id: 'piccione', src: './img/piccione.png', name: 'ハト', value: 500, rarity: 'Secret' },
     { id: 'peely', src: './img/peely.png', name: 'ピーリー', value: 500, rarity: 'Secret' },
