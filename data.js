@@ -26,6 +26,7 @@ const images = [
     { id: 'tukanno', src: './img/tukanno.png', name: 'ツカンノバナナ(鳥)', value: 0, rarity: 'Common' },
     { id: 'bluberrinni', src: './img/bluberrinni.png', name: 'ブルーベリー', value: 0, rarity: 'Common' },
     { id: 'spijuniro', src: './img/spijuniro.png', name: 'ペンギン', value: 0, rarity: 'Common' },
+    { id: 'penginzukini', src: './img/penginzukini.png', name: 'ズッキーニペンギン', value: 0, rarity: 'Common' },
     { id: 'blueberry', src: './img/blueberry.png', name: 'ブルーベリー豚', value: 0, rarity: 'Common' },
     { id: 'gingobalo', src: './img/gingobalo.png', name: 'リンゴ豚', value: 0, rarity: 'Common' },
     { id: 'burbalona', src: './img/burbalona.png', name: 'バーバローナ', value: 0, rarity: 'Common' },
@@ -41,6 +42,7 @@ const images = [
     { id: 'zibra', src: './img/zibra.png', name: 'スイカシマウマ', value: 0, rarity: 'Common' },
     { id: 'bambu', src: './img/bambu.png', name: '竹ぶた', value: 0, rarity: 'Common' },
     { id: 'mangolini', src: './img/mangolini.png', name: 'マンゴー鳥', value: 0, rarity: 'Common' },
+    { id: 'tako', src: './img/tako.png', name: 'たこ', value: 0, rarity: 'Common' },
     { id: 'leoraion', src: './img/leoraion.png', name: 'サボテンライオン', value: 0, rarity: 'Common' },
     // Mythic
     { id: 'frigo', src: './img/frigo.png', name: 'フリゴカメロ', value: 0, rarity: 'Common' },
@@ -146,6 +148,7 @@ const images = [
     { id: 'lossanta', src: './img/lossanta.png', name: 'ロスサンタ', value: 5500, rarity: 'Secret' },
     { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret-' },
     { id: 'legolem', src: './img/legolem.png', name: '合成のロボ', value: 6000, rarity: 'Secret' },
+    { id: 'cornball', src: './img/cornball.png', name: 'コーンボール', value: 6500, rarity: 'Secret' },
     { id: '67', src: './img/67.png', name: '67', value: 6700, rarity: 'Secret' },
     { id: 'loshouse', src: './img/loshouse.png', name: 'ロス家', value: 7000, rarity: 'Secret' },
     { id: 'Coccoblade', src: './img/Coccoblade.png', name: 'ココブレード', value: 7500, rarity: 'Secret-' },//数字仮
