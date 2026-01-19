@@ -135,7 +135,7 @@ const images = [
     { id: 'ketchuru', src: './img/ketchuru.png', name: 'ケチュマチュ', value: 1500, rarity: 'Secret' },
     { id: 'pothotspotona', src: './img/pothotspotona.png', name: '骨女', value: 1700, rarity: 'Secret' },//女骨
     { id: 'pothotspot', src: './img/pothotspot.png', name: '骨', value: 2000, rarity: 'Secret' },
-    { id: 'turtleman', src: './img/turtleman.png', name: 'タートルマン', value: 2100, rarity: 'Secret-' },
+    { id: 'turtleman', src: './img/turtleman.png', name: 'タートルマン', value: 4200, rarity: 'Secret-' },
     { id: '21', src: './img/21.png', name: '21', value: 2100, rarity: 'Secret' },
     { id: 'losmobilis', src: './img/losmobilis.png', name: 'ロスモバイル', value: 2200, rarity: 'Secret' },
     { id: 'nomyhotspot', src: './img/nomyhotspot.png', name: 'ノーマイ', value: 2500, rarity: 'Secret' },
@@ -175,7 +175,7 @@ const images = [
     { id: 'gorgon', src: './img/gorgon.png', name: 'ゴジラ(合成限定)', value: 57000, rarity: 'Secret' },
     { id: 'spageti', src: './img/spageti.png', name: 'スパゲティトイレ', value: 12000, rarity: 'Secret-' },
     { id: 'santani', src: './img/santani.png', name: 'サンタツリー(クリスマス合成限定)', value: 12000, rarity: 'Secret-' },//サンタニ
-    { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人(合成限定)', value: 12000, rarity: 'Secret-' },//ヤギ2人
+    { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人(合成限定)', value: 45000, rarity: 'Secret' },//ヤギ2人
     { id: 'doragon', src: './img/doragon.png', name: 'ドラゴン', value: 12000, rarity: 'Secret-' },
     { id: 'lacrazy', src: './img/lacrazy.png', name: 'ラクレイジー', value: 12000, rarity: 'Secret-' },
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 12000, rarity: 'Secret-' },
