@@ -151,7 +151,7 @@ const images = [
     { id: 'cornball', src: './img/cornball.png', name: 'コーンボール', value: 6500, rarity: 'Secret' },
     { id: '67', src: './img/67.png', name: '67', value: 6700, rarity: 'Secret' },
     { id: 'loshouse', src: './img/loshouse.png', name: 'ロス家', value: 7000, rarity: 'Secret' },
-    { id: 'Coccoblade', src: './img/Coccoblade.png', name: 'ココブレード', value: 7500, rarity: 'Secret-' },//数字仮
+    { id: 'Coccoblade', src: './img/Coccoblade.png', name: 'ココブレード', value: 7500, rarity: 'Secret' },//数字仮
     { id: 'cacasito', src: './img/cacasito.png', name: '人工衛星ハムスター(合成限定)', value: 8500, rarity: 'Secret' },
     { id: 'chicleteira', src: './img/chicleteira.png', name: 'チャリ', value: 8000, rarity: 'Secret' },
     { id: 'lachristmas', src: './img/lachristmas.png', name: 'クリスマスラグランデ(クリスマス合成限定)', value: 9000, rarity: 'Secret' },//クリスマスラグランデ
