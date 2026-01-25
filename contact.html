@@ -60,6 +60,75 @@
       color: var(--text-muted);
       font-size: 12px;
     }
+
+    /* 🔍 現在探している情報セクションのスタイル */
+    .info-seeking-box {
+      background: rgba(0, 200, 81, 0.15);
+      border: 2px solid var(--neon-green);
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 32px;
+      box-shadow: 0 0 15px rgba(0, 200, 81, 0.2);
+    }
+
+    .info-title {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: var(--neon-green);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-description {
+      font-size: 15px;
+      margin-bottom: 16px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .info-highlight {
+      color: var(--neon-cyan);
+      font-weight: 600;
+    }
+
+    .info-list-container {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px dashed var(--neon-green);
+    }
+
+    #seeking-list {
+      font-size: 20px;
+      font-weight: 700;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #090909;
+    }
+
+    #seeking-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #seeking-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .list-arrow {
+      color: var(--neon-green);
+    }
+
+    .info-footer {
+      font-size: 14px;
+      margin-top: 16px;
+      color: var(--text-muted);
+    }
   </style>
 </head>
 
@@ -98,35 +167,50 @@
     </div>
     <br>
 
-    <div
-      style="background: rgba(0, 200, 81, 0.15); border: 2px solid var(--neon-green); padding: 24px; border-radius: 16px; margin-bottom: 32px; box-shadow: 0 0 15px rgba(0, 200, 81, 0.2);">
-      <p
-        style="font-size: 22px; font-weight: 900; margin-bottom: 12px; color: var(--neon-green); display: flex; align-items: center; gap: 8px;">
-        📸 現在探している情報
-      </p>
-      <p style="font-size: 15px; margin-bottom: 16px; color: var(--text-main); line-height: 1.5;">
+    <!-- 🔍 現在探している情報セクション -->
+    <div class="info-seeking-box">
+      <p class="info-title">📸 現在探している情報</p>
+      <p class="info-description">
         以下のモンスターの情報を募集中です。スクショや画面直撮りで問題ありません。<br>
-        <span style="color: var(--neon-cyan); font-weight: 600;">※数値は「通常・変異なし」、図鑑画像は「通常」</span>の情報をお願いします。
+        <span class="info-highlight">※数値は「通常・変異なし」、図鑑画像は「通常」</span>の情報をお願いします。
       </p>
-      <div
-        style="background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 12px; border: 1px dashed var(--neon-green);">
-        <ul style="font-size: 20px; font-weight: 700; list-style: none; padding: 0; margin: 0; color: #090909;">
-          <li style="display: flex; align-items: center; gap: 10px;">
-            <span style="color: var(--neon-green);">▶</span> 新キャラ（1/25追加分）の図鑑画像、数値
-          </li>
-          <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-            <span style="color: var(--neon-green);">▶</span> 宇宙飛行士の図鑑画像
-          </li>
-          <li style="display: flex; align-items: center; gap: 10px;">
-            <span style="color: var(--neon-green);">▶</span> 大砲の図鑑画像
-          </li>
+
+      <div class="info-list-container">
+        <ul id="seeking-list">
+          <!-- JSで動的に表示されます -->
         </ul>
       </div>
-      <p style="font-size: 14px; margin-top: 16px; color: var(--text-muted);">
+
+      <p class="info-footer">
         ※𝕏(Twitter)のDM、またはメール、お問い合わせフォームよりお送りください。
       </p>
     </div>
 
+    <script>
+      /**
+       * 💡 メンテナンス用: 探している情報のリスト
+       * ここに項目を追加・削除するだけで画面に反映されます。
+       */
+      const seekingItems = [
+        "クモの1つ上のキャラの図鑑画像",
+        "猫時計の図鑑画像",
+        "宇宙飛行士の図鑑画像"
+      ];
+
+      function renderSeekingList() {
+        const listEl = document.getElementById('seeking-list');
+        if (!listEl) return;
+
+        listEl.innerHTML = seekingItems.map(item => `
+          <li>
+            <span class="list-arrow">▶</span> ${item}
+          </li>
+        `).join('');
+      }
+
+      // 実行
+      renderSeekingList();
+    </script>
   </main>
 </body>
 
