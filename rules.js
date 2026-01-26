@@ -178,13 +178,25 @@ const monsterProbabilityRules = [
     },
     {
         range: "40001〜",
-        threshold: Infinity,
+        threshold: 650000,
         monsters: [
             { id: "nomychari", percent: 35 },
             { id: "chinpanking", percent: 35 },
             { id: "tictac", percent: 15 },
             { id: "cabritos", percent: 10 },
             { id: "gorgon", percent: 5 }
+        ]
+    },
+    {
+        range: "650001〜",
+        threshold: Infinity,
+        monsters: [
+            { id: "nomychari", percent: 35 },
+            { id: "chinpanking", percent: 35 },
+            { id: "tictac", percent: 15 },
+            { id: "cabritos", percent: 10 },
+            { id: "gorgon", percent: 5 },
+            { id: "tiramis", percent: 1 }
         ]
     }
 ];
