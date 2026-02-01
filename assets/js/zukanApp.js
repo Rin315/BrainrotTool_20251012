@@ -238,7 +238,7 @@ function renderGrid() {
     if (state.filterUnobtained) {
         displayMonsters = displayMonsters.filter(m => {
             const key = `${getMonsterId(m)}_${state.currentTab}`;
-            return !!state.collection[key]; // Explicitly check for existence
+            return !state.collection[key]; // Obtained monsters have timestamps, so we want the ones WITHOUT them
         });
     }
 
@@ -358,10 +358,11 @@ function setupPagination() {
     };
     nextBtn.onclick = () => {
         const itemsPerPage = getItemsPerPage();
-        let totalItems = monsters.length;
+        let displayMonsters = [...monsters];
         if (state.filterUnobtained) {
-            totalItems = monsters.filter(m => !state.collection[`${getMonsterId(m)}_${state.currentTab}`]).length;
+            displayMonsters = displayMonsters.filter(m => !state.collection[`${getMonsterId(m)}_${state.currentTab}`]);
         }
+        const totalItems = displayMonsters.length;
         const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
         if (state.currentPage < totalPages) {
             state.currentPage++;
@@ -509,10 +510,10 @@ function undoLastAction() {
     const itemRef = ref(db, `collection_status/${key}`);
 
     if (!wasObtained) {
-        // Last state was unobtained, now it's obtained -> to undo, remove from DB
+        // Last action was "mark as obtained", so to undo we must remove it
         remove(itemRef).catch(err => console.error("Undo remove failed:", err));
     } else {
-        // Last state was obtained, now it's unobtained -> to undo, put back in DB
+        // Last action was "remove obtained state", so to undo we must put it back
         set(itemRef, lastAction.timestamp || Date.now()).catch(err => console.error("Undo set failed:", err));
     }
 
