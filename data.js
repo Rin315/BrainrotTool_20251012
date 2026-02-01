@@ -42,6 +42,7 @@ const images = [
     { id: 'zibra', src: './img/zibra.png', name: 'スイカシマウマ', value: 0, rarity: 'Common' },
     { id: 'bambu', src: './img/bambu.png', name: '竹ぶた', value: 0, rarity: 'Common' },
     { id: 'mangolini', src: './img/mangolini.png', name: 'マンゴー鳥', value: 0, rarity: 'Common' },
+    { id: 'lamplamp', src: './img/lamplamp.png', name: '電球サフール', value: 0, rarity: 'Common' },
     { id: 'tako', src: './img/tako.png', name: 'たこ', value: 0, rarity: 'Common' },
     { id: 'leoraion', src: './img/leoraion.png', name: 'サボテンライオン', value: 0, rarity: 'Common' },
     // Mythic
@@ -59,6 +60,7 @@ const images = [
     { id: 'strawberre', src: './img/strawberre.png', name: 'ストロベリーフラミンゴ', value: 0, rarity: 'Common' },
     { id: 'elefantino', src: './img/elefantino.png', name: '冷蔵庫ゾウ', value: 0, rarity: 'Common' },
     { id: 'to3', src: './img/to3.png', name: 'トトトサフー(細長いやつ)', value: 0, rarity: 'Common' },
+    { id: 'yakanzou', src: './img/yakanzou.png', name: 'やかん象', value: 0, rarity: 'Common' },
     { id: 'antonio', src: './img/antonio.png', name: 'アントニオー', value: 0, rarity: 'Common' },//アントニオ
     { id: 'girafa', src: './img/girafa.png', name: 'スイカキリン(合成限定)', value: 0, rarity: 'Common' },
     { id: 'mypepper', src: './img/mypepper.png', name: 'マイペッパーミント(クリスマス合成限定)', value: 0, rarity: 'Common' },
@@ -93,6 +95,7 @@ const images = [
     { id: 'brrestrh', src: './img/brrestrh.png', name: 'ジュース', value: 145, rarity: 'BrainrotGot' },
     { id: 'torrtuginni', src: './img/torrtuginni.png', name: 'トゲゾー', value: 150, rarity: 'BrainrotGot' },
     { id: 'losbros', src: './img/losbros.png', name: 'ロスブロス', value: 155, rarity: 'BrainrotGot' },
+    { id: 'bim', src: './img/bim.png', name: '四角いやつ', value: 157, rarity: 'BrainrotGot' },
     { id: 'bambini', src: './img/bambini.png', name: 'バンビーニ戦車', value: 160, rarity: 'BrainrotGot' },
     { id: 'hoccci', src: './img/hoccci.png', name: 'ケーキ(クリスマス合成限定)', value: 167, rarity: 'BrainrotGot' },
     { id: 'jiqi', src: './img/jiqi.png', name: '時計', value: 165, rarity: 'BrainrotGot' },//時計
@@ -143,9 +146,11 @@ const images = [
     { id: 'nomyhotspot', src: './img/nomyhotspot.png', name: 'ノーマイ', value: 2500, rarity: 'Secret' },
     { id: 'elf3', src: './img/elf3.png', name: 'エルフエルフ(クリスマス合成限定)', value: 2700, rarity: 'Secret' },
     { id: 'garamarama', src: './img/garamarama.png', name: 'ガラマ', value: 3000, rarity: 'Secret' },
+    { id: 'torisoujiki', src: './img/torisoujiki.png', name: '鳥掃除機', value: 3200, rarity: 'Secret' },
     { id: 'pirulitoita', src: './img/pirulitoita.png', name: 'ペロペロキャンディー', value: 3500, rarity: 'Secret' },//飴
     { id: 'iisacro', src: './img/iisacro.png', name: '合成ヤギ', value: 4000, rarity: 'Secret' },
     { id: 'chari2', src: './img/chari2.png', name: 'チャリ女', value: 4500, rarity: 'Secret' },
+    { id: '4metori', src: './img/4metori.png', name: '4つ目鳥', value: 4700, rarity: 'Secret' },
     { id: 'lagrande', src: './img/lagrande.png', name: 'ラグランデ', value: 5000, rarity: 'Secret' },//ラグランデ
     { id: 'lossanta', src: './img/lossanta.png', name: 'ロスサンタ', value: 5500, rarity: 'Secret' },
     { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret' },

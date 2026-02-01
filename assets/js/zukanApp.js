@@ -95,7 +95,7 @@ function init() {
     setupPagination();
     setupReset();
     setupFiltering();
-    setupMarkAll();
+    setupMarkAllObtained();
 
     if (state.isAdmin) {
         if (markAllBtn) markAllBtn.classList.remove('hidden');
@@ -109,8 +109,20 @@ function init() {
     setupExportText();
     setupUndo();
 
-    // Listen to Firebase (Source of Truth)
-    const collectionRef = ref(db, 'unobtained_status');
+    // Initial Render
+    renderGrid();
+
+    // Listen to Migration Version
+    const metaRef = ref(db, '_metadata/migration_v2');
+    onValue(metaRef, (snapshot) => {
+        if (!snapshot.val() && state.isAdmin) {
+            console.log("Starting Migration to Obtained-Default...");
+            migrateToObtainedDefault();
+        }
+    }, { onlyOnce: true });
+
+    // Listen to Firebase (Source of Truth: Positive Collection)
+    const collectionRef = ref(db, 'collection_status');
     onValue(collectionRef, (snapshot) => {
         const data = snapshot.val() || {};
         state.collection = data;
@@ -118,9 +130,47 @@ function init() {
         renderGrid();
         updateStats();
     });
+}
 
-    // Initial Render
-    renderGrid();
+/**
+ * 🔄 Migration Logic: Flip Unobtained-Default to Obtained-Default
+ * Only runs once for the admin if the flag is not set.
+ */
+async function migrateToObtainedDefault() {
+    try {
+        // 1. Get current "Unobtained" state
+        const oldRef = ref(db, 'unobtained_status');
+        const oldDataRef = await new Promise((resolve) => {
+            onValue(oldRef, (snap) => resolve(snap.val() || {}), { onlyOnce: true });
+        });
+
+        // 2. Prepare new "Obtained" state for ALL current monsters
+        // Current Obtained = NOT in current Unobtained List
+        const newCollection = {};
+        const now = Date.now();
+
+        monsters.forEach(monster => {
+            const mId = getMonsterId(monster);
+            variants.forEach(variant => {
+                const key = `${mId}_${variant}`;
+                if (!oldDataRef[key]) {
+                    // Not in unobtained list means it IS obtained
+                    newCollection[key] = now;
+                }
+            });
+        });
+
+        // 3. Batch write to new path
+        await set(ref(db, 'collection_status'), newCollection);
+
+        // 4. Mark migration as finished
+        await set(ref(db, '_metadata/migration_v2'), true);
+
+        console.log("Migration Successful: Database flipped to Obtained-Positive.");
+        alert("データベースの移行が完了しました。今後、新しく追加されるモンスターは「未所持」がデフォルトになります。");
+    } catch (err) {
+        console.error("Migration Failed:", err);
+    }
 }
 
 // ========== Rendering ==========
@@ -138,7 +188,7 @@ function renderTabs() {
 
         monsters.forEach(monster => {
             const key = `${getMonsterId(monster)}_${variant}`;
-            if (!state.collection[key]) {
+            if (state.collection[key]) {
                 obtainedCount++;
                 totalObtainedGlobal++;
             }
@@ -230,7 +280,7 @@ function renderGrid() {
 function createMonsterCard(monster) {
     const key = `${getMonsterId(monster)}_${state.currentTab}`; // Stable ID: name + variant
     const timestamp = state.collection[key];
-    const isObtained = !timestamp; // Default is obtained (not in collection)
+    const isObtained = !!timestamp; // Default is UNobtained (not in collection)
 
     const card = document.createElement('div');
     card.className = `monster-card ${isObtained ? 'obtained' : 'unobtained'}`;
@@ -242,7 +292,7 @@ function createMonsterCard(monster) {
     let isComplete = true;
     for (const v of variants) {
         const k = `${getMonsterId(monster)}_${v}`;
-        if (state.collection[k]) { // If any variant is UNobtained
+        if (!state.collection[k]) { // If any variant is NOT obtained
             isComplete = false;
             break;
         }
@@ -310,7 +360,7 @@ function setupPagination() {
         const itemsPerPage = getItemsPerPage();
         let totalItems = monsters.length;
         if (state.filterUnobtained) {
-            totalItems = monsters.filter(m => state.collection[`${getMonsterId(m)}_${state.currentTab}`]).length;
+            totalItems = monsters.filter(m => !state.collection[`${getMonsterId(m)}_${state.currentTab}`]).length;
         }
         const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
         if (state.currentPage < totalPages) {
@@ -337,9 +387,9 @@ function setupReset() {
 
         if (confirm('Are you sure you want to reset ALL progress? (This will mark everything as obtained)')) {
             // Clear Firebase
-            set(ref(db, 'unobtained_status'), null)
+            set(ref(db, 'collection_status'), null)
                 .then(() => {
-                    alert("All data reset to obtained.");
+                    alert("All data reset to unobtained.");
                 })
                 .catch(err => console.error("Reset failed:", err));
         }
@@ -362,13 +412,21 @@ function setupFiltering() {
     };
 }
 
-function setupMarkAll() {
+function setupMarkAllObtained() {
     if (!markAllBtn) return;
     markAllBtn.onclick = () => {
         if (!state.isAdmin) return;
 
         if (confirm(`Mark ALL monsters in ALL variants as obtained?`)) {
-            set(ref(db, 'unobtained_status'), null)
+            const allObtained = {};
+            const now = Date.now();
+            monsters.forEach(m => {
+                variants.forEach(v => {
+                    allObtained[`${getMonsterId(m)}_${v}`] = now;
+                });
+            });
+
+            set(ref(db, 'collection_status'), allObtained)
                 .then(() => alert(`All monsters marked as obtained.`))
                 .catch(err => console.error("Mark all failed:", err));
         }
@@ -383,7 +441,7 @@ function setupExportText() {
             let variantMonsters = [];
             monsters.forEach(monster => {
                 const key = `${getMonsterId(monster)}_${variant}`;
-                if (state.collection[key]) {
+                if (!state.collection[key]) {
                     variantMonsters.push(` ${monster.name}`);
                 }
             });
@@ -448,13 +506,13 @@ function undoLastAction() {
     if (!lastAction) return;
 
     const { key, wasObtained } = lastAction;
-    const itemRef = ref(db, `unobtained_status/${key}`);
+    const itemRef = ref(db, `collection_status/${key}`);
 
-    if (wasObtained) {
-        // Last action was "mark as unobtained", so undo is "mark as obtained"
+    if (!wasObtained) {
+        // Last state was unobtained, now it's obtained -> to undo, remove from DB
         remove(itemRef).catch(err => console.error("Undo remove failed:", err));
     } else {
-        // Last action was "mark as obtained", so undo is "mark as unobtained"
+        // Last state was obtained, now it's unobtained -> to undo, put back in DB
         set(itemRef, lastAction.timestamp || Date.now()).catch(err => console.error("Undo set failed:", err));
     }
 
@@ -472,12 +530,12 @@ function toggleCollection(key, isCurrentlyObtained) {
     updateUndoButtonVisibility();
 
     // NO Optimistic Update - Rely on Firebase Listener
-    const itemRef = ref(db, `unobtained_status/${key}`);
-    if (isCurrentlyObtained) {
-        // Was obtained, now marking as UNobtained -> Add to DB
+    const itemRef = ref(db, `collection_status/${key}`);
+    if (!isCurrentlyObtained) {
+        // Was unobtained, now marking as obtained -> Add to DB
         set(itemRef, Date.now()).catch(err => console.error("Firebase set failed:", err));
     } else {
-        // Was unobtained, now marking as obtained -> Remove from DB
+        // Was obtained, now marking as unobtained -> Remove from DB
         remove(itemRef).catch(err => console.error("Firebase remove failed:", err));
     }
 }
