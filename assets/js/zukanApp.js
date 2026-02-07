@@ -21,7 +21,7 @@ const db = getDatabase(app);
 
 // ========== State ==========
 const variants = [
-    "Default", "Gold", "Diamond", "Rainbow", "Toxic",
+    "Default", "Gold", "Diamond", "Rainbow", "Love", "Toxic",
     "Galaxy", "Zombie", "Dreamy", "ICE&FIRE", "Carnival",
     "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
 ];

@@ -188,7 +188,7 @@ const images = [
     { id: 'doragon', src: './img/doragon.png', name: 'ドラゴン', value: 12000, rarity: 'Secret-' },
     { id: 'lacrazy', src: './img/lacrazy.png', name: 'ラクレイジー', value: 12000, rarity: 'Secret-' },
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 12000, rarity: 'Secret-' },
-    { id: 'tiramis', src: './img/tiramis.png', name: 'ティラミス', value: 90000, rarity: 'Secret-' },
+    { id: 'tiramis', src: './img/tiramis.png', name: '潜水艦', value: 90000, rarity: 'Secret-' },
     { id: 'track', src: './img/track.png', name: 'トラック', value: 12000, rarity: 'Secret-' },
     { id: 'taihou', src: './img/taihou.png', name: '大砲', value: 115000, rarity: 'Secret-' },
     { id: 'toire', src: './img/SkibidiToilet.png', name: 'スケビティートイレ', value: 12000, rarity: 'Secret-' },
