@@ -166,6 +166,7 @@ const images = [
     { id: 'chicleteira', src: './img/chicleteira.png', name: 'チャリ', value: 8000, rarity: 'Secret' },
     { id: 'lachristmas', src: './img/lachristmas.png', name: 'クリスマスラグランデ(クリスマス合成限定)', value: 9000, rarity: 'Secret' },//クリスマスラグランデ
     { id: 'pad', src: './img/pad.png', name: 'ケパット', value: 10000, rarity: 'Secret' },
+    { id: 'lovebear', src: './img/lovebear.png', name: 'ラブベアー', value: 10500, rarity: 'Secret' },
     { id: 'nekotokei', src: './img/nekotokei.png', name: '猫時計', value: 11500, rarity: 'Secret' },
     { id: 'nomychari', src: './img/nomychari.png', name: 'ノーマイチャリ(合成限定)', value: 13500, rarity: 'Secret' },
     { id: 'dulduldul', src: './img/dulduldul.png', name: 'サル', value: 12000, rarity: 'Secret' },
