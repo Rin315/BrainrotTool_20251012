@@ -136,6 +136,7 @@ const images = [
     { id: 'Babel', src: './img/Babel.png', name: 'アンパリーバベル', value: 800, rarity: 'Secret' },
     { id: 'losisu', src: './img/losisu.png', name: 'ロスイス', value: 900, rarity: 'Secret' },//ロス椅子
     { id: 'orcalero', src: './img/orcalero.png', name: 'オルカ', value: 1000, rarity: 'Secret' },
+    { id: '14', src: './img/14.png', name: '14', value: 1400, rarity: 'Secret' },
     { id: 'frog', src: './img/frog.png', name: 'カエル', value: 1200, rarity: 'Secret' },
     { id: 'ketchuru', src: './img/ketchuru.png', name: 'ケチュマチュ', value: 1500, rarity: 'Secret' },
     { id: 'pothotspotona', src: './img/pothotspotona.png', name: '骨女', value: 1700, rarity: 'Secret' },//女骨
@@ -152,6 +153,7 @@ const images = [
     { id: 'chari2', src: './img/chari2.png', name: 'チャリ女', value: 4500, rarity: 'Secret' },
     { id: '4metori', src: './img/4metori.png', name: '4つ目鳥', value: 4700, rarity: 'Secret' },
     { id: 'lagrande', src: './img/lagrande.png', name: 'ラグランデ', value: 5000, rarity: 'Secret' },//ラグランデ
+    { id: 'rose', src: './img/rose.png', name: '花束', value: 5200, rarity: 'Secret' },
     { id: 'lossanta', src: './img/lossanta.png', name: 'ロスサンタ', value: 5500, rarity: 'Secret' },
     { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret' },
     { id: 'legolem', src: './img/legolem.png', name: '合成のロボ', value: 6000, rarity: 'Secret' },
@@ -172,6 +174,7 @@ const images = [
     { id: 'losgarama', src: './img/losgarama.png', name: 'ロスガラマ', value: 12000, rarity: 'Secret-' },
     { id: 'uchuhikoushi', src: './img/uchuhikoushi.png', name: '宇宙飛行士', value: 16000, rarity: 'Secret-' },
     { id: 'kaerutoire', src: './img/kaerutoire.png', name: 'カエルトイレ', value: 12000, rarity: 'Secret-' },
+    { id: 'lovepad', src: './img/lovepad.png', name: 'Loveパッド', value: 18000, rarity: 'Secret-' },
     { id: 'ie', src: './img/ie.png', name: '家', value: 12000, rarity: 'Secret-' },
     { id: 'pitiata', src: './img/pitiata.png', name: '竜', value: 12000, rarity: 'Secret-' },
     { id: 'yule', src: './img/yule.png', name: 'ツリートナカイ(クリスマス合成限定)', value: 12000, rarity: 'Secret-' },
@@ -179,6 +182,7 @@ const images = [
     { id: 'tictac', src: './img/tictac.png', name: 'チクタク(合成限定)', value: 33000, rarity: 'Secret' },
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'itigozou', src: './img/itigozou.png', name: 'ストロベリーエレファント', value: 12000, rarity: 'Secret-' },
+    { id: 'royals', src: './img/royals.png', name: 'チンパンジー夫婦', value: 33000, rarity: 'Secret-' },
     { id: 'klombo', src: './img/klombo.png', name: 'クロムボ', value: 12000, rarity: 'Secret-' },
     { id: 'shtekerito', src: './img/shtekerito.png', name: '電球', value: 12000, rarity: 'Secret-' },
     { id: 'gorgon', src: './img/gorgon.png', name: 'ゴジラ(合成限定)', value: 57000, rarity: 'Secret' },
@@ -187,6 +191,7 @@ const images = [
     { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人(合成限定)', value: 45000, rarity: 'Secret' },//ヤギ2人
     { id: 'doragon', src: './img/doragon.png', name: 'ドラゴン', value: 12000, rarity: 'Secret-' },
     { id: 'lacrazy', src: './img/lacrazy.png', name: 'ラクレイジー', value: 12000, rarity: 'Secret-' },
+    { id: 'lovedragon', src: './img/lovedragon.png', name: 'ラブドラゴン', value: 70000, rarity: 'Secret-' },
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 12000, rarity: 'Secret-' },
     { id: 'tiramis', src: './img/tiramis.png', name: '潜水艦', value: 90000, rarity: 'Secret-' },
     { id: 'track', src: './img/track.png', name: 'トラック', value: 12000, rarity: 'Secret-' },
