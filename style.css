@@ -725,3 +725,37 @@ h2 {
     gap: 4px;
   }
 }
+/* Event Toggle Button */
+.event-toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#event-toggle-btn {
+  background: white;
+  color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan);
+  padding: 6px 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+
+#event-toggle-btn:hover {
+  background: var(--neon-cyan);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 176, 255, 0.3);
+}
+
+#event-toggle-btn.active {
+  background: var(--neon-cyan);
+  color: #fff;
+}

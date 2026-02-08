@@ -57,74 +57,101 @@ function getPrevThresholdDiff(sumValue) {
 }
 
 // ========== ギャラリー生成 ==========
-const groupedImages = [];
-const processedIndices = new Set();
+// ========== ギャラリー生成 ==========
+let showEventLimited = false;
 
-images.forEach((imgObj, index) => {
-  if (processedIndices.has(index)) return;
-  const group = [imgObj];
-  processedIndices.add(index);
-  for (let i = index + 1; i < images.length; i++) {
-    if (processedIndices.has(i)) continue;
-    const other = images[i];
-    if (other.value === imgObj.value && other.rarity === imgObj.rarity) {
-      group.push(other);
-      processedIndices.add(i);
+function renderGallery() {
+  galleryBrainrot.innerHTML = '';
+  gallerySecret.innerHTML = '';
+  const processedIndices = new Set();
+  const groupedImages = [];
+
+  images.forEach((imgObj, index) => {
+    if (processedIndices.has(index)) return;
+
+    // イベント限定モンスターのフィルタリング（初期は非表示）
+    if (!showEventLimited && imgObj.rarity.endsWith('-')) return;
+
+    const group = [imgObj];
+    processedIndices.add(index);
+    for (let i = index + 1; i < images.length; i++) {
+      if (processedIndices.has(i)) continue;
+      const other = images[i];
+      if (other.value === imgObj.value && other.rarity === imgObj.rarity) {
+        group.push(other);
+        processedIndices.add(i);
+      }
     }
-  }
-  groupedImages.push(group);
-});
+    groupedImages.push(group);
+  });
 
-groupedImages.forEach((group) => {
-  const box = document.createElement('div');
-  box.className = 'imgbox imgbox--gallery';
-  const firstObj = group[0];
-  if (group.length > 1) {
-    box.classList.add('imgbox--split');
-    group.forEach((imgObj, index) => {
-      const isLeft = index === 0;
-      const hitArea = document.createElement('div');
-      hitArea.className = `split-hit-area ${isLeft ? 'split-hit-left' : 'split-hit-right'}`;
-      hitArea.addEventListener('click', (e) => {
-        e.stopPropagation();
-        selectMonster(imgObj);
+  groupedImages.forEach((group) => {
+    const box = document.createElement('div');
+    box.className = 'imgbox imgbox--gallery';
+    const firstObj = group[0];
+    if (group.length > 1) {
+      box.classList.add('imgbox--split');
+      group.forEach((imgObj, index) => {
+        const isLeft = index === 0;
+        const hitArea = document.createElement('div');
+        hitArea.className = `split-hit-area ${isLeft ? 'split-hit-left' : 'split-hit-right'}`;
+        hitArea.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectMonster(imgObj);
+        });
+        box.appendChild(hitArea);
+        const img = document.createElement('img');
+        img.src = imgObj.src;
+        img.className = `gallery-img split-img ${isLeft ? 'split-img-left' : 'split-img-right'}`;
+        img.style.objectFit = 'cover';
+        box.appendChild(img);
       });
-      box.appendChild(hitArea);
+    } else {
+      const imgObj = group[0];
       const img = document.createElement('img');
       img.src = imgObj.src;
-      img.className = `gallery-img split-img ${isLeft ? 'split-img-left' : 'split-img-right'}`;
+      img.className = 'gallery-img';
       img.style.objectFit = 'cover';
+      img.addEventListener('click', () => { selectMonster(imgObj); });
       box.appendChild(img);
-    });
-  } else {
-    const imgObj = group[0];
-    const img = document.createElement('img');
-    img.src = imgObj.src;
-    img.className = 'gallery-img';
-    img.style.objectFit = 'cover';
-    img.addEventListener('click', () => { selectMonster(imgObj); });
-    box.appendChild(img);
-  }
-  const label = document.createElement('div');
-  label.className = 'value-label';
-  label.textContent = `${firstObj.value} K/s`;
-  if (firstObj.rarity === 'BrainrotGot') {
-    galleryBrainrot.appendChild(box);
-    const saleLabel = document.createElement('div');
-    saleLabel.className = 'sale-label';
-    saleLabel.textContent = formatSaleLabelM(0);
-    box.appendChild(saleLabel);
-  } else if (firstObj.rarity === 'Secret') {
-    gallerySecret.appendChild(box);
-    const saleLabel = document.createElement('div');
-    saleLabel.className = 'sale-label';
-    saleLabel.textContent = formatSaleLabelM(1);
-    box.appendChild(saleLabel);
-  } else {
-    return;
-  }
-  box.appendChild(label);
-});
+    }
+    const label = document.createElement('div');
+    label.className = 'value-label';
+    label.textContent = `${firstObj.value} K/s`;
+
+    // Rarity checks should use startsWith to handle event-limited variants (e.g. BrainrotGot-)
+    if (firstObj.rarity.startsWith('BrainrotGot')) {
+      galleryBrainrot.appendChild(box);
+      const saleLabel = document.createElement('div');
+      saleLabel.className = 'sale-label';
+      saleLabel.textContent = formatSaleLabelM(0);
+      box.appendChild(saleLabel);
+    } else if (firstObj.rarity.startsWith('Secret')) {
+      gallerySecret.appendChild(box);
+      const saleLabel = document.createElement('div');
+      saleLabel.className = 'sale-label';
+      saleLabel.textContent = formatSaleLabelM(1);
+      box.appendChild(saleLabel);
+    } else {
+      return;
+    }
+    box.appendChild(label);
+  });
+}
+
+// 初期描画
+renderGallery();
+
+// イベント限定モンスター表示切り替えボタン
+const eventToggleBtn = document.getElementById('event-toggle-btn');
+if (eventToggleBtn) {
+  eventToggleBtn.onclick = () => {
+    showEventLimited = !showEventLimited;
+    eventToggleBtn.classList.toggle('active', showEventLimited);
+    eventToggleBtn.textContent = showEventLimited ? 'イベント限定モンスターを非表示' : 'イベント限定モンスターを表示';
+    renderGallery();
+  };
+}
 
 function selectMonster(imgObj) {
   const emptyIndex = selectedImages.findIndex(v => v === null);
