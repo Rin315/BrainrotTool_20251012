@@ -90,6 +90,7 @@
       gap: 16px;
       margin-top: 16px;
       width: 100%;
+      align-items: flex-start;
     }
 
     .monster-col {
@@ -602,14 +603,14 @@
         モンスター一覧から、合成に使用するモンスターを5体選択してください。
       </p>
 
-      <h3 style="font-size: 18px; color: var(--neon-cyan); margin-top: 0;">■ RESULTの見方</h3>
-      <ul style="list-style: none; margin-left: 0;">
-        <li style="margin-bottom: 10px;"><strong>・モンスターごとの確率：</strong>
-          選択した5体の「K/s（1秒あたりの稼ぎ）」の合計値に応じて、排出されるモンスターの確率が変化します。</li>
-        <li style="margin-bottom: 10px;"><strong>・TOTAL：</strong> 現在の選択したモンスターの合計K/sと次の確率帯までに必要なK/sを表示します。</li>
-      </ul>
+      <h3 style="font-size: 18px; margin-top: 0;">■ RESULTの見方</h3>
+      <div style="margin-bottom: 15px;">
+        <p style="margin-bottom: 8px;"><strong>・モンスターごとの確率：</strong> 選択した5体の「K/s（1秒あたりの稼ぎ）」の合計値に応じて、排出されるモンスターの確率が変化します。
+        </p>
+        <p style="margin-bottom: 8px;"><strong>・TOTAL：</strong> 現在の選択したモンスターの合計K/sと次の確率帯までに必要なK/sを表示します。</p>
+      </div>
 
-      <h3 style="font-size: 18px; color: var(--neon-cyan);">■ 合成の目安</h3>
+      <h3 style="font-size: 18px;">■ 合成の目安</h3>
       <p>
         TOTAL欄には、次の確率帯まであと少しなら <strong>😱（損）</strong>、現在のランクの境界ギリギリなら <strong>😍（得）</strong>
         と数字の横に表示されます。<br>これらを参考に、最適なK/sの組み合わせを探してみてください。
@@ -700,12 +701,9 @@
     <h3>Q1. Mythicモンスターの計算がしたい</h3>
     <p>BrainrotGod以上のモンスターにしか対応しておりません。</p>
 
-    <h3>Q2. 確率が全然違う</h3>
+    <h3>Q2. 確率が実際と違う</h3>
     <p>イベントや仕様変更によるものか、モンスターの設定値が誤っている可能性があります。<br>
       お手数ですが<a href="contact.html" style="color:#2f4f4f; font-weight:bold;">「お問い合わせ」</a>よりご連絡ください。</p>
-
-    <h3>Q3. GalaxyやZonbieの確率も計算したい</h3>
-    <p>Other等他のシリーズのボタンで代用してください。</p>
 
     <h2>4. 運営ポリシーと免責事項</h2>
     <p>当サイトはユーザーの学習・分析・検証目的で提供されています。確率や結果を利用した損失やトラブルについては責任を負いかねます。</p>
@@ -780,7 +778,7 @@
             rowBlock.className = 'monster-row-block';
             const rangeCell = document.createElement('div');
             rangeCell.className = 'range-cell';
-            rangeCell.innerHTML = item.range.replace('〜', '〜<br>');
+            rangeCell.innerHTML = item.range;
             const monstersCell = document.createElement('div');
             monstersCell.className = 'monsters-cell';
             const monsterRow = document.createElement('div');
