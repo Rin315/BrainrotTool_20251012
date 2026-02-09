@@ -95,7 +95,7 @@ const images = [
     { id: 'brrestrh', src: './img/brrestrh.png', name: 'ジュース', value: 145, rarity: 'BrainrotGot' },
     { id: 'torrtuginni', src: './img/torrtuginni.png', name: 'トゲゾー', value: 150, rarity: 'BrainrotGot' },
     { id: 'losbros', src: './img/losbros.png', name: 'ロスブロス', value: 155, rarity: 'BrainrotGot' },
-    { id: 'bim', src: './img/bim.png', name: '四角いやつ', value: 157, rarity: 'BrainrotGot' },
+    { id: 'bim', src: './img/bim.png', name: 'ビムビム', value: 157, rarity: 'BrainrotGot' },
     { id: 'bambini', src: './img/bambini.png', name: 'バンビーニ戦車', value: 160, rarity: 'BrainrotGot' },
     { id: 'hoccci', src: './img/hoccci.png', name: 'ケーキ(クリスマス合成限定)', value: 167, rarity: 'BrainrotGot-' },
     { id: 'jiqi', src: './img/jiqi.png', name: '時計', value: 165, rarity: 'BrainrotGot' },//時計

@@ -207,6 +207,8 @@ function renderSelected() {
       box.appendChild(saleLabel);
       applyOutline(box, idx);
       wrapper.appendChild(box);
+      /* 
+      // 変異選択ボタン（一時的に無効化）
       const btnContainer = document.createElement('div');
       btnContainer.className = 'button-container';
       ['Default', 'Gold', 'Diamond', 'Rainbow', 'Toxic', 'Other'].forEach(type => {
@@ -223,6 +225,7 @@ function renderSelected() {
         btnContainer.appendChild(btn);
       });
       wrapper.appendChild(btnContainer);
+      */
     } else {
       const ph = document.createElement('div');
       ph.className = 'imgbox imgbox--selected';
@@ -318,6 +321,8 @@ function updateMonsterProbability() {
 }
 
 function updateTypeProbability() {
+  // シリーズごとの確率計算を無効化（仕様変更のため）
+  /*
   const probs = { ...baseProb };
   const colorSums = {};
   selectedImages.forEach((img, i) => {
@@ -343,6 +348,7 @@ function updateTypeProbability() {
     .filter(it => it.prob > 0)
     .map(it => `<span class="${it.name}">${it.name}: ${it.prob}%</span>`)
     .join('');
+  */
 }
 
 function getButtonColor(type) {
