@@ -93,11 +93,12 @@
     }
 
     .monster-col {
-      flex: 1 1 400px;
+      flex: 1 1 500px;
       background: var(--card-bg);
       border-radius: 12px;
       border: 1px solid var(--card-border);
       overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     .monster-header {
@@ -164,17 +165,25 @@
       color: #000;
       /* Pure black for maximum readability */
       font-weight: 700;
-      min-width: 50px;
+      min-width: 70px;
     }
 
     .monster-set img {
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
       object-fit: contain;
       border: 1px solid var(--card-border);
-      border-radius: 4px;
+      border-radius: 8px;
       background: rgba(0, 0, 0, 0.05);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .monster-set img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-color: var(--neon-cyan);
     }
 
     .tool-link {
@@ -278,20 +287,20 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-width: 50px;
+        min-width: 70px;
         font-size: 11px;
         color: #000;
         font-weight: 700;
       }
 
       .mobile-monster-set img {
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         object-fit: contain;
         border: 1px solid var(--card-border);
-        border-radius: 4px;
+        border-radius: 8px;
         background: rgba(0, 0, 0, 0.05);
-        margin-bottom: 4px;
+        margin-bottom: 6px;
       }
     }
   </style>
@@ -587,12 +596,23 @@
 
 
     <h2>2. 計算ツールの使い方</h2>
-    <div class="highlight">
-      <p>
-        <strong>モンスターごとの確率</strong>は選択されたモンスターのK/s(1秒あたりに稼ぐ金額)の合計によって変動します。
+    <div class="highlight" style="background: var(--card-bg); border: 2px solid var(--neon-cyan); padding: 20px;">
+      <p
+        style="font-weight: 700; font-size: 16px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-bottom: 15px;">
+        モンスター一覧から、合成に使用するモンスターを5体選択してください。
       </p>
+
+      <h3 style="font-size: 18px; color: var(--neon-cyan); margin-top: 0;">■ RESULTの見方</h3>
+      <ul style="list-style: none; margin-left: 0;">
+        <li style="margin-bottom: 10px;"><strong>・モンスターごとの確率：</strong>
+          選択した5体の「K/s（1秒あたりの稼ぎ）」の合計値に応じて、排出されるモンスターの確率が変化します。</li>
+        <li style="margin-bottom: 10px;"><strong>・TOTAL：</strong> 現在の選択したモンスターの合計K/sと次の確率帯までに必要なK/sを表示します。</li>
+      </ul>
+
+      <h3 style="font-size: 18px; color: var(--neon-cyan);">■ 合成の目安</h3>
       <p>
-        モンスターのK/s(1秒あたりに稼ぐ金額)は通常の種類、変異なしのK/sを参照します。
+        次の確率帯まであと少しなら <strong>😱（損）</strong>、現在のランクの境界ギリギリなら <strong>😍（得）</strong>
+        と数字の横に表示されます。これらを参考に、最適なK/sの組み合わせを探してみてください。
       </p>
     </div>
 
