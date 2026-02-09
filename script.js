@@ -277,7 +277,7 @@ function updateTotal() {
   const rawDiff = getNextThresholdDiff(sumValue);
   let nextLineText;
   if (rawDiff === null) {
-    nextLineText = "確率は現在が最高帯です";
+    nextLineText = '確率は現在が<span style="color: #ff4d4d; font-weight: bold;">最高帯</span>です';
   } else {
     const diffToNext = rawDiff + 1;
     const emoji = diffToNext <= sumValue / 20 ? " 😱" : "";
