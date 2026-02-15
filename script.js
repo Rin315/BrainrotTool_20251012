@@ -336,7 +336,7 @@ function updateTotal() {
     nextDiff = currentThreshold - sumValue + 1;
 
     const emoji1 = nextDiff <= sumValue / 20 ? " 😱" : "";
-    nextLineHTML += `Next： 次の確率帯まで あと <span class="total-number">${nextDiff}</span> K/s${emoji1}`;
+    nextLineHTML += `Next ： 次の確率帯まで あと <span class="total-number">${nextDiff}</span> K/s${emoji1}`;
 
     // Next²
     // The tier AFTER next starts at monsterProbabilityRules[currentRangeIndex + 1].threshold + 1
