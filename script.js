@@ -336,7 +336,7 @@ function updateTotal() {
     nextDiff = currentThreshold - sumValue + 1;
 
     const emoji1 = nextDiff <= sumValue / 20 ? " 😱" : "";
-    nextLineHTML += `Next: 次の確率帯まで あと <span class="total-number">${nextDiff}</span> K/s${emoji1}`;
+    nextLineHTML += `Next： 次の確率帯まで あと <span class="total-number">${nextDiff}</span> K/s${emoji1}`;
 
     // Next²
     // The tier AFTER next starts at monsterProbabilityRules[currentRangeIndex + 1].threshold + 1
@@ -347,7 +347,7 @@ function updateTotal() {
       const nextNextThreshold = monsterProbabilityRules[currentRangeIndex + 1].threshold;
       nextNextDiff = nextNextThreshold - sumValue + 1;
       const emoji2 = nextNextDiff <= sumValue / 20 ? " 😱" : ""; // Use same emoji logic?
-      nextLineHTML += `<br>Next²: さらに次の確率帯まで あと <span class="total-number">${nextNextDiff}</span> K/s${emoji2}`;
+      nextLineHTML += `<br>Next²： さらに次の確率帯まで あと <span class="total-number">${nextNextDiff}</span> K/s${emoji2}`;
     }
   }
 
@@ -355,10 +355,10 @@ function updateTotal() {
   if (totalTitle) totalTitle.textContent = "Total";
 
   // Format Line 1: Total ... (Prev ...)
-  let line1 = `【TOTAL】 <span class="total-number">${sumValue}</span> K/s`;
+  let line1 = `TOTAL： <span class="total-number">${sumValue}</span> K/s`;
   if (diffToPrev !== null) {
     const emoji = diffToPrev <= sumValue / 20 ? " 😍" : "";
-    line1 += ` （前の確率帯から：+${diffToPrev} K/s オーバー${emoji}）`;
+    line1 += ` （前の確率帯から + <span class="total-number">${diffToPrev}</span> K/s オーバー${emoji}）`;
   }
 
   const lines = [line1, nextLineHTML];
