@@ -242,6 +242,9 @@ function renderGrid() {
         });
     }
 
+    // Fix: Update pagination state BEFORE rendering to clamp currentPage within valid bounds
+    updatePaginationUI(displayMonsters.length);
+
     // Use grid for blocks: 1 col on mobile, 2 cols on PC (to make 2x2 for 32 items)
     gridContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-8 w-full';
 
@@ -273,8 +276,6 @@ function renderGrid() {
     }
 
     blocks.forEach(block => gridContainer.appendChild(block));
-
-    updatePaginationUI(displayMonsters.length);
 }
 
 function createMonsterCard(monster) {
