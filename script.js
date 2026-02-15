@@ -274,25 +274,94 @@ function updateAll() {
 
 function updateTotal() {
   const sumValue = selectedImages.reduce((acc, img) => acc + Number(img?.value || 0), 0);
-  const rawDiff = getNextThresholdDiff(sumValue);
-  let nextLineText;
-  if (rawDiff === null) {
-    nextLineText = '確率は現在が<span style="color: #ff4d4d; font-weight: bold;">最高帯</span>です';
-  } else {
-    const diffToNext = rawDiff + 1;
-    const emoji = diffToNext <= sumValue / 20 ? " 😱" : "";
-    nextLineText = `次の確率帯まで<span class="total-number">${diffToNext}</span> K/s${emoji}`;
+
+  // 1. Calculate Next and Next²
+  let nextDiff = null;
+  let nextNextDiff = null;
+  let currentRangeIndex = -1;
+
+  // Find current range index.
+  // monsterProbabilityRules is sorted by threshold (ascending).
+  for (let i = 0; i < monsterProbabilityRules.length; i++) {
+    if (sumValue <= monsterProbabilityRules[i].threshold) {
+      currentRangeIndex = i;
+      break;
+    }
   }
+
+  // If sumValue is larger than the last threshold (should cover max range logic if rules are exhaustive),
+  // or if it matches the last one exactly?
+  // Let's assume the rules cover all ranges up to infinity or the last item is the max.
+  // Actually, getNextThresholdDiff found the *next* threshold.
+  // Here we want to find the current active range to determine "Next" (start of next range)
+  // The "Next" threshold is simply the end of the current range + 1?
+  // Or is it the *next* range's start?
+  // Logic: "Next" means distance to the NEXT probability tier.
+  // unique behavior: "Next²" means distance to the tier AFTER the next one.
+
+  // Re-evaluating based on existing getNextThresholdDiff logic:
+  // It returns (threshold - sumValue). So (threshold - sumValue + 1) is amount needed to reach Next Tier.
+
+  let isMax = false;
+  if (currentRangeIndex === -1) {
+    // Falls through if rules are not exhaustive or sum > all thresholds?
+    // In current data, last threshold might be valid.
+    // Let's stick to using the found index.
+    // If loop finished without break, we are above all defined thresholds?
+    // Wait, getNextThresholdDiff handles "infinity".
+    // Let's assume we are in range `currentRangeIndex`.
+    // If we are at the last index, we are at Max.
+    if (sumValue > monsterProbabilityRules[monsterProbabilityRules.length - 1].threshold) {
+      isMax = true;
+    }
+  } else if (currentRangeIndex === monsterProbabilityRules.length - 1) {
+    // If we are in the last defined range, is it max?
+    // Usually the last rule is the "Max" range or "Highest".
+    // Let's assume the last entry in rules IS the highest band.
+    isMax = true;
+  }
+
+  // Logic for Next / Next²
+  // Next Diff = (Current Range Threshold) - sumValue + 1
+  // Next² Diff = (Next Range Threshold) - sumValue + 1
+
+  let nextLineHTML = '';
+
+  if (isMax) {
+    nextLineHTML = '確率は現在が<span style="color: #ff4d4d; font-weight: bold;">最高帯</span>です。';
+  } else {
+    // We are at currentRangeIndex.
+    // Next tier starts at monsterProbabilityRules[currentRangeIndex].threshold + 1
+    const currentThreshold = monsterProbabilityRules[currentRangeIndex].threshold;
+    nextDiff = currentThreshold - sumValue + 1;
+
+    const emoji1 = nextDiff <= sumValue / 20 ? " 😱" : "";
+    nextLineHTML += `Next: 次の確率帯まで あと <span class="total-number">${nextDiff}</span> K/s${emoji1}`;
+
+    // Next²
+    // The tier AFTER next starts at monsterProbabilityRules[currentRangeIndex + 1].threshold + 1
+    if (currentRangeIndex + 1 < monsterProbabilityRules.length - 1) { // -1 because the last one is Max? Or just check existence?
+      // If current is i, next range is i+1.
+      // If i+1 is the *last* one, it is the Max range. format says "Next²: さらに次の..."
+      // Let's enable Next² as long as i+1 exists.
+      const nextNextThreshold = monsterProbabilityRules[currentRangeIndex + 1].threshold;
+      nextNextDiff = nextNextThreshold - sumValue + 1;
+      const emoji2 = nextNextDiff <= sumValue / 20 ? " 😱" : ""; // Use same emoji logic?
+      nextLineHTML += `<br>Next²: さらに次の確率帯まで あと <span class="total-number">${nextNextDiff}</span> K/s${emoji2}`;
+    }
+  }
+
   const diffToPrev = getPrevThresholdDiff(sumValue);
   if (totalTitle) totalTitle.textContent = "Total";
-  const lines = [
-    `Total K/s：<span class="total-number">${sumValue}</span>`,
-    nextLineText
-  ];
+
+  // Format Line 1: Total ... (Prev ...)
+  let line1 = `【TOTAL】 <span class="total-number">${sumValue}</span> K/s`;
   if (diffToPrev !== null) {
     const emoji = diffToPrev <= sumValue / 20 ? " 😍" : "";
-    lines.push(`(前の確率帯から +${diffToPrev} K/s${emoji})`);
+    line1 += ` （前の確率帯から：+${diffToPrev} K/s オーバー${emoji}）`;
   }
+
+  const lines = [line1, nextLineHTML];
   totalBox.innerHTML = lines.map(t => `<div>${t}</div>`).join('');
 }
 
