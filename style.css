@@ -759,14 +759,22 @@ h2 {
 }
 
 /* ========= Side Ad ========= */
-.side-ad-left {
+.side-ad-left,
+.side-ad-right {
   position: fixed;
   top: 50%;
-  left: 10px;
   transform: translateY(-50%);
   z-index: 100;
   display: none;
   /* Default hidden */
+}
+
+.side-ad-left {
+  left: 10px;
+}
+
+.side-ad-right {
+  right: 10px;
 }
 
 /* 
@@ -776,7 +784,9 @@ h2 {
    Let's check 1650px as safe margin.
 */
 @media (min-width: 1650px) {
-  .side-ad-left {
+
+  .side-ad-left,
+  .side-ad-right {
     display: block;
   }
 }
