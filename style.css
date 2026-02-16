@@ -770,11 +770,13 @@ h2 {
 }
 
 .side-ad-left {
-  left: 10px;
+  right: calc(50% + 610px);
+  left: auto;
 }
 
 .side-ad-right {
-  right: 10px;
+  left: calc(50% + 610px);
+  right: auto;
 }
 
 /* 
