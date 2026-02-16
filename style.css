@@ -757,3 +757,26 @@ h2 {
   background: var(--neon-cyan);
   color: #fff;
 }
+
+/* ========= Side Ad ========= */
+.side-ad-left {
+  position: fixed;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: none;
+  /* Default hidden */
+}
+
+/* 
+   Content max-width is ~1250px.
+   Ad width assumed ~160px.
+   Need space: (W - 1250) / 2 > 160 => W > 1570.
+   Let's check 1650px as safe margin.
+*/
+@media (min-width: 1650px) {
+  .side-ad-left {
+    display: block;
+  }
+}
