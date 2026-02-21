@@ -197,6 +197,7 @@ const images = [
     { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人(合成限定)', value: 45000, rarity: 'Secret' },//ヤギ2人
     { id: 'doragon', src: './img/doragon.png', name: 'ドラゴン', value: 50000, rarity: 'Secret' },
     { id: 'lacrazy', src: './img/lacrazy.png', name: 'ラクレイジー', value: 60000, rarity: 'Secret' },
+    { id: 'croissa', src: './img/croissa.png', name: 'クロイサンティーニ', value: 65000, rarity: 'Secret' },
     { id: 'choconedragon', src: './img/choconedragon.png', name: 'ラブドラゴン', value: 70000, rarity: 'Secret-' },
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 75000, rarity: 'Secret' },
     { id: 'tiramis', src: './img/tiramis.png', name: '潜水艦', value: 90000, rarity: 'Secret' },

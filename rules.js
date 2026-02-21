@@ -177,8 +177,8 @@ const monsterProbabilityRules = [
         ]
     },
     {
-        range: "40001〜",
-        threshold: 65000,
+        range: "40001〜45000",
+        threshold: 45000,
         monsters: [
             { id: "nomychari", percent: 35 },
             { id: "chinpanking", percent: 35 },
@@ -188,14 +188,38 @@ const monsterProbabilityRules = [
         ]
     },
     {
-        range: "65001〜",
-        threshold: Infinity,
+        range: "45001〜55000",
+        threshold: 55000,
         monsters: [
-            { id: "nomychari", percent: 35 },
+            { id: "nomychari", percent: 34 },
             { id: "chinpanking", percent: 35 },
             { id: "tictac", percent: 15 },
             { id: "cabritos", percent: 10 },
             { id: "gorgon", percent: 5 },
+            { id: "croissa", percent: 1 },
+        ]
+    },
+    {
+        range: "55001〜65000",
+        threshold: 65000,
+        monsters: [
+            { id: "nomychari", percent: 33 },
+            { id: "chinpanking", percent: 35 },
+            { id: "tictac", percent: 15 },
+            { id: "cabritos", percent: 10 },
+            { id: "gorgon", percent: 5 },
+            { id: "croissa", percent: 2 },
+        ]
+    },
+    {
+        range: "65001〜",
+        threshold: Infinity,
+        monsters: [
+            { id: "chinpanking", percent: 60 },
+            { id: "tictac", percent: 18 },
+            { id: "cabritos", percent: 13 },
+            { id: "gorgon", percent: 6 },
+            { id: "croissa", percent: 2 },
             { id: "tiramis", percent: 1 }
         ]
     }
