@@ -656,6 +656,14 @@ h2 {
   .monster-prob-text {
     font-size: 10px;
   }
+
+  /* Force line break for total Prev-Tier text on mobile */
+  .prev-tier-text {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    /* Slightly smaller to fit nicely */
+  }
 }
 
 @media (max-width: 768px) {
@@ -808,4 +816,11 @@ h2 {
   border: 1px solid var(--card-border);
   border-radius: 16px;
   box-shadow: var(--shadow);
+}
+@media (max-width: 768px) {
+  .prev-tier-text {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+  }
 }
