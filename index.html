@@ -262,6 +262,24 @@
   <script src="data.js"></script>
   <script src="rules.js"></script>
   <script src="./script.js"></script>
+  <script>
+    // Hide side sticky ads when they would overlap the bottom banner
+    (function () {
+      const sideAdLeft = document.querySelector('.side-ad-left');
+      const sideAdRight = document.querySelector('.side-ad-right');
+      function updateSideAds() {
+        // Distance from bottom of viewport to bottom of document
+        const scrollBottom = window.scrollY + window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+        // Hide side ads when within 200px of the page bottom
+        const nearBottom = (docHeight - scrollBottom) < 200;
+        if (sideAdLeft) sideAdLeft.style.opacity = nearBottom ? '0' : '';
+        if (sideAdRight) sideAdRight.style.opacity = nearBottom ? '0' : '';
+      }
+      window.addEventListener('scroll', updateSideAds, { passive: true });
+      updateSideAds();
+    })();
+  </script>
 </body>
 
 </html>
