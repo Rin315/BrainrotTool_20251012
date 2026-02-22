@@ -614,8 +614,14 @@ h2 {
   margin: 20px 0;
 }
 
+/* Base visibility rules for Ad areas */
 .ad-sp {
-  display: none;
+  display: none !important;
+}
+
+/* Force hiding of any injected iframe / script ad elements when container is hidden */
+.ad-sp * {
+  display: none !important;
 }
 
 @media (max-width: 600px) {
@@ -780,15 +786,19 @@ h2 {
 
 @media (max-width: 600px) {
   #event-toggle-btn {
-    padding: 6px 8px;
-    font-size: 9px;
+    padding: 6px 4px;
+    font-size: 8px;
+    /* Extremely small to fit text */
     letter-spacing: -0.5px;
     white-space: normal;
     /* Allow text to wrap to next line */
-    line-height: 1.2;
+    word-break: break-word;
+    /* Ensure extremely long words break if needed */
+    line-height: 1.1;
     text-align: center;
-    max-width: 120px;
-    /* Constrain horizontal width so it doesn't take up the whole screen */
+    max-width: 90px;
+    /* Constrain horizontal width heavily */
+    min-width: 80px;
   }
 }
 
