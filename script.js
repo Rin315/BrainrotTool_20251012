@@ -144,11 +144,17 @@ renderGallery();
 
 // イベント限定モンスター表示切り替えボタン
 const eventToggleBtn = document.getElementById('event-toggle-btn');
+const isEnglish = document.documentElement.lang === 'en';
+
 if (eventToggleBtn) {
   eventToggleBtn.onclick = () => {
     showEventLimited = !showEventLimited;
     eventToggleBtn.classList.toggle('active', showEventLimited);
-    eventToggleBtn.textContent = showEventLimited ? 'イベント限定モンスターを非表示' : 'イベント限定モンスターを表示';
+    if (isEnglish) {
+      eventToggleBtn.textContent = showEventLimited ? 'Hide Event Limited Monsters' : 'Show Event Limited Monsters';
+    } else {
+      eventToggleBtn.textContent = showEventLimited ? 'イベント限定モンスターを非表示' : 'イベント限定モンスターを表示';
+    }
     renderGallery();
   };
 }
@@ -328,7 +334,9 @@ function updateTotal() {
   let nextLineHTML = '';
 
   if (isMax) {
-    nextLineHTML = '確率は現在が<span style="color: #ff4d4d; font-weight: bold;">最高帯</span>です。';
+    nextLineHTML = isEnglish
+      ? 'Probability is currently at the <span style="color: #ff4d4d; font-weight: bold;">highest tier</span>.'
+      : '確率は現在が<span style="color: #ff4d4d; font-weight: bold;">最高帯</span>です。';
   } else {
     // We are at currentRangeIndex.
     // Next tier starts at monsterProbabilityRules[currentRangeIndex].threshold + 1
@@ -336,7 +344,9 @@ function updateTotal() {
     nextDiff = currentThreshold - sumValue + 1;
 
     const emoji1 = nextDiff <= sumValue / 20 ? " 😱" : "";
-    nextLineHTML += `Next ： 次の確率帯まで あと <span class="total-number">${nextDiff}</span> K/s${emoji1}`;
+    nextLineHTML += isEnglish
+      ? `Next: <span class="total-number">${nextDiff}</span> K/s until next probability tier${emoji1}`
+      : `Next ： 次の確率帯まで あと <span class="total-number">${nextDiff}</span> K/s${emoji1}`;
 
     // Next²
     // The tier AFTER next starts at monsterProbabilityRules[currentRangeIndex + 1].threshold + 1
@@ -347,7 +357,9 @@ function updateTotal() {
       const nextNextThreshold = monsterProbabilityRules[currentRangeIndex + 1].threshold;
       nextNextDiff = nextNextThreshold - sumValue + 1;
       const emoji2 = nextNextDiff <= sumValue / 20 ? " 😱" : ""; // Use same emoji logic?
-      nextLineHTML += `<br>Next²： さらに次の確率帯まで あと <span class="total-number">${nextNextDiff}</span> K/s${emoji2}`;
+      nextLineHTML += isEnglish
+        ? `<br>Next²: <span class="total-number">${nextNextDiff}</span> K/s until the tier after next${emoji2}`
+        : `<br>Next²： さらに次の確率帯まで あと <span class="total-number">${nextNextDiff}</span> K/s${emoji2}`;
     }
   }
 
@@ -355,10 +367,14 @@ function updateTotal() {
   if (totalTitle) totalTitle.textContent = "Total";
 
   // Format Line 1: Total ... (Prev ...)
-  let line1 = `TOTAL： <span class="total-number">${sumValue}</span> K/s`;
+  let line1 = isEnglish
+    ? `TOTAL: <span class="total-number">${sumValue}</span> K/s`
+    : `TOTAL： <span class="total-number">${sumValue}</span> K/s`;
   if (diffToPrev !== null) {
     const emoji = diffToPrev <= sumValue / 20 ? " 😍" : "";
-    line1 += ` （前の確率帯から + <span class="total-number">${diffToPrev}</span> K/s オーバー${emoji}）`;
+    line1 += isEnglish
+      ? ` (+ <span class="total-number">${diffToPrev}</span> K/s over previous tier${emoji})`
+      : ` （前の確率帯から + <span class="total-number">${diffToPrev}</span> K/s オーバー${emoji}）`;
   }
 
   const lines = [line1, nextLineHTML];
