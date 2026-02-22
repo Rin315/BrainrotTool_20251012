@@ -615,13 +615,16 @@ h2 {
 }
 
 /* Base visibility rules for Ad areas */
-.ad-sp {
-  display: none !important;
-}
+/* Hide smartphone ads forcefully ONLY on desktop (769px and above) */
+@media (min-width: 769px) {
+  .ad-sp {
+    display: none !important;
+  }
 
-/* Force hiding of any injected iframe / script ad elements when container is hidden */
-.ad-sp * {
-  display: none !important;
+  /* Force hiding of any injected iframe / script ad elements when container is hidden */
+  .ad-sp * {
+    display: none !important;
+  }
 }
 
 @media (max-width: 600px) {
