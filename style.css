@@ -774,6 +774,14 @@ h2 {
   color: #fff;
 }
 
+@media (max-width: 600px) {
+  #event-toggle-btn {
+    padding: 6px 8px;
+    font-size: 9px;
+    letter-spacing: -0.5px;
+  }
+}
+
 /* ========= Side Ad ========= */
 .side-ad-left,
 .side-ad-right {
@@ -817,6 +825,7 @@ h2 {
   border-radius: 16px;
   box-shadow: var(--shadow);
 }
+
 @media (max-width: 768px) {
   .prev-tier-text {
     display: block;
