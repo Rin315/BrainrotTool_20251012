@@ -393,7 +393,7 @@ function updateMonsterProbability() {
     const monster = images.find(m => m.id === id);
     if (!monster) return;
     const box = document.createElement('div');
-    box.className = 'monster-box';
+    box.className = 'monster-box panel';
     const image = document.createElement('img');
     image.src = monster.src;
     const probText = document.createElement('div');
