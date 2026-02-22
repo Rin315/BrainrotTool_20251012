@@ -620,11 +620,6 @@ h2 {
   .ad-sp {
     display: none !important;
   }
-
-  /* Force hiding of any injected iframe / script ad elements when container is hidden */
-  .ad-sp * {
-    display: none !important;
-  }
 }
 
 @media (max-width: 600px) {
