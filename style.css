@@ -792,3 +792,11 @@ h2 {
     display: block;
   }
 }
+/* Explicitly applying the panel class wrapper styles to selection area in case */
+#selection-area > .panel {
+  padding: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
