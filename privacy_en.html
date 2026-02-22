@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Brainrot Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        main {
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: var(--text-main);
+        }
+
+        p {
+            color: var(--text-main);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+    <script>
+        fetch("navbar_en.html")
+            .then(res => res.text())
+            .then(html => document.getElementById("navbar").innerHTML = html);
+    </script>
+
+    <main>
+        <h2>Privacy Policy</h2>
+        <p>This site uses cookies for advertising delivery and access analytics. Personal information is managed
+            appropriately and will not be shared with third parties.</p>
+        <p>Additionally, some images, names, and values displayed on this site may be unofficial.</p>
+    </main>
+</body>
+
+</html>
