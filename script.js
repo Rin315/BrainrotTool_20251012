@@ -373,8 +373,8 @@ function updateTotal() {
   if (diffToPrev !== null) {
     const emoji = diffToPrev <= sumValue / 20 ? " 😍" : "";
     line1 += isEnglish
-      ? ` (+ <span class="total-number">${diffToPrev}</span> K/s over previous tier${emoji})`
-      : ` （前の確率帯から + <span class="total-number">${diffToPrev}</span> K/s オーバー${emoji}）`;
+      ? ` <span class="prev-tier-text">(+ <span class="total-number">${diffToPrev}</span> K/s over previous tier${emoji})</span>`
+      : ` <span class="prev-tier-text">（前の確率帯から + <span class="total-number">${diffToPrev}</span> K/s オーバー${emoji}）</span>`;
   }
 
   const lines = [line1, nextLineHTML];
