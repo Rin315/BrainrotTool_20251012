@@ -149,6 +149,7 @@ const isEnglish = document.documentElement.lang === 'en';
 if (eventToggleBtn) {
   eventToggleBtn.onclick = () => {
     showEventLimited = !showEventLimited;
+    gtag('event', 'EventLimit_button_click');
     eventToggleBtn.classList.toggle('active', showEventLimited);
     if (isEnglish) {
       eventToggleBtn.textContent = showEventLimited ? 'Hide Event Limited Monsters' : 'Show Event Limited Monsters';
@@ -267,6 +268,7 @@ if (resetBtn) {
     selectedImages = [null, null, null, null, null];
     selectedColors = ['Default', 'Default', 'Default', 'Default', 'Default'];
     selectedHasBorder = [false, false, false, false, false];
+    gtag('event', 'Reset_button_click');
     renderSelected();
     updateAll();
   });
