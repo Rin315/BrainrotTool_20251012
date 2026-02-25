@@ -136,7 +136,7 @@ const images = [
     { id: 'pakrah', src: './img/pakrah.png', name: 'えんぴつ', value: 600, rarity: 'Secret' },
     { id: 'pickolini', src: './img/pickolini.png', name: 'ゴーヤ(合成限定)', value: 1400, rarity: 'Secret' },
     { id: 'losjob', src: './img/losjob.png', name: 'ロスジョブ', value: 700, rarity: 'Secret' },
-    { id: '4000', src: './img/4000.png', name: '新幹線鳥', value: 700, rarity: 'Secret' },//4000
+    { id: '4000', src: './img/4000.png', name: '新幹線鳥', value: 1700, rarity: 'Secret' },//4000
     { id: 'Babel', src: './img/Babel.png', name: 'アンパリーバベル', value: 800, rarity: 'Secret' },
     { id: 'losisu', src: './img/losisu.png', name: 'ロスイス', value: 900, rarity: 'Secret' },//ロス椅子
     { id: 'orcalero', src: './img/orcalero.png', name: 'オルカ', value: 1000, rarity: 'Secret' },
