@@ -143,7 +143,7 @@ const images = [
     { id: '14', src: './img/14.png', name: '14', value: 1400, rarity: 'Secret-' },
     { id: 'frog', src: './img/frog.png', name: 'カエル', value: 1200, rarity: 'Secret' },
     { id: 'ketchuru', src: './img/ketchuru.png', name: 'ケチュマチュ', value: 1500, rarity: 'Secret' },
-    { id: 'pothotspotona', src: './img/pothotspotona.png', name: '骨女', value: 1700, rarity: 'Secret' },//女骨
+    { id: 'pothotspotona', src: './img/pothotspotona.png', name: '骨女', value: 1750, rarity: 'Secret' },//女骨
     { id: 'pothotspot', src: './img/pothotspot.png', name: '骨', value: 2000, rarity: 'Secret' },
     { id: 'turtleman', src: './img/turtleman.png', name: 'タートルマン', value: 4200, rarity: 'Secret' },
     { id: '21', src: './img/21.png', name: '21', value: 2100, rarity: 'Secret' },
