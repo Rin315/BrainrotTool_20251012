@@ -89,6 +89,9 @@ function renderGallery() {
     const box = document.createElement('div');
     box.className = 'imgbox imgbox--gallery';
     const firstObj = group[0];
+    if (firstObj.rarity.endsWith('-')) {
+      box.classList.add('imgbox--event');
+    }
     if (group.length > 1) {
       box.classList.add('imgbox--split');
       group.forEach((imgObj, index) => {
