@@ -23,7 +23,7 @@ const db = getDatabase(app);
 const variants = [
     "Default", "Gold", "Diamond", "Rainbow", "Love", "Toxic",
     "Galaxy", "Zombie", "Dreamy", "ICE&FIRE", "Carnival",
-    "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
+    "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate", "Void"
 ];
 
 function getItemsPerPage() {
