@@ -752,27 +752,14 @@ h2 {
 }
 
 /* Event Limited Monster Glow */
-@keyframes eventPinkGlow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 8px 2px rgba(255, 100, 180, 0.25), var(--shadow);
-  }
-
-  50% {
-    box-shadow: 0 0 18px 6px rgba(255, 100, 180, 0.5), var(--shadow);
-  }
-}
-
 .imgbox--event {
-  background: linear-gradient(rgba(255, 100, 180, 0.12), rgba(255, 100, 180, 0.12)), #222;
-  animation: eventPinkGlow 2.4s ease-in-out infinite;
+  background: linear-gradient(rgba(255, 100, 180, 0.15), rgba(255, 100, 180, 0.15)), #222;
+  box-shadow: 0 0 12px 3px rgba(255, 100, 180, 0.35), var(--shadow);
 }
 
 .imgbox--event:hover {
   border-color: #ff64b4;
-  box-shadow: 0 8px 24px rgba(255, 100, 180, 0.45);
-  animation: none;
+  box-shadow: 0 8px 24px rgba(255, 100, 180, 0.5);
 }
 
 /* Event Toggle Button */
