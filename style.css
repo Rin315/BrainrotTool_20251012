@@ -765,7 +765,7 @@ h2 {
 }
 
 .imgbox--event {
-  background: rgba(255, 100, 180, 0.08);
+  background: linear-gradient(rgba(255, 100, 180, 0.12), rgba(255, 100, 180, 0.12)), #222;
   animation: eventPinkGlow 2.4s ease-in-out infinite;
 }
 
