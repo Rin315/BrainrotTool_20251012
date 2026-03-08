@@ -314,6 +314,11 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* rules.js に記載されているモンスターの枠に薄い黒の影を追加 */
+        .monster-card.rules-monster {
+            box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.45);
+        }
     </style>
 </head>
 
@@ -435,6 +440,8 @@
     </div>
 
     <!-- Scripts -->
+    <!-- Load rules.js for probability monster IDs -->
+    <script src="rules.js"></script>
     <!-- Load data.js globally first -->
     <script src="data.js"></script>
     <script>window.images = images;</script>

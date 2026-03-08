@@ -26,6 +26,16 @@ const variants = [
     "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
 ];
 
+// rules.js に記載のモンスターIDをSetに収集（動的に変更に追従）
+const rulesMonsterIds = new Set();
+if (typeof monsterProbabilityRules !== 'undefined') {
+    for (const rule of monsterProbabilityRules) {
+        for (const m of rule.monsters) {
+            rulesMonsterIds.add(m.id);
+        }
+    }
+}
+
 function getItemsPerPage() {
     return window.innerWidth >= 768 ? 32 : 16;
 }
@@ -288,6 +298,12 @@ function createMonsterCard(monster) {
 
     // Apply variant class for border color
     card.classList.add(state.currentTab);
+
+    // rules.js に記載のモンスターの場合、黒い影を追加
+    const monsterId = getMonsterId(monster);
+    if (rulesMonsterIds.has(monsterId)) {
+        card.classList.add('rules-monster');
+    }
 
     // Check for Complete (all variants collected for this monster)
     let isComplete = true;
