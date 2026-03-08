@@ -45,6 +45,7 @@ const images = [
     { id: 'lamplamp', src: './img/lamplamp.png', name: '電球サフール', value: 0, rarity: 'Common' },
     { id: 'tako', src: './img/tako.png', name: 'たこ', value: 0, rarity: 'Common' },
     { id: 'leoraion', src: './img/leoraion.png', name: 'サボテンライオン', value: 0, rarity: 'Common' },
+    { id: 'zoubanana', src: './img/zoubanana.png', name: '象バナナ', value: 0, rarity: 'Common' },
     { id: 'paindoragon', src: './img/paindoragon.png', name: 'パインドラゴン', value: 0, rarity: 'Common' },
     { id: 'avocadsika', src: './img/avocadsika.png', name: 'アボカド鹿', value: 0, rarity: 'Common' },
     // Mythic
@@ -152,6 +153,7 @@ const images = [
     { id: 'losmobilis', src: './img/losmobilis.png', name: 'ロスモバイル', value: 2200, rarity: 'Secret' },
     { id: 'nomyhotspot', src: './img/nomyhotspot.png', name: 'ノーマイ', value: 2500, rarity: 'Secret' },
     { id: 'elf3', src: './img/elf3.png', name: 'エルフエルフ(クリスマス合成限定)', value: 2700, rarity: 'Secret-' },
+    { id: 'kaerukaizoku', src: './img/kaerukaizoku.png', name: '海賊カエル', value: 2800, rarity: 'Secret' },
     { id: 'garamarama', src: './img/garamarama.png', name: 'ガラマ', value: 3000, rarity: 'Secret' },
     { id: 'torisoujiki', src: './img/torisoujiki.png', name: '鳥掃除機', value: 3200, rarity: 'Secret' },
     { id: 'pirulitoita', src: './img/pirulitoita.png', name: 'ペロペロキャンディー', value: 3500, rarity: 'Secret' },//飴
@@ -201,6 +203,7 @@ const images = [
     { id: 'spageti', src: './img/spageti.png', name: 'スパゲティトイレ', value: 40000, rarity: 'Secret-' },
     { id: 'santani', src: './img/santani.png', name: 'サンタツリー(クリスマス合成限定)', value: 42000, rarity: 'Secret-' },//サンタニ
     { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人(合成限定)', value: 45000, rarity: 'Secret' },//ヤギ2人
+    { id: 'arigatou', src: './img/arigatou.png', name: 'ありがとう', value: 47000, rarity: 'Secret' },
     { id: 'doragon', src: './img/doragon.png', name: 'ドラゴン', value: 50000, rarity: 'Secret' },
     { id: 'honedragon', src: './img/honedragon.png', name: '骨ドラゴン', value: 56000, rarity: 'Secret' },
     { id: 'gorgon', src: './img/gorgon.png', name: 'ゴジラ(合成限定)', value: 57000, rarity: 'Secret' },
