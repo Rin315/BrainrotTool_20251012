@@ -183,7 +183,7 @@ const images = [
     { id: 'nekotokei', src: './img/nekotokei.png', name: '猫時計', value: 11500, rarity: 'Secret' },
     { id: 'nomychari', src: './img/nomychari.png', name: 'ノーマイチャリ(合成限定)', value: 13500, rarity: 'Secret' },
     { id: 'dulduldul', src: './img/dulduldul.png', name: 'サル', value: 12000, rarity: 'Secret' },
-    { id: 'reng', src: './img/reng.png', name: 'rengreng', value: 12500, rarity: 'Secret' },
+    { id: 'reng', src: './img/reng.png', name: 'バギー', value: 12500, rarity: 'Secret' },
     { id: 'WorL', src: './img/WorL.png', name: 'WorL', value: 13000, rarity: 'Secret' },
     { id: 'cookipad', src: './img/cookipad.png', name: 'クッキーパット', value: 14000, rarity: 'Secret-' },
     { id: 'kabaking', src: './img/kabaking.png', name: 'カバキング', value: 14500, rarity: 'Secret' },
