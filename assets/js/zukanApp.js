@@ -44,7 +44,7 @@ let state = {
     currentPage: 1,
     collection: {}, // { "monsterId_variant": timestamp }
     isAdmin: false,
-    filterUnobtained: false,
+    filterUnobtained: true,
     undoStack: []
 };
 
@@ -417,9 +417,9 @@ function setupReset() {
 function setupFiltering() {
     if (!filterToggleBtn) return;
 
-    // Initial UI state based on default filterUnobtained: false (すべて表示)
-    filterToggleBtn.textContent = '未所持のみ表示';
-    filterToggleBtn.className = `px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded transition-colors`;
+    // Initial UI state based on default filterUnobtained: true (未所持のみ表示)
+    filterToggleBtn.textContent = 'すべて表示';
+    filterToggleBtn.className = `px-3 py-1 bg-gray-500 text-white text-xs font-bold rounded transition-colors`;
 
     filterToggleBtn.onclick = () => {
         state.filterUnobtained = !state.filterUnobtained;
