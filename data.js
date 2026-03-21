@@ -76,6 +76,7 @@ const images = [
     { id: 'tirilikalika', src: './img/tirilikalika.png', name: '室外機ニワトリ', value: 0, rarity: 'Common' },//室外機
     { id: 'santonio', src: './img/santonio.png', name: 'サントニオー(クリスマス合成限定)', value: 0, rarity: 'Common' },
     { id: 'losmateo', src: './img/losmateo.png', name: 'ロスマテオ', value: 0, rarity: 'Common' }, //ロスマテオ
+    { id: 'lossiguma', src: './img/lossiguma.png', name: 'ロスシグマ', value: 0, rarity: 'Common' }, //ロスシグマ
     { id: 'box', src: './img/hako.png', name: 'レンガ(合成限定)', value: 0, rarity: 'Common' }, //箱
     { id: 'fishinis', src: './img/fishinis.png', name: 'フィーシーニ2人(クリスマス合成限定)', value: 0, rarity: 'Common' },
 
@@ -185,6 +186,7 @@ const images = [
     { id: 'penginking', src: './img/penginking.png', name: 'ペンギンキング', value: 9500, rarity: 'Secret' },
     { id: 'pad', src: './img/pad.png', name: 'ケパット', value: 10000, rarity: 'Secret' },
     { id: 'lovebear', src: './img/lovebear.png', name: 'ラブベアー', value: 10500, rarity: 'Secret-' },
+    { id: 'cocobina', src: './img/cocobina.png', name: 'ココブレード女', value: 11000, rarity: 'Secret' },
     { id: 'nekotokei', src: './img/nekotokei.png', name: '猫時計', value: 11500, rarity: 'Secret' },
     { id: 'dulduldul', src: './img/dulduldul.png', name: 'サル', value: 12000, rarity: 'Secret' },
     { id: 'reng', src: './img/reng.png', name: 'バギー', value: 12500, rarity: 'Secret' },
