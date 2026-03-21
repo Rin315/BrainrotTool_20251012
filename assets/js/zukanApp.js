@@ -21,7 +21,7 @@ const db = getDatabase(app);
 
 // ========== State ==========
 const variants = [
-    "Default", "Gold", "Diamond", "Rainbow", "Heven", "Void", "Love", "Toxic",
+    "Default", "Gold", "Diamond", "Rainbow", "Heaven", "Void", "Love", "Toxic",
     "Galaxy", "Zombie", "Dreamy", "ICE&FIRE", "Carnival",
     "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
 ];
@@ -216,7 +216,7 @@ function renderTabs() {
         nameSpan.textContent = variant;
 
         const countSpan = document.createElement('span');
-        countSpan.textContent = `${obtainedCount}/${totalCount}`;
+        countSpan.textContent = `残り${totalCount - obtainedCount}体`;
         countSpan.className = 'text-xs opacity-80 hidden md:inline';
 
         btn.appendChild(nameSpan);
