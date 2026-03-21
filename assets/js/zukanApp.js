@@ -21,9 +21,9 @@ const db = getDatabase(app);
 
 // ========== State ==========
 const variants = [
-    "Default", "Gold", "Diamond", "Rainbow", "Void", "Love", "Toxic",
+    "Default", "Gold", "Diamond", "Rainbow", "Heven", "Void", "Love", "Toxic",
     "Galaxy", "Zombie", "Dreamy", "ICE&FIRE", "Carnival",
-    "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate", "Heven"
+    "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
 ];
 
 // rules.js に記載のモンスターIDをSetに収集（動的に変更に追従）
