@@ -234,7 +234,7 @@ function renderTabs() {
     // Update Total Progress Display
     const totalProgressEl = document.getElementById('total-progress');
     if (totalProgressEl) {
-        totalProgressEl.textContent = `${totalObtainedGlobal}/${totalPossibleGlobal}`;
+        totalProgressEl.textContent = `残り${totalPossibleGlobal - totalObtainedGlobal}体`;
     }
 }
 

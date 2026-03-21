@@ -103,8 +103,8 @@ const images = [
     { id: 'losbros', src: './img/losbros.png', name: 'ロスブロス', value: 155, rarity: 'BrainrotGot' },
     { id: 'bim', src: './img/bim.png', name: 'ビムビム', value: 157, rarity: 'BrainrotGot' },
     { id: 'bambini', src: './img/bambini.png', name: 'バンビーニ戦車', value: 160, rarity: 'BrainrotGot' },
-    { id: 'hoccci', src: './img/hoccci.png', name: 'ケーキ(クリスマス合成限定)', value: 167, rarity: 'BrainrotGot-' },
     { id: 'jiqi', src: './img/jiqi.png', name: '時計', value: 165, rarity: 'BrainrotGot' },//時計
+    { id: 'hoccci', src: './img/hoccci.png', name: 'ケーキ(クリスマス合成限定)', value: 167, rarity: 'BrainrotGot-' },
     { id: 'los', src: './img/los.png', name: 'ロスワニ', value: 170, rarity: 'BrainrotGot' },
     { id: 'agarrini', src: './img/agarrini.png', name: 'スコップ', value: 175, rarity: 'BrainrotGot' },//スコップ
     { id: 'alessio', src: './img/alessio.png', name: 'アレシオー', value: 180, rarity: 'BrainrotGot' },
@@ -172,6 +172,7 @@ const images = [
     { id: 'rose', src: './img/rose.png', name: '花束', value: 5200, rarity: 'Secret-' },
     { id: 'lossanta', src: './img/lossanta.png', name: 'ロスサンタ', value: 5500, rarity: 'Secret' },
     { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret' },
+    //{ id: 'clover', src: './img/clover.png', name: 'クローバー', value: 5700, rarity: 'Secret' },
     { id: 'legolem', src: './img/legolem.png', name: '合成のロボ', value: 6000, rarity: 'Secret' },
     { id: 'cornball', src: './img/cornball.png', name: 'コーンボール', value: 6500, rarity: 'Secret' },
     { id: '67', src: './img/67.png', name: '67', value: 6700, rarity: 'Secret' },
