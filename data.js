@@ -125,7 +125,7 @@ const images = [
     { id: 'hebi', src: './img/hebi.png', name: 'ヘビ', value: 260, rarity: 'BrainrotGot' },
     { id: 'belugelo', src: './img/belugelo.png', name: 'ベルーガ', value: 270, rarity: 'BrainrotGot' },
     { id: 'bellaca', src: './img/bellaca.png', name: 'クリスマス犬(クリスマス合成限定)', value: 275, rarity: 'BrainrotGot-' },
-    { id: 'propera', src: './img/propera.png', name: 'プロペラ', value: 290, rarity: 'BrainrotGot' },
+    { id: 'puropera', src: './img/puropera.png', name: 'プロペラ', value: 290, rarity: 'BrainrotGot' },
     { id: 'miss', src: './img/miss.png', name: 'ロケット', value: 300, rarity: 'BrainrotGot' },//ロケット
     { id: 'suikahana', src: './img/suikahana.png', name: 'スイカ花', value: 350, rarity: 'BrainrotGot' },
 
