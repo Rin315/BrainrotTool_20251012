@@ -1,6 +1,6 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+import { getDatabase, ref, onValue, set, remove, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
 // ========== Configuration ==========
 // TODO: Replace with your actual Firebase config
@@ -80,6 +80,12 @@ const closeModalBtns = [
     document.getElementById('close-modal-btn')
 ];
 
+// History Modal Elements
+const historyModal = document.getElementById('history-modal');
+const historyModalTitle = document.getElementById('history-modal-title');
+const historyChartCanvas = document.getElementById('history-chart');
+let historyChartInstance = null;
+
 // ========== Initialization ==========
 function init() {
     // Check Admin Mode
@@ -118,6 +124,7 @@ function init() {
 
     setupExportText();
     setupUndo();
+    setupHistoryModal();
 
     // Initial Render
     renderGrid();
@@ -139,6 +146,11 @@ function init() {
         renderTabs(); // Update tabs for progress count
         renderGrid();
         updateStats();
+
+        // Admin: record daily progress
+        if (state.isAdmin) {
+            recordProgressHistory();
+        }
     });
 }
 
@@ -216,8 +228,13 @@ function renderTabs() {
         nameSpan.textContent = variant;
 
         const countSpan = document.createElement('span');
-        countSpan.textContent = `残り${totalCount - obtainedCount}体`;
-        countSpan.className = 'text-xs opacity-80 hidden md:inline';
+        const remaining = totalCount - obtainedCount;
+        countSpan.textContent = `残り${remaining}体`;
+        countSpan.className = 'text-xs opacity-80 hidden md:inline history-clickable';
+        countSpan.onclick = (e) => {
+            e.stopPropagation();
+            showProgressChart(variant);
+        };
 
         btn.appendChild(nameSpan);
         btn.appendChild(countSpan);
@@ -235,6 +252,8 @@ function renderTabs() {
     const totalProgressEl = document.getElementById('total-progress');
     if (totalProgressEl) {
         totalProgressEl.textContent = `残り${totalPossibleGlobal - totalObtainedGlobal}体`;
+        totalProgressEl.className = 'ml-2 text-sm font-normal text-gray-500 history-clickable';
+        totalProgressEl.onclick = () => showProgressChart('_total');
     }
 }
 
@@ -556,6 +575,170 @@ function toggleCollection(key, isCurrentlyObtained) {
         // Was obtained, now marking as unobtained -> Remove from DB
         remove(itemRef).catch(err => console.error("Firebase remove failed:", err));
     }
+}
+// ========== Progress History ==========
+
+/**
+ * Get today's date string in JST (YYYY-MM-DD)
+ */
+function getTodayJST() {
+    const now = new Date();
+    const jst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+    return jst.toISOString().split('T')[0];
+}
+
+/**
+ * Record progress to Firebase (admin only, once per day)
+ */
+function recordProgressHistory() {
+    const today = getTodayJST();
+    const todayRef = ref(db, `progress_history/${today}`);
+
+    // Calculate remaining for each variant and total
+    const record = {};
+    let totalRemaining = 0;
+
+    variants.forEach(variant => {
+        let obtainedCount = 0;
+        monsters.forEach(monster => {
+            const key = `${getMonsterId(monster)}_${variant}`;
+            if (state.collection[key]) obtainedCount++;
+        });
+        const remaining = monsters.length - obtainedCount;
+        record[variant] = remaining;
+        totalRemaining += remaining;
+    });
+    record['_total'] = totalRemaining;
+
+    // Check if today's data already exists
+    get(todayRef).then(snapshot => {
+        const existing = snapshot.val();
+        if (!existing) {
+            // No data for today — save
+            set(todayRef, record)
+                .then(() => console.log(`Progress history saved for ${today}`))
+                .catch(err => console.error('Failed to save progress history:', err));
+        } else {
+            // Data exists — update only if changed
+            let changed = false;
+            for (const k of Object.keys(record)) {
+                if (existing[k] !== record[k]) {
+                    changed = true;
+                    break;
+                }
+            }
+            if (changed) {
+                set(todayRef, record)
+                    .then(() => console.log(`Progress history updated for ${today}`))
+                    .catch(err => console.error('Failed to update progress history:', err));
+            }
+        }
+    }).catch(err => console.error('Failed to check progress history:', err));
+}
+
+/**
+ * Show progress chart in modal
+ * @param {string} variantKey - variant name or '_total' for aggregate
+ */
+function showProgressChart(variantKey) {
+    const historyRef = ref(db, 'progress_history');
+
+    get(historyRef).then(snapshot => {
+        const allData = snapshot.val();
+        if (!allData) {
+            alert('履歴データがありません。');
+            return;
+        }
+
+        // Sort dates
+        const dates = Object.keys(allData).sort();
+        const values = dates.map(d => allData[d][variantKey] ?? null);
+
+        // Set modal title
+        const label = variantKey === '_total' ? '全体' : variantKey;
+        historyModalTitle.textContent = `${label} — 進捗履歴`;
+
+        // Destroy previous chart
+        if (historyChartInstance) {
+            historyChartInstance.destroy();
+        }
+
+        // Format dates for display (MM/DD)
+        const displayDates = dates.map(d => {
+            const parts = d.split('-');
+            return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
+        });
+
+        historyChartInstance = new Chart(historyChartCanvas, {
+            type: 'line',
+            data: {
+                labels: displayDates,
+                datasets: [{
+                    label: `残り体数`,
+                    data: values,
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#3b82f6',
+                    pointRadius: 4,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: (items) => dates[items[0].dataIndex],
+                            label: (item) => `残り ${item.raw} 体`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        },
+                        title: {
+                            display: true,
+                            text: '残り体数'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日付'
+                        }
+                    }
+                }
+            }
+        });
+
+        historyModal.classList.remove('hidden');
+    }).catch(err => {
+        console.error('Failed to load progress history:', err);
+        alert('履歴の読み込みに失敗しました。');
+    });
+}
+
+/**
+ * Setup history modal close handlers
+ */
+function setupHistoryModal() {
+    const closeBtn = document.getElementById('close-history-modal');
+    const closeBtnBottom = document.getElementById('close-history-modal-btn');
+
+    const closeModal = () => historyModal.classList.add('hidden');
+
+    if (closeBtn) closeBtn.onclick = closeModal;
+    if (closeBtnBottom) closeBtnBottom.onclick = closeModal;
+
+    historyModal.onclick = (e) => {
+        if (e.target === historyModal) closeModal();
+    };
 }
 
 // Start
