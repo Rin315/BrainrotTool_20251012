@@ -313,7 +313,9 @@ function createMonsterCard(monster) {
     const isObtained = !!timestamp; // Default is UNobtained (not in collection)
 
     const card = document.createElement('div');
-    card.className = `monster-card ${isObtained ? 'obtained' : 'unobtained'}`;
+    // When filtering unobtained only, show all cards bright (no dimming)
+    const visuallyObtained = isObtained || state.filterUnobtained;
+    card.className = `monster-card ${visuallyObtained ? 'obtained' : 'unobtained'}`;
 
     // Apply variant class for border color
     card.classList.add(state.currentTab);
