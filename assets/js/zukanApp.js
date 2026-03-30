@@ -607,6 +607,13 @@ function setupVariantSearch() {
             // Close plus menu
             plusBtn.classList.remove('open');
             plusMenuItems.classList.remove('open');
+            // Force "すべて表示" mode
+            if (state.filterUnobtained) {
+                state.filterUnobtained = false;
+                state.currentPage = 1;
+                filterToggleBtn.textContent = '未所持のみ表示';
+                filterToggleBtn.className = `px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded transition-colors`;
+            }
         } else {
             searchModeBanner.classList.remove('active');
         }
