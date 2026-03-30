@@ -26,6 +26,15 @@ const variants = [
     "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
 ];
 
+// Variant colors (matching sidebar tab border colors)
+const variantColors = {
+    Default: '#333', Gold: '#ffd700', Diamond: '#00b0ff', Rainbow: '#d500f9',
+    Heaven: '#FFFFFF', Void: '#5D3B8E', Love: '#FF69B4', Toxic: '#9ACD32',
+    Galaxy: '#663399', Zombie: '#2E8B57', Dreamy: '#FF69B4', 'ICE&FIRE': '#FF4500',
+    Carnival: '#FF1493', Aqua: '#00FFFF', Halloween: '#FF8C00', Darkness: '#4B0082',
+    Neon: '#39FF14', Christmas: '#228B22', Chocolate: '#D2691E'
+};
+
 // rules.js に記載のモンスターIDをSetに収集（動的に変更に追従）
 const rulesMonsterIds = new Set();
 if (typeof monsterProbabilityRules !== 'undefined') {
@@ -45,7 +54,8 @@ let state = {
     collection: {}, // { "monsterId_variant": timestamp }
     isAdmin: false,
     filterUnobtained: true,
-    undoStack: []
+    undoStack: [],
+    searchMode: false
 };
 
 // Access global images from data.js
@@ -70,6 +80,14 @@ const filterToggleBtn = document.getElementById('filter-toggle-btn');
 const markAllBtn = document.getElementById('mark-all-btn');
 const exportTextBtn = document.getElementById('export-text-btn');
 const undoBtn = document.getElementById('undo-btn');
+const plusMenu = document.getElementById('plus-menu');
+const plusBtn = document.getElementById('plus-btn');
+const plusMenuItems = document.getElementById('plus-menu-items');
+const variantSearchBtn = document.getElementById('variant-search-btn');
+const searchModeBanner = document.getElementById('search-mode-banner');
+const variantSearchModal = document.getElementById('variant-search-modal');
+const variantSearchResult = document.getElementById('variant-search-result');
+const variantSearchModalTitle = document.getElementById('variant-search-modal-title');
 
 // Export Modal Elements
 const exportModal = document.getElementById('export-modal');
@@ -115,7 +133,7 @@ function init() {
 
     if (state.isAdmin) {
         if (markAllBtn) markAllBtn.classList.remove('hidden');
-        if (exportTextBtn) exportTextBtn.classList.remove('hidden');
+        if (plusMenu) plusMenu.classList.remove('hidden');
         if (undoBtn) {
             undoBtn.classList.remove('hidden');
             updateUndoButtonVisibility();
@@ -125,6 +143,8 @@ function init() {
     setupExportText();
     setupUndo();
     setupHistoryModal();
+    setupPlusMenu();
+    setupVariantSearch();
 
     // Initial Render
     renderGrid();
@@ -359,10 +379,19 @@ function createMonsterCard(monster) {
 
     // Click Handler
     card.onclick = () => {
+        if (state.searchMode) {
+            showVariantStatus(monster);
+            return;
+        }
         // Enforce Admin-only writes
         if (!state.isAdmin) return;
         toggleCollection(key, isObtained);
     };
+
+    // Add search mode class for hover effect
+    if (state.searchMode) {
+        card.classList.add('search-mode-active');
+    }
 
     return card;
 }
@@ -556,6 +585,82 @@ function undoLastAction() {
     }
 
     updateUndoButtonVisibility();
+}
+
+// ========== Plus Menu ==========
+function setupPlusMenu() {
+    if (!plusBtn || !plusMenuItems) return;
+    plusBtn.onclick = () => {
+        plusBtn.classList.toggle('open');
+        plusMenuItems.classList.toggle('open');
+    };
+}
+
+// ========== Variant Search ==========
+function setupVariantSearch() {
+    if (!variantSearchBtn) return;
+
+    variantSearchBtn.onclick = () => {
+        state.searchMode = !state.searchMode;
+        if (state.searchMode) {
+            searchModeBanner.classList.add('active');
+            // Close plus menu
+            plusBtn.classList.remove('open');
+            plusMenuItems.classList.remove('open');
+        } else {
+            searchModeBanner.classList.remove('active');
+        }
+        renderGrid(); // Re-render to apply/remove search-mode-active class
+    };
+
+    // Exit search mode from banner
+    const exitBtn = document.getElementById('exit-search-mode');
+    if (exitBtn) {
+        exitBtn.onclick = () => {
+            state.searchMode = false;
+            searchModeBanner.classList.remove('active');
+            renderGrid();
+        };
+    }
+
+    // Close variant search modal
+    const closeBtn = document.getElementById('close-variant-search');
+    const closeBtnBottom = document.getElementById('close-variant-search-btn');
+    const closeModal = () => variantSearchModal.classList.add('hidden');
+    if (closeBtn) closeBtn.onclick = closeModal;
+    if (closeBtnBottom) closeBtnBottom.onclick = closeModal;
+    variantSearchModal.onclick = (e) => {
+        if (e.target === variantSearchModal) closeModal();
+    };
+}
+
+function showVariantStatus(monster) {
+    const monsterId = getMonsterId(monster);
+    variantSearchModalTitle.textContent = `${monster.name} の種類一覧`;
+    variantSearchResult.innerHTML = '';
+
+    variants.forEach(variant => {
+        const key = `${monsterId}_${variant}`;
+        const isObtained = !!state.collection[key];
+        const color = variantColors[variant] || '#999';
+
+        const item = document.createElement('div');
+        item.className = `variant-status-item ${isObtained ? 'obtained' : 'unobtained'}`;
+        item.style.borderColor = color;
+
+        const icon = document.createElement('span');
+        icon.className = 'status-icon';
+        icon.textContent = isObtained ? '✅' : '❌';
+
+        const name = document.createElement('span');
+        name.textContent = variant;
+
+        item.appendChild(icon);
+        item.appendChild(name);
+        variantSearchResult.appendChild(item);
+    });
+
+    variantSearchModal.classList.remove('hidden');
 }
 
 function toggleCollection(key, isCurrentlyObtained) {
