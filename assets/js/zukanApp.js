@@ -101,8 +101,7 @@ const closeModalBtns = [
 // History Modal Elements
 const historyModal = document.getElementById('history-modal');
 const historyModalTitle = document.getElementById('history-modal-title');
-const historyChartCanvas = document.getElementById('history-chart');
-let historyChartInstance = null;
+const historyContent = document.getElementById('history-content');
 
 // ========== Initialization ==========
 function init() {
@@ -759,7 +758,7 @@ function recordProgressHistory() {
 }
 
 /**
- * Show progress chart in modal
+ * Show progress history as text (daily changes)
  * @param {string} variantKey - variant name or '_total' for aggregate
  */
 function showProgressChart(variantKey) {
@@ -772,7 +771,7 @@ function showProgressChart(variantKey) {
             return;
         }
 
-        // Sort dates
+        // Sort dates ascending
         const dates = Object.keys(allData).sort();
         const values = dates.map(d => allData[d][variantKey] ?? null);
 
@@ -780,65 +779,53 @@ function showProgressChart(variantKey) {
         const label = variantKey === '_total' ? '全体' : variantKey;
         historyModalTitle.textContent = `${label} — 進捗履歴`;
 
-        // Destroy previous chart
-        if (historyChartInstance) {
-            historyChartInstance.destroy();
+        // Build daily diff list (newest first)
+        let html = '';
+        const entries = [];
+
+        for (let i = 1; i < dates.length; i++) {
+            const prev = values[i - 1];
+            const curr = values[i];
+            if (prev === null || curr === null) continue;
+            const diff = curr - prev;
+            if (diff === 0) continue; // Skip days with no change
+
+            const d = dates[i];
+            const parts = d.split('-');
+            const dateStr = `${parts[0]}/${parseInt(parts[1])}/${parseInt(parts[2])}`;
+            const diffStr = diff < 0 ? `${diff}体` : `+${diff}体`;
+            const color = diff < 0 ? '#22c55e' : '#ef4444'; // green for decrease, red for increase
+
+            entries.push({ dateStr, diffStr, color, remaining: curr });
         }
 
-        // Format dates for display (MM/DD)
-        const displayDates = dates.map(d => {
+        // Also show the first day as baseline
+        if (dates.length > 0 && values[0] !== null) {
+            const d = dates[0];
             const parts = d.split('-');
-            return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
-        });
+            const dateStr = `${parts[0]}/${parseInt(parts[1])}/${parseInt(parts[2])}`;
+            entries.push({ dateStr, diffStr: '記録開始', color: '#6b7280', remaining: values[0], isBaseline: true });
+        }
 
-        historyChartInstance = new Chart(historyChartCanvas, {
-            type: 'line',
-            data: {
-                labels: displayDates,
-                datasets: [{
-                    label: `残り体数`,
-                    data: values,
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#3b82f6',
-                    pointRadius: 4,
-                    tension: 0.3,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            title: (items) => dates[items[0].dataIndex],
-                            label: (item) => `残り ${item.raw} 体`
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
-                        },
-                        title: {
-                            display: true,
-                            text: '残り体数'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: '日付'
-                        }
-                    }
-                }
-            }
-        });
+        // Reverse for newest first
+        entries.reverse();
 
+        if (entries.length === 0) {
+            html = '<p class="text-gray-500 text-center">変化の記録がありません。</p>';
+        } else {
+            html = '<div style="display: flex; flex-direction: column; gap: 6px;">';
+            entries.forEach(e => {
+                html += `<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: #f9fafb; border: 1px solid #e5e7eb;">`;
+                html += `<span style="font-weight: 600; color: #374151; font-size: 14px;">${e.dateStr}</span>`;
+                html += `<div style="display: flex; align-items: center; gap: 12px;">`;
+                html += `<span style="color: ${e.color}; font-weight: 700; font-size: 15px;">${e.diffStr}</span>`;
+                html += `<span style="color: #9ca3af; font-size: 12px;">残り${e.remaining}体</span>`;
+                html += `</div></div>`;
+            });
+            html += '</div>';
+        }
+
+        historyContent.innerHTML = html;
         historyModal.classList.remove('hidden');
     }).catch(err => {
         console.error('Failed to load progress history:', err);
