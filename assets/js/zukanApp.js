@@ -133,6 +133,7 @@ function init() {
 
     if (state.isAdmin) {
         if (markAllBtn) markAllBtn.classList.remove('hidden');
+        if (exportTextBtn) exportTextBtn.classList.remove('hidden');
         if (variantSearchBtn) variantSearchBtn.classList.remove('hidden');
         // if (plusMenu) plusMenu.classList.remove('hidden'); // ＋メニュー復活時に有効化
         if (undoBtn) {
