@@ -799,14 +799,6 @@ function showProgressChart(variantKey) {
             entries.push({ dateStr, diffStr, color, remaining: curr });
         }
 
-        // Also show the first day as baseline
-        if (dates.length > 0 && values[0] !== null) {
-            const d = dates[0];
-            const parts = d.split('-');
-            const dateStr = `${parts[0]}/${parseInt(parts[1])}/${parseInt(parts[2])}`;
-            entries.push({ dateStr, diffStr: '記録開始', color: '#6b7280', remaining: values[0], isBaseline: true });
-        }
-
         // Reverse for newest first
         entries.reverse();
 
