@@ -207,7 +207,7 @@ const images = [
     { id: 'kaerutoire', src: './img/kaerutoire.png', name: 'カエルトイレ', value: 17000, rarity: 'Secret' },
     { id: 'lovepad', src: './img/lovepad.png', name: 'Loveパッド', value: 18000, rarity: 'Secret-' },
     { id: 'mcpene', src: './img/mcpene.png', name: 'ムキムキ', value: 19000, rarity: 'Secret' },
-    { id: 'tungbale', src: './img/tungbale.png', name: 'タンタンサフ＆バレリーナ', value: 19000, rarity: 'Secret' },
+    { id: 'tungballe', src: './img/tungballe.png', name: 'タンタンサフ＆バレリーナ', value: 19000, rarity: 'Secret' },
     { id: 'ie', src: './img/ie.png', name: '家', value: 20000, rarity: 'Secret' },
     { id: 'niwatorisouryo', src: './img/niwatorisouryo.png', name: '座ってるにわとり', value: 21000, rarity: 'Secret' },//にわとり
     { id: 'basket', src: './img/basket.png', name: 'バスケット（イースターロット）', value: 21500, rarity: 'Secret-' },
