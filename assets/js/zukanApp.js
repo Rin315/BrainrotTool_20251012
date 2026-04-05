@@ -133,7 +133,8 @@ function init() {
 
     if (state.isAdmin) {
         if (markAllBtn) markAllBtn.classList.remove('hidden');
-        if (plusMenu) plusMenu.classList.remove('hidden');
+        if (variantSearchBtn) variantSearchBtn.classList.remove('hidden');
+        // if (plusMenu) plusMenu.classList.remove('hidden'); // ＋メニュー復活時に有効化
         if (undoBtn) {
             undoBtn.classList.remove('hidden');
             updateUndoButtonVisibility();
@@ -610,9 +611,9 @@ function setupVariantSearch() {
         state.searchMode = !state.searchMode;
         if (state.searchMode) {
             searchModeBanner.classList.add('active');
-            // Close plus menu
-            plusBtn.classList.remove('open');
-            plusMenuItems.classList.remove('open');
+            // Close plus menu (＋メニュー復活時に有効化)
+            // plusBtn.classList.remove('open');
+            // plusMenuItems.classList.remove('open');
             // Force "すべて表示" mode
             if (state.filterUnobtained) {
                 state.filterUnobtained = false;
