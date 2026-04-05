@@ -266,6 +266,11 @@ function renderTabs() {
             if (state.searchMode) {
                 state.searchMode = false;
                 searchModeBanner.classList.remove('active');
+                // Restore "未所持のみ表示" filter
+                state.filterUnobtained = true;
+                state.currentPage = 1;
+                filterToggleBtn.textContent = 'すべて表示';
+                filterToggleBtn.className = `px-3 py-1 bg-gray-500 text-white text-xs font-bold rounded transition-colors`;
             }
             state.currentTab = variant;
             // Page remains same as per requirement
@@ -623,6 +628,11 @@ function setupVariantSearch() {
             }
         } else {
             searchModeBanner.classList.remove('active');
+            // Restore "未所持のみ表示" filter
+            state.filterUnobtained = true;
+            state.currentPage = 1;
+            filterToggleBtn.textContent = 'すべて表示';
+            filterToggleBtn.className = `px-3 py-1 bg-gray-500 text-white text-xs font-bold rounded transition-colors`;
         }
         renderGrid(); // Re-render to apply/remove search-mode-active class
     };
@@ -633,6 +643,11 @@ function setupVariantSearch() {
         exitBtn.onclick = () => {
             state.searchMode = false;
             searchModeBanner.classList.remove('active');
+            // Restore "未所持のみ表示" filter
+            state.filterUnobtained = true;
+            state.currentPage = 1;
+            filterToggleBtn.textContent = 'すべて表示';
+            filterToggleBtn.className = `px-3 py-1 bg-gray-500 text-white text-xs font-bold rounded transition-colors`;
             renderGrid();
         };
     }
