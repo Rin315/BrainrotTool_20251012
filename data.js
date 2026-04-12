@@ -77,6 +77,7 @@ const images = [
     { id: 'santonio', src: './img/santonio.png', name: 'サントニオー(クリスマス合成限定)', value: 0, rarity: 'Common' },
     { id: 'losmateo', src: './img/losmateo.png', name: 'ロスマテオ', value: 0, rarity: 'Common' }, //ロスマテオ
     { id: 'lossiguma', src: './img/lossiguma.png', name: 'ロスシグマ', value: 0, rarity: 'Common' }, //ロスシグマ
+    { id: 'taka', src: './img/taka.png', name: 'タカ', value: 0, rarity: 'Common' },
     { id: 'box', src: './img/hako.png', name: 'レンガ(合成限定)', value: 0, rarity: 'Common' }, //箱
     { id: 'fishinis', src: './img/fishinis.png', name: 'フィーシーニ2人(クリスマス合成限定)', value: 0, rarity: 'Common' },
 
@@ -216,6 +217,7 @@ const images = [
     { id: 'chinpanking', src: './img/chinpanking.png', name: 'チンパンジニーキング', value: 25000, rarity: 'Secret' },//チンパンジー
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'yule', src: './img/yule.png', name: 'ツリートナカイ(クリスマス合成限定)', value: 27000, rarity: 'Secret-' },
+    { id: 'tiriabogado', src: './img/tiriabogado.png', name: 'チリ&アボガド', value: 28000, rarity: 'Secret' },
     { id: 'itigozou', src: './img/itigozou.png', name: 'ストロベリーエレファント', value: 30000, rarity: 'Secret' },
     { id: 'klombo', src: './img/klombo.png', name: 'クロムボ', value: 32000, rarity: 'Secret' },
     { id: 'tictac', src: './img/tictac.png', name: 'チクタク(合成限定)', value: 33000, rarity: 'Secret' },
@@ -237,6 +239,7 @@ const images = [
     { id: 'pinkkuma', src: './img/pinkkuma.png', name: 'ピンククマ', value: 85000, rarity: 'Secret' },
     { id: 'tiramis', src: './img/tiramis.png', name: '潜水艦', value: 90000, rarity: 'Secret' },
     { id: 'track', src: './img/track.png', name: 'トラック', value: 100000, rarity: 'Secret' },
+    { id: 'bazrait', src: './img/bazrait.png', name: 'フィッシー二ロボ', value: 105000, rarity: 'Secret' },
     { id: 'taihou', src: './img/taihou.png', name: '大砲', value: 115000, rarity: 'Secret' },
     { id: 'toire', src: './img/SkibidiToilet.png', name: 'スケビティートイレ', value: 350000, rarity: 'Secret-' },
 ];
