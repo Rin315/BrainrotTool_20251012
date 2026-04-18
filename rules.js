@@ -47,7 +47,9 @@ const monsterProbabilityRules = [
             { id: "lasskop", percent: 30 },
             { id: "pickolini", percent: 30 },
             { id: "pothotspot", percent: 35 },
-            { id: "yesmyhot", percent: 5 }
+            { id: "yesmyhot", percent: 5 },
+            { id: "wanihikouki", percent: 5 },
+            { id: "itigokinnniku", percent: 5 }
         ]
     },
     {
@@ -56,7 +58,9 @@ const monsterProbabilityRules = [
         monsters: [
             { id: "pickolini", percent: 30 },
             { id: "pothotspot", percent: 55 },
-            { id: "yesmyhot", percent: 15 }
+            { id: "yesmyhot", percent: 15 },
+            { id: "wanihikouki", percent: 15 },
+            { id: "itigokinnniku", percent: 15 }
         ]
     },
     {
@@ -66,7 +70,10 @@ const monsterProbabilityRules = [
             { id: "pickolini", percent: 10 },
             { id: "pothotspot", percent: 60 },
             { id: "yesmyhot", percent: 25 },
-            { id: "cacasito", percent: 5 }
+            { id: "wanihikouki", percent: 25 },
+            { id: "itigokinnniku", percent: 25 },
+            { id: "cacasito", percent: 5 },
+            { id: "wanichari", percent: 5 }
         ]
     },
     {
@@ -75,7 +82,10 @@ const monsterProbabilityRules = [
         monsters: [
             { id: "pothotspot", percent: 45 },
             { id: "yesmyhot", percent: 35 },
-            { id: "cacasito", percent: 20 }
+            { id: "wanihikouki", percent: 35 },
+            { id: "itigokinnniku", percent: 35 },
+            { id: "cacasito", percent: 20 },
+            { id: "wanichari", percent: 20 }
         ]
     },
     {
@@ -84,7 +94,10 @@ const monsterProbabilityRules = [
         monsters: [
             { id: "pothotspot", percent: 25 },
             { id: "yesmyhot", percent: 50 },
-            { id: "cacasito", percent: 25 }
+            { id: "wanihikouki", percent: 50 },
+            { id: "itigokinnniku", percent: 50 },
+            { id: "cacasito", percent: 25 },
+            { id: "wanichari", percent: 25 }
         ]
     },
     {
@@ -93,7 +106,10 @@ const monsterProbabilityRules = [
         monsters: [
             { id: "pothotspot", percent: 5 },
             { id: "yesmyhot", percent: 60 },
+            { id: "wanihikouki", percent: 60 },
+            { id: "itigokinnniku", percent: 60 },
             { id: "cacasito", percent: 30 },
+            { id: "wanichari", percent: 30 },
             { id: "nomychari", percent: 5 }
         ]
     },
@@ -102,7 +118,10 @@ const monsterProbabilityRules = [
         threshold: 10000,
         monsters: [
             { id: "yesmyhot", percent: 55 },
+            { id: "wanihikouki", percent: 55 },
+            { id: "itigokinnniku", percent: 55 },
             { id: "cacasito", percent: 35 },
+            { id: "wanichari", percent: 35 },
             { id: "nomychari", percent: 10 }
         ]
     },
@@ -111,7 +130,10 @@ const monsterProbabilityRules = [
         threshold: 12000,
         monsters: [
             { id: "yesmyhot", percent: 35 },
+            { id: "wanihikouki", percent: 35 },
+            { id: "itigokinnniku", percent: 35 },
             { id: "cacasito", percent: 45 },
+            { id: "wanichari", percent: 45 },
             { id: "nomychari", percent: 20 }
         ]
     },
@@ -120,9 +142,13 @@ const monsterProbabilityRules = [
         threshold: 16000,
         monsters: [
             { id: "yesmyhot", percent: 20 },
+            { id: "wanihikouki", percent: 20 },
+            { id: "itigokinnniku", percent: 20 },
             { id: "cacasito", percent: 40 },
+            { id: "wanichari", percent: 40 },
             { id: "nomychari", percent: 35 },
-            { id: "chinpanking", percent: 5 }
+            { id: "chinpanking", percent: 5 },
+            { id: "penginkingini", percent: 5 }
         ]
     },
     {
@@ -130,9 +156,13 @@ const monsterProbabilityRules = [
         threshold: 20000,
         monsters: [
             { id: "yesmyhot", percent: 10 },
+            { id: "wanihikouki", percent: 10 },
+            { id: "itigokinnniku", percent: 10 },
             { id: "cacasito", percent: 35 },
+            { id: "wanichari", percent: 35 },
             { id: "nomychari", percent: 45 },
-            { id: "chinpanking", percent: 10 }
+            { id: "chinpanking", percent: 10 },
+            { id: "penginkingini", percent: 10 }
         ]
     },
     {
@@ -140,19 +170,25 @@ const monsterProbabilityRules = [
         threshold: 25000,
         monsters: [
             { id: "cacasito", percent: 30 },
-            { id: "nomychari", percent: 50 },
+            { id: "wanichari", percent: 30 },
+            { id: "nomychari", percent: 40 },
             { id: "chinpanking", percent: 15 },
-            { id: "tictac", percent: 5 }
+            { id: "penginkingini", percent: 15 },
+            { id: "tictac", percent: 5 },
+            { id: "wanitrack", percent: 5 }
         ]
     },
     {
         range: "25001〜30000",
         threshold: 30000,
         monsters: [
-            { id: "cacasito", percent: 30 },
+            { id: "cacasito", percent: 20 },
+            { id: "wanichari", percent: 20 },
             { id: "nomychari", percent: 50 },
             { id: "chinpanking", percent: 20 },
-            { id: "tictac", percent: 10 }
+            { id: "penginkingini", percent: 20 },
+            { id: "tictac", percent: 10 },
+            { id: "wanitrack", percent: 10 }
         ]
     },
     {
@@ -160,10 +196,14 @@ const monsterProbabilityRules = [
         threshold: 35000,
         monsters: [
             { id: "cacasito", percent: 15 },
+            { id: "wanichari", percent: 15 },
             { id: "nomychari", percent: 40 },
             { id: "chinpanking", percent: 30 },
+            { id: "penginkingini", percent: 30 },
             { id: "tictac", percent: 10 },
-            { id: "cabritos", percent: 5 }
+            { id: "wanitrack", percent: 10 },
+            { id: "cabritos", percent: 5 },
+            { id: "corngozira", percent: 5 }
         ]
     },
     {
@@ -172,8 +212,11 @@ const monsterProbabilityRules = [
         monsters: [
             { id: "nomychari", percent: 40 },
             { id: "chinpanking", percent: 35 },
+            { id: "penginkingini", percent: 35 },
             { id: "tictac", percent: 15 },
-            { id: "cabritos", percent: 10 }
+            { id: "wanitrack", percent: 15 },
+            { id: "cabritos", percent: 10 },
+            { id: "corngozira", percent: 10 }
         ]
     },
     {
@@ -182,8 +225,11 @@ const monsterProbabilityRules = [
         monsters: [
             { id: "nomychari", percent: 35 },
             { id: "chinpanking", percent: 35 },
+            { id: "penginkingini", percent: 35 },
             { id: "tictac", percent: 15 },
+            { id: "wanitrack", percent: 15 },
             { id: "cabritos", percent: 10 },
+            { id: "corngozira", percent: 10 },
             { id: "gorgon", percent: 5 }
         ]
     },
@@ -191,10 +237,13 @@ const monsterProbabilityRules = [
         range: "45001〜55000",
         threshold: 55000,
         monsters: [
-            { id: "nomychari", percent: 34 },
-            { id: "chinpanking", percent: 35 },
+            { id: "nomychari", percent: 29 },
+            { id: "chinpanking", percent: 40 },
+            { id: "penginkingini", percent: 40 },
             { id: "tictac", percent: 15 },
+            { id: "wanitrack", percent: 15 },
             { id: "cabritos", percent: 10 },
+            { id: "corngozira", percent: 10 },
             { id: "gorgon", percent: 5 },
             { id: "croissa", percent: 1 },
         ]
@@ -203,24 +252,64 @@ const monsterProbabilityRules = [
         range: "55001〜65000",
         threshold: 65000,
         monsters: [
-            { id: "nomychari", percent: 33 },
+            { id: "nomychari", percent: 25 },
             { id: "chinpanking", percent: 35 },
-            { id: "tictac", percent: 15 },
-            { id: "cabritos", percent: 10 },
+            { id: "penginkingini", percent: 35 },
+            { id: "tictac", percent: 20 },
+            { id: "wanitrack", percent: 20 },
+            { id: "cabritos", percent: 13 },
+            { id: "corngozira", percent: 13 },
             { id: "gorgon", percent: 5 },
             { id: "croissa", percent: 2 },
         ]
     },
     {
-        range: "65001〜",
-        threshold: Infinity,
+        range: "65001〜80000",
+        threshold: 80000,
         monsters: [
-            { id: "chinpanking", percent: 60 },
-            { id: "tictac", percent: 18 },
-            { id: "cabritos", percent: 13 },
+            { id: "chinpanking", percent: 49 },
+            { id: "penginkingini", percent: 49 },
+            { id: "tictac", percent: 25 },
+            { id: "wanitrack", percent: 25 },
+            { id: "cabritos", percent: 17 },
+            { id: "corngozira", percent: 17 },
             { id: "gorgon", percent: 6 },
             { id: "croissa", percent: 2 },
-            { id: "tiramis", percent: 1 }
+            { id: "humberger", percent: 1 },
+            { id: "tiramis", percent: 1 },
+            { id: "tralaledon", percent: 1 }
+        ]
+    },
+    {
+        range: "80001〜100000",
+        threshold: 100000,
+        monsters: [
+            { id: "chinpanking", percent: 37.5 },
+            { id: "penginkingini", percent: 37.5 },
+            { id: "tictac", percent: 30 },
+            { id: "wanitrack", percent: 30 },
+            { id: "cabritos", percent: 20 },
+            { id: "corngozira", percent: 20 },
+            { id: "gorgon", percent: 8 },
+            { id: "croissa", percent: 3 },
+            { id: "humberger", percent: 1.5 },
+            { id: "tiramis", percent: 1.5 },
+            { id: "tralaledon", percent: 1.5 }
+        ]
+    },
+    {
+        range: "100001〜",
+        threshold: Infinity,
+        monsters: [
+            { id: "chinpanking", percent: 25 },
+            { id: "penginkingini", percent: 25 },
+            { id: "tictac", percent: 35 },
+            { id: "wanitrack", percent: 35 },
+            { id: "cabritos", percent: 25 },
+            { id: "corngozira", percent: 25 },
+            { id: "gorgon", percent: 10 },
+            { id: "croissa", percent: 4 },
+            { id: "lasuper", percent: 1 }
         ]
     }
 ];
