@@ -313,3 +313,20 @@ const monsterProbabilityRules = [
         ]
     }
 ];
+
+// ========== 条件付きモンスター置換ルール ==========
+// selectedId: 選択されたモンスターのID
+// minCount: 最低何体選択されている必要があるか
+// replacements: { 置換元ID: 置換先ID } — 同じIDに置換された場合は自動で1つにまとまる
+const monsterReplacementRules = [
+    {
+        selectedId: "67",
+        minCount: 2,
+        replacements: { "nomychari": "los67" }
+    },
+    {
+        selectedId: "chinpanking",
+        minCount: 1,
+        replacements: { "tictac": "lostinpan", "wanitrack": "lostinpan" }
+    }
+];

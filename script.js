@@ -395,9 +395,44 @@ function updateMonsterProbability() {
   const rule = monsterProbabilityRules.find(r => sumValue <= r.threshold);
   if (!rule) return;
 
+  // Clone monsters array for replacement
+  let monsters = rule.monsters.map(m => ({ ...m }));
+
+  // Apply replacement rules based on selected monsters
+  if (typeof monsterReplacementRules !== 'undefined') {
+    // Count selected monster IDs
+    const selectedCounts = {};
+    selectedImages.forEach(img => {
+      if (!img) return;
+      selectedCounts[img.id] = (selectedCounts[img.id] || 0) + 1;
+    });
+
+    monsterReplacementRules.forEach(repRule => {
+      const count = selectedCounts[repRule.selectedId] || 0;
+      if (count >= repRule.minCount) {
+        // Apply ID replacements
+        monsters = monsters.map(m => {
+          if (repRule.replacements[m.id]) {
+            return { ...m, id: repRule.replacements[m.id] };
+          }
+          return m;
+        });
+      }
+    });
+
+    // Deduplicate: if multiple entries have the same id and percent, keep only one
+    const seen = new Set();
+    monsters = monsters.filter(m => {
+      const key = `${m.id}_${m.percent}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
   // Group monsters by percent
   const groups = {};
-  rule.monsters.forEach(({ id, percent }) => {
+  monsters.forEach(({ id, percent }) => {
     if (!groups[percent]) groups[percent] = [];
     const monster = images.find(m => m.id === id);
     if (monster) groups[percent].push(monster);

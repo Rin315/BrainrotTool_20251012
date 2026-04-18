@@ -542,7 +542,7 @@ h2 {
 .monster-prob-text {
   color: var(--text-main);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 /* Grouped monster images (same probability) */
