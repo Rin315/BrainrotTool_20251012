@@ -508,9 +508,9 @@ h2 {
 
 #monster-probability {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
-  /* Wrap items instead of scroll */
+  justify-content: center;
   padding-bottom: 0;
   width: 100%;
 }
@@ -533,8 +533,8 @@ h2 {
 }
 
 .monster-box img {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   margin-bottom: 4px;
 }
@@ -548,6 +548,7 @@ h2 {
 /* Grouped monster images (same probability) */
 .monster-group {
   min-width: auto;
+  flex: 1 1 auto;
 }
 
 .monster-group-images {
@@ -559,8 +560,8 @@ h2 {
 }
 
 .monster-group-images img {
-  width: 65px;
-  height: 65px;
+  width: 75px;
+  height: 75px;
   object-fit: contain;
   margin-bottom: 4px;
 }
@@ -683,8 +684,8 @@ h2 {
   }
 
   .monster-group-images img {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
   }
 
   .monster-prob-text {
