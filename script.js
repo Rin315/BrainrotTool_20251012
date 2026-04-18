@@ -394,20 +394,42 @@ function updateMonsterProbability() {
   if (sumValue <= 251) return;
   const rule = monsterProbabilityRules.find(r => sumValue <= r.threshold);
   if (!rule) return;
+
+  // Group monsters by percent
+  const groups = {};
   rule.monsters.forEach(({ id, percent }) => {
+    if (!groups[percent]) groups[percent] = [];
     const monster = images.find(m => m.id === id);
-    if (!monster) return;
-    const box = document.createElement('div');
-    box.className = 'monster-box panel';
-    const image = document.createElement('img');
-    image.src = monster.src;
-    const probText = document.createElement('div');
-    probText.className = 'monster-prob-text';
-    probText.textContent = `${percent}%`;
-    box.appendChild(image);
-    box.appendChild(probText);
-    container.appendChild(box);
+    if (monster) groups[percent].push(monster);
   });
+
+  // Render each group as a single box
+  // Sort by percent descending
+  Object.keys(groups)
+    .sort((a, b) => Number(b) - Number(a))
+    .forEach(percent => {
+      const monsters = groups[percent];
+      if (monsters.length === 0) return;
+
+      const box = document.createElement('div');
+      box.className = 'monster-box monster-group panel';
+
+      const imgRow = document.createElement('div');
+      imgRow.className = 'monster-group-images';
+      monsters.forEach(monster => {
+        const image = document.createElement('img');
+        image.src = monster.src;
+        imgRow.appendChild(image);
+      });
+
+      const probText = document.createElement('div');
+      probText.className = 'monster-prob-text';
+      probText.textContent = `${percent}%`;
+
+      box.appendChild(imgRow);
+      box.appendChild(probText);
+      container.appendChild(box);
+    });
 }
 
 function updateTypeProbability() {

@@ -545,6 +545,26 @@ h2 {
   font-size: 12px;
 }
 
+/* Grouped monster images (same probability) */
+.monster-group {
+  min-width: auto;
+}
+
+.monster-group-images {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.monster-group-images img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
 /* Type Probability */
 .panel:has(#probability) {
   flex: 1;
@@ -660,6 +680,11 @@ h2 {
   .monster-box img {
     width: 40px;
     height: 40px;
+  }
+
+  .monster-group-images img {
+    width: 35px;
+    height: 35px;
   }
 
   .monster-prob-text {
