@@ -94,12 +94,21 @@
     }
 
     .monster-col {
-      flex: 1 1 600px;
       background: var(--card-bg);
       border-radius: 12px;
       border: 1px solid var(--card-border);
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .monster-col:first-child {
+      flex: 4;
+      min-width: 400px;
+    }
+
+    .monster-col:last-child {
+      flex: 6;
+      min-width: 500px;
     }
 
     .monster-header {
@@ -123,15 +132,16 @@
 
     .range-header,
     .range-cell {
-      width: 100px;
+      width: 110px;
+      min-width: 110px;
+      flex-shrink: 0;
       border-right: 1px solid var(--card-border);
       background: rgba(0, 0, 0, 0.03);
-      /* Subtle bg for range column */
       color: #000;
-      /* Pure black */
       font-weight: 700;
       justify-content: flex-start !important;
       text-align: left;
+      white-space: nowrap;
     }
 
     .monster-header-cell,
