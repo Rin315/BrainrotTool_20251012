@@ -158,9 +158,12 @@
       align-items: center;
       font-size: 11px;
       color: #000;
-      /* Pure black for maximum readability */
       font-weight: 700;
       min-width: 60px;
+      background: rgba(0, 176, 255, 0.06);
+      border: 1px solid rgba(0, 176, 255, 0.2);
+      border-radius: 8px;
+      padding: 6px 8px 4px;
     }
 
     .monster-set-images {
@@ -172,9 +175,8 @@
 
     .monster-row {
       display: flex;
-      flex-wrap: nowrap;
-      gap: 4px;
-      overflow-x: auto;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .monster-set img {
@@ -300,6 +302,10 @@
         font-size: 11px;
         color: #000;
         font-weight: 700;
+        background: rgba(0, 176, 255, 0.06);
+        border: 1px solid rgba(0, 176, 255, 0.2);
+        border-radius: 8px;
+        padding: 6px 8px 4px;
       }
 
       .mobile-monster-set .monster-set-images {
@@ -772,7 +778,7 @@
         const mobileContainer = document.querySelector('.monster-table-mobile');
         if (!pcContainer || !mobileContainer) return;
 
-        // Helper: group monsters by percent (preserving order by first appearance, descending)
+        // Helper: group monsters by percent (preserving original order)
         function groupByPercent(monstersArr) {
           const groups = {};
           const order = [];
@@ -784,8 +790,6 @@
             const monster = images.find(m => m.id === id);
             if (monster) groups[percent].push(monster);
           });
-          // Sort by percent descending
-          order.sort((a, b) => Number(b) - Number(a));
           return order.map(p => ({ percent: p, monsters: groups[p] }));
         }
 
