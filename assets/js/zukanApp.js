@@ -21,7 +21,7 @@ const db = getDatabase(app);
 
 // ========== State ==========
 const variants = [
-    "Default", "Gold", "Diamond", "Rainbow", "Heaven", "Void", "Love", "Toxic",
+    "Default", "Gold", "Diamond", "Rainbow", "Crystal", "Heaven", "Void", "Love", "Toxic",
     "Galaxy", "Zombie", "Dreamy", "ICE&FIRE", "Carnival",
     "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
 ];
@@ -29,7 +29,7 @@ const variants = [
 // Variant colors (matching sidebar tab border colors)
 const variantColors = {
     Default: '#333', Gold: '#ffd700', Diamond: '#00b0ff', Rainbow: '#d500f9',
-    Heaven: '#FFFFFF', Void: '#5D3B8E', Love: '#FF69B4', Toxic: '#9ACD32',
+    Crystal: '#5BC0EB', Heaven: '#FFFFFF', Void: '#5D3B8E', Love: '#FF69B4', Toxic: '#9ACD32',
     Galaxy: '#663399', Zombie: '#2E8B57', Dreamy: '#FF69B4', 'ICE&FIRE': '#FF4500',
     Carnival: '#FF1493', Aqua: '#00FFFF', Halloween: '#FF8C00', Darkness: '#4B0082',
     Neon: '#39FF14', Christmas: '#228B22', Chocolate: '#D2691E'
