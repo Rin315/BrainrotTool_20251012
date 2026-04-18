@@ -132,8 +132,8 @@
 
     .range-header,
     .range-cell {
-      width: 110px;
-      min-width: 110px;
+      width: 130px;
+      min-width: 130px;
       flex-shrink: 0;
       border-right: 1px solid var(--card-border);
       background: rgba(0, 0, 0, 0.03);
@@ -142,6 +142,7 @@
       justify-content: flex-start !important;
       text-align: left;
       white-space: nowrap;
+      font-size: 12px;
     }
 
     .monster-header-cell,
@@ -789,25 +790,65 @@
         const mobileContainer = document.querySelector('.monster-table-mobile');
         if (!pcContainer || !mobileContainer) return;
 
+        // Helper: format range text with commas (e.g. "80001〜100000" → "80,001〜100,000")
+        function formatRange(range) {
+          return range.replace(/\d+/g, n => Number(n).toLocaleString());
+        }
+
         // Helper: group monsters by percent (preserving original order)
+        // Also tracks original IDs for coloring
         function groupByPercent(monstersArr) {
           const groups = {};
+          const ids = {};
           const order = [];
           monstersArr.forEach(({ id, percent }) => {
             if (!groups[percent]) {
               groups[percent] = [];
+              ids[percent] = [];
               order.push(percent);
             }
+            ids[percent].push(id);
             const monster = images.find(m => m.id === id);
             if (monster) groups[percent].push(monster);
           });
-          return order.map(p => ({ percent: p, monsters: groups[p] }));
+          return order.map(p => ({ percent: p, monsters: groups[p], ids: ids[p] }));
+        }
+
+        // Coloring rules for specific monsters
+        const highlightColors = {
+          orange: ['tictac', 'wanitrack'],
+          yellow: ['nomychari']
+        };
+
+        function getGroupColor(groupIds) {
+          for (const [color, ids] of Object.entries(highlightColors)) {
+            if (groupIds.some(id => ids.includes(id))) {
+              if (color === 'orange') return 'rgba(255, 152, 0, 0.15)';
+              if (color === 'yellow') return 'rgba(255, 235, 59, 0.25)';
+            }
+          }
+          return null;
+        }
+
+        function getGroupBorderColor(groupIds) {
+          for (const [color, ids] of Object.entries(highlightColors)) {
+            if (groupIds.some(id => ids.includes(id))) {
+              if (color === 'orange') return 'rgba(255, 152, 0, 0.5)';
+              if (color === 'yellow') return 'rgba(255, 235, 59, 0.6)';
+            }
+          }
+          return null;
         }
 
         // Helper: create a grouped monster-set element (multiple imgs + one percent label)
         function createGroupedSet(group, imgClass) {
           const set = document.createElement('div');
           set.className = imgClass || 'monster-set';
+          // Apply special coloring
+          const bgColor = getGroupColor(group.ids);
+          const borderColor = getGroupBorderColor(group.ids);
+          if (bgColor) set.style.background = bgColor;
+          if (borderColor) set.style.borderColor = borderColor;
           const imgRow = document.createElement('div');
           imgRow.className = 'monster-set-images';
           group.monsters.forEach(monster => {
@@ -844,7 +885,7 @@
             rowBlock.className = 'monster-row-block';
             const rangeCell = document.createElement('div');
             rangeCell.className = 'range-cell';
-            rangeCell.innerHTML = item.range;
+            rangeCell.innerHTML = formatRange(item.range);
             const monstersCell = document.createElement('div');
             monstersCell.className = 'monsters-cell';
             const monsterRow = document.createElement('div');
@@ -875,7 +916,7 @@
           rowBlock.className = 'monster-mobile-row-block';
           const rangeCell = document.createElement('div');
           rangeCell.className = 'mobile-range';
-          rangeCell.textContent = item.range;
+          rangeCell.textContent = formatRange(item.range);
           const monstersCell = document.createElement('div');
           monstersCell.className = 'mobile-monsters-cell';
           const monsterRow = document.createElement('div');
