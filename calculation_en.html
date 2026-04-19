@@ -20,8 +20,8 @@
 
     <style>
         .content-wrapper {
-            padding: 0 24px;
-            max-width: 1200px;
+            max-width: 1400px;
+            padding: 24px;
             margin: 0 auto;
         }
 
@@ -88,12 +88,21 @@
         }
 
         .monster-col {
-            flex: 1 1 500px;
             background: var(--card-bg);
             border-radius: 12px;
             border: 1px solid var(--card-border);
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .monster-col:first-child {
+            flex: 4;
+            min-width: 400px;
+        }
+
+        .monster-col:last-child {
+            flex: 6;
+            min-width: 500px;
         }
 
         .monster-header {
@@ -116,13 +125,17 @@
 
         .range-header,
         .range-cell {
-            width: 100px;
+            width: 130px;
+            min-width: 130px;
+            flex-shrink: 0;
             border-right: 1px solid var(--card-border);
             background: rgba(0, 0, 0, 0.03);
             color: #000;
             font-weight: 700;
             justify-content: flex-start !important;
             text-align: left;
+            white-space: nowrap;
+            font-size: 12px;
         }
 
         .monster-header-cell,
@@ -145,8 +158,8 @@
 
         .monster-row {
             display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
+            flex-wrap: nowrap;
+            gap: 6px;
         }
 
         .monster-set {
@@ -157,16 +170,27 @@
             color: #000;
             font-weight: 700;
             min-width: 60px;
+            background: rgba(0, 176, 255, 0.06);
+            border: 1px solid rgba(0, 176, 255, 0.2);
+            border-radius: 8px;
+            padding: 6px 8px 4px;
+        }
+
+        .monster-set-images {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+            align-items: center;
         }
 
         .monster-set img {
-            width: 55px;
-            height: 55px;
+            width: 45px;
+            height: 45px;
             object-fit: contain;
             border: 1px solid var(--card-border);
-            border-radius: 8px;
+            border-radius: 6px;
             background: rgba(0, 0, 0, 0.05);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
@@ -266,6 +290,7 @@
                 display: flex;
                 gap: 8px;
                 overflow-x: auto;
+                flex-wrap: nowrap;
                 padding-bottom: 4px;
             }
 
@@ -273,15 +298,26 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                min-width: 70px;
+                min-width: auto;
                 font-size: 11px;
                 color: #000;
                 font-weight: 700;
+                background: rgba(0, 176, 255, 0.06);
+                border: 1px solid rgba(0, 176, 255, 0.2);
+                border-radius: 8px;
+                padding: 6px 8px 4px;
+            }
+
+            .mobile-monster-set .monster-set-images {
+                display: flex;
+                gap: 2px;
+                justify-content: center;
+                align-items: center;
             }
 
             .mobile-monster-set img {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 50px;
                 object-fit: contain;
                 border: 1px solid var(--card-border);
                 border-radius: 8px;
@@ -333,6 +369,19 @@
         <div class="monster-table-mobile">
         </div>
         <!-- ▲▲ Mobile table end ▲▲ -->
+
+        <div
+            style="margin-top: 16px; padding: 12px 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; font-size: 13px; line-height: 1.7; color: var(--text-main);">
+            <strong>※ Notes on Conditional Probability Changes</strong><br>
+            · <span
+                style="background: rgba(255, 235, 59, 0.25); border: 1px solid rgba(255, 235, 59, 0.6); padding: 1px 6px; border-radius: 4px; font-weight: 700;">Yellow</span>
+            monster (Nomychari) will be replaced by <strong>Los67</strong> when <strong>2 or more "67"</strong> are
+            selected.<br>
+            · <span
+                style="background: rgba(255, 152, 0, 0.15); border: 1px solid rgba(255, 152, 0, 0.5); padding: 1px 6px; border-radius: 4px; font-weight: 700;">Orange</span>
+            monsters (Tictac & Wanitrack) will be replaced by <strong>Lostinpan</strong> when
+            <strong>Chinpanking</strong> is selected.
+        </div>
 
         <h2>2. How to Use the Calculator</h2>
         <div style="margin-bottom: 30px;">
@@ -420,6 +469,77 @@
             const mobileContainer = document.querySelector('.monster-table-mobile');
             if (!pcContainer || !mobileContainer) return;
 
+            // Helper: format range text with commas
+            function formatRange(range) {
+                return range.replace(/\d+/g, n => Number(n).toLocaleString());
+            }
+
+            // Helper: group monsters by percent (preserving original order)
+            function groupByPercent(monstersArr) {
+                const groups = {};
+                const ids = {};
+                const order = [];
+                monstersArr.forEach(({ id, percent }) => {
+                    if (!groups[percent]) {
+                        groups[percent] = [];
+                        ids[percent] = [];
+                        order.push(percent);
+                    }
+                    ids[percent].push(id);
+                    const monster = images.find(m => m.id === id);
+                    if (monster) groups[percent].push(monster);
+                });
+                return order.map(p => ({ percent: p, monsters: groups[p], ids: ids[p] }));
+            }
+
+            // Coloring rules for specific monsters
+            const highlightColors = {
+                orange: ['tictac', 'wanitrack'],
+                yellow: ['nomychari']
+            };
+
+            function getGroupColor(groupIds) {
+                for (const [color, ids] of Object.entries(highlightColors)) {
+                    if (groupIds.some(id => ids.includes(id))) {
+                        if (color === 'orange') return 'rgba(255, 152, 0, 0.15)';
+                        if (color === 'yellow') return 'rgba(255, 235, 59, 0.25)';
+                    }
+                }
+                return null;
+            }
+
+            function getGroupBorderColor(groupIds) {
+                for (const [color, ids] of Object.entries(highlightColors)) {
+                    if (groupIds.some(id => ids.includes(id))) {
+                        if (color === 'orange') return 'rgba(255, 152, 0, 0.5)';
+                        if (color === 'yellow') return 'rgba(255, 235, 59, 0.6)';
+                    }
+                }
+                return null;
+            }
+
+            // Helper: create a grouped monster-set element
+            function createGroupedSet(group, imgClass) {
+                const set = document.createElement('div');
+                set.className = imgClass || 'monster-set';
+                const bgColor = getGroupColor(group.ids);
+                const borderColor = getGroupBorderColor(group.ids);
+                if (bgColor) set.style.background = bgColor;
+                if (borderColor) set.style.borderColor = borderColor;
+                const imgRow = document.createElement('div');
+                imgRow.className = 'monster-set-images';
+                group.monsters.forEach(monster => {
+                    const img = document.createElement('img');
+                    img.src = monster.src;
+                    imgRow.appendChild(img);
+                });
+                const span = document.createElement('span');
+                span.textContent = group.percent + '%';
+                set.appendChild(imgRow);
+                set.appendChild(span);
+                return set;
+            }
+
             // --- PC View Rendering ---
             const totalItems = monsterProbabilityRules.length;
             const midPoint = Math.ceil(totalItems / 2);
@@ -432,9 +552,9 @@
                 const header = document.createElement('div');
                 header.className = 'monster-header';
                 header.innerHTML = `
-          <div class="range-header">Total K/s</div>
-          <div class="monster-header-cell">Monsters</div>
-        `;
+                    <div class="range-header">Total K/s</div>
+                    <div class="monster-header-cell">Monsters</div>
+                `;
                 col.appendChild(header);
 
                 data.forEach(item => {
@@ -442,25 +562,18 @@
                     rowBlock.className = 'monster-row-block';
                     const rangeCell = document.createElement('div');
                     rangeCell.className = 'range-cell';
-                    rangeCell.innerHTML = item.range;
+                    rangeCell.innerHTML = formatRange(item.range);
                     const monstersCell = document.createElement('div');
                     monstersCell.className = 'monsters-cell';
                     const monsterRow = document.createElement('div');
                     monsterRow.className = 'monster-row';
 
-                    item.monsters.forEach(mRule => {
-                        const monster = images.find(m => m.id === mRule.id);
-                        if (!monster) return;
-                        const set = document.createElement('div');
-                        set.className = 'monster-set';
-                        const img = document.createElement('img');
-                        img.src = monster.src;
-                        const span = document.createElement('span');
-                        span.textContent = mRule.percent + '%';
-                        set.appendChild(img);
-                        set.appendChild(span);
-                        monsterRow.appendChild(set);
+                    const groups = groupByPercent(item.monsters);
+                    groups.forEach(group => {
+                        if (group.monsters.length === 0) return;
+                        monsterRow.appendChild(createGroupedSet(group, 'monster-set'));
                     });
+
                     monstersCell.appendChild(monsterRow);
                     rowBlock.appendChild(rangeCell);
                     rowBlock.appendChild(monstersCell);
@@ -480,25 +593,18 @@
                 rowBlock.className = 'monster-mobile-row-block';
                 const rangeCell = document.createElement('div');
                 rangeCell.className = 'mobile-range';
-                rangeCell.textContent = item.range;
+                rangeCell.textContent = formatRange(item.range);
                 const monstersCell = document.createElement('div');
                 monstersCell.className = 'mobile-monsters-cell';
                 const monsterRow = document.createElement('div');
                 monsterRow.className = 'mobile-monster-row';
 
-                item.monsters.forEach(mRule => {
-                    const monster = images.find(m => m.id === mRule.id);
-                    if (!monster) return;
-                    const set = document.createElement('div');
-                    set.className = 'mobile-monster-set';
-                    const img = document.createElement('img');
-                    img.src = monster.src;
-                    const span = document.createElement('span');
-                    span.textContent = mRule.percent + '%';
-                    set.appendChild(img);
-                    set.appendChild(span);
-                    monsterRow.appendChild(set);
+                const groups = groupByPercent(item.monsters);
+                groups.forEach(group => {
+                    if (group.monsters.length === 0) return;
+                    monsterRow.appendChild(createGroupedSet(group, 'mobile-monster-set'));
                 });
+
                 monstersCell.appendChild(monsterRow);
                 rowBlock.appendChild(rangeCell);
                 rowBlock.appendChild(monstersCell);
