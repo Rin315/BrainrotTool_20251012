@@ -330,3 +330,26 @@ const monsterReplacementRules = [
         replacements: { "tictac": "lostinpan", "wanitrack": "lostinpan" }
     }
 ];
+
+// ========== 条件付きルール全体置換 ==========
+// selectedIds: この中から minCount 体以上選択された場合に発動
+// threshold: 置換対象のルールのthreshold
+// monsters: 置換後のモンスターリスト
+const monsterRuleOverrides = [
+    {
+        selectedIds: ["doragon", "pinkkuma", "tiramis", "track"],
+        minCount: 2,
+        threshold: Infinity,
+        monsters: [
+            { id: "chinpanking", percent: 22 },
+            { id: "penginkingini", percent: 22 },
+            { id: "tictac", percent: 35 },
+            { id: "wanitrack", percent: 35 },
+            { id: "cabritos", percent: 25 },
+            { id: "corngozira", percent: 25 },
+            { id: "gorgon", percent: 10 },
+            { id: "croissa", percent: 4 },
+            { id: "lasuper", percent: 4 }
+        ]
+    }
+];

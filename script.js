@@ -395,8 +395,21 @@ function updateMonsterProbability() {
   const rule = monsterProbabilityRules.find(r => sumValue <= r.threshold);
   if (!rule) return;
 
+  // Apply rule-level overrides (completely replace monster list for a threshold)
+  let ruleMonsters = rule.monsters;
+  if (typeof monsterRuleOverrides !== 'undefined') {
+    const selectedIds = selectedImages.filter(img => img).map(img => img.id);
+    monsterRuleOverrides.forEach(override => {
+      if (override.threshold !== rule.threshold) return;
+      const matchCount = selectedIds.filter(id => override.selectedIds.includes(id)).length;
+      if (matchCount >= override.minCount) {
+        ruleMonsters = override.monsters;
+      }
+    });
+  }
+
   // Clone monsters array for replacement
-  let monsters = rule.monsters.map(m => ({ ...m }));
+  let monsters = ruleMonsters.map(m => ({ ...m }));
 
   // Apply replacement rules based on selected monsters
   if (typeof monsterReplacementRules !== 'undefined') {
