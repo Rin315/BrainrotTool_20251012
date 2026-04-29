@@ -535,7 +535,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin-bottom: 16px;
         }
 
         .filter-column-title {
@@ -546,8 +545,6 @@
             font-size: 14px;
             color: #374151;
             margin-bottom: 10px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid #e5e7eb;
         }
 
         .filter-column-title img {
@@ -597,12 +594,13 @@
         .filter-btn-gousei {
             display: block;
             width: 100%;
-            padding: 12px;
+            padding: 10px 12px;
             border: 2px solid #fbbf24;
+            border-left: 4px solid #fbbf24;
             border-radius: 10px;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            background: white;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             color: #92400e;
             cursor: pointer;
             transition: all 0.2s;
@@ -611,33 +609,11 @@
 
         .filter-btn-gousei:hover {
             border-color: #f59e0b;
-            background: linear-gradient(135deg, #fde68a, #fcd34d);
+            background: #fffbeb;
         }
 
         .filter-btn-gousei:active {
             transform: scale(0.97);
-        }
-
-        .filter-popup-footer {
-            padding: 12px 20px;
-            border-top: 1px solid #f0f0f0;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .filter-popup-close-btn {
-            padding: 8px 24px;
-            background: #e5e7eb;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            color: #374151;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .filter-popup-close-btn:hover {
-            background: #d1d5db;
         }
 
         /* フィルタ適用中バナー */
@@ -662,9 +638,12 @@
         }
 
         @keyframes pulse-glow-filter {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
             }
+
             50% {
                 box-shadow: 0 0 16px rgba(245, 158, 11, 0.7);
             }
@@ -878,17 +857,12 @@
                                 <button class="filter-btn secret-btn" data-filter="grande-secret">Secret</button>
                             </div>
                         </div>
-                        <!-- 合成 button -->
-                        <button class="filter-btn-gousei" data-filter="gousei">合成</button>
+                        <!-- 合成 button (grid内、左列下に配置) -->
+                        <div class="filter-columns" style="margin-top: 0;">
+                            <button class="filter-btn-gousei" data-filter="gousei">合成限定</button>
+                        </div>
                     </div>
-                    <div class="filter-popup-footer">
-                        <button id="clear-filter-btn" class="filter-popup-close-btn" style="margin-right: 8px; background: #fee2e2; color: #b91c1c;">
-                            フィルタ解除
-                        </button>
-                        <button id="close-filter-popup-btn" class="filter-popup-close-btn">
-                            閉じる
-                        </button>
-                    </div>
+
                 </div>
             </div>
 
