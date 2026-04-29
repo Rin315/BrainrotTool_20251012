@@ -55,7 +55,9 @@ let state = {
     isAdmin: false,
     filterUnobtained: true,
     undoStack: [],
-    searchMode: false
+    searchMode: false,
+    monsterFilter: null,       // null = no filter, Set of monster IDs to show
+    monsterFilterLabel: null   // label for the active filter banner
 };
 
 // Access global images from data.js
@@ -88,6 +90,12 @@ const searchModeBanner = document.getElementById('search-mode-banner');
 const variantSearchModal = document.getElementById('variant-search-modal');
 const variantSearchResult = document.getElementById('variant-search-result');
 const variantSearchModalTitle = document.getElementById('variant-search-modal-title');
+
+// Monster Filter Elements
+const monsterFilterBtn = document.getElementById('monster-filter-btn');
+const filterPopupOverlay = document.getElementById('filter-popup-overlay');
+const filterActiveBanner = document.getElementById('filter-active-banner');
+const filterActiveLabel = document.getElementById('filter-active-label');
 
 // Export Modal Elements
 const exportModal = document.getElementById('export-modal');
@@ -146,6 +154,7 @@ function init() {
     setupHistoryModal();
     setupPlusMenu();
     setupVariantSearch();
+    setupMonsterFilter();
 
     // Initial Render
     renderGrid();
@@ -296,6 +305,11 @@ function renderGrid() {
     // Map monsters to include their original index for correct key generation
     let displayMonsters = [...monsters];
 
+    // Apply monster filter (luckyrot / gousei)
+    if (state.monsterFilter) {
+        displayMonsters = displayMonsters.filter(m => state.monsterFilter.has(getMonsterId(m)));
+    }
+
     if (state.filterUnobtained) {
         displayMonsters = displayMonsters.filter(m => {
             const key = `${getMonsterId(m)}_${state.currentTab}`;
@@ -438,6 +452,10 @@ function setupPagination() {
     nextBtn.onclick = () => {
         const itemsPerPage = getItemsPerPage();
         let displayMonsters = [...monsters];
+        // Apply monster filter (luckyrot / gousei)
+        if (state.monsterFilter) {
+            displayMonsters = displayMonsters.filter(m => state.monsterFilter.has(getMonsterId(m)));
+        }
         if (state.filterUnobtained) {
             displayMonsters = displayMonsters.filter(m => !state.collection[`${getMonsterId(m)}_${state.currentTab}`]);
         }
@@ -603,6 +621,7 @@ function undoLastAction() {
 function setupPlusMenu() {
     if (!plusBtn || !plusMenuItems) return;
     plusBtn.onclick = () => {
+
         plusBtn.classList.toggle('open');
         plusMenuItems.classList.toggle('open');
     };
@@ -855,6 +874,112 @@ function setupHistoryModal() {
     historyModal.onclick = (e) => {
         if (e.target === historyModal) closeModal();
     };
+}
+
+// ========== Monster Filter (Luckyrot / Gousei) ==========
+function setupMonsterFilter() {
+    if (!monsterFilterBtn || !filterPopupOverlay) return;
+
+    const closePopup = () => filterPopupOverlay.classList.remove('active');
+
+    // Open filter popup
+    monsterFilterBtn.onclick = () => {
+        filterPopupOverlay.classList.add('active');
+    };
+
+    // Close filter popup
+    const closeBtn = document.getElementById('close-filter-popup');
+    const closeBtnBottom = document.getElementById('close-filter-popup-btn');
+    if (closeBtn) closeBtn.onclick = closePopup;
+    if (closeBtnBottom) closeBtnBottom.onclick = closePopup;
+    filterPopupOverlay.onclick = (e) => {
+        if (e.target === filterPopupOverlay) closePopup();
+    };
+
+    // Filter button labels
+    const filterLabels = {
+        'normal-mythic': '通常 Mythic',
+        'normal-brainGot': '通常 BrainGot',
+        'normal-secret': '通常 Secret',
+        'grande-mythic': 'グランデ Mythic',
+        'grande-brainGot': 'グランデ BrainGot',
+        'grande-secret': 'グランデ Secret',
+        'gousei': '合成',
+    };
+
+    // Handle filter button clicks
+    const filterBtns = filterPopupOverlay.querySelectorAll('[data-filter]');
+    filterBtns.forEach(btn => {
+        btn.onclick = () => {
+            const filterKey = btn.getAttribute('data-filter');
+            let monsterIds = [];
+
+            if (filterKey === 'gousei') {
+                // Use rulesMonsterIds from rules.js
+                monsterIds = [...rulesMonsterIds];
+            } else {
+                // Parse luckyrot_filter.js config
+                const [type, category] = filterKey.split('-');
+                if (typeof luckyrotFilter !== 'undefined' && luckyrotFilter[type] && luckyrotFilter[type][category]) {
+                    monsterIds = luckyrotFilter[type][category];
+                }
+            }
+
+            // Apply filter
+            state.monsterFilter = new Set(monsterIds);
+            state.monsterFilterLabel = filterLabels[filterKey] || filterKey;
+            state.currentPage = 1;
+
+            // Show filter active banner
+            if (filterActiveBanner) {
+                filterActiveLabel.textContent = `🔸 フィルタ適用中：${state.monsterFilterLabel}`;
+                filterActiveBanner.classList.add('active');
+            }
+
+            // Update filter button appearance
+            monsterFilterBtn.textContent = 'フィルタ中';
+            monsterFilterBtn.className = 'px-3 h-[28px] bg-orange-600 text-white text-xs font-bold rounded hover:bg-orange-700 transition-colors ring-2 ring-orange-300';
+
+            closePopup();
+            renderGrid();
+        };
+    });
+
+    // Clear filter button in popup
+    const clearBtn = document.getElementById('clear-filter-btn');
+    if (clearBtn) {
+        clearBtn.onclick = () => {
+            clearMonsterFilter();
+            closePopup();
+        };
+    }
+
+    // Exit filter mode from banner
+    const exitBtn = document.getElementById('exit-filter-mode');
+    if (exitBtn) {
+        exitBtn.onclick = () => {
+            clearMonsterFilter();
+        };
+    }
+}
+
+function clearMonsterFilter() {
+    state.monsterFilter = null;
+    state.monsterFilterLabel = null;
+    state.currentPage = 1;
+
+    // Hide filter active banner
+    if (filterActiveBanner) {
+        filterActiveBanner.classList.remove('active');
+    }
+
+    // Reset filter button appearance
+    if (monsterFilterBtn) {
+        monsterFilterBtn.textContent = 'フィルタ';
+        monsterFilterBtn.className = 'px-3 h-[28px] bg-orange-500 text-white text-xs font-bold rounded hover:bg-orange-600 transition-colors';
+    }
+
+    renderGrid();
 }
 
 // Start

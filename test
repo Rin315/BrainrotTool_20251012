@@ -1,0 +1,74 @@
+index.htmlのresult欄について、確率が同じものはまとめて表示するようにしてください。モンスターの数が多くて見づらくなってしまいました。
+
+選択されたモンスターの中に67が2体以上いる場合、rule.jsに記載のnomychariをlos67に変えたいです
+また、chinpankingが選択された場合、rule.jsに記載のtictac、wanitrackの2つをchinpankingに変えたいです
+どのような変更方法が管理しやすいでしょうか。
+
+少し間違えました。
+chinpankingが選択された場合、rule.jsに記載のtictac、wanitrackの2つをlostinpanに変えたいです
+chinpankingが選択された時はtictacとwanitrackの2つがlostinpanに置き換わる形です。
+            { id: "cacasito", percent: 30 },
+            { id: "wanichari", percent: 30 },
+            { id: "nomychari", percent: 40 },
+            { id: "chinpanking", percent: 15 },
+            { id: "penginkingini", percent: 15 },
+            { id: "tictac", percent: 5 },
+            { id: "wanitrack", percent: 5 }
+これが
+            { id: "cacasito", percent: 30 },
+            { id: "wanichari", percent: 30 },
+            { id: "nomychari", percent: 40 },
+            { id: "chinpanking", percent: 15 },
+            { id: "penginkingini", percent: 15 },
+            { id: "lostinpan", percent: 5 }
+になる感じです。
+
+calculation.htmlの1. モンスターごとの確率についての表をきれいにしたいです。
+いまは確率が同じものがグループ化されていないので、グループ化してください。
+また、モンスターの行が2段にならないようにしてください。
+
+以下修正お願いします。
+・PC版ではスクロールではなく、1画面で収まるようにしてください。また、2段にならないようにしてください。表の横幅を広げてもいいです。
+・スマホ版ではスクロールして1段にしてください。
+・確率が高い順にソートはしないでください。
+
+・グループ化したものは枠や背景色でわかるようにしてください。
+
+・Total K/sの列がガタガタになっているので修正してください。
+・左側の表は余白があるので、その分つめて、右側の表のスペースを広げてください。
+
+・80001〜100000の数字がはみ出ています。修正してください
+・数字が見にくいので、「100,000」のようにカンマを入れてください。
+・tictacとwanitrackの2つと、nomychariのみ背景の色を変えてください。
+tictacとwanitrackの2つはオレンジ、nomychariは黄色にしてください。
+
+
+calculation.htmlの1. モンスターごとの確率についての表の下に67を2体以上選択した場合、nomychariの部分の確率が変わる旨と
+chinpankingを選択した場合、tictacとwanitrackの部分の確率が変わる旨の注意書きを入れてください。
+
+contact.htmlの中にこっそりと寄付をできるリンクを追加したいです。
+あまり目立たないくらいでいいです。
+リンクは以下です。
+https://buymeacoffee.com/rin315
+
+doragon,pinkkuma,tiramis,trackのうち2体以上が選ばれた場合のみ、確率を以下にしたいです
+            { id: "chinpanking", percent: 22 },
+            { id: "penginkingini", percent: 22 },
+            { id: "tictac", percent: 35 },
+            { id: "wanitrack", percent: 35 },
+            { id: "cabritos", percent: 25 },
+            { id: "corngozira", percent: 25 },
+            { id: "gorgon", percent: 10 },
+            { id: "croissa", percent: 4 },
+            { id: "lasuper", percent: 4 }
+
+
+cheack.htmlにて上部に「フィルタ」というボタンを追加したいです。
+イメージとしては「フィルタ」というボタンを押すと、「合成」「Mythic」「BrainGot」「Secret」「Mythic」「BrainGot」「Secret」というボタンを選択できるポップアップでウィンドウが開きます。
+なお、「Mythic」「BrainGot」「Secret」は2つずつありますが、内容は異なります。1組のものは上部に「通常」とタイトルをつけて横に「luckyrot.png」の画像をタイトルの横に小さめにつけてください。
+もう1組は「グランデ」とタイトルをつけて、「grandeluckyrot.png」の画像をタイトルの横に小さめにつけてください。
+ポップアップウィンドウ内のボタンの配置としては、通常の1組が縦に3つ、その横にグランデの1組が縦に3つ、下に「合成」がある感じでお願いします。
+そしてボタンを押したときの動作ですが、それぞれのボタンに割あたっているモンスターのみを表示させる形にフィルターしてほしいです。
+それぞれのボタンに割り当てるモンスターはメンテナンスしやすいようにまとめて指定できるようにしたいです。
+「合成」のボタンを押したときはrules.jsに記載のモンスターを表示するようにしてください。
+実装にあたり質問があればきいてください。

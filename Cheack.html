@@ -485,6 +485,205 @@
             transform: scale(1.05);
             box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
         }
+
+        /* フィルタポップアップ */
+        .filter-popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .filter-popup-overlay.active {
+            display: flex;
+        }
+
+        .filter-popup {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+        }
+
+        .filter-popup-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fafb;
+        }
+
+        .filter-popup-header h3 {
+            font-weight: 700;
+            color: #374151;
+            font-size: 16px;
+        }
+
+        .filter-popup-body {
+            padding: 20px;
+        }
+
+        .filter-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .filter-column-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .filter-column-title img {
+            height: 24px;
+            width: auto;
+            border-radius: 4px;
+        }
+
+        .filter-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: white;
+            font-weight: 700;
+            font-size: 13px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .filter-btn:hover {
+            border-color: #6366f1;
+            background: #f0f0ff;
+            color: #4f46e5;
+        }
+
+        .filter-btn:active {
+            transform: scale(0.97);
+        }
+
+        .filter-btn.mythic-btn {
+            border-left: 4px solid #ff6b35;
+        }
+
+        .filter-btn.braingot-btn {
+            border-left: 4px solid #22c55e;
+        }
+
+        .filter-btn.secret-btn {
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .filter-btn-gousei {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #fbbf24;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            font-weight: 700;
+            font-size: 14px;
+            color: #92400e;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .filter-btn-gousei:hover {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fde68a, #fcd34d);
+        }
+
+        .filter-btn-gousei:active {
+            transform: scale(0.97);
+        }
+
+        .filter-popup-footer {
+            padding: 12px 20px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .filter-popup-close-btn {
+            padding: 8px 24px;
+            background: #e5e7eb;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            color: #374151;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .filter-popup-close-btn:hover {
+            background: #d1d5db;
+        }
+
+        /* フィルタ適用中バナー */
+        .filter-active-banner {
+            display: none;
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+            color: white;
+            text-align: center;
+            padding: 6px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            animation: pulse-glow-filter 2s ease-in-out infinite;
+        }
+
+        .filter-active-banner.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        @keyframes pulse-glow-filter {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(245, 158, 11, 0.7);
+            }
+        }
+
+        .filter-active-banner button {
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
+            color: white;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .filter-active-banner button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 
@@ -553,6 +752,10 @@
                     <button id="variant-search-btn"
                         class="px-3 h-[28px] bg-teal-500 text-white text-xs font-bold rounded hover:bg-teal-600 transition-colors whitespace-nowrap hidden">
                         種類検索
+                    </button>
+                    <button id="monster-filter-btn"
+                        class="px-3 h-[28px] bg-orange-500 text-white text-xs font-bold rounded hover:bg-orange-600 transition-colors">
+                        フィルタ
                     </button>
                     <button id="filter-toggle-btn"
                         class="px-3 h-[28px] bg-gray-500 text-white text-xs font-bold rounded hover:bg-blue-600 transition-colors">
@@ -634,6 +837,61 @@
                 <button id="exit-search-mode">✕ 終了</button>
             </div>
 
+            <!-- Filter Active Banner -->
+            <div id="filter-active-banner" class="filter-active-banner order-2">
+                <span id="filter-active-label">🔸 フィルタ適用中</span>
+                <button id="exit-filter-mode">✕ 解除</button>
+            </div>
+
+            <!-- Filter Popup Modal -->
+            <div id="filter-popup-overlay" class="filter-popup-overlay">
+                <div class="filter-popup">
+                    <div class="filter-popup-header">
+                        <h3>フィルタ</h3>
+                        <button id="close-filter-popup" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="filter-popup-body">
+                        <div class="filter-columns">
+                            <!-- 通常 column -->
+                            <div>
+                                <div class="filter-column-title">
+                                    <span>通常</span>
+                                    <img src="./img/luckyrot.png" alt="通常ラッキーロット">
+                                </div>
+                                <button class="filter-btn mythic-btn" data-filter="normal-mythic">Mythic</button>
+                                <button class="filter-btn braingot-btn" data-filter="normal-brainGot">BrainGot</button>
+                                <button class="filter-btn secret-btn" data-filter="normal-secret">Secret</button>
+                            </div>
+                            <!-- グランデ column -->
+                            <div>
+                                <div class="filter-column-title">
+                                    <span>グランデ</span>
+                                    <img src="./img/grandeluckyrot.png" alt="グランデラッキーロット">
+                                </div>
+                                <button class="filter-btn mythic-btn" data-filter="grande-mythic">Mythic</button>
+                                <button class="filter-btn braingot-btn" data-filter="grande-brainGot">BrainGot</button>
+                                <button class="filter-btn secret-btn" data-filter="grande-secret">Secret</button>
+                            </div>
+                        </div>
+                        <!-- 合成 button -->
+                        <button class="filter-btn-gousei" data-filter="gousei">合成</button>
+                    </div>
+                    <div class="filter-popup-footer">
+                        <button id="clear-filter-btn" class="filter-popup-close-btn" style="margin-right: 8px; background: #fee2e2; color: #b91c1c;">
+                            フィルタ解除
+                        </button>
+                        <button id="close-filter-popup-btn" class="filter-popup-close-btn">
+                            閉じる
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Modal for Variant Search Result -->
             <div id="variant-search-modal"
                 class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000] hidden flex items-center justify-center p-4">
@@ -685,6 +943,8 @@
     <!-- Scripts -->
     <!-- Load rules.js for probability monster IDs -->
     <script src="rules.js"></script>
+    <!-- Load luckyrot filter config -->
+    <script src="luckyrot_filter.js"></script>
     <!-- Load data.js globally first -->
     <script src="data.js"></script>
     <script>window.images = images;</script>
