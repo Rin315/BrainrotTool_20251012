@@ -301,15 +301,15 @@ const monsterProbabilityRules = [
         range: "100001〜",
         threshold: Infinity,
         monsters: [
-            { id: "chinpanking", percent: 25 },
-            { id: "penginkingini", percent: 25 },
+            { id: "chinpanking", percent: 25.5 },
+            { id: "penginkingini", percent: 25.5 },
             { id: "tictac", percent: 35 },
             { id: "wanitrack", percent: 35 },
             { id: "cabritos", percent: 25 },
             { id: "corngozira", percent: 25 },
             { id: "gorgon", percent: 10 },
             { id: "croissa", percent: 4 },
-            { id: "lasuper", percent: 1 }
+            { id: "lasuper", percent: 0.5 }
         ]
     }
 ];
