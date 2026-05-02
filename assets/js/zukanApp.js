@@ -961,6 +961,9 @@ function setupMonsterFilter() {
             clearMonsterFilter();
         };
     }
+
+    // Setup monster list modal
+    setupFilterListModal();
 }
 
 function clearMonsterFilter() {
@@ -980,6 +983,102 @@ function clearMonsterFilter() {
     }
 
     renderGrid();
+}
+
+// ========== Monster Filter List Modal ==========
+function setupFilterListModal() {
+    const showBtn = document.getElementById('show-filter-list-btn');
+    const overlay = document.getElementById('filter-list-modal-overlay');
+    const closeBtn = document.getElementById('close-filter-list-modal');
+    const body = document.getElementById('filter-list-modal-body');
+
+    if (!showBtn || !overlay || !body) return;
+
+    const closeModal = () => overlay.classList.remove('active');
+
+    if (closeBtn) closeBtn.onclick = closeModal;
+    overlay.onclick = (e) => {
+        if (e.target === overlay) closeModal();
+    };
+
+    showBtn.onclick = () => {
+        // Build monster list content
+        body.innerHTML = '';
+
+        // Helper: create a section with title and monster images
+        const createSection = (titleHtml, monsterIds, badgeColor) => {
+            if (!monsterIds || monsterIds.length === 0) return;
+
+            const section = document.createElement('div');
+            section.className = 'filter-list-section';
+
+            const title = document.createElement('div');
+            title.className = 'filter-list-section-title';
+            title.innerHTML = titleHtml;
+            section.appendChild(title);
+
+            const imagesDiv = document.createElement('div');
+            imagesDiv.className = 'filter-list-images';
+
+            monsterIds.forEach(id => {
+                const monster = monsters.find(m => getMonsterId(m) === id);
+                if (!monster) return;
+                const img = document.createElement('img');
+                img.src = monster.src;
+                img.alt = monster.name;
+                img.title = monster.name;
+                img.onerror = () => {
+                    img.style.display = 'none';
+                };
+                imagesDiv.appendChild(img);
+            });
+
+            section.appendChild(imagesDiv);
+            body.appendChild(section);
+        };
+
+        // 通常ラッキーロット sections
+        if (typeof luckyrotFilter !== 'undefined' && luckyrotFilter.normal) {
+            const n = luckyrotFilter.normal;
+            createSection(
+                '<img src="./img/luckyrot.png" alt="通常"> <span>通常</span> <span class="section-badge" style="background:#ff6b35;">Mythic</span>',
+                n.mythic
+            );
+            createSection(
+                '<img src="./img/luckyrot.png" alt="通常"> <span>通常</span> <span class="section-badge" style="background:#22c55e;">BrainGot</span>',
+                n.brainGot
+            );
+            createSection(
+                '<img src="./img/luckyrot.png" alt="通常"> <span>通常</span> <span class="section-badge" style="background:#8b5cf6;">Secret</span>',
+                n.secret
+            );
+        }
+
+        // グランデラッキーロット sections
+        if (typeof luckyrotFilter !== 'undefined' && luckyrotFilter.grande) {
+            const g = luckyrotFilter.grande;
+            createSection(
+                '<img src="./img/grandeluckyrot.png" alt="グランデ"> <span>グランデ</span> <span class="section-badge" style="background:#ff6b35;">Mythic</span>',
+                g.mythic
+            );
+            createSection(
+                '<img src="./img/grandeluckyrot.png" alt="グランデ"> <span>グランデ</span> <span class="section-badge" style="background:#22c55e;">BrainGot</span>',
+                g.brainGot
+            );
+            createSection(
+                '<img src="./img/grandeluckyrot.png" alt="グランデ"> <span>グランデ</span> <span class="section-badge" style="background:#8b5cf6;">Secret</span>',
+                g.secret
+            );
+        }
+
+        // 合成限定 section
+        createSection(
+            '<span class="section-badge" style="background:#f59e0b;">合成限定</span>',
+            [...rulesMonsterIds]
+        );
+
+        overlay.classList.add('active');
+    };
 }
 
 // Start
