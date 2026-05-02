@@ -854,22 +854,22 @@ h2 {
 }
 
 .side-ad-left {
-  right: calc(50% + 610px);
+  right: calc(50% + 640px);
   left: auto;
 }
 
 .side-ad-right {
-  left: calc(50% + 610px);
+  left: calc(50% + 640px);
   right: auto;
 }
 
 /* 
-   Content max-width is ~1250px.
+   Content max-width is ~1200px (center ±600px).
    Ad width assumed ~160px.
-   Need space: (W - 1250) / 2 > 160 => W > 1570.
-   Let's check 1650px as safe margin.
+   Offset from center: 640px.
+   Need viewport: 640*2 + 160*2 = 1600px minimum, use 1750px for safe margin.
 */
-@media (min-width: 1650px) {
+@media (min-width: 1750px) {
 
   .side-ad-left,
   .side-ad-right {
