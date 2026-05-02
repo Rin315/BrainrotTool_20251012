@@ -194,6 +194,7 @@ const images = [
     { id: 'lachristmas', src: './img/lachristmas.png', name: 'クリスマスラグランデ(クリスマス合成限定)', value: 9000, rarity: 'Secret-' },//クリスマスラグランデ
     { id: 'penginking', src: './img/penginking.png', name: 'ペンギンキング', value: 9500, rarity: 'Secret' },
     { id: 'pad', src: './img/pad.png', name: 'ケパット', value: 10000, rarity: 'Secret' },
+    { id: 'kabuto', src: './img/kabuto.png', name: 'カブト鯉のぼり', value: 10000, rarity: 'Secret' },
     { id: 'lovebear', src: './img/lovebear.png', name: 'ラブベアー', value: 10500, rarity: 'Secret-' },
     { id: 'cocobina', src: './img/cocobina.png', name: 'ココブレード女', value: 11000, rarity: 'Secret' },
     { id: 'nekotokei', src: './img/nekotokei.png', name: '猫時計', value: 11500, rarity: 'Secret' },
@@ -203,11 +204,15 @@ const images = [
     { id: 'WorL', src: './img/WorL.png', name: 'WorL', value: 13000, rarity: 'Secret' },
     { id: 'nomychari', src: './img/nomychari.png', name: 'ノーマイチャリ(合成限定)', value: 13500, rarity: 'Secret' },
     { id: 'cookipad', src: './img/cookipad.png', name: 'クッキーパット', value: 14000, rarity: 'Secret-' },
+    { id: 'mekainu', src: './img/mekainu.png', name: 'メカ犬', value: 14000, rarity: 'Secret' },
+    { id: 'kobura', src: './img/kobura.png', name: 'コブラ', value: 14200, rarity: 'Secret' },
+
     { id: 'kabaking', src: './img/kabaking.png', name: 'カバキング', value: 14500, rarity: 'Secret' },
     { id: 'cloverchari', src: './img/cloverchari.jpg', name: 'クローバーチャリ', value: 14500, rarity: 'Secret' },
     { id: 'losgarama', src: './img/losgarama.png', name: 'ロスガラマ', value: 15000, rarity: 'Secret' },
     { id: 'uchuhikoushi', src: './img/uchuhikoushi.png', name: '宇宙飛行士', value: 16000, rarity: 'Secret' },
     { id: 'kaerutoire', src: './img/kaerutoire.png', name: 'カエルトイレ', value: 17000, rarity: 'Secret' },
+    { id: 'tranp', src: './img/tranp.png', name: 'トランプキング', value: 17500, rarity: 'Secret' },
     { id: 'lovepad', src: './img/lovepad.png', name: 'Loveパッド', value: 18000, rarity: 'Secret-' },
     { id: 'mcpene', src: './img/mcpene.png', name: 'ムキムキ', value: 19000, rarity: 'Secret' },
     { id: 'tungballe', src: './img/tungballe.png', name: 'タンタンサフ＆バレリーナ', value: 19000, rarity: 'Secret' },
@@ -217,6 +222,7 @@ const images = [
     { id: 'pitiata', src: './img/pitiata.png', name: '竜', value: 22000, rarity: 'Secret' },
     { id: 'los67', src: './img/los67.png', name: 'ロス67(合成限定)', value: 22500, rarity: 'Secret' },
     { id: 'kitunesouryo', src: './img/kitunesouryo.png', name: '狼', value: 23000, rarity: 'Secret' },
+    { id: 'sameking', src: './img/sameking.png', name: 'サメキング', value: 23500, rarity: 'Secret' },
     { id: 'chinpanking', src: './img/chinpanking.png', name: 'チンパンジニーキング', value: 25000, rarity: 'Secret' },//チンパンジー
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'penginkingini', src: './img/penginkingini.JPG', name: 'ペンギンキンギー二(合成合成限定)', value: 26000, rarity: 'Secret' },
@@ -230,6 +236,7 @@ const images = [
     { id: 'eggie', src: './img/eggie.png', name: 'エッグ家（イースターロット）', value: 35000, rarity: 'Secret-' },
     { id: 'wanitrack', src: './img/wanitrack.JPG', name: 'ワニトラック（合成限定）', value: 36000, rarity: 'Secret' },
     { id: 'mekauma', src: './img/mekauma.png', name: 'メカ馬', value: 37000, rarity: 'Secret' },
+    { id: 'capanna', src: './img/capanna.png', name: 'カッパーナ', value: 38000, rarity: 'Secret' },
     { id: 'spageti', src: './img/spageti.png', name: 'スパゲティトイレ', value: 40000, rarity: 'Secret-' },
     { id: 'lostinpan', src: './img/lostinpan.JPG', name: 'ロスチンパンジー二(合成限定)', value: 41000, rarity: 'Secret' },
     { id: 'santani', src: './img/santani.png', name: 'サンタツリー(クリスマス合成限定)', value: 42000, rarity: 'Secret-' },//サンタニ
@@ -251,5 +258,6 @@ const images = [
     { id: 'bazrait', src: './img/bazrait.png', name: 'フィッシー二ロボ', value: 105000, rarity: 'Secret' },
     { id: 'taihou', src: './img/taihou.png', name: '大砲', value: 115000, rarity: 'Secret' },
     { id: 'lasuper', src: './img/lasuper.JPG', name: 'ラスペリオー（合成限定）', value: 180000, rarity: 'Secret' },
+    { id: 'taihou3', src: './img/taihou3.png', name: '大砲ケルベロス', value: 200000, rarity: 'Secret' },
     { id: 'toire', src: './img/SkibidiToilet.png', name: 'スケビティートイレ', value: 350000, rarity: 'Secret-' },
 ];
