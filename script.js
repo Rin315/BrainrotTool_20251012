@@ -16,7 +16,8 @@ let selectedHasBorder = [false, false, false, false, false];
 const isEnglish = document.documentElement.lang === 'en';
 
 // ========== フィルタ状態 ==========
-let filterState = {
+const FILTER_STORAGE_KEY = 'brainrot_filter_state';
+const defaultFilterState = {
   brainGot: true,
   secret: true,
   eternal: false,
@@ -24,6 +25,22 @@ let filterState = {
   gousei: true,
   eventLimited: false,
 };
+
+function loadFilterState() {
+  try {
+    const saved = localStorage.getItem(FILTER_STORAGE_KEY);
+    if (saved) return { ...defaultFilterState, ...JSON.parse(saved) };
+  } catch (e) { /* ignore */ }
+  return { ...defaultFilterState };
+}
+
+function saveFilterState() {
+  try {
+    localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(filterState));
+  } catch (e) { /* ignore */ }
+}
+
+let filterState = loadFilterState();
 
 // ========== IDセット構築 ==========
 function buildLuckyrotSet() {
@@ -67,23 +84,23 @@ function shouldShowMonster(imgObj) {
   // Common/Mythic (rarity === 'Common') は表示しない
   if (rarity === 'Common') return false;
 
+  // レアリティフィルタ（最優先：OFFならクロスカテゴリに関係なく非表示）
+  if (rarity.startsWith('BrainrotGot') && !filterState.brainGot) return false;
+  if (rarity.startsWith('Secret') && !filterState.secret) return false;
+  if (rarity.startsWith('Eternal') && !filterState.eternal) return false;
+
   // イベント限定フィルタ (rarity ending in '-')
   if (rarity.endsWith('-') && !filterState.eventLimited) return false;
 
   const isInLuckyrot = luckyrotIdSet.has(id);
   const isInGousei = gouseiIdSet.has(id);
 
-  // クロスカテゴリフィルタ（合成限定/ラッキーロット）がONなら、レアリティに関係なく表示
+  // クロスカテゴリフィルタ（合成限定/ラッキーロット）がONなら表示
   if ((isInLuckyrot && filterState.luckyrot) || (isInGousei && filterState.gousei)) return true;
 
   // クロスカテゴリフィルタがOFFで、そのカテゴリに属するモンスターは非表示
   if (isInLuckyrot && !filterState.luckyrot) return false;
   if (isInGousei && !filterState.gousei) return false;
-
-  // レアリティフィルタ
-  if (rarity.startsWith('BrainrotGot') && !filterState.brainGot) return false;
-  if (rarity.startsWith('Secret') && !filterState.secret) return false;
-  if (rarity.startsWith('Eternal') && !filterState.eternal) return false;
 
   return true;
 }
@@ -279,6 +296,7 @@ if (indexFilterBtn && filterPopupOverlay) {
       filterState.luckyrot = document.getElementById('ft-luckyrot').checked;
       filterState.gousei = document.getElementById('ft-gousei').checked;
       filterState.eventLimited = document.getElementById('ft-event').checked;
+      saveFilterState();
       gtag('event', 'Filter_apply_click');
       closePopup();
       renderGallery();

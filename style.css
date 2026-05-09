@@ -881,6 +881,27 @@ h2 {
   border-bottom: none;
 }
 
+/* レアリティフィルタ（優先） */
+.filter-toggle-row--primary {
+  background: #f0f9ff;
+  margin: 0 -20px;
+  padding: 10px 20px;
+  border-left: 3px solid #3b82f6;
+  border-bottom: 1px solid #e0f2fe;
+}
+
+.filter-toggle-row--primary .filter-toggle-label {
+  color: #1e40af;
+  font-weight: 700;
+}
+
+/* フィルタグループ区切り */
+.filter-separator {
+  height: 1px;
+  background: #d1d5db;
+  margin: 8px 0;
+}
+
 .filter-toggle-label {
   font-size: 14px;
   font-weight: 600;
