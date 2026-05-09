@@ -99,15 +99,15 @@
   <!-- ▼▼ ツール本体 ▼▼ -->
   <div class="update-section">
     <div class="update-info">
-      <span class="update-date">2026/5/3</span>
-      <span class="update-text">合成マシンの確率を最新のデータに更新しました。一部モンスターの図鑑画像を募集しています。<a
+      <span class="update-date">2026/5/9</span>
+      <span class="update-text">モンスターが多くなってきたためフィルタボタンを追加しました。フィルタ状態は保存されますのでぜひご利用ください。<a
           href="/contact.html">コチラ</a>からお願いします。</span>
       <!-- <span class="update-text">合成マシンの確率を最新のデータに更新しました。</span> -->
     </div>
   </div>
 
   <div class="section-header">
-    <h2 class="category-title">BrainrotGod</h2>
+    <h2 class="category-title" id="brainrot-section-title">BrainrotGod</h2>
     <div class="event-toggle-container">
       <button id="index-filter-btn" type="button">フィルタ</button>
     </div>
@@ -138,37 +138,45 @@
     <div class="index-filter-popup">
       <div class="index-filter-popup-header">
         <h3>フィルタ</h3>
-        <button id="close-index-filter-popup" class="text-gray-400 hover:text-gray-600" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;">&times;</button>
+        <button id="close-index-filter-popup" class="text-gray-400 hover:text-gray-600"
+          style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;">&times;</button>
       </div>
       <div class="index-filter-popup-body">
         <div class="filter-toggle-row filter-toggle-row--primary">
           <span class="filter-toggle-label">BrainrotGot</span>
-          <label class="filter-toggle-switch"><input type="checkbox" id="ft-brainGot" checked><span class="filter-toggle-slider"></span></label>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-brainGot" checked><span
+              class="filter-toggle-slider"></span></label>
         </div>
         <div class="filter-toggle-row filter-toggle-row--primary">
           <span class="filter-toggle-label">Secret</span>
-          <label class="filter-toggle-switch"><input type="checkbox" id="ft-secret" checked><span class="filter-toggle-slider"></span></label>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-secret" checked><span
+              class="filter-toggle-slider"></span></label>
         </div>
         <div class="filter-toggle-row filter-toggle-row--primary">
           <span class="filter-toggle-label">Eternal</span>
-          <label class="filter-toggle-switch"><input type="checkbox" id="ft-eternal"><span class="filter-toggle-slider"></span></label>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-eternal"><span
+              class="filter-toggle-slider"></span></label>
         </div>
         <div class="filter-separator"></div>
         <div class="filter-toggle-row">
           <span class="filter-toggle-label">ラッキーロット</span>
-          <label class="filter-toggle-switch"><input type="checkbox" id="ft-luckyrot" checked><span class="filter-toggle-slider"></span></label>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-luckyrot" checked><span
+              class="filter-toggle-slider"></span></label>
         </div>
         <div class="filter-toggle-row">
           <span class="filter-toggle-label">合成限定</span>
-          <label class="filter-toggle-switch"><input type="checkbox" id="ft-gousei" checked><span class="filter-toggle-slider"></span></label>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-gousei" checked><span
+              class="filter-toggle-slider"></span></label>
         </div>
         <div class="filter-toggle-row">
           <span class="filter-toggle-label">イベント限定</span>
-          <label class="filter-toggle-switch"><input type="checkbox" id="ft-event"><span class="filter-toggle-slider"></span></label>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-event"><span
+              class="filter-toggle-slider"></span></label>
         </div>
         <div class="filter-toggle-row">
           <span class="filter-toggle-label">上記以外</span>
-          <label class="filter-toggle-switch"><input type="checkbox" id="ft-others" checked><span class="filter-toggle-slider"></span></label>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-others" checked><span
+              class="filter-toggle-slider"></span></label>
         </div>
       </div>
       <div class="index-filter-popup-footer">

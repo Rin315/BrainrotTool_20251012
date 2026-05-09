@@ -160,6 +160,9 @@ function updateSectionVisibility() {
   // コンテンツの有無でセクションを表示/非表示
   const hasBrainGot = galleryBrainrot.children.length > 0;
   galleryBrainrot.style.display = hasBrainGot ? '' : 'none';
+  // BrainrotGodタイトルもギャラリーに合わせて表示/非表示
+  const brainrotTitle = document.getElementById('brainrot-section-title');
+  if (brainrotTitle) brainrotTitle.style.display = hasBrainGot ? '' : 'none';
 
   const hasSecret = gallerySecret.children.length > 0;
   const secretHeader = document.getElementById('secret-section-header');
