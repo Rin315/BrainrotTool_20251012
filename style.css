@@ -796,6 +796,7 @@ h2 {
 .event-toggle-container {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 #index-filter-btn {
