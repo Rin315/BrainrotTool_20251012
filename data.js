@@ -80,7 +80,7 @@ const images = [
     { id: 'taka', src: './img/taka.png', name: 'タカ', value: 0, rarity: 'Common' },
     { id: 'box', src: './img/hako.png', name: 'レンガ(合成限定)', value: 0, rarity: 'Common' }, //箱
     { id: 'box', src: './img/hako.png', name: 'レンガ(合成限定)', value: 0, rarity: 'Common' }, //箱
-    { id: 'wolfdensirenzi', src: './img/wolfdensirenzi.png', name: 'ウルフ電子レンジ', value: 0, rarity: 'Common' },
+    { id: 'goriraalto', src: './img/goriraalto.png', name: 'ミャクミャクゴリラ', value: 0, rarity: 'Common' },
 
     //　Brainrot Got
     { id: 'cocofanto', src: './img/cocofanto.png', name: 'ココファント', value: 10, rarity: 'BrainrotGot' },
@@ -255,7 +255,7 @@ const images = [
     { id: 'kumo', src: './img/kumo.png', name: 'クモ', value: 75000, rarity: 'Eternal' },
     { id: 'humberger', src: './img/humberger.JPG', name: 'ハンバーガーポテト（合成限定）', value: 80000, rarity: 'Eternal' },
     { id: 'pinkkuma', src: './img/pinkkuma.png', name: 'ピンククマ', value: 85000, rarity: 'Eternal' },
-    { id: 'syoberuka', src: './img/syoberuka.png', name: 'ショベルカー', value: 87000, rarity: 'Eternal' },
+    { id: 'syoberuka', src: './img/syoberuka.png', name: 'ショベルカー', value: 8700, rarity: 'Eternal' },
     { id: 'tiramis', src: './img/tiramis.png', name: '潜水艦', value: 90000, rarity: 'Eternal' },
     { id: 'tralaledon', src: './img/tralaledon.JPG', name: 'トララレドン（合成限定）', value: 95000, rarity: 'Eternal' },
     { id: 'track', src: './img/track.png', name: 'トラック', value: 100000, rarity: 'Eternal' },
