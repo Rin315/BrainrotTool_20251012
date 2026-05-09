@@ -160,9 +160,6 @@ function updateSectionVisibility() {
   // コンテンツの有無でセクションを表示/非表示
   const hasBrainGot = galleryBrainrot.children.length > 0;
   galleryBrainrot.style.display = hasBrainGot ? '' : 'none';
-  // BrainrotGodタイトルもギャラリーに合わせて表示/非表示
-  const brainrotTitle = document.getElementById('brainrot-section-title');
-  if (brainrotTitle) brainrotTitle.style.display = hasBrainGot ? '' : 'none';
 
   const hasSecret = gallerySecret.children.length > 0;
   const secretHeader = document.getElementById('secret-section-header');
@@ -173,6 +170,33 @@ function updateSectionVisibility() {
   const eternalHeader = document.getElementById('eternal-section-header');
   if (eternalHeader) eternalHeader.style.display = hasEternal ? '' : 'none';
   if (galleryEternal) galleryEternal.style.display = hasEternal ? '' : 'none';
+
+  // フィルタボタンの位置制御
+  const brainrotHeader = document.getElementById('brainrot-section-header');
+  const brainrotTitle = document.getElementById('brainrot-section-title');
+  const filterBtnContainer = document.getElementById('filter-btn-container');
+  if (!filterBtnContainer) return;
+
+  if (hasBrainGot) {
+    // BrainrotGotが表示中 → 元の位置（BrainrotGodヘッダー）に戻す
+    if (brainrotHeader && filterBtnContainer.parentNode !== brainrotHeader) {
+      brainrotHeader.appendChild(filterBtnContainer);
+    }
+    if (brainrotHeader) brainrotHeader.style.display = '';
+    if (brainrotTitle) brainrotTitle.style.display = '';
+  } else {
+    // BrainrotGotが非表示 → 最初に表示されるセクションヘッダーに移動
+    if (brainrotTitle) brainrotTitle.style.display = 'none';
+    const firstVisibleHeader = hasSecret ? secretHeader
+      : hasEternal ? eternalHeader : null;
+    if (firstVisibleHeader) {
+      firstVisibleHeader.appendChild(filterBtnContainer);
+      if (brainrotHeader) brainrotHeader.style.display = 'none';
+    } else {
+      // どのセクションも表示されない場合はBrainrotGodヘッダーにボタンだけ残す
+      if (brainrotHeader) brainrotHeader.style.display = '';
+    }
+  }
 }
 
 // ========== ギャラリー生成 ==========
