@@ -109,12 +109,12 @@
   <div class="section-header">
     <h2 class="category-title">BrainrotGod</h2>
     <div class="event-toggle-container">
-      <button id="event-toggle-btn" type="button">イベント限定モンスターを表示</button>
+      <button id="index-filter-btn" type="button">フィルタ</button>
     </div>
   </div>
   <div id="gallery-brainrot" class="gallery-grid"></div>
 
-  <div class="section-header">
+  <div class="section-header" id="secret-section-header">
     <h2 class="category-title">Secret</h2>
   </div>
   <div id="gallery-secret" class="gallery-grid"></div>
@@ -127,6 +127,50 @@
     </div>
   </div>
   <!-- /PC広告2 -->
+
+  <div class="section-header" id="eternal-section-header" style="display: none;">
+    <h2 class="category-title">Eternal</h2>
+  </div>
+  <div id="gallery-eternal" class="gallery-grid" style="display: none;"></div>
+
+  <!-- フィルタポップアップ -->
+  <div id="index-filter-popup-overlay" class="index-filter-popup-overlay">
+    <div class="index-filter-popup">
+      <div class="index-filter-popup-header">
+        <h3>フィルタ</h3>
+        <button id="close-index-filter-popup" class="text-gray-400 hover:text-gray-600" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;">&times;</button>
+      </div>
+      <div class="index-filter-popup-body">
+        <div class="filter-toggle-row">
+          <span class="filter-toggle-label">BrainGot</span>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-brainGot" checked><span class="filter-toggle-slider"></span></label>
+        </div>
+        <div class="filter-toggle-row">
+          <span class="filter-toggle-label">Secret</span>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-secret" checked><span class="filter-toggle-slider"></span></label>
+        </div>
+        <div class="filter-toggle-row">
+          <span class="filter-toggle-label">Eternal</span>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-eternal"><span class="filter-toggle-slider"></span></label>
+        </div>
+        <div class="filter-toggle-row">
+          <span class="filter-toggle-label">ラッキーロット</span>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-luckyrot" checked><span class="filter-toggle-slider"></span></label>
+        </div>
+        <div class="filter-toggle-row">
+          <span class="filter-toggle-label">合成限定</span>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-gousei" checked><span class="filter-toggle-slider"></span></label>
+        </div>
+        <div class="filter-toggle-row">
+          <span class="filter-toggle-label">イベント限定</span>
+          <label class="filter-toggle-switch"><input type="checkbox" id="ft-event"><span class="filter-toggle-slider"></span></label>
+        </div>
+      </div>
+      <div class="index-filter-popup-footer">
+        <button id="apply-index-filter" class="index-filter-ok-btn">OK</button>
+      </div>
+    </div>
+  </div>
 
   <div class="section-header">
     <h2>Select</h2>
@@ -274,6 +318,7 @@
 
   <script src="data.js"></script>
   <script src="rules.js"></script>
+  <script src="luckyrot_filter.js"></script>
   <script src="./script.js"></script>
   <script>
     // Hide side sticky ads when they would overlap the bottom banner

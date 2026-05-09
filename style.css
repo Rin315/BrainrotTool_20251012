@@ -792,54 +792,171 @@ h2 {
   box-shadow: 0 8px 24px rgba(255, 100, 180, 0.5);
 }
 
-/* Event Toggle Button */
+/* Filter Button */
 .event-toggle-container {
   display: flex;
   align-items: center;
 }
 
-#event-toggle-btn {
-  background: white;
-  color: var(--neon-cyan);
-  border: 1px solid var(--neon-cyan);
-  padding: 8px 16px;
+#index-filter-btn {
+  background: #f97316;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 8px;
-  text-transform: uppercase;
   height: fit-content;
 }
 
-#event-toggle-btn:hover {
-  background: var(--neon-cyan);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 176, 255, 0.3);
-}
-
-#event-toggle-btn.active {
-  background: var(--neon-cyan);
-  color: #fff;
+#index-filter-btn:hover {
+  background: #ea580c;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 @media (max-width: 600px) {
-  #event-toggle-btn {
-    padding: 6px 4px;
-    font-size: 8px;
-    /* Extremely small to fit text */
-    letter-spacing: -0.5px;
-    white-space: normal;
-    /* Allow text to wrap to next line */
-    word-break: break-word;
-    /* Ensure extremely long words break if needed */
-    line-height: 1.1;
-    text-align: center;
-    max-width: 90px;
-    /* Constrain horizontal width heavily */
-    min-width: 80px;
+  #index-filter-btn {
+    padding: 6px 12px;
+    font-size: 10px;
   }
+}
+
+/* Index Filter Popup */
+.index-filter-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.index-filter-popup-overlay.active {
+  display: flex;
+}
+
+.index-filter-popup {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 360px;
+  overflow: hidden;
+}
+
+.index-filter-popup-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+}
+
+.index-filter-popup-header h3 {
+  font-weight: 700;
+  color: #374151;
+  font-size: 16px;
+}
+
+.index-filter-popup-body {
+  padding: 16px 20px;
+}
+
+.filter-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.filter-toggle-row:last-child {
+  border-bottom: none;
+}
+
+.filter-toggle-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Toggle Switch */
+.filter-toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.filter-toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.filter-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #d1d5db;
+  border-radius: 24px;
+  transition: 0.3s;
+}
+
+.filter-toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.filter-toggle-switch input:checked + .filter-toggle-slider {
+  background: #22c55e;
+}
+
+.filter-toggle-switch input:checked + .filter-toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.index-filter-popup-footer {
+  padding: 12px 20px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: center;
+}
+
+.index-filter-ok-btn {
+  padding: 10px 48px;
+  background: #f97316;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.index-filter-ok-btn:hover {
+  background: #ea580c;
+}
+
+.index-filter-ok-btn:active {
+  transform: scale(0.97);
 }
 
 /* ========= Side Ad ========= */
@@ -854,22 +971,22 @@ h2 {
 }
 
 .side-ad-left {
-  right: calc(50% + 640px);
+  right: calc(50% + 680px);
   left: auto;
 }
 
 .side-ad-right {
-  left: calc(50% + 640px);
+  left: calc(50% + 680px);
   right: auto;
 }
 
 /* 
    Content max-width is ~1200px (center ±600px).
    Ad width assumed ~160px.
-   Offset from center: 640px.
-   Need viewport: 640*2 + 160*2 = 1600px minimum, use 1750px for safe margin.
+   Offset from center: 680px.
+   Need viewport: 680*2 + 160*2 = 1680px minimum, use 1850px for safe margin.
 */
-@media (min-width: 1750px) {
+@media (min-width: 1850px) {
 
   .side-ad-left,
   .side-ad-right {

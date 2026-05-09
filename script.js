@@ -1,6 +1,7 @@
 // ========== DOM要素 ==========
 const galleryBrainrot = document.getElementById('gallery-brainrot');
 const gallerySecret = document.getElementById('gallery-secret');
+const galleryEternal = document.getElementById('gallery-eternal');
 const selectedWrappers = document.querySelectorAll('.selected-wrapper');
 const totalBox = document.getElementById('total');
 const totalTitle = document.getElementById('total-title');
@@ -12,6 +13,69 @@ const resetBtn = document.getElementById('reset-btn');
 let selectedImages = [null, null, null, null, null];
 let selectedColors = ['Default', 'Default', 'Default', 'Default', 'Default'];
 let selectedHasBorder = [false, false, false, false, false];
+const isEnglish = document.documentElement.lang === 'en';
+
+// ========== フィルタ状態 ==========
+let filterState = {
+  brainGot: true,
+  secret: true,
+  eternal: false,
+  luckyrot: true,
+  gousei: true,
+  eventLimited: false,
+};
+
+// ========== IDセット構築 ==========
+function buildLuckyrotSet() {
+  if (typeof luckyrotFilter === 'undefined') return new Set();
+  const ids = new Set();
+  ['normal', 'grande'].forEach(type => {
+    if (!luckyrotFilter[type]) return;
+    ['mythic', 'brainGot', 'secret'].forEach(cat => {
+      if (luckyrotFilter[type][cat]) {
+        luckyrotFilter[type][cat].forEach(id => ids.add(id));
+      }
+    });
+  });
+  return ids;
+}
+
+function buildGouseiSet() {
+  const ids = new Set();
+  if (typeof monsterProbabilityRules === 'undefined') return ids;
+  monsterProbabilityRules.forEach(rule => {
+    rule.monsters.forEach(m => ids.add(m.id));
+  });
+  return ids;
+}
+
+const luckyrotIdSet = buildLuckyrotSet();
+const gouseiIdSet = buildGouseiSet();
+
+// ========== フィルタ判定 ==========
+function shouldShowMonster(imgObj) {
+  const rarity = imgObj.rarity;
+  const id = imgObj.id;
+
+  // Common/Mythic (rarity === 'Common') は表示しない
+  if (rarity === 'Common') return false;
+
+  // レアリティフィルタ
+  if (rarity.startsWith('BrainrotGot') && !filterState.brainGot) return false;
+  if (rarity.startsWith('Secret') && !filterState.secret) return false;
+  if (rarity.startsWith('Eternal') && !filterState.eternal) return false;
+
+  // イベント限定フィルタ (rarity ending in '-')
+  if (rarity.endsWith('-') && !filterState.eventLimited) return false;
+
+  // ラッキーロットフィルタ
+  if (!filterState.luckyrot && luckyrotIdSet.has(id)) return false;
+
+  // 合成限定フィルタ
+  if (!filterState.gousei && gouseiIdSet.has(id)) return false;
+
+  return true;
+}
 
 // ========== 基本確率 ==========
 const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Toxic: 0, Galaxy: 0, Zombie: 0, Dreamy: 0, "ICE&FIRE": 0, Carnival: 0, Aqua: 0, Halloween: 0, Darkness: 0, Neon: 0, Christmas: 0, Chocolate: 0, Other: 0 };
@@ -56,21 +120,36 @@ function getPrevThresholdDiff(sumValue) {
   return null;
 }
 
-// ========== ギャラリー生成 ==========
-// ========== ギャラリー生成 ==========
-let showEventLimited = false;
+// ========== セクション表示制御 ==========
+function updateSectionVisibility() {
+  // BrainrotGod section
+  galleryBrainrot.style.display = filterState.brainGot ? '' : 'none';
 
+  // Secret section
+  const secretHeader = document.getElementById('secret-section-header');
+  if (secretHeader) secretHeader.style.display = filterState.secret ? '' : 'none';
+  gallerySecret.style.display = filterState.secret ? '' : 'none';
+
+  // Eternal section
+  const eternalHeader = document.getElementById('eternal-section-header');
+  if (eternalHeader) eternalHeader.style.display = filterState.eternal ? '' : 'none';
+  if (galleryEternal) galleryEternal.style.display = filterState.eternal ? '' : 'none';
+}
+
+// ========== ギャラリー生成 ==========
 function renderGallery() {
   galleryBrainrot.innerHTML = '';
   gallerySecret.innerHTML = '';
+  if (galleryEternal) galleryEternal.innerHTML = '';
+
   const processedIndices = new Set();
   const groupedImages = [];
 
   images.forEach((imgObj, index) => {
     if (processedIndices.has(index)) return;
 
-    // イベント限定モンスターのフィルタリング（初期は非表示）
-    if (!showEventLimited && imgObj.rarity.endsWith('-')) return;
+    // フィルタチェック
+    if (!shouldShowMonster(imgObj)) return;
 
     const group = [imgObj];
     processedIndices.add(index);
@@ -122,7 +201,7 @@ function renderGallery() {
     label.className = 'value-label';
     label.textContent = `${firstObj.value} K/s`;
 
-    // Rarity checks should use startsWith to handle event-limited variants (e.g. BrainrotGot-)
+    // Assign to correct gallery section
     if (firstObj.rarity.startsWith('BrainrotGot')) {
       galleryBrainrot.appendChild(box);
       const saleLabel = document.createElement('div');
@@ -135,32 +214,64 @@ function renderGallery() {
       saleLabel.className = 'sale-label';
       saleLabel.textContent = formatSaleLabelM(1);
       box.appendChild(saleLabel);
+    } else if (firstObj.rarity.startsWith('Eternal')) {
+      if (galleryEternal) {
+        galleryEternal.appendChild(box);
+        const saleLabel = document.createElement('div');
+        saleLabel.className = 'sale-label';
+        saleLabel.textContent = formatSaleLabelM(1);
+        box.appendChild(saleLabel);
+      }
     } else {
       return;
     }
     box.appendChild(label);
   });
+
+  updateSectionVisibility();
 }
 
 // 初期描画
 renderGallery();
 
-// イベント限定モンスター表示切り替えボタン
-const eventToggleBtn = document.getElementById('event-toggle-btn');
-const isEnglish = document.documentElement.lang === 'en';
+// ========== フィルタポップアップ ==========
+const indexFilterBtn = document.getElementById('index-filter-btn');
+const filterPopupOverlay = document.getElementById('index-filter-popup-overlay');
+const closeFilterPopup = document.getElementById('close-index-filter-popup');
+const applyFilterBtn = document.getElementById('apply-index-filter');
 
-if (eventToggleBtn) {
-  eventToggleBtn.onclick = () => {
-    showEventLimited = !showEventLimited;
-    gtag('event', 'EventLimit_button_click');
-    eventToggleBtn.classList.toggle('active', showEventLimited);
-    if (isEnglish) {
-      eventToggleBtn.textContent = showEventLimited ? 'Hide Event Limited Monsters' : 'Show Event Limited Monsters';
-    } else {
-      eventToggleBtn.textContent = showEventLimited ? 'イベント限定モンスターを非表示' : 'イベント限定モンスターを表示';
-    }
-    renderGallery();
+if (indexFilterBtn && filterPopupOverlay) {
+  const closePopup = () => filterPopupOverlay.classList.remove('active');
+
+  indexFilterBtn.onclick = () => {
+    // ポップアップ開く前に現在の状態をトグルに反映
+    document.getElementById('ft-brainGot').checked = filterState.brainGot;
+    document.getElementById('ft-secret').checked = filterState.secret;
+    document.getElementById('ft-eternal').checked = filterState.eternal;
+    document.getElementById('ft-luckyrot').checked = filterState.luckyrot;
+    document.getElementById('ft-gousei').checked = filterState.gousei;
+    document.getElementById('ft-event').checked = filterState.eventLimited;
+    filterPopupOverlay.classList.add('active');
   };
+
+  if (closeFilterPopup) closeFilterPopup.onclick = closePopup;
+  filterPopupOverlay.onclick = (e) => {
+    if (e.target === filterPopupOverlay) closePopup();
+  };
+
+  if (applyFilterBtn) {
+    applyFilterBtn.onclick = () => {
+      filterState.brainGot = document.getElementById('ft-brainGot').checked;
+      filterState.secret = document.getElementById('ft-secret').checked;
+      filterState.eternal = document.getElementById('ft-eternal').checked;
+      filterState.luckyrot = document.getElementById('ft-luckyrot').checked;
+      filterState.gousei = document.getElementById('ft-gousei').checked;
+      filterState.eventLimited = document.getElementById('ft-event').checked;
+      gtag('event', 'Filter_apply_click');
+      closePopup();
+      renderGallery();
+    };
+  }
 }
 
 function selectMonster(imgObj) {
@@ -206,9 +317,9 @@ function renderSelected() {
       label.className = 'value-label';
       box.appendChild(label);
       const saleLabel = document.createElement('div');
-      if (imgObj.rarity === 'BrainrotGot') {
+      if (imgObj.rarity.startsWith('BrainrotGot')) {
         saleLabel.textContent = formatSaleLabelM(0);
-      } else if (imgObj.rarity.startsWith('Secret')) {
+      } else if (imgObj.rarity.startsWith('Secret') || imgObj.rarity.startsWith('Eternal')) {
         saleLabel.textContent = formatSaleLabelM(1);
       } else {
         saleLabel.textContent = '';
