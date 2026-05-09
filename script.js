@@ -60,19 +60,23 @@ function shouldShowMonster(imgObj) {
   // Common/Mythic (rarity === 'Common') は表示しない
   if (rarity === 'Common') return false;
 
+  // イベント限定フィルタ (rarity ending in '-')
+  if (rarity.endsWith('-') && !filterState.eventLimited) return false;
+
+  const isInLuckyrot = luckyrotIdSet.has(id);
+  const isInGousei = gouseiIdSet.has(id);
+
+  // クロスカテゴリフィルタ（合成限定/ラッキーロット）がONなら、レアリティに関係なく表示
+  if ((isInLuckyrot && filterState.luckyrot) || (isInGousei && filterState.gousei)) return true;
+
+  // クロスカテゴリフィルタがOFFで、そのカテゴリに属するモンスターは非表示
+  if (isInLuckyrot && !filterState.luckyrot) return false;
+  if (isInGousei && !filterState.gousei) return false;
+
   // レアリティフィルタ
   if (rarity.startsWith('BrainrotGot') && !filterState.brainGot) return false;
   if (rarity.startsWith('Secret') && !filterState.secret) return false;
   if (rarity.startsWith('Eternal') && !filterState.eternal) return false;
-
-  // イベント限定フィルタ (rarity ending in '-')
-  if (rarity.endsWith('-') && !filterState.eventLimited) return false;
-
-  // ラッキーロットフィルタ
-  if (!filterState.luckyrot && luckyrotIdSet.has(id)) return false;
-
-  // 合成限定フィルタ
-  if (!filterState.gousei && gouseiIdSet.has(id)) return false;
 
   return true;
 }
@@ -122,18 +126,19 @@ function getPrevThresholdDiff(sumValue) {
 
 // ========== セクション表示制御 ==========
 function updateSectionVisibility() {
-  // BrainrotGod section
-  galleryBrainrot.style.display = filterState.brainGot ? '' : 'none';
+  // コンテンツの有無でセクションを表示/非表示
+  const hasBrainGot = galleryBrainrot.children.length > 0;
+  galleryBrainrot.style.display = hasBrainGot ? '' : 'none';
 
-  // Secret section
+  const hasSecret = gallerySecret.children.length > 0;
   const secretHeader = document.getElementById('secret-section-header');
-  if (secretHeader) secretHeader.style.display = filterState.secret ? '' : 'none';
-  gallerySecret.style.display = filterState.secret ? '' : 'none';
+  if (secretHeader) secretHeader.style.display = hasSecret ? '' : 'none';
+  gallerySecret.style.display = hasSecret ? '' : 'none';
 
-  // Eternal section
+  const hasEternal = galleryEternal && galleryEternal.children.length > 0;
   const eternalHeader = document.getElementById('eternal-section-header');
-  if (eternalHeader) eternalHeader.style.display = filterState.eternal ? '' : 'none';
-  if (galleryEternal) galleryEternal.style.display = filterState.eternal ? '' : 'none';
+  if (eternalHeader) eternalHeader.style.display = hasEternal ? '' : 'none';
+  if (galleryEternal) galleryEternal.style.display = hasEternal ? '' : 'none';
 }
 
 // ========== ギャラリー生成 ==========
