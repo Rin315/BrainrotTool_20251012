@@ -24,6 +24,7 @@ const defaultFilterState = {
   luckyrot: true,
   gousei: true,
   eventLimited: false,
+  others: true,
 };
 
 function loadFilterState() {
@@ -92,13 +93,19 @@ function shouldShowMonster(imgObj) {
   // クロスカテゴリフィルタ（絞り込みモード）
   // 1つでもONなら、アクティブなカテゴリに属するモンスターのみ表示
   // 全てOFFなら絞り込みなし＝レアリティを通過した全モンスター表示
-  const anyCrossCuttingActive = filterState.luckyrot || filterState.gousei || filterState.eventLimited;
+  const isInLuckyrot = luckyrotIdSet.has(id);
+  const isInGousei = gouseiIdSet.has(id);
+  const isEventLimited = rarity.endsWith('-');
+  const isOthers = !isInLuckyrot && !isInGousei && !isEventLimited;
+
+  const anyCrossCuttingActive = filterState.luckyrot || filterState.gousei || filterState.eventLimited || filterState.others;
 
   if (anyCrossCuttingActive) {
     let matched = false;
-    if (filterState.luckyrot && luckyrotIdSet.has(id)) matched = true;
-    if (filterState.gousei && gouseiIdSet.has(id)) matched = true;
-    if (filterState.eventLimited && rarity.endsWith('-')) matched = true;
+    if (filterState.luckyrot && isInLuckyrot) matched = true;
+    if (filterState.gousei && isInGousei) matched = true;
+    if (filterState.eventLimited && isEventLimited) matched = true;
+    if (filterState.others && isOthers) matched = true;
     if (!matched) return false;
   }
 
@@ -280,6 +287,7 @@ if (indexFilterBtn && filterPopupOverlay) {
     document.getElementById('ft-luckyrot').checked = filterState.luckyrot;
     document.getElementById('ft-gousei').checked = filterState.gousei;
     document.getElementById('ft-event').checked = filterState.eventLimited;
+    document.getElementById('ft-others').checked = filterState.others;
     filterPopupOverlay.classList.add('active');
   };
 
@@ -296,6 +304,7 @@ if (indexFilterBtn && filterPopupOverlay) {
       filterState.luckyrot = document.getElementById('ft-luckyrot').checked;
       filterState.gousei = document.getElementById('ft-gousei').checked;
       filterState.eventLimited = document.getElementById('ft-event').checked;
+      filterState.others = document.getElementById('ft-others').checked;
       saveFilterState();
       gtag('event', 'Filter_apply_click');
       closePopup();
