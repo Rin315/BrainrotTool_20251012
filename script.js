@@ -42,10 +42,17 @@ function buildLuckyrotSet() {
 
 function buildGouseiSet() {
   const ids = new Set();
-  if (typeof monsterProbabilityRules === 'undefined') return ids;
-  monsterProbabilityRules.forEach(rule => {
-    rule.monsters.forEach(m => ids.add(m.id));
-  });
+  if (typeof monsterProbabilityRules !== 'undefined') {
+    monsterProbabilityRules.forEach(rule => {
+      rule.monsters.forEach(m => ids.add(m.id));
+    });
+  }
+  // 置換ルールの置換先IDも含める
+  if (typeof monsterReplacementRules !== 'undefined') {
+    monsterReplacementRules.forEach(rule => {
+      Object.values(rule.replacements).forEach(id => ids.add(id));
+    });
+  }
   return ids;
 }
 

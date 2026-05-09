@@ -44,6 +44,14 @@ if (typeof monsterProbabilityRules !== 'undefined') {
         }
     }
 }
+// 置換ルールの置換先IDも含める
+if (typeof monsterReplacementRules !== 'undefined') {
+    for (const rule of monsterReplacementRules) {
+        for (const id of Object.values(rule.replacements)) {
+            rulesMonsterIds.add(id);
+        }
+    }
+}
 
 function getItemsPerPage() {
     return window.innerWidth >= 768 ? 32 : 16;
