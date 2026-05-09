@@ -81,26 +81,26 @@ function shouldShowMonster(imgObj) {
   const rarity = imgObj.rarity;
   const id = imgObj.id;
 
-  // Common/Mythic (rarity === 'Common') は表示しない
+  // Common は表示しない
   if (rarity === 'Common') return false;
 
-  // レアリティフィルタ（最優先：OFFならクロスカテゴリに関係なく非表示）
+  // レアリティフィルタ（最優先：OFFなら絶対非表示）
   if (rarity.startsWith('BrainrotGot') && !filterState.brainGot) return false;
   if (rarity.startsWith('Secret') && !filterState.secret) return false;
   if (rarity.startsWith('Eternal') && !filterState.eternal) return false;
 
-  // イベント限定フィルタ (rarity ending in '-')
-  if (rarity.endsWith('-') && !filterState.eventLimited) return false;
+  // クロスカテゴリフィルタ（絞り込みモード）
+  // 1つでもONなら、アクティブなカテゴリに属するモンスターのみ表示
+  // 全てOFFなら絞り込みなし＝レアリティを通過した全モンスター表示
+  const anyCrossCuttingActive = filterState.luckyrot || filterState.gousei || filterState.eventLimited;
 
-  const isInLuckyrot = luckyrotIdSet.has(id);
-  const isInGousei = gouseiIdSet.has(id);
-
-  // クロスカテゴリフィルタ（合成限定/ラッキーロット）がONなら表示
-  if ((isInLuckyrot && filterState.luckyrot) || (isInGousei && filterState.gousei)) return true;
-
-  // クロスカテゴリフィルタがOFFで、そのカテゴリに属するモンスターは非表示
-  if (isInLuckyrot && !filterState.luckyrot) return false;
-  if (isInGousei && !filterState.gousei) return false;
+  if (anyCrossCuttingActive) {
+    let matched = false;
+    if (filterState.luckyrot && luckyrotIdSet.has(id)) matched = true;
+    if (filterState.gousei && gouseiIdSet.has(id)) matched = true;
+    if (filterState.eventLimited && rarity.endsWith('-')) matched = true;
+    if (!matched) return false;
+  }
 
   return true;
 }
