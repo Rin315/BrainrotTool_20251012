@@ -113,7 +113,7 @@ function shouldShowMonster(imgObj) {
 }
 
 // ========== 基本確率 ==========
-const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Toxic: 0, Galaxy: 0, Zombie: 0, Dreamy: 0, "ICE&FIRE": 0, Carnival: 0, Aqua: 0, Halloween: 0, Darkness: 0, Neon: 0, Christmas: 0, Chocolate: 0, Other: 0 };
+const baseProb = { Default: 9.5, Gold: 10, Diamond: 5, Rainbow: 0.5, Toxic: 0, Galaxy: 0, Zombie: 0, Dreamy: 0, "ICE&FIRE": 0, Carnival: 0, Aqua: 0, Halloween: 0, Darkness: 0, Neon: 0, Christmas: 0, Chocolate: 0, Magical: 0, Other: 0 };
 
 // ========== モンスターごとの確率ルール（rules.js で定義） ==========
 // monsterProbabilityRules は rules.js から読み込まれます
