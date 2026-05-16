@@ -913,6 +913,7 @@ function setupMonsterFilter() {
         'grande-brainGot': 'グランデ BrainGot',
         'grande-secret': 'グランデ Secret',
         'gousei': '合成',
+        'event-limited': 'イベント限定',
     };
 
     // Handle filter button clicks
@@ -925,6 +926,11 @@ function setupMonsterFilter() {
             if (filterKey === 'gousei') {
                 // Use rulesMonsterIds from rules.js
                 monsterIds = [...rulesMonsterIds];
+            } else if (filterKey === 'event-limited') {
+                // イベント限定: rarity が '-' で終わるモンスター
+                monsterIds = monsters
+                    .filter(m => m.rarity && m.rarity.endsWith('-'))
+                    .map(m => getMonsterId(m));
             } else {
                 // Parse luckyrot_filter.js config
                 const [type, category] = filterKey.split('-');
