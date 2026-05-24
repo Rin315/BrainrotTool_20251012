@@ -174,6 +174,7 @@ const images = [
     { id: '4metori', src: './img/4metori.png', name: '4つ目鳥', value: 4700, rarity: 'Secret' },
     { id: 'lagrande', src: './img/lagrande.png', name: 'ラグランデ', value: 5000, rarity: 'Secret' },//ラグランデ
     { id: 'rose', src: './img/rose.png', name: '花束', value: 5200, rarity: 'Secret-' },
+    { id: 'baiking', src: './img/baiking.png', name: 'バイキング', value: 5300, rarity: 'Secret' },
     { id: 'lossanta', src: './img/lossanta.png', name: 'ロスサンタ', value: 5500, rarity: 'Secret' },
     { id: 'yesmyhot', src: './img/yesmyhot.png', name: 'イエスマイホットスポット(合成限定)', value: 5500, rarity: 'Secret' },
     { id: 'kaerumahou', src: './img/kaerumahou.JPG', name: 'カエル魔法使い(ForestRot限定)', value: 5600, rarity: 'Secre-' },
@@ -228,12 +229,14 @@ const images = [
     { id: 'los67', src: './img/los67.png', name: 'ロス67(合成限定)', value: 22500, rarity: 'Secret' },
     { id: 'kitunesouryo', src: './img/kitunesouryo.png', name: '狼', value: 23000, rarity: 'Secret' },
     { id: 'sameking', src: './img/sameking.png', name: 'サメキング', value: 23500, rarity: 'Secret' },
+    { id: 'sakanaking', src: './img/sakanaking.png', name: '魚キング', value: 24000, rarity: 'Secret' },
     { id: 'chinpanking', src: './img/chinpanking.png', name: 'チンパンジニーキング', value: 25000, rarity: 'Secret' },//チンパンジー
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'penginkingini', src: './img/penginkingini.JPG', name: 'ペンギンキンギー二(合成合成限定)', value: 26000, rarity: 'Secret' },
     { id: 'yule', src: './img/yule.png', name: 'ツリートナカイ(クリスマス合成限定)', value: 27000, rarity: 'Secret-' },
     { id: 'tiriabogado', src: './img/tiriabogado.png', name: 'チリ&アボガド', value: 28000, rarity: 'Secret' },
     { id: 'itigozou', src: './img/itigozou.png', name: 'ストロベリーエレファント', value: 30000, rarity: 'Secret' },
+    { id: 'piero', src: './img/piero.png', name: 'ピエロ', value: 31000, rarity: 'Secret' },
     { id: 'klombo', src: './img/klombo.png', name: 'クロムボ', value: 32000, rarity: 'Secret' },
     { id: 'tictac', src: './img/tictac.png', name: 'チクタク(合成限定)', value: 33000, rarity: 'Secret' },
     { id: 'royals', src: './img/royals.png', name: 'チンパンジー夫婦', value: 33000, rarity: 'Secret-' },
