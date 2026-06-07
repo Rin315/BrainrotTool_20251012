@@ -23,7 +23,7 @@ const db = getDatabase(app);
 const variants = [
     "Default", "Gold", "Diamond", "Rainbow", "Magical", "Crystal", "Heaven", "Void", "Love", "Toxic",
     "Galaxy", "Zombie", "Dreamy", "ICE&FIRE", "Carnival",
-    "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate"
+    "Aqua", "Halloween", "Darkness", "Neon", "Christmas", "Chocolate", "Gothic"
 ];
 
 // Variant colors (matching sidebar tab border colors)
@@ -32,7 +32,7 @@ const variantColors = {
     Crystal: '#5BC0EB', Heaven: '#FFFFFF', Void: '#5D3B8E', Love: '#FF69B4', Toxic: '#9ACD32',
     Galaxy: '#663399', Zombie: '#2E8B57', Dreamy: '#FF69B4', 'ICE&FIRE': '#FF4500',
     Carnival: '#FF1493', Aqua: '#00FFFF', Halloween: '#FF8C00', Darkness: '#4B0082',
-    Neon: '#39FF14', Christmas: '#228B22', Chocolate: '#D2691E', Magical: '#E91E9C'
+    Neon: '#39FF14', Christmas: '#228B22', Chocolate: '#D2691E', Magical: '#E91E9C', Gothic: '#808080'
 };
 
 // rules.js に記載のモンスターIDをSetに収集（動的に変更に追従）
