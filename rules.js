@@ -284,31 +284,33 @@ const monsterProbabilityRules = [
         range: "80001〜100000",
         threshold: 100000,
         monsters: [
-            { id: "chinpanking", percent: 37.5 },
-            { id: "penginkingini", percent: 37.5 },
+            { id: "chinpanking", percent: 36.5 },
+            { id: "penginkingini", percent: 36.5 },
             { id: "tictac", percent: 30 },
             { id: "wanitrack", percent: 30 },
             { id: "cabritos", percent: 20 },
             { id: "corngozira", percent: 20 },
             { id: "gorgon", percent: 8 },
             { id: "croissa", percent: 3 },
-            { id: "humberger", percent: 1.5 },
-            { id: "tiramis", percent: 1.5 },
-            { id: "tralaledon", percent: 1.5 }
+            { id: "humberger", percent: 2 },
+            { id: "tiramis", percent: 2 },
+            { id: "tralaledon", percent: 2 },
+            { id: "shipship", percent: 0.5 }
         ]
     },
     {
         range: "100001〜",
         threshold: Infinity,
         monsters: [
-            { id: "chinpanking", percent: 25.5 },
-            { id: "penginkingini", percent: 25.5 },
+            { id: "chinpanking", percent: 24.5 },
+            { id: "penginkingini", percent: 24.5 },
             { id: "tictac", percent: 35 },
             { id: "wanitrack", percent: 35 },
             { id: "cabritos", percent: 25 },
             { id: "corngozira", percent: 25 },
             { id: "gorgon", percent: 10 },
             { id: "croissa", percent: 4 },
+            { id: "shipship", percent: 1 },
             { id: "lasuper", percent: 0.5 }
         ]
     }
