@@ -237,6 +237,7 @@ const images = [
     { id: 'sameking', src: './img/sameking.png', name: 'サメキング', value: 23500, rarity: 'Secret' },
     { id: 'sakanaking', src: './img/sakanaking.png', name: '魚キング', value: 24000, rarity: 'Secret' },
     { id: 'supaiku', src: './img/supaiku.JPG', name: 'サッカースパイク(BallRot限定)', value: 24000, rarity: 'Secret-' },
+    { id: 'taimatu', src: './img/taimatu.png', name: 'たいまつ持ってるやつ', value: 24500, rarity: 'Secret' },
     { id: 'chinpanking', src: './img/chinpanking.png', name: 'チンパンジニーキング', value: 25000, rarity: 'Secret' },//チンパンジー
     { id: '25', src: './img/25.png', name: '25(クリスマス合成限定)', value: 25000, rarity: 'Secret-' },
     { id: 'penginkingini', src: './img/penginkingini.JPG', name: 'ペンギンキンギー二(合成合成限定)', value: 26000, rarity: 'Secret' },
@@ -265,6 +266,7 @@ const images = [
     { id: 'cabritos', src: './img/cabritos.png', name: 'ヤギ2人(合成限定)', value: 45000, rarity: 'Secret' },//ヤギ2人
     { id: 'corngozira', src: './img/corngozira.JPG', name: 'コーンゴジラ(合成限定)', value: 46000, rarity: 'Secret' },
     { id: 'arigatou', src: './img/arigato.png', name: 'ありがとう', value: 47000, rarity: 'Secret' },
+    { id: 'umaibou', src: './img/umaibou.png', name: 'うまい棒ヒーロー', value: 48000, rarity: 'Secret' },
     { id: 'doragon', src: './img/doragon.png', name: 'ドラゴン', value: 50000, rarity: 'Secret' },
     { id: 'cake', src: './img/cake.png', name: 'ケーキ', value: 50000, rarity: 'Secret' },
     { id: 'soccerstadium', src: './img/soccerstadium.JPG', name: 'スタジアム(BallRot限定)', value: 52000, rarity: 'Secret-' },
@@ -284,6 +286,7 @@ const images = [
     { id: 'pinkkuma', src: './img/pinkkuma.png', name: 'ピンククマ', value: 85000, rarity: 'Eternal' },
     { id: 'syoberuka', src: './img/syoberuka.png', name: 'ショベルカー', value: 87000, rarity: 'Eternal' },
     { id: 'tiramis', src: './img/tiramis.png', name: '潜水艦', value: 90000, rarity: 'Eternal' },
+    { id: 'kirinbas', src: './img/kirinbas.png', name: 'キリンバス', value: 93000, rarity: 'Eternal' },
     { id: 'tralaledon', src: './img/tralaledon.JPG', name: 'トララレドン（合成限定）', value: 95000, rarity: 'Eternal' },
     { id: 'track', src: './img/track.png', name: 'トラック', value: 100000, rarity: 'Eternal' },
     { id: 'shipship', src: './img/shipship.png', name: 'シップシップサフー（合成限定）', value: 103000, rarity: 'Eternal' },
