@@ -308,13 +308,8 @@ if (indexFilterBtn && filterPopupOverlay) {
 
   indexFilterBtn.onclick = () => {
     // ポップアップ開く前に現在の状態をトグルに反映
-    document.getElementById('ft-brainGot').checked = filterState.brainGot;
-    document.getElementById('ft-secret').checked = filterState.secret;
-    document.getElementById('ft-eternal').checked = filterState.eternal;
-    document.getElementById('ft-luckyrot').checked = filterState.luckyrot;
-    document.getElementById('ft-gousei').checked = filterState.gousei;
-    document.getElementById('ft-event').checked = filterState.eventLimited;
-    document.getElementById('ft-others').checked = filterState.others;
+    const ftEvent = document.getElementById('ft-event');
+    if (ftEvent) ftEvent.checked = filterState.eventLimited;
     filterPopupOverlay.classList.add('active');
   };
 
@@ -325,13 +320,15 @@ if (indexFilterBtn && filterPopupOverlay) {
 
   if (applyFilterBtn) {
     applyFilterBtn.onclick = () => {
-      filterState.brainGot = document.getElementById('ft-brainGot').checked;
-      filterState.secret = document.getElementById('ft-secret').checked;
-      filterState.eternal = document.getElementById('ft-eternal').checked;
-      filterState.luckyrot = document.getElementById('ft-luckyrot').checked;
-      filterState.gousei = document.getElementById('ft-gousei').checked;
-      filterState.eventLimited = document.getElementById('ft-event').checked;
-      filterState.others = document.getElementById('ft-others').checked;
+      // 残っているトグルのみ読み取り、削除されたものはデフォルト値を維持
+      filterState.brainGot = true;
+      filterState.secret = true;
+      filterState.eternal = false;
+      filterState.luckyrot = true;
+      filterState.gousei = true;
+      const ftEvent = document.getElementById('ft-event');
+      filterState.eventLimited = ftEvent ? ftEvent.checked : false;
+      filterState.others = true;
       saveFilterState();
       gtag('event', 'Filter_apply_click');
       closePopup();
