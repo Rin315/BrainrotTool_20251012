@@ -85,6 +85,7 @@
     <div class="section-header" id="brainrot-section-header">
         <h2 class="category-title" id="brainrot-section-title">BrainrotGod</h2>
         <div class="event-toggle-container" id="filter-btn-container">
+            <button id="level-calc-btn" type="button"><span class="lc-btn-icon">📊</span>Level Calc</button>
             <button id="index-filter-btn" type="button">Filter</button>
         </div>
     </div>
@@ -256,10 +257,58 @@
     </div>
 
 
+    <!-- Level Calculator Popup -->
+    <div id="level-calc-popup-overlay" class="level-calc-popup-overlay" data-lang="en">
+        <div class="level-calc-popup">
+            <div class="level-calc-popup-header">
+                <h3><span class="lc-header-icon">📊</span>Level Calculator</h3>
+                <button id="close-level-calc-popup" class="level-calc-close-btn">&times;</button>
+            </div>
+            <div class="level-calc-popup-body">
+                <div class="lc-field">
+                    <label class="lc-label" for="lc-current-level">Current Level (1–200)</label>
+                    <input type="number" id="lc-current-level" class="lc-input" min="1" max="200" placeholder="e.g. 50">
+                </div>
+                <div class="lc-field">
+                    <label class="lc-label" for="lc-current-earning">Current Earning</label>
+                    <div class="lc-earning-row">
+                        <input type="number" id="lc-current-earning" class="lc-input" min="0" step="any" placeholder="e.g. 100">
+                        <select id="lc-earning-unit" class="lc-unit-select">
+                            <option value="">—</option>
+                            <option value="K">K</option>
+                            <option value="M">M</option>
+                            <option value="B">B</option>
+                            <option value="T">T</option>
+                            <option value="Qa">Qa</option>
+                            <option value="Qi">Qi</option>
+                            <option value="Sx">Sx</option>
+                            <option value="Sp">Sp</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="lc-field">
+                    <label class="lc-label" for="lc-target-level">Target Level (1–200)</label>
+                    <input type="number" id="lc-target-level" class="lc-input" min="1" max="200" placeholder="e.g. 100">
+                </div>
+                <button id="lc-calculate-btn" class="lc-calculate-btn">Calculate</button>
+                <div id="lc-error" class="lc-error"></div>
+                <div id="lc-result-container" class="lc-result-container">
+                    <div class="lc-result-label">Predicted Earning</div>
+                    <div id="lc-result-value" class="lc-result-value">—</div>
+                    <div id="lc-result-multiplier" class="lc-result-multiplier"></div>
+                </div>
+            </div>
+            <div class="level-calc-popup-footer">
+                * This is an estimated value. Actual results may vary.
+            </div>
+        </div>
+    </div>
+
     <script src="data.js"></script>
     <script src="rules.js"></script>
     <script src="luckyrot_filter.js"></script>
     <script src="./script.js"></script>
+    <script src="level_calc.js"></script>
     <!-- Adsterra -->
     <!-- Social Bar(通知みたいなやつ) -->
     <script src="https://pl28765794.effectivegatecpm.com/b2/3d/a5/b23da5940d5dbcd564271b178142f114.js"></script>
