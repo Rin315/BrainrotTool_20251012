@@ -94,14 +94,27 @@
     // Determine language
     const lang = overlay.dataset.lang || 'ja';
 
-    // Validation
+    // Validation - check all fields are filled
     if (isNaN(currentLevel) || currentLevel < 1 || currentLevel > 200 ||
       isNaN(targetLevel) || targetLevel < 1 || targetLevel > 200 ||
       isNaN(earningInput) || earningInput <= 0) {
       resultContainer.classList.remove('show');
+      // Only show error if at least one field has a value (avoid error on empty form)
+      if (!isNaN(currentLevel) || !isNaN(targetLevel) || !isNaN(earningInput)) {
+        errorEl.textContent = lang === 'ja'
+          ? 'すべての項目を正しく入力してください。'
+          : 'Please fill in all fields correctly.';
+        errorEl.style.display = 'block';
+      }
+      return;
+    }
+
+    // Validation - target level must be higher than current level
+    if (targetLevel <= currentLevel) {
+      resultContainer.classList.remove('show');
       errorEl.textContent = lang === 'ja'
-        ? 'すべての項目を正しく入力してください。'
-        : 'Please fill in all fields correctly.';
+        ? '目標レベルは現在のレベルより高く設定してください。'
+        : 'Target level must be higher than current level.';
       errorEl.style.display = 'block';
       return;
     }
@@ -167,12 +180,6 @@
         el.addEventListener('change', calculate);
       }
     });
-
-    // Calculate button
-    const calcBtn = document.getElementById('lc-calculate-btn');
-    if (calcBtn) {
-      calcBtn.addEventListener('click', calculate);
-    }
   }
 
   // Run init when DOM is ready

@@ -106,10 +106,13 @@
     </div>
   </div>
 
+  <div class="lc-banner-container">
+    <button id="level-calc-btn" type="button"><span class="lc-btn-icon">📊</span>レベル計算ツール</button>
+  </div>
+
   <div class="section-header" id="brainrot-section-header">
     <h2 class="category-title" id="brainrot-section-title">BrainrotGod</h2>
     <div class="event-toggle-container" id="filter-btn-container">
-      <button id="level-calc-btn" type="button"><span class="lc-btn-icon">📊</span>レベル計算</button>
       <button id="index-filter-btn" type="button">フィルタ</button>
     </div>
   </div>
@@ -352,7 +355,7 @@
               <option value="M">M</option>
               <option value="B">B</option>
               <option value="T">T</option>
-              <option value="Qa">Qa</option>
+              <option value="Qa" selected>Qa</option>
               <option value="Qi">Qi</option>
               <option value="Sx">Sx</option>
               <option value="Sp">Sp</option>
@@ -363,7 +366,6 @@
           <label class="lc-label" for="lc-target-level">目標のレベル (1〜200)</label>
           <input type="number" id="lc-target-level" class="lc-input" min="1" max="200" placeholder="例: 100">
         </div>
-        <button id="lc-calculate-btn" class="lc-calculate-btn">計算する</button>
         <div id="lc-error" class="lc-error"></div>
         <div id="lc-result-container" class="lc-result-container">
           <div class="lc-result-label">予測される稼ぐ額</div>
