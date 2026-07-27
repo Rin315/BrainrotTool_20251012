@@ -171,22 +171,21 @@ function updateSectionVisibility() {
   if (eternalHeader) eternalHeader.style.display = hasEternal ? '' : 'none';
   if (galleryEternal) galleryEternal.style.display = hasEternal ? '' : 'none';
 
-  // フィルタボタンの位置制御
+  // BrainrotGodタイトルは常に非表示
   const brainrotHeader = document.getElementById('brainrot-section-header');
   const brainrotTitle = document.getElementById('brainrot-section-title');
   const filterBtnContainer = document.getElementById('filter-btn-container');
+  if (brainrotTitle) brainrotTitle.style.display = 'none';
   if (!filterBtnContainer) return;
 
   if (hasBrainGot) {
-    // BrainrotGotが表示中 → 元の位置（BrainrotGodヘッダー）に戻す
+    // BrainrotGotが表示中 → フィルタボタンはBrainrotGodヘッダーに配置
     if (brainrotHeader && filterBtnContainer.parentNode !== brainrotHeader) {
       brainrotHeader.appendChild(filterBtnContainer);
     }
     if (brainrotHeader) brainrotHeader.style.display = '';
-    if (brainrotTitle) brainrotTitle.style.display = '';
   } else {
     // BrainrotGotが非表示 → 最初に表示されるセクションヘッダーに移動
-    if (brainrotTitle) brainrotTitle.style.display = 'none';
     const firstVisibleHeader = hasSecret ? secretHeader
       : hasEternal ? eternalHeader : null;
     if (firstVisibleHeader) {
