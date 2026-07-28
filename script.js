@@ -85,8 +85,10 @@ function shouldShowMonster(imgObj) {
   // Common は表示しない
   if (rarity === 'Common') return false;
 
+  // BrainrotGot は常に非表示
+  if (rarity.startsWith('BrainrotGot')) return false;
+
   // レアリティフィルタ（最優先：OFFなら絶対非表示）
-  if (rarity.startsWith('BrainrotGot') && !filterState.brainGot) return false;
   if (rarity.startsWith('Secret') && !filterState.secret) return false;
   if (rarity.startsWith('Eternal') && !filterState.eternal) return false;
 
@@ -163,7 +165,12 @@ function updateSectionVisibility() {
 
   const hasSecret = gallerySecret.children.length > 0;
   const secretHeader = document.getElementById('secret-section-header');
-  if (secretHeader) secretHeader.style.display = hasSecret ? '' : 'none';
+  // Secretセクション: タイトルは非表示、コンテンツのみ表示
+  if (secretHeader) {
+    secretHeader.style.display = hasSecret ? '' : 'none';
+    const secretTitle = secretHeader.querySelector('.category-title');
+    if (secretTitle) secretTitle.style.display = 'none';
+  }
   gallerySecret.style.display = hasSecret ? '' : 'none';
 
   const hasEternal = galleryEternal && galleryEternal.children.length > 0;
