@@ -24,7 +24,12 @@
     12500000000, 13100000000, 13800000000, 14400000000, 15200000000, 15900000000, 16700000000, 17500000000, 18300000000, 19200000000,
     20200000000, 21100000000, 22200000000, 23200000000, 24300000000, 25500000000, 26700000000, 27900000000, 29300000000, 30600000000,
     32000000000, 33500000000, 35000000000, 36600000000, 38300000000, 40000000000, 41700000000, 43600000000, 45500000000, 47500000000,
-    49500000000, 51600000000, 53800000000, 56000000000, 58400000000, 60700000000, 63200000000, 65700000000, 68300000000, 71100000000
+    49500000000, 51600000000, 53800000000, 56000000000, 58400000000, 60700000000, 63200000000, 65700000000, 68300000000, 71100000000,
+    73200000000, 75400000000, 77600000000, 80000000000, 82400000000, 84800000000, 87400000000, 90000000000, 92700000000, 95500000000,
+    98300000000, 101000000000, 104000000000, 107000000000, 110000000000, 113000000000, 116000000000, 120000000000, 123000000000, 127000000000,
+    130000000000, 134000000000, 138000000000, 142000000000, 146000000000, 150000000000, 154000000000, 158000000000, 162000000000, 166000000000,
+    171000000000, 175000000000, 180000000000, 184000000000, 189000000000, 194000000000, 198000000000, 203000000000, 208000000000, 213000000000,
+    218000000000, 222000000000, 227000000000, 232000000000, 237000000000, 242000000000, 247000000000, 252000000000, 257000000000, 262000000000
   ];
 
   // ── Unit definitions ──
@@ -37,7 +42,8 @@
     { suffix: 'Qa', threshold: 1e15 },
     { suffix: 'Qi', threshold: 1e18 },
     { suffix: 'Sx', threshold: 1e21 },
-    { suffix: 'Sp', threshold: 1e24 }
+    { suffix: 'Sp', threshold: 1e24 },
+    { suffix: 'Oct', threshold: 1e27 }
   ];
 
   const unitMultipliers = {
@@ -49,12 +55,13 @@
     'Qa': 1e15,
     'Qi': 1e18,
     'Sx': 1e21,
-    'Sp': 1e24
+    'Sp': 1e24,
+    'Oct': 1e27
   };
 
   // ── Format number with unit suffix ──
   function formatWithUnit(value) {
-    if (value === 0) return '0';
+    if (value === 0) return '0.0';
     // Find the largest unit that fits
     let chosen = units[0];
     for (let i = units.length - 1; i >= 0; i--) {
@@ -64,17 +71,8 @@
       }
     }
     const divided = value / chosen.threshold;
-    // Format with up to 2 decimal places, remove trailing zeros
-    let formatted;
-    if (divided >= 100) {
-      formatted = divided.toFixed(1);
-    } else if (divided >= 10) {
-      formatted = divided.toFixed(2);
-    } else {
-      formatted = divided.toFixed(3);
-    }
-    // Remove trailing zeros after decimal point
-    formatted = formatted.replace(/\.?0+$/, '');
+    // Format to exactly 1 decimal place
+    const formatted = divided.toFixed(1);
     return formatted + chosen.suffix;
   }
 
@@ -95,8 +93,8 @@
     const lang = overlay.dataset.lang || 'ja';
 
     // Validation - check all fields are filled
-    if (isNaN(currentLevel) || currentLevel < 1 || currentLevel > 200 ||
-      isNaN(targetLevel) || targetLevel < 1 || targetLevel > 200 ||
+    if (isNaN(currentLevel) || currentLevel < 1 || currentLevel > 250 ||
+      isNaN(targetLevel) || targetLevel < 1 || targetLevel > 250 ||
       isNaN(earningInput) || earningInput <= 0) {
       resultContainer.classList.remove('show');
       // Only show error if at least one field has a value (avoid error on empty form)
