@@ -156,6 +156,11 @@
     openBtn.addEventListener('click', function () {
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+      
+      // 回数だけをシンプルにカウントする
+      if (typeof gtag === 'function') {
+        gtag('event', 'calctool');
+      }
     });
 
     closeBtn.addEventListener('click', function () {
