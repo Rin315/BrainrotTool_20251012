@@ -35,6 +35,24 @@
         gtag('js', new Date());
         gtag('config', 'G-Z4LQTYSLN0');
     </script>
+    <script>
+        // 固定したい元のタブ名（サイト名）を指定
+        const originalTitle = document.title;
+
+        // titleタグの変更を監視する
+        const titleElement = document.querySelector('title');
+        if (titleElement) {
+            const observer = new MutationObserver(() => {
+                // タイトルが勝手に書き換えられたら元に戻す
+                if (document.title !== originalTitle) {
+                    document.title = originalTitle;
+                }
+            });
+
+            // 監視を開始
+            observer.observe(titleElement, { childList: true });
+        }
+    </script>
 </head>
 
 <body>
@@ -240,7 +258,8 @@
             <div class="level-calc-popup-body">
                 <div class="lc-field">
                     <label class="lc-label" for="lc-current-level">Current Level (1–250)</label>
-                    <input type="number" id="lc-current-level" class="lc-input" min="1" max="250" placeholder="e.g. 50" value="1">
+                    <input type="number" id="lc-current-level" class="lc-input" min="1" max="250" placeholder="e.g. 50"
+                        value="1">
                 </div>
                 <div class="lc-field">
                     <label class="lc-label" for="lc-current-earning">Current Earning</label>
